@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/com/pm/aiost/entity/AiostEntity.java=UTF-8
+encoding//src/com/pm/aiost/entity/EntityHelper.java=UTF-8
+encoding//src/com/pm/aiost/entity/ownable/ownables/OwnableEnderman.java=UTF-8
+encoding//src/com/pm/aiost/entity/ownable/ownables/OwnableZombie.java=UTF-8
+encoding//src/com/pm/aiost/game/games/castleDefend/CastleDefendScoreboard.java=UTF-8
+encoding//src/com/pm/aiost/item/AiostToolMaterial.java=UTF-8
+encoding//src/com/pm/aiost/item/spell/Spell.java=UTF-8
+encoding//src/com/pm/aiost/misc/other/Symbols.java=UTF-8
+encoding//src/com/pm/aiost/misc/other/WordFilter.java=UTF-8
+encoding//src/com/pm/aiost/misc/scoreboard/scoreboards/LobbyScoreboard.java=UTF-8
+encoding//src/com/pm/aiost/misc/scoreboard/scoreboards/PlayerWorldScoreboard.java=UTF-8
+encoding//src/com/pm/aiost/misc/scoreboard/scoreboards/SurvivalScoreboard.java=UTF-8
+encoding//src/com/pm/aiost/server/ServerManager.java=UTF-8

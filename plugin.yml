@@ -1,0 +1,248 @@
+name: AIOST
+main: com.pm.aiost.Aiost
+version: 1.0
+api-version: 1.14
+commands:
+  rl:
+    discription: gives player the server items.
+    usage: /<command>
+  Reload:
+    discription: gives player the server items.
+    usage: /<command>
+  re:
+    discription: gives player the server items.
+    usage: /<command>
+  GameMode:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  gm:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  menu:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  m:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  ItemMenu:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  EffectMenu:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Lobby:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Menu:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Party:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Friend:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Invite:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  acceptInvite:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Op:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Operator:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  Deop:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  SetFurniture:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  setHologram:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  setEntity:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  setPlayer:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  buildDatabase:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  query:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  updateQuery:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  execQuery:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  callQuery:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  batchQuery:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  addPermission:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  setSetting:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  friend:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  friendDecline:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  unfriend:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  lobby:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  createWorld:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  deleteWorld:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  addWorld:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  world:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  tpWorld:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  portal:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  deletePortal:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  marker:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  createRegion:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  editRegion:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  deleteRegion:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  buildResourcePack:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  resourcepack:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  texturepack:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  removeResourcepack:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  removeTexturepack:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  spawnMenu:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  heal:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  worldSettings:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  disguise:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  adminDisguise:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  removeDisguise:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  showInvisibles:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  hideInvisibles:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  gmc:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  gms:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  gma:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  party:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  partyJoin:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  partyLeave:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  day:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  noon:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  night:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  midnight:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  rank:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  fly:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  flySpeed:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  worldEffects:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  credits:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  credit:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  c:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  addCredits:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  duel:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  serverType:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  buildstaff:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  worldEdit:
+    discription: teleports player to Building Server.
+    usage: /<command>
+  worldBrush:
+    discription: teleports player to Building Server.
+    usage: /<command>
