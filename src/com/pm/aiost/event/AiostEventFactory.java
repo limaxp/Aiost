@@ -8,6 +8,7 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.damage.DamageSource;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -34,23 +35,24 @@ public class AiostEventFactory {
 
 	private static final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
 
-	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, @Nonnull List<ItemStack> drops,
-			int droppedExp, @Nullable String deathMessage) {
-		PlayerDeathEvent e = new PlayerDeathEvent(player, drops, droppedExp, deathMessage);
+	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, DamageSource source,
+			@Nonnull List<ItemStack> drops, int droppedExp, @Nullable String deathMessage) {
+		PlayerDeathEvent e = new PlayerDeathEvent(player, source, drops, droppedExp, deathMessage);
 		PLUGIN_MANAGER.callEvent(e);
 		return e;
 	}
 
-	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, @Nonnull List<ItemStack> drops,
-			int droppedExp, int newExp, @Nullable String deathMessage) {
-		PlayerDeathEvent e = new PlayerDeathEvent(player, drops, droppedExp, newExp, deathMessage);
+	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, DamageSource source,
+			@Nonnull List<ItemStack> drops, int droppedExp, int newExp, @Nullable String deathMessage) {
+		PlayerDeathEvent e = new PlayerDeathEvent(player, source, drops, droppedExp, newExp, deathMessage);
 		PLUGIN_MANAGER.callEvent(e);
 		return e;
 	}
 
-	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, @Nonnull List<ItemStack> drops,
-			int droppedExp, int newExp, int newTotalExp, int newLevel, @Nullable String deathMessage) {
-		PlayerDeathEvent e = new PlayerDeathEvent(player, drops, droppedExp, newExp, newTotalExp, newLevel,
+	public static PlayerDeathEvent callPlayerDeathEvent(@Nonnull Player player, DamageSource source,
+			@Nonnull List<ItemStack> drops, int droppedExp, int newExp, int newTotalExp, int newLevel,
+			@Nullable String deathMessage) {
+		PlayerDeathEvent e = new PlayerDeathEvent(player, source, drops, droppedExp, newExp, newTotalExp, newLevel,
 				deathMessage);
 		PLUGIN_MANAGER.callEvent(e);
 		return e;

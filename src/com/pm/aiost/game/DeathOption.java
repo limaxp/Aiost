@@ -1,5 +1,10 @@
 package com.pm.aiost.game;
 
+import static com.pm.aiost.game.DeathOption.cancelPlayerDeath;
+import static com.pm.aiost.game.DeathOption.checkInstantPlayerDeath;
+import static com.pm.aiost.game.DeathOption.instantPlayerDeath;
+import static com.pm.aiost.game.DeathOption.spawnBody;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,7 +99,7 @@ public interface DeathOption {
 	public static void checkInstantPlayerDeath(Player player, EntityDamageEvent event) {
 		// TODO: Fix death messages
 		if (player.getHealth() - event.getFinalDamage() <= 0) {
-			AiostEventFactory.callPlayerDeathEvent(player, EMPTY_DROPS, 0, null);
+			AiostEventFactory.callPlayerDeathEvent(player, event.getDamageSource(), EMPTY_DROPS, 0, null);
 			event.setCancelled(true);
 		}
 	}
