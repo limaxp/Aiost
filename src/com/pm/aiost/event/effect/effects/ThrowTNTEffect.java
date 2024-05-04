@@ -20,21 +20,21 @@ public class ThrowTNTEffect extends LaunchTNTEffect {
 			is = serverPlayer.player.getInventory().getItemInMainHand();
 		else
 			is = serverPlayer.player.getInventory().getItemInOffHand();
-		LaunchTNTEffect.launchTNT(event.getPlayer(), velocityMultiplier, damage, knockback, fuseTicks, effect);
+//		LaunchTNTEffect.launchTNT(event.getPlayer(), velocityMultiplier, damage, knockback, fuseTicks, effect);
 		EffectHelper.decrementItemStack(serverPlayer, is, event.getHand(), event);
 	}
 
 	@Override
 	public void onPlayerFish(ServerPlayer serverPlayer, PlayerFishEvent event) {
 		ItemStack is = serverPlayer.lastRightClickedIS;
-		LaunchTNTEffect.launchTNT(event.getPlayer(), velocityMultiplier, damage, knockback, fuseTicks, effect);
+//		LaunchTNTEffect.launchTNT(event.getPlayer(), velocityMultiplier, damage, knockback, fuseTicks, effect);
 		EffectHelper.decrementItemStack(serverPlayer, is, serverPlayer.lastRightClickedEquipmentSlot, event);
 	}
 
 	@Override
 	public void onPlayerProjectileLaunch(ServerPlayer serverPlayer, ProjectileLaunchEvent event) {
 		ItemStack is = serverPlayer.lastRightClickedIS;
-		LaunchTNTEffect.launchTNT(serverPlayer.player, velocityMultiplier, damage, knockback, fuseTicks, effect);
+//		LaunchTNTEffect.launchTNT(serverPlayer.player, velocityMultiplier, damage, knockback, fuseTicks, effect);
 		EffectHelper.decrementItemStack(serverPlayer, is, serverPlayer.lastRightClickedEquipmentSlot, event);
 	}
 

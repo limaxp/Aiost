@@ -10,7 +10,8 @@ import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class TeamData {
 
@@ -78,6 +79,6 @@ public class TeamData {
 	public void save(ConfigurationSection section) {
 		section.set("name", name);
 		section.set("color", color.ordinal());
-		section.set("item", NBTHelper.saveItem(new NBTCompound(), item).toString());
+		section.set("item", NBTHelper.saveItem(new CompoundTag(), item).toString());
 	}
 }

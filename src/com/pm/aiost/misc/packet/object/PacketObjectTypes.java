@@ -9,12 +9,10 @@ import com.pm.aiost.misc.packet.object.objects.Marker;
 import com.pm.aiost.misc.packet.object.objects.SimpleText;
 import com.pm.aiost.misc.packet.object.objects.TextDisplay;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ServerChunk;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class PacketObjectTypes {
 
@@ -35,58 +33,32 @@ public class PacketObjectTypes {
 		return type;
 	}
 
-	public static PacketObject spawn(int id, ServerChunk chunk, NBTTagCompound nbt) {
+	public static PacketObject spawn(int id, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(AiostRegistry.PACKET_OBJECTS.get(id).constructor, chunk, nbt);
 	}
 
-	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, ServerChunk chunk, NBTTagCompound nbt) {
+	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(type.constructor, chunk, nbt);
 	}
 
 	public static <T extends PacketObject> T spawn(PacketObjectConstructor<T> constructor, ServerChunk chunk,
-			NBTTagCompound nbt) {
-		return spawn(constructor, chunk, new NBTCompoundWrapper(nbt));
-	}
-
-	public static PacketObject spawn(int id, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.PACKET_OBJECTS.get(id).constructor, chunk, nbt);
-	}
-
-	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(type.constructor, chunk, nbt);
-	}
-
-	public static <T extends PacketObject> T spawn(PacketObjectConstructor<T> constructor, ServerChunk chunk,
-			INBTTagCompound nbt) {
+			CompoundTag nbt) {
 		T t = constructor.get(chunk.world);
 		t.load(nbt);
 		chunk.loadPacketObject(t);
 		return t;
 	}
 
-	public static PacketObject spawn(int id, Location loc, NBTTagCompound nbt) {
+	public static PacketObject spawn(int id, Location loc, CompoundTag nbt) {
 		return spawn(AiostRegistry.PACKET_OBJECTS.get(id).constructor, loc, nbt);
 	}
 
-	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, Location loc, NBTTagCompound nbt) {
+	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, Location loc, CompoundTag nbt) {
 		return spawn(type.constructor, loc, nbt);
 	}
 
 	public static <T extends PacketObject> T spawn(PacketObjectConstructor<T> constructor, Location loc,
-			NBTTagCompound nbt) {
-		return spawn(constructor, loc, new NBTCompoundWrapper(nbt));
-	}
-
-	public static PacketObject spawn(int id, Location loc, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.PACKET_OBJECTS.get(id).constructor, loc, nbt);
-	}
-
-	public static <T extends PacketObject> T spawn(PacketObjectType<T> type, Location loc, INBTTagCompound nbt) {
-		return spawn(type.constructor, loc, nbt);
-	}
-
-	public static <T extends PacketObject> T spawn(PacketObjectConstructor<T> constructor, Location loc,
-			INBTTagCompound nbt) {
+			CompoundTag nbt) {
 		ServerWorld world = ServerWorld.getByWorld(loc.getWorld());
 		T t = constructor.get(world);
 		t.load(nbt);

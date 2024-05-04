@@ -1,9 +1,9 @@
 package com.pm.aiost.event.effect;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ByteMap;
-
 import com.pm.aiost.collection.list.FastArrayList;
+
+import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ByteMap;
 
 public class EffectCondition {
 

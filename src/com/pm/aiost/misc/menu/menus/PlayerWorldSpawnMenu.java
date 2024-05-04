@@ -30,7 +30,7 @@ import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class PlayerWorldSpawnMenu {
 
@@ -91,7 +91,7 @@ public class PlayerWorldSpawnMenu {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnEntity(serverPlayer, (EntityTypes<?>) obj);
+								spawnEntity(serverPlayer, (EntityType<?>) obj);
 							}
 
 							@Override
@@ -147,7 +147,7 @@ public class PlayerWorldSpawnMenu {
 		}
 	}
 
-	public static void spawnEntity(ServerPlayer serverPlayer, EntityTypes<?> type) {
+	public static void spawnEntity(ServerPlayer serverPlayer, EntityType<?> type) {
 		AiostEntityTypes.spawnEntity(type, serverPlayer.player.getLocation());
 	}
 

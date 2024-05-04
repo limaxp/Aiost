@@ -9,8 +9,6 @@ import java.sql.SQLException;
 import java.util.Arrays;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.LongArrayList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.LongList;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
@@ -23,6 +21,9 @@ import com.pm.aiost.misc.rank.Ranks;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.FriendHandler;
+
+import it.unimi.dsi.fastutil.longs.LongArrayList;
+import it.unimi.dsi.fastutil.longs.LongList;
 
 public class FriendRequestMenu extends ViewInventoryMenu {
 

@@ -409,4 +409,23 @@ public class NullConfigurationSection implements ConfigurationSection {
 
 	}
 
+	@Override
+	public List<String> getComments(String arg0) {
+		return null;
+	}
+
+	@Override
+	public List<String> getInlineComments(String arg0) {
+		return null;
+	}
+
+	@Override
+	public void setComments(String arg0, List<String> arg1) {
+
+	}
+
+	@Override
+	public void setInlineComments(String arg0, List<String> arg1) {
+
+	}
 }

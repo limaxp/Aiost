@@ -23,8 +23,9 @@ import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.other.ProjectileClass;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class LaunchProjectileEffect extends SimpleLivingEntityEffect {
 
@@ -87,17 +88,17 @@ public class LaunchProjectileEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		projectileClass = ProjectileClass.get(nbt.getString("projectile"));
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setString("projectile", ProjectileClass.getName(projectileClass));
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putString("projectile", ProjectileClass.getName(projectileClass));
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
 		return nbt;
 	}
 

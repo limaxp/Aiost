@@ -73,7 +73,7 @@ public class LakePopulator extends BlockPopulator {
 							int Y1 = Y + j1 - 1;
 							int Z1 = Z + k1;
 							if (world.getBlockAt(X1, Y1, Z1).getType() == Material.DIRT) {
-								world.getBlockAt(X1, Y1, Z1).setType(Material.GRASS);
+								world.getBlockAt(X1, Y1, Z1).setType(Material.GRASS_BLOCK);
 							}
 						}
 					}

@@ -20,8 +20,9 @@ import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class CastSpellEffect extends SimpleLivingEntityEffect {
 
@@ -74,15 +75,15 @@ public class CastSpellEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		spell = AiostRegistry.SPELLS.get(nbt.getString("spell"));
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setString("spell", spell.getName());
+		nbt.putString("spell", spell.getName());
 		return nbt;
 	}
 

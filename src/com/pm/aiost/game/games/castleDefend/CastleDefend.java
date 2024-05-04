@@ -34,13 +34,9 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.CustomInsentient;
-import com.pm.aiost.entity.ai.pathfinderGoal.PathfinderGoalWalkToLocation;
-import com.pm.aiost.entity.ai.pathfinderGoal.custom.CustomPathfinderGoalWalkToLocation;
+import com.pm.aiost.entity.EntityTrader;
 import com.pm.aiost.entity.spawner.StageEntitySpawner;
-import com.pm.aiost.entity.vanilla.EntityTrader;
 import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameKit;
@@ -54,11 +50,7 @@ import com.pm.aiost.misc.menu.menus.ShopMenu;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.BlockPosition;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityCreature;
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.EnumMobSpawn;
+import net.minecraft.world.entity.Entity;
 
 public class CastleDefend extends Game {
 
@@ -72,8 +64,8 @@ public class CastleDefend extends Game {
 	private StageEntitySpawner spawner;
 	private CastleDefenseMobEventHandler castleDefenseMobEventHandler;
 	private Random random;
-	private List<EntityTypes<?>> entityTypes;
-	protected List<EntityTypes<?>> lockedTypes;
+	private List<net.minecraft.world.entity.EntityType<?>> entityTypes;
+	protected List<net.minecraft.world.entity.EntityType<?>> lockedTypes;
 	private boolean isSpecialWave;
 	private Location targetLocation;
 	private int kills; // TODO should be in teams and saved to database!
@@ -144,7 +136,7 @@ public class CastleDefend extends Game {
 		spawner.setSpawnCallback(this::spawnCallback);
 		spawner.setTime(WAVE_PAUSE_TIME);
 		EntityTrader trader = (EntityTrader) AiostEntityTypes.spawnEntity(AiostEntityTypes.TRADER, targetLocation);
-		trader.setPersistent();
+		trader.setPersistenceRequired(true);
 	}
 
 	@Override
@@ -285,55 +277,55 @@ public class CastleDefend extends Game {
 	}
 
 	protected void spawnCallback(Entity entity) {
-		if (entity instanceof EntityCreature) {
-			EntityCreature insentient = (EntityCreature) entity;
-			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
-			insentient.setPersistent();
-			insentient.goalSelector.a(2, new PathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
-			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
-					EnumMobSpawn.SPAWNER, null, null);
-		} else if (entity instanceof CustomInsentient) {
-			CustomInsentient insentient = (CustomInsentient) entity;
-			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
-			insentient.setPersistent();
-			insentient.getGoalSelector().a(2, new CustomPathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
-			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
-					EnumMobSpawn.SPAWNER, null, null);
-		}
+//		if (entity instanceof Mob) {
+//			Mob insentient = (Mob) entity;
+//			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
+//			insentient.setPersistent();
+//			insentient.goalSelector.a(2, new PathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
+//			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
+//					EnumMobSpawn.SPAWNER, null, null);
+//		} else if (entity instanceof CustomInsentient) {
+//			CustomInsentient insentient = (CustomInsentient) entity;
+//			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
+//			insentient.setPersistent();
+//			insentient.getGoalSelector().a(2, new CustomPathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
+//			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
+//					EnumMobSpawn.SPAWNER, null, null);
+//		}
 	}
 
 	protected void initEntityTypes() {
-		addStartTypes(entityTypes = new UnorderedIdentityArrayList<EntityTypes<?>>());
-		addLockedTypes(lockedTypes = new UnorderedIdentityArrayList<EntityTypes<?>>());
+		addStartTypes(entityTypes = new UnorderedIdentityArrayList<net.minecraft.world.entity.EntityType<?>>());
+		addLockedTypes(lockedTypes = new UnorderedIdentityArrayList<net.minecraft.world.entity.EntityType<?>>());
 		addEntityType();
 	}
 
-	protected void addStartTypes(List<EntityTypes<?>> list) {
-//		list.add(AiostEntityTypes.TEST_ZOMBIE);
-//		list.add(AiostEntityTypes.NO_COMBUST_ZOMBIE);
-//		list.add(AiostEntityTypes.NO_COMBUST_MELEE_SKELETON);
-		list.add(AiostEntityTypes.ENEMY_NPC);
+	protected void addStartTypes(List<net.minecraft.world.entity.EntityType<?>> list) {
+////		list.add(AiostEntityTypes.TEST_ZOMBIE);
+////		list.add(AiostEntityTypes.NO_COMBUST_ZOMBIE);
+////		list.add(AiostEntityTypes.NO_COMBUST_MELEE_SKELETON);
+//		list.add(AiostEntityTypes.ENEMY_NPC);
 	}
 
-	protected void addLockedTypes(List<EntityTypes<?>> list) {
-		list.add(AiostEntityTypes.NO_COMBUST_WITHER_SKELETON);
-		list.add(AiostEntityTypes.NO_COMBUST_MULTISHOT_SKELETON);
-		list.add(AiostEntityTypes.ALWAYS_ATTACK_SPIDER);
-		list.add(AiostEntityTypes.NO_COMBUST_SKELETON);
-		list.add(AiostEntityTypes.ALWAYS_ATTACK_CAVE_SPIDER);
-//		list.add(EntityTypes.SLIME);
-//		list.add(EntityTypes.MAGMA_CUBE);
-		list.add(AiostEntityTypes.CREEPER);
-		list.add(AiostEntityTypes.MELEE_CREEPER);
-		list.add(AiostEntityTypes.FAKE_CREEPER);
-//		list.add(EntityTypes.MELEE_WITCH);
-		list.add(AiostEntityTypes.WITCH);
-		list.add(AiostEntityTypes.MELEE_BLAZE);
-		list.add(AiostEntityTypes.BLAZE);
-		list.add(AiostEntityTypes.MULTISHOT_BLAZE);
-		list.add(AiostEntityTypes.GHAST);
-		list.add(AiostEntityTypes.ALWAYS_ATTACK_ENDERMAN);
-		list.add(AiostEntityTypes.HOSTILE_IRON_GOLEM);
+	protected void addLockedTypes(List<net.minecraft.world.entity.EntityType<?>> list) {
+//		list.add(AiostEntityTypes.NO_COMBUST_WITHER_SKELETON);
+//		list.add(AiostEntityTypes.NO_COMBUST_MULTISHOT_SKELETON);
+//		list.add(AiostEntityTypes.ALWAYS_ATTACK_SPIDER);
+//		list.add(AiostEntityTypes.NO_COMBUST_SKELETON);
+//		list.add(AiostEntityTypes.ALWAYS_ATTACK_CAVE_SPIDER);
+////		list.add(EntityTypes.SLIME);
+////		list.add(EntityTypes.MAGMA_CUBE);
+//		list.add(AiostEntityTypes.CREEPER);
+//		list.add(AiostEntityTypes.MELEE_CREEPER);
+//		list.add(AiostEntityTypes.FAKE_CREEPER);
+////		list.add(EntityTypes.MELEE_WITCH);
+//		list.add(AiostEntityTypes.WITCH);
+//		list.add(AiostEntityTypes.MELEE_BLAZE);
+//		list.add(AiostEntityTypes.BLAZE);
+//		list.add(AiostEntityTypes.MULTISHOT_BLAZE);
+//		list.add(AiostEntityTypes.GHAST);
+//		list.add(AiostEntityTypes.ALWAYS_ATTACK_ENDERMAN);
+//		list.add(AiostEntityTypes.HOSTILE_IRON_GOLEM);
 	}
 
 	protected void addEntityType() {
@@ -341,21 +333,21 @@ public class CastleDefend extends Game {
 			entityTypes.add(lockedTypes.remove(random.nextInt(lockedTypes.size())));
 	}
 
-	public void addEntityType(EntityTypes<?> type) {
+	public void addEntityType(net.minecraft.world.entity.EntityType<?> type) {
 		if (lockedTypes.remove(type))
 			entityTypes.add(type);
 	}
 
-	public void removeEntityType(EntityTypes<?> type) {
+	public void removeEntityType(net.minecraft.world.entity.EntityType<?> type) {
 		if (entityTypes.remove(type))
 			lockedTypes.add(type);
 	}
 
-	public List<EntityTypes<?>> getEntityTypes() {
+	public List<net.minecraft.world.entity.EntityType<?>> getEntityTypes() {
 		return entityTypes;
 	}
 
-	public List<EntityTypes<?>> getLockedTypes() {
+	public List<net.minecraft.world.entity.EntityType<?>> getLockedTypes() {
 		return lockedTypes;
 	}
 
@@ -374,32 +366,32 @@ public class CastleDefend extends Game {
 	protected void setRandomSpecialWave() {
 		switch (random.nextInt(8)) {
 		case 7:
-			setSpecialWave("Chicken Wave!", AiostEntityTypes.HOSTILE_CHICKEN);
+//			setSpecialWave("Chicken Wave!", AiostEntityTypes.HOSTILE_CHICKEN);
 			break;
 		case 6:
-			setSpecialWave("Skeleton Wave!", AiostEntityTypes.NO_COMBUST_SKELETON,
-					AiostEntityTypes.NO_COMBUST_MELEE_SKELETON);
+//			setSpecialWave("Skeleton Wave!", AiostEntityTypes.NO_COMBUST_SKELETON,
+//					AiostEntityTypes.NO_COMBUST_MELEE_SKELETON);
 			break;
 		case 5:
 			setSpecialWave("Spider Wave!", AiostEntityTypes.SPIDER, AiostEntityTypes.CAVE_SPIDER);
 			break;
 		case 4:
-			setSpecialWave("Creeper Wave!", AiostEntityTypes.CREEPER, AiostEntityTypes.MELEE_CREEPER,
-					AiostEntityTypes.FAKE_CREEPER);
+//			setSpecialWave("Creeper Wave!", AiostEntityTypes.CREEPER, AiostEntityTypes.MELEE_CREEPER,
+//					AiostEntityTypes.FAKE_CREEPER);
 			break;
 		case 3:
 			setSpecialWave("Ghast Wave!", AiostEntityTypes.GHAST);
 			break;
 		case 2:
-			setSpecialWave("Blaze Wave!", AiostEntityTypes.BLAZE, AiostEntityTypes.MELEE_BLAZE);
+//			setSpecialWave("Blaze Wave!", AiostEntityTypes.BLAZE, AiostEntityTypes.MELEE_BLAZE);
 			break;
 		case 1:
-			setSpecialWave("Witch Wave!", AiostEntityTypes.WITCH, AiostEntityTypes.MELEE_WITCH);
+//			setSpecialWave("Witch Wave!", AiostEntityTypes.WITCH, AiostEntityTypes.MELEE_WITCH);
 			break;
 
 		case 0:
 		default:
-			setSpecialWave("Zombie Wave!", AiostEntityTypes.NO_COMBUST_ZOMBIE);
+//			setSpecialWave("Zombie Wave!", AiostEntityTypes.NO_COMBUST_ZOMBIE);
 			break;
 		}
 	}
@@ -424,7 +416,7 @@ public class CastleDefend extends Game {
 		}
 	}
 
-	protected final void setSpecialWave(String msg, EntityTypes<?>... entityTypes) {
+	protected final void setSpecialWave(String msg, net.minecraft.world.entity.EntityType<?>... entityTypes) {
 		isSpecialWave = true;
 		spawner.setEntityTypes(Arrays.asList(entityTypes));
 		getBossBar().setTitle(msg);

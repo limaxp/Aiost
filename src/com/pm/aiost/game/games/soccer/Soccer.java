@@ -20,7 +20,7 @@ import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerDropItemEvent;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.custom.Ball;
+import com.pm.aiost.entity.Ball;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameTeam;
@@ -81,7 +81,6 @@ public class Soccer extends Game {
 	@Override
 	public void end() {
 		super.end();
-		ball.die();
 		if (bluePoints > redPoints)
 			broadcastTitle(ChatColor.BLUE + "Blue team has won!");
 		else

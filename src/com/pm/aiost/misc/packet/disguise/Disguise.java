@@ -7,9 +7,9 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.packet.PacketFactory;
 
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.EnumItemSlot;
-import net.minecraft.server.v1_15_R1.Items;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public interface Disguise {
 
@@ -20,11 +20,12 @@ public interface Disguise {
 
 	public void load(ConfigurationSection section);
 
-	public static void addPlayerStatePackets(EntityPlayer entityPlayer, List<Object> packets) {
+	public static void addPlayerStatePackets(net.minecraft.world.entity.player.Player entityPlayer,
+			List<Object> packets) {
 		int id = entityPlayer.getId();
-		packets.add(PacketFactory.packetEntityMetadata(id, entityPlayer.getDataWatcher(), true));
-		for (EnumItemSlot slot : EnumItemSlot.values()) {
-			net.minecraft.server.v1_15_R1.ItemStack equimentItem = entityPlayer.getEquipment(slot);
+		packets.add(PacketFactory.packetEntityMetadata(id, entityPlayer.getEntityData().getNonDefaultValues()));
+		for (EquipmentSlot slot : EquipmentSlot.values()) {
+			ItemStack equimentItem = entityPlayer.getItemBySlot(slot);
 			if (equimentItem.getItem() != Items.AIR)
 				packets.add(PacketFactory.packetEntityEquipment(id, slot, equimentItem));
 		}

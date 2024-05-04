@@ -3,18 +3,16 @@ package com.pm.aiost.server.world.object.tileObject;
 import org.bukkit.Location;
 
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ServerChunk;
 import com.pm.aiost.server.world.object.tileObject.TileObjectType.TileObjectConstructor;
 import com.pm.aiost.server.world.object.tileObject.tileObjects.BlinkingBlock;
 import com.pm.aiost.server.world.object.tileObject.tileObjects.MovingBlock;
 import com.pm.aiost.server.world.object.tileObject.tileObjects.ProximityFallingBlock;
-import com.pm.aiost.server.world.object.tileObject.tileObjects.SlidingBlock;
 import com.pm.aiost.server.world.object.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
+import com.pm.aiost.server.world.object.tileObject.tileObjects.SlidingBlock;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class TileObjectTypes {
 
@@ -37,58 +35,31 @@ public class TileObjectTypes {
 		return type;
 	}
 
-	public static TileObject spawn(int id, ServerChunk chunk, NBTTagCompound nbt) {
+	public static TileObject spawn(int id, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(AiostRegistry.TILE_OBJECTS.get(id).constructor, chunk, nbt);
 	}
 
-	public static <T extends TileObject> T spawn(TileObjectType<T> type, ServerChunk chunk, NBTTagCompound nbt) {
+	public static <T extends TileObject> T spawn(TileObjectType<T> type, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(type.constructor, chunk, nbt);
 	}
 
 	public static <T extends TileObject> T spawn(TileObjectConstructor<T> constructor, ServerChunk chunk,
-			NBTTagCompound nbt) {
-		return spawn(constructor, chunk, new NBTCompoundWrapper(nbt));
-	}
-
-	public static TileObject spawn(int id, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.TILE_OBJECTS.get(id).constructor, chunk, nbt);
-	}
-
-	public static <T extends TileObject> T spawn(TileObjectType<T> type, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(type.constructor, chunk, nbt);
-	}
-
-	public static <T extends TileObject> T spawn(TileObjectConstructor<T> constructor, ServerChunk chunk,
-			INBTTagCompound nbt) {
+			CompoundTag nbt) {
 		T t = constructor.get(chunk.world);
 		t.load(nbt);
 		chunk.addTileObject(t);
 		return t;
 	}
 
-	public static TileObject spawn(int id, Location loc, NBTTagCompound nbt) {
+	public static TileObject spawn(int id, Location loc, CompoundTag nbt) {
 		return spawn(AiostRegistry.TILE_OBJECTS.get(id).constructor, loc, nbt);
 	}
 
-	public static <T extends TileObject> T spawn(TileObjectType<T> type, Location loc, NBTTagCompound nbt) {
+	public static <T extends TileObject> T spawn(TileObjectType<T> type, Location loc, CompoundTag nbt) {
 		return spawn(type.constructor, loc, nbt);
 	}
 
-	public static <T extends TileObject> T spawn(TileObjectConstructor<T> constructor, Location loc,
-			NBTTagCompound nbt) {
-		return spawn(constructor, loc, new NBTCompoundWrapper(nbt));
-	}
-
-	public static TileObject spawn(int id, Location loc, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.TILE_OBJECTS.get(id).constructor, loc, nbt);
-	}
-
-	public static <T extends TileObject> T spawn(TileObjectType<T> type, Location loc, INBTTagCompound nbt) {
-		return spawn(type.constructor, loc, nbt);
-	}
-
-	public static <T extends TileObject> T spawn(TileObjectConstructor<T> constructor, Location loc,
-			INBTTagCompound nbt) {
+	public static <T extends TileObject> T spawn(TileObjectConstructor<T> constructor, Location loc, CompoundTag nbt) {
 		ServerWorld world = ServerWorld.getByWorld(loc.getWorld());
 		T t = constructor.get(world);
 		t.load(nbt);

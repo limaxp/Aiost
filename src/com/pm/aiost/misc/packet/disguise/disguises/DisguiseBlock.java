@@ -1,5 +1,6 @@
 package com.pm.aiost.misc.packet.disguise.disguises;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.bukkit.Location;
@@ -10,20 +11,21 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.dataWatcher.AiostDataWatcherObject;
-import com.pm.aiost.entity.dataWatcher.AiostDataWatcherRegistry;
-import com.pm.aiost.entity.dataWatcher.EmptyDataWatcher;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.utils.nms.NMS;
 
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
+
 public class DisguiseBlock implements Disguise {
 
-	public static final EmptyDataWatcher DATA_WATCHER;
+	public static final List<DataValue<?>> DATA_WATCHER;
 
 	static {
-		DATA_WATCHER = new EmptyDataWatcher();
-		DATA_WATCHER.register(new AiostDataWatcherObject<>(5, AiostDataWatcherRegistry.BOOLEAN), true);
+		DATA_WATCHER = Arrays
+				.asList(DataValue.create(new EntityDataAccessor<Boolean>(5, EntityDataSerializers.BOOLEAN), true));
 	}
 
 	protected int blockId;
@@ -52,8 +54,8 @@ public class DisguiseBlock implements Disguise {
 		Location loc = player.getLocation();
 		int id = player.getEntityId();
 		packets.add(PacketFactory.packetEntitySpawn(id, player.getUniqueId(), loc.getX(), loc.getY(), loc.getZ(),
-				loc.getYaw(), loc.getPitch(), AiostEntityTypes.FALLING_BLOCK, blockId, NMS.EMTPY_VEC_3D));
-		packets.add(PacketFactory.packetEntityMetadata(id, DATA_WATCHER, true));
+				loc.getYaw(), loc.getPitch(), AiostEntityTypes.FALLING_BLOCK, blockId));
+		packets.add(PacketFactory.packetEntityMetadata(id, DATA_WATCHER));
 	}
 
 	@Override
@@ -78,7 +80,7 @@ public class DisguiseBlock implements Disguise {
 	}
 
 	public void setMaterial(Material material) {
-		this.blockId = NMS.getCombinedId(NMS.getBlock(material));
+		this.blockId = NMS.getCombinedId(NMS.getBlock(material).defaultBlockState());
 	}
 
 	public Material getMaterial() {

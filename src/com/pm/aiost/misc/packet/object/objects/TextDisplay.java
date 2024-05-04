@@ -8,19 +8,20 @@ import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.entity.dataWatcher.EmptyDataWatcher;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.utils.LocationHelper;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
 
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
+
 public class TextDisplay extends Hologram {
 
-	protected EmptyDataWatcher[] dataWatchers;
+	protected List<DataValue<?>>[] dataWatchers;
 	private final List<Player> playerList = new UnorderedIdentityArrayList<Player>();
 
 	public TextDisplay(ServerWorld world) {
@@ -29,17 +30,17 @@ public class TextDisplay extends Hologram {
 
 	public TextDisplay(ServerWorld world, String text) {
 		super(world, text);
-		dataWatchers = new EmptyDataWatcher[1];
+		dataWatchers = new List[1];
 	}
 
 	public TextDisplay(ServerWorld world, String[] text) {
 		super(world, text);
-		dataWatchers = new EmptyDataWatcher[text.length];
+		dataWatchers = new List[text.length];
 	}
 
 	public TextDisplay(ServerWorld world, Collection<String> text) {
 		super(world, text);
-		dataWatchers = new EmptyDataWatcher[text.size()];
+		dataWatchers = new List[text.size()];
 	}
 
 	@Override
@@ -78,28 +79,29 @@ public class TextDisplay extends Hologram {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		dataWatchers = new EmptyDataWatcher[text.length];
+		dataWatchers = new List[text.length];
 	}
 
 	@Override
 	public Object createMetaDataPacket(int index, String text) {
-		EmptyDataWatcher dataWatcher = createDataWatcher(text);
+		List<DataValue<?>> dataWatcher = createDataWatcher(text);
 		dataWatchers[index] = dataWatcher;
 		return super.createMetaDataPacket(index, text);
 	}
 
 	public void setText(int index, String text) {
 		this.text[index] = text;
-		dataWatchers[index].set(NAME_WATCHER, Optional.ofNullable(NMS.createChatMessage(text)));
+		dataWatchers[index].set(1, DataValue.create(NAME_WATCHER, Optional.ofNullable(NMS.createChatComponent(text))));
 		updateText(index);
 	}
 
 	public void setText(String[] text) {
 		this.text = text;
 		for (int i = 0; i < text.length; i++)
-			dataWatchers[i].set(NAME_WATCHER, Optional.ofNullable(NMS.createChatMessage(text[i])));
+			dataWatchers[i].set(1,
+					DataValue.create(NAME_WATCHER, Optional.ofNullable(NMS.createChatComponent(text[i]))));
 		updateText();
 	}
 
@@ -107,7 +109,8 @@ public class TextDisplay extends Hologram {
 		this.text = text;
 		int j = index;
 		for (int i = 0; i < text.length; i++)
-			dataWatchers[j++].set(NAME_WATCHER, Optional.ofNullable(NMS.createChatMessage(text[i])));
+			dataWatchers[j++].set(1,
+					DataValue.create(NAME_WATCHER, Optional.ofNullable(NMS.createChatComponent(text[i]))));
 		updateFrom(index);
 	}
 
@@ -115,7 +118,7 @@ public class TextDisplay extends Hologram {
 		int length = dataWatchers.length;
 		Object[] packets = new Object[length];
 		for (int i = index; i < length; i++)
-			packets[i] = PacketFactory.packetEntityMetadata(id + i, dataWatchers[i], true);
+			packets[i] = PacketFactory.packetEntityMetadata(id + i, dataWatchers[i]);
 		PacketSender.send_(playerList, packets);
 	}
 
@@ -124,7 +127,7 @@ public class TextDisplay extends Hologram {
 	}
 
 	public void updateText(int index) {
-		PacketSender.send(playerList, PacketFactory.packetEntityMetadata(id + index, dataWatchers[index], true));
+		PacketSender.send(playerList, PacketFactory.packetEntityMetadata(id + index, dataWatchers[index]));
 	}
 
 	@Override

@@ -16,12 +16,9 @@ import com.pm.aiost.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class Effect implements EventHandler {
 
@@ -113,14 +110,14 @@ public abstract class Effect implements EventHandler {
 			condition = effect.condition;
 	}
 
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		actions = nbt.getByteArray("actions");
 		condition = nbt.getByte("condition");
 	}
 
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setByteArray("actions", actions);
-		nbt.setByte("condition", condition);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putByteArray("actions", actions);
+		nbt.putByte("condition", condition);
 		return nbt;
 	}
 
@@ -134,33 +131,13 @@ public abstract class Effect implements EventHandler {
 		return EMPTY;
 	}
 
-	public static Effect loadNBT(INBTTagCompound nbt) {
+	public static Effect loadNBT(CompoundTag nbt) {
 		return EffectBuilder.createEffect(nbt);
 	}
 
-	public static Effect loadNBT(NBTCompound nbt) {
-		return EffectBuilder.createEffect((INBTTagCompound) nbt);
-	}
-
-	public static Effect loadNBT(NBTTagCompound nbt) {
-		return EffectBuilder.createEffect(nbt);
-	}
-
-	public static INBTTagCompound saveNBT(Effect effect, INBTTagCompound nbt) {
-		nbt.setString("effectId", effect.getName());
+	public static CompoundTag saveNBT(Effect effect, CompoundTag nbt) {
+		nbt.putString("effectId", effect.getName());
 		effect.save(nbt);
-		return nbt;
-	}
-
-	public static INBTTagCompound saveNBT(Effect effect, NBTCompound nbt) {
-		nbt.setString("effectId", effect.getName());
-		effect.save(nbt);
-		return nbt;
-	}
-
-	public static NBTTagCompound saveNBT(Effect effect, NBTTagCompound nbt) {
-		nbt.setString("effectId", effect.getName());
-		effect.save(new NBTCompoundWrapper(nbt));
 		return nbt;
 	}
 

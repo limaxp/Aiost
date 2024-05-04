@@ -25,9 +25,9 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class ThrowItemEffect extends Effect {
 
@@ -81,7 +81,7 @@ public class ThrowItemEffect extends Effect {
 			float knockback, Effect effect) {
 		itemStack = itemStack.clone();
 		itemStack.setAmount(1);
-		LaunchItemEffect.launchItem(entity, itemStack, velocityMultiplier, damage, knockback, effect);
+//		LaunchItemEffect.launchItem(entity, itemStack, velocityMultiplier, damage, knockback, effect);
 	}
 
 	@Override
@@ -124,7 +124,7 @@ public class ThrowItemEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 		damage = nbt.getFloat("damage");
@@ -133,12 +133,12 @@ public class ThrowItemEffect extends Effect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
-		nbt.setFloat("damage", damage);
-		nbt.setFloat("knockback", knockback);
-		nbt.set("effect", Effect.saveNBT(effect, new NBTCompound()));
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putFloat("damage", damage);
+		nbt.putFloat("knockback", knockback);
+		nbt.put("effect", Effect.saveNBT(effect, new CompoundTag()));
 		return nbt;
 	}
 

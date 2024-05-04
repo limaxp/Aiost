@@ -13,8 +13,9 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
 import com.pm.aiost.misc.particleEffect.particle.particles.Particle;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public interface IParticle {
 
@@ -42,9 +43,9 @@ public interface IParticle {
 
 	public void load(ConfigurationSection particleSection);
 
-	public void load(INBTTagCompound nbt);
+	public void load(CompoundTag nbt);
 
-	public void save(INBTTagCompound nbt);
+	public void save(CompoundTag nbt);
 
 	public default IParticle init() {
 		return this;

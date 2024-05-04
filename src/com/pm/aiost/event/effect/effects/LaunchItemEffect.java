@@ -9,14 +9,9 @@ import java.util.function.Supplier;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.entity.projectile.CustomProjectile;
-import com.pm.aiost.entity.projectile.ProjectileHelper;
-import com.pm.aiost.entity.projectile.projectiles.ItemProjectile;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.effect.EffectTypes;
@@ -30,9 +25,9 @@ import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class LaunchItemEffect extends SimpleLivingEntityEffect {
 
@@ -62,19 +57,19 @@ public class LaunchItemEffect extends SimpleLivingEntityEffect {
 
 	@Override
 	public void runEffect(LivingEntity entity) {
-		launchItem(entity, itemStack, velocityMultiplier, damage, knockback, effect);
+//		launchItem(entity, itemStack, velocityMultiplier, damage, knockback, effect);
 	}
 
-	public static ItemProjectile launchItem(LivingEntity entity, ItemStack itemStack, float velocityMultiplier,
-			float damage, float knockback, Effect effect) {
-		ItemProjectile projectile = new ItemProjectile(((CraftLivingEntity) entity).getHandle(),
-				CraftItemStack.asNMSCopy(itemStack));
-		projectile.setDamage(damage);
-		projectile.setKnockback(knockback);
-		projectile.setEffect(effect);
-		ProjectileHelper.launchProjectile(entity, (CustomProjectile) projectile, velocityMultiplier);
-		return projectile;
-	}
+//	public static ItemProjectile launchItem(LivingEntity entity, ItemStack itemStack, float velocityMultiplier,
+//			float damage, float knockback, Effect effect) {
+//		ItemProjectile projectile = new ItemProjectile(((CraftLivingEntity) entity).getHandle(),
+//				CraftItemStack.asNMSCopy(itemStack));
+//		projectile.setDamage(damage);
+//		projectile.setKnockback(knockback);
+//		projectile.setEffect(effect);
+//		ProjectileHelper.launchProjectile(entity, (CustomProjectile) projectile, velocityMultiplier);
+//		return projectile;
+//	}
 
 	@Override
 	public boolean equals(Effect effect) {
@@ -121,7 +116,7 @@ public class LaunchItemEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		itemStack = NBTHelper.loadItem(nbt.getCompound("item"));
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
@@ -131,13 +126,13 @@ public class LaunchItemEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.set("item", NBTHelper.saveItem(new NBTCompound(), itemStack));
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
-		nbt.setFloat("damage", damage);
-		nbt.setFloat("knockback", knockback);
-		nbt.set("effect", Effect.saveNBT(effect, new NBTCompound()));
+		nbt.put("item", NBTHelper.saveItem(new CompoundTag(), itemStack));
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putFloat("damage", damage);
+		nbt.putFloat("knockback", knockback);
+		nbt.put("effect", Effect.saveNBT(effect, new CompoundTag()));
 		return nbt;
 	}
 

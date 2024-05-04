@@ -20,8 +20,9 @@ import com.pm.aiost.misc.menu.menus.request.creation.CreationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class TimedAuraEffect extends AuraEffect {
 
@@ -81,15 +82,15 @@ public class TimedAuraEffect extends AuraEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		duration = nbt.getInt("duration");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setInt("duration", duration);
+		nbt.putInt("duration", duration);
 		return nbt;
 	}
 

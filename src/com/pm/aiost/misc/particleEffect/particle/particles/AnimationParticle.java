@@ -13,9 +13,9 @@ import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class AnimationParticle implements IParticle {
 
@@ -39,15 +39,15 @@ public abstract class AnimationParticle implements IParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		particle = ParticleBuilder.create(nbt.getCompound("particle"));
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
-		INBTTagCompound particleNbt;
-		ParticleBuilder.save(particle, particleNbt = new NBTCompound());
-		nbt.set("particle", particleNbt);
+	public void save(CompoundTag nbt) {
+		CompoundTag particleNbt;
+		ParticleBuilder.save(particle, particleNbt = new CompoundTag());
+		nbt.put("particle", particleNbt);
 	}
 
 	public void setParticle(IParticle particle) {

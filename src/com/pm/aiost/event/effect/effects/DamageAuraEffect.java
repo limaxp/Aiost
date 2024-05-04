@@ -23,8 +23,9 @@ import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class DamageAuraEffect extends Effect {
 
@@ -98,7 +99,7 @@ public class DamageAuraEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		particle = ParticleBuilder.create(nbt);
 		damage = nbt.getDouble("damage");
@@ -106,11 +107,11 @@ public class DamageAuraEffect extends Effect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		ParticleBuilder.save(particle, nbt);
-		nbt.setDouble("damage", damage);
-		nbt.setDouble("range", range);
+		nbt.putDouble("damage", damage);
+		nbt.putDouble("range", range);
 		return nbt;
 	}
 

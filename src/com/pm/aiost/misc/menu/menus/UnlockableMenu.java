@@ -98,13 +98,13 @@ public class UnlockableMenu extends LazyInventoryMenu {
 		lore.set(0, DEACTIVATE_TEXT);
 		lore.set(lore.size() - 1, ACTIVATED_TEXT);
 		im.setLore(lore);
-		im.addEnchant(Enchantment.DIG_SPEED, 1, false);
+		im.addEnchant(Enchantment.EFFICIENCY, 1, false);
 		im.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		clone.setItemMeta(im);
 		return clone;
 	}
 
 	protected static boolean isActivate(ItemStack is) {
-		return is.getItemMeta().getEnchantLevel(Enchantment.DIG_SPEED) == 1;
+		return is.getItemMeta().getEnchantLevel(Enchantment.EFFICIENCY) == 1;
 	}
 }

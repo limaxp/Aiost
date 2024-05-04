@@ -9,7 +9,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -23,8 +22,9 @@ import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.CreativeModeTab;
-import net.minecraft.server.v1_15_R1.Item;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
 
 public class ItemMenu {
 
@@ -41,7 +41,7 @@ public class ItemMenu {
 	}
 
 	private static void createMainMenu() {
-		menu = new ArrayInventoryMenu(BOLD + "Items", CreativeModeTab.a.length, true);
+		menu = new ArrayInventoryMenu(BOLD + "Items", CreativeModeTabs.allTabs().size(), true);
 		menu.setInventoryClickCallback(ItemMenu::mainMenuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
 	}
@@ -57,7 +57,8 @@ public class ItemMenu {
 		groupMenus = new InventoryMenu[size];
 		ItemStack[] tabIcons = getTabIcons();
 		for (int i = 0; i < size; i++) {
-			String name = creativeTabs.get(i).c().replace("_", " ");
+//			String name = creativeTabs.get(i).c().replace("_", " ");
+			String name = creativeTabs.get(i).row().name().replace("_", " ");
 			List<String> lore = Arrays.asList(GRAY + "Click to view " + name);
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			groupMenus[i] = createItemMenu(items.get(i), name);
@@ -68,12 +69,7 @@ public class ItemMenu {
 	}
 
 	private static List<CreativeModeTab> initTabList() {
-		CreativeModeTab[] tabs = CreativeModeTab.a;
-		int size = tabs.length;
-		List<CreativeModeTab> tabList = new ArrayList<CreativeModeTab>(size);
-		for (int i = 0; i < size; i++)
-			tabList.add(tabs[i]);
-		return tabList;
+		return CreativeModeTabs.allTabs();
 	}
 
 	private static List<List<ItemStack>> initTabItemLists(int size) {
@@ -88,13 +84,8 @@ public class ItemMenu {
 		List<ItemStack> searchList = items.get(searchIndex);
 		try {
 			while (iterator.hasNext()) {
-				Item item = iterator.next();
-				CreativeModeTab tab = item.r();
-				if (tab == null)
-					continue;
-				int id = (int) NMS.CREATIVEMODETAB_ID_GET.invoke(tab);
-				ItemStack is = CraftItemStack.asCraftMirror(new net.minecraft.server.v1_15_R1.ItemStack(item));
-				items.get(id).add(is);
+				ItemStack is = NMS.getBukkit(new net.minecraft.world.item.ItemStack(iterator.next()));
+				items.get(is.getType().getCreativeCategory().ordinal()).add(is);
 				searchList.add(is);
 			}
 		} catch (Throwable e) {
@@ -122,7 +113,8 @@ public class ItemMenu {
 	private static void remove(List<CreativeModeTab> creativeTabs, List<List<ItemStack>> items, String name) {
 		int size = creativeTabs.size();
 		for (int i = 0; i < size; i++) {
-			if (creativeTabs.get(i).c() == name) {
+//			if (creativeTabs.get(i).c() == name) {
+			if (creativeTabs.get(i).row().name() == name) {
 				creativeTabs.remove(i);
 				items.remove(i);
 				return;
@@ -146,7 +138,8 @@ public class ItemMenu {
 	private static int getIndex(List<CreativeModeTab> creativeTabs, String name) {
 		int size = creativeTabs.size();
 		for (int i = 0; i < size; i++)
-			if (creativeTabs.get(i).c() == name)
+//			if (creativeTabs.get(i).c() == name)
+			if (creativeTabs.get(i).row().name() == name)
 				return i;
 		return -1;
 	}

@@ -18,8 +18,9 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.Geometric;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class VerticalRing extends Ring {
 
@@ -66,15 +67,15 @@ public class VerticalRing extends Ring {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		yaw = nbt.getFloat("yaw");
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setFloat("yaw", yaw);
+		nbt.putFloat("yaw", yaw);
 	}
 
 	@Override

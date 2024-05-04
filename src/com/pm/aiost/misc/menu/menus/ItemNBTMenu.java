@@ -24,7 +24,7 @@ import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class ItemNBTMenu {
 
@@ -128,7 +128,7 @@ public class ItemNBTMenu {
 		return menu;
 	}
 
-	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<NBTTagCompound> consumer) {
+	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<CompoundTag> consumer) {
 		CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class);
 		createItemMenu.setItem(NBTHelper.modifyNBT(NMS.getNMS(createItemMenu.getItem()), consumer));
 	}

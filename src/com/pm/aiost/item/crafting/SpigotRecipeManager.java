@@ -29,10 +29,10 @@ public class SpigotRecipeManager {
 
 	private static void initRecipes() {
 		List<Recipe> recipes = new ArrayList<Recipe>();
+		SpigotRecipeManager.recipes = recipes;
 		Iterator<Recipe> iterator = Bukkit.getServer().recipeIterator();
 		while (iterator.hasNext())
 			recipes.add(iterator.next());
-		SpigotRecipeManager.recipes = recipes;
 	}
 
 	public static void updateRecipes() {

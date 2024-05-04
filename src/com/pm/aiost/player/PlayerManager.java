@@ -11,8 +11,6 @@ import javax.annotation.Nonnull;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
@@ -31,6 +29,9 @@ import com.pm.aiost.server.request.ServerRequest;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ChunkWatcher;
 import com.pm.aiost.server.world.region.IRegion;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class PlayerManager {
 

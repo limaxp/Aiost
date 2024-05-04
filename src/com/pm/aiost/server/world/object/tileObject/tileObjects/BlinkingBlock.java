@@ -14,13 +14,14 @@ import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.object.TickingObject;
 import com.pm.aiost.server.world.object.tileObject.TileObject;
 import com.pm.aiost.server.world.object.tileObject.TileObjectType;
 import com.pm.aiost.server.world.object.tileObject.TileObjectTypes;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class BlinkingBlock extends TileObject implements TickingObject {
 
@@ -45,17 +46,17 @@ public class BlinkingBlock extends TileObject implements TickingObject {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		material = Material.valueOf(nbt.getString("material"));
 		delay = nbt.getInt("delay");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setString("material", material.name());
-		nbt.setInt("delay", delay);
+		nbt.putString("material", material.name());
+		nbt.putInt("delay", delay);
 		return nbt;
 	}
 

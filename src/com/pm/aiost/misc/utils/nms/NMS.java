@@ -1,7 +1,7 @@
 package com.pm.aiost.misc.utils.nms;
 
 import java.lang.invoke.MethodHandle;
-import java.util.Map;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -11,91 +11,61 @@ import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.craftbukkit.v1_15_R1.CraftEquipmentSlot;
-import org.bukkit.craftbukkit.v1_15_R1.CraftParticle;
-import org.bukkit.craftbukkit.v1_15_R1.CraftServer;
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_15_R1.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_15_R1.block.data.CraftBlockData;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftHumanEntity;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftInventoryPlayer;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftRecipe;
-import org.bukkit.craftbukkit.v1_15_R1.util.CraftMagicNumbers;
-import org.bukkit.craftbukkit.v1_15_R1.util.CraftNamespacedKey;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.HumanEntity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.craftbukkit.v1_20_R4.CraftEquipmentSlot;
+import org.bukkit.craftbukkit.v1_20_R4.CraftParticle;
+import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.block.CraftBlock;
+import org.bukkit.craftbukkit.v1_20_R4.block.data.CraftBlockData;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftRecipe;
+import org.bukkit.craftbukkit.v1_20_R4.profile.CraftPlayerProfile;
+import org.bukkit.craftbukkit.v1_20_R4.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_20_R4.util.CraftNamespacedKey;
 import org.bukkit.inventory.Recipe;
 import org.bukkit.inventory.RecipeChoice;
+import org.bukkit.profile.PlayerProfile;
 
+import com.google.common.base.Preconditions;
+import com.mojang.authlib.GameProfile;
+import com.mojang.brigadier.LiteralMessage;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.reflection.Reflection;
 import com.pm.aiost.misc.utils.reflection.ReflectionUtils;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.Block;
-import net.minecraft.server.v1_15_R1.BlockPosition;
-import net.minecraft.server.v1_15_R1.ChatMessage;
-import net.minecraft.server.v1_15_R1.CreativeModeTab;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityHuman;
-import net.minecraft.server.v1_15_R1.EntityInsentient;
-import net.minecraft.server.v1_15_R1.EntityLiving;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.EntitySpider;
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.EnumDirection;
-import net.minecraft.server.v1_15_R1.EnumItemSlot;
-import net.minecraft.server.v1_15_R1.IBlockData;
-import net.minecraft.server.v1_15_R1.IRecipe;
-import net.minecraft.server.v1_15_R1.Item;
-import net.minecraft.server.v1_15_R1.ItemArmor;
-import net.minecraft.server.v1_15_R1.ItemAxe;
-import net.minecraft.server.v1_15_R1.ItemElytra;
-import net.minecraft.server.v1_15_R1.ItemPickaxe;
-import net.minecraft.server.v1_15_R1.ItemStack;
-import net.minecraft.server.v1_15_R1.MinecraftKey;
-import net.minecraft.server.v1_15_R1.MinecraftServer;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
-import net.minecraft.server.v1_15_R1.Particle;
-import net.minecraft.server.v1_15_R1.ParticleParam;
-import net.minecraft.server.v1_15_R1.PlayerInventory;
-import net.minecraft.server.v1_15_R1.RecipeItemStack;
-import net.minecraft.server.v1_15_R1.ToolMaterial;
-import net.minecraft.server.v1_15_R1.Vec3D;
-import net.minecraft.server.v1_15_R1.World;
-import net.minecraft.server.v1_15_R1.WorldServer;
+import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ElytraItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.BlockState;
 
-public class NMS extends NMSUtils {
-
-	public static final Vec3D EMTPY_VEC_3D = Vec3D.a;
-
-	public static final Class<?> ENTITY_CLASS;
-	public static final Class<?> ENTITY_LIVING_CLASS;
-	public static final Class<?> ENTITY_SPIDER_CLASS;
-	public static final Class<?> PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CLASS;
-	public static final Class<?> PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CLASS;
-	public static final Class<?> CREATIVE_MODE_TAB_CLASS;
-	public static final Class<?> ITEM_PICKAXE_CLASS;
-	public static final Class<?> ITEM_AXE_CLASS;
-	public static final Class<?> TOOL_MATERIAL_CLASS;
-	public static final Class<?> ITEM_INFO_CLASS;
-	public static final Class<?> CRAFT_META_SKULL_CLASS;
-	private static final Class<?> WORLD_SERVER_CLASS;
-	private static final Class<?> CHUNK_PROVIDER_SERVER_CLASS;
-	private static final Class<?> PLAYER_CHUNK_MAP_CLASS;
-	private static final Class<?> ENTITY_TRACKER_CLASS;
-	private static final Class<?> ENTITY_TRACKER_ENTRY_CLASS;
+public class NMS {
 
 	public static final MethodHandle ENTITYLIVING_JUMPING_GET;
 
@@ -104,81 +74,38 @@ public class NMS extends NMSUtils {
 	public static final MethodHandle ENTITY_RANDOM_GET;
 	public static final MethodHandle ENTITY_ENTITY_COUNT_GET;
 
-	public static final MethodHandle PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CONSTRUCTOR;
-	public static final MethodHandle PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CONSTRUCTOR;
-
 	public static final MethodHandle CREATIVEMODETAB_ID_GET;
-
-	public static final MethodHandle ITEM_PICKAXE_CONSTRUCTOR;
-	public static final MethodHandle ITEM_AXE_CONSTRUCTOR;
-
-	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET;
-	private static final MethodHandle CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET;
-	private static final MethodHandle PLAYERCHUNKMAP_TRACKED_ENTITIES_GET;
-	private static final MethodHandle ENTITYTRACKER_TRACKER_ENTRY_GET;
-	private static final MethodHandle ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET;
+//
+//	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET;
+//	private static final MethodHandle CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET;
+//	private static final MethodHandle PLAYERCHUNKMAP_TRACKED_ENTITIES_GET;
+//	private static final MethodHandle ENTITYTRACKER_TRACKER_ENTRY_GET;
+//	private static final MethodHandle ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET;
 
 	static {
 		try {
-			ENTITY_CLASS = NMSUtils.getNMSClass("Entity");
-			ENTITY_LIVING_CLASS = NMSUtils.getNMSClass("EntityLiving");
-			ENTITY_SPIDER_CLASS = NMSUtils.getNMSClass("EntitySpider");
-			PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CLASS = NMSUtils
-					.getNMSClass("EntitySpider$PathfinderGoalSpiderMeleeAttack");
-			PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CLASS = NMSUtils
-					.getNMSClass("EntitySpider$PathfinderGoalSpiderNearestAttackableTarget");
-			CREATIVE_MODE_TAB_CLASS = NMSUtils.getNMSClass("CreativeModeTab");
-			ITEM_PICKAXE_CLASS = NMSUtils.getNMSClass("ItemPickaxe");
-			ITEM_AXE_CLASS = NMSUtils.getNMSClass("ItemAxe");
-			TOOL_MATERIAL_CLASS = NMSUtils.getNMSClass("ToolMaterial");
-			ITEM_INFO_CLASS = NMSUtils.getNMSClass("Item$Info");
-			CRAFT_META_SKULL_CLASS = NMSUtils.getCraftBukkitClass("inventory.CraftMetaSkull");
-			WORLD_SERVER_CLASS = NMSUtils.getNMSClass("WorldServer");
-			CHUNK_PROVIDER_SERVER_CLASS = NMSUtils.getNMSClass("ChunkProviderServer");
-			PLAYER_CHUNK_MAP_CLASS = NMSUtils.getNMSClass("PlayerChunkMap");
-			ENTITY_TRACKER_CLASS = NMSUtils.getNMSClass("PlayerChunkMap$EntityTracker");
-			ENTITY_TRACKER_ENTRY_CLASS = NMSUtils.getNMSClass("EntityTrackerEntry");
 
-			ENTITYLIVING_JUMPING_GET = ReflectionUtils.unreflectGetter(ENTITY_LIVING_CLASS, "jumping");
+			ENTITYLIVING_JUMPING_GET = ReflectionUtils.unreflectGetter(LivingEntity.class, "jumping");
 
-			ENTITY_BUKKITENTITY_GET = ReflectionUtils.unreflectGetter(ENTITY_CLASS, "bukkitEntity");
-			ENTITY_BUKKITENTITY_SET = ReflectionUtils.unreflectSetter(ENTITY_CLASS, "bukkitEntity");
-			ENTITY_RANDOM_GET = ReflectionUtils.unreflectGetter(ENTITY_CLASS, "random");
-			ENTITY_ENTITY_COUNT_GET = ReflectionUtils.unreflectGetter(ENTITY_CLASS, "entityCount");
+			ENTITY_BUKKITENTITY_GET = ReflectionUtils.unreflectGetter(Entity.class, "bukkitEntity");
+			ENTITY_BUKKITENTITY_SET = ReflectionUtils.unreflectSetter(Entity.class, "bukkitEntity");
+			ENTITY_RANDOM_GET = ReflectionUtils.unreflectGetter(Entity.class, "random");
+			ENTITY_ENTITY_COUNT_GET = ReflectionUtils.unreflectGetter(Entity.class, "entityCount");
 
-			PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CONSTRUCTOR = ReflectionUtils
-					.unreflectConstructor(PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CLASS, ENTITY_SPIDER_CLASS);
-			PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(
-					PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CLASS, ENTITY_SPIDER_CLASS, Class.class);
+			CREATIVEMODETAB_ID_GET = ReflectionUtils.unreflectGetter(CreativeModeTab.class, "o");
 
-			CREATIVEMODETAB_ID_GET = ReflectionUtils.unreflectGetter(CREATIVE_MODE_TAB_CLASS, "o");
-
-			ITEM_PICKAXE_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ITEM_PICKAXE_CLASS, TOOL_MATERIAL_CLASS,
-					int.class, float.class, ITEM_INFO_CLASS);
-			ITEM_AXE_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ITEM_AXE_CLASS, TOOL_MATERIAL_CLASS,
-					float.class, float.class, ITEM_INFO_CLASS);
-
-			WORLDSERVER_CHUNK_PROVIDER_GET = ReflectionUtils.unreflectMethod(WORLD_SERVER_CLASS, "getChunkProvider");
-			CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET = ReflectionUtils.unreflectGetter(CHUNK_PROVIDER_SERVER_CLASS,
-					"playerChunkMap");
-			PLAYERCHUNKMAP_TRACKED_ENTITIES_GET = ReflectionUtils.unreflectGetter(PLAYER_CHUNK_MAP_CLASS,
-					"trackedEntities");
-			ENTITYTRACKER_TRACKER_ENTRY_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_CLASS, "trackerEntry");
-			ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_ENTRY_CLASS,
-					"trackedPlayers");
-		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException | IllegalAccessException
-				| NoSuchMethodException e) {
+//			WORLDSERVER_CHUNK_PROVIDER_GET = ReflectionUtils.unreflectMethod(WORLD_SERVER_CLASS, "getChunkProvider");
+//			CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET = ReflectionUtils.unreflectGetter(CHUNK_PROVIDER_SERVER_CLASS,
+//					"playerChunkMap");
+//			PLAYERCHUNKMAP_TRACKED_ENTITIES_GET = ReflectionUtils.unreflectGetter(PLAYER_CHUNK_MAP_CLASS,
+//					"trackedEntities");
+//			ENTITYTRACKER_TRACKER_ENTRY_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_CLASS, "trackerEntry");
+//			ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_ENTRY_CLASS,
+//					"trackedPlayers");
+		} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
 			Logger.err("NMS: Error on nms field reflection!", e);
 			throw new RuntimeException();
 		}
-	}
-
-	public static Class<?> getNMSClass(String name) {
-		return Reflection.getClass(NET_MINECRAFT_SERVER_PACKAGE_DOT + name);
-	}
-
-	public static Class<?> getCraftBukkitClass(String name) {
-		return Reflection.getClass(CRAFTBUKKIT_SERVER_PACKAGE_DOT + name);
 	}
 
 	public static ItemStack getNMS(org.bukkit.inventory.ItemStack is) {
@@ -197,59 +124,63 @@ public class NMS extends NMSUtils {
 		return entity.getBukkitEntity();
 	}
 
-	public static EntityLiving getNMS(LivingEntity entity) {
+	public static LivingEntity getNMS(org.bukkit.entity.LivingEntity entity) {
 		return ((CraftLivingEntity) entity).getHandle();
 	}
 
-	public static LivingEntity getBukkit(EntityLiving entity) {
-		return (LivingEntity) entity.getBukkitEntity();
+	public static org.bukkit.entity.LivingEntity getBukkit(LivingEntity entity) {
+		return (org.bukkit.entity.LivingEntity) entity.getBukkitEntity();
 	}
 
-	public static EntityHuman getNMS(HumanEntity entity) {
-		return ((CraftHumanEntity) entity).getHandle();
-	}
-
-	public static HumanEntity getBukkit(EntityHuman entity) {
-		return entity.getBukkitEntity();
-	}
-
-	public static WorldServer getNMS(org.bukkit.World world) {
-		return ((CraftWorld) world).getHandle();
-	}
-
-	public static org.bukkit.World getBukkit(WorldServer world) {
-		return world.getWorld();
-	}
-
-	public static org.bukkit.World getBukkit(World world) {
-		return world.getWorld();
-	}
-
-	public static EntityPlayer getNMS(Player player) {
+	public static net.minecraft.server.level.ServerPlayer getNMS(org.bukkit.entity.Player player) {
 		return ((CraftPlayer) player).getHandle();
 	}
 
-	public static Player getBukkit(EntityPlayer player) {
-		return player.getBukkitEntity();
+	public static org.bukkit.entity.Player getBukkit(Player player) {
+		return (org.bukkit.entity.Player) player.getBukkitEntity();
 	}
 
-	public static ParticleParam getNMS(org.bukkit.Particle particle) {
-		return CraftParticle.toNMS(particle);
+	public static ServerLevel getNMS(org.bukkit.World world) {
+		return ((CraftWorld) world).getHandle();
 	}
 
-	public static <T> ParticleParam getNMS(org.bukkit.Particle particle, T obj) {
-		return CraftParticle.toNMS(particle, obj);
+	public static org.bukkit.World getBukkit(ServerLevel world) {
+		return world.getWorld();
 	}
 
-	public static org.bukkit.Particle getBukkit(ParticleParam particle) {
-		return CraftParticle.toBukkit(particle);
+	public static MinecraftServer getMinecraftServer() {
+		return ((CraftServer) Bukkit.getServer()).getServer();
 	}
 
-	public static org.bukkit.Particle getBukkit(Particle<ParticleParam> particle) {
-		return CraftParticle.toBukkit(particle);
+	public static int getMinecraftServerTick() {
+		return MinecraftServer.currentTick;
 	}
 
-	public static IBlockData getNMS(org.bukkit.block.Block block) {
+	public static GameProfile getNMS(PlayerProfile profile) {
+		return ((CraftPlayerProfile) profile).buildGameProfile();
+	}
+
+	public static PlayerProfile getBukkit(GameProfile profile) {
+		return new CraftPlayerProfile(profile);
+	}
+
+	public static ParticleType<?> getNMS(org.bukkit.Particle particle) {
+		return CraftParticle.bukkitToMinecraft(particle);
+	}
+
+	public static <T> ParticleOptions getNMS(org.bukkit.Particle particle, T obj) {
+		return CraftParticle.createParticleParam(particle, obj);
+	}
+
+	public static org.bukkit.Particle getBukkit(ParticleType<?> particle) {
+		return CraftParticle.minecraftToBukkit(particle);
+	}
+
+	public static org.bukkit.Particle getBukkit(ParticleOptions particle) {
+		return CraftParticle.minecraftToBukkit(particle.getType());
+	}
+
+	public static BlockState getNMS(org.bukkit.block.Block block) {
 		return ((CraftBlock) block).getNMS();
 	}
 
@@ -259,79 +190,92 @@ public class NMS extends NMSUtils {
 //		return ((BlockData) CraftBlockData.fromData(block.getBlockData())).;
 //	}
 
-	public static IBlockData getNMS(BlockData block) {
+	public static BlockState getNMS(BlockData block) {
 		return ((CraftBlockData) block).getState();
 	}
 
-	public static BlockData getBukkit(IBlockData block) {
+	public static BlockData getBukkit(BlockState block) {
 		return CraftBlockData.fromData(block);
 	}
 
-	public static EnumItemSlot getNMS(EquipmentSlot slot) {
+	public static int getCombinedId(BlockState block) {
+		return Block.getId(block);
+	}
+
+//	public static int getCombinedId(Block block) {
+//		return Block.getCombinedId(block.getBlockData());
+//	}
+
+	public static BlockState getByCombinedId(int id) {
+		return Block.stateById(id);
+	}
+
+	public static Block getBlock(Material material) {
+		return CraftMagicNumbers.getBlock(material);
+	}
+
+	public static BlockState getBlock(Material material, byte data) {
+		return CraftMagicNumbers.getBlock(material, data);
+	}
+
+	public static EquipmentSlot getNMS(org.bukkit.inventory.EquipmentSlot slot) {
 		return CraftEquipmentSlot.getNMS(slot);
 	}
 
-	public static EquipmentSlot getBukkit(EnumItemSlot slot) {
+	public static org.bukkit.inventory.EquipmentSlot getBukkit(EquipmentSlot slot) {
 		return CraftEquipmentSlot.getSlot(slot);
 	}
 
-	public static MinecraftKey getNMS(NamespacedKey key) {
+	public static ResourceLocation createMinecraftKey(String key) {
+		return new ResourceLocation(key);
+	}
+
+	public static ResourceLocation getNMS(NamespacedKey key) {
 		return CraftNamespacedKey.toMinecraft(key);
 	}
 
-	public static NamespacedKey getBukkit(MinecraftKey key) {
+	public static NamespacedKey getBukkit(ResourceLocation key) {
 		return CraftNamespacedKey.fromMinecraft(key);
 	}
 
-	public static EntityTypes<?> getNMS(EntityType type) {
+	public static EntityType<?> getNMS(org.bukkit.entity.EntityType type) {
 		return AiostEntityTypes.fromEntityType(type);
 	}
 
-	public static EntityType getBukkit(EntityTypes<?> type) {
+	public static org.bukkit.entity.EntityType getBukkit(EntityType<?> type) {
 		return AiostEntityTypes.toEntityType(type);
 	}
 
-//	private static IRecipe<?> getNMS(Recipe recipe) {
-//		return null;
-//	}
-
-	public static Recipe getBukkit(IRecipe<?> recipe) {
-		return recipe.toBukkitRecipe();
+	public static Recipe getBukkit(net.minecraft.world.item.crafting.Recipe<?> recipe, NamespacedKey key) {
+		return recipe.toBukkitRecipe(key);
 	}
 
-	@SuppressWarnings("deprecation")
-	public static RecipeItemStack getNMS(RecipeChoice recipeChoice, boolean requireNotEmpty) {
-		RecipeItemStack stack;
-		if (recipeChoice == null) {
-			stack = RecipeItemStack.a;
-		} else if (recipeChoice instanceof RecipeChoice.MaterialChoice) {
-			stack = new RecipeItemStack(((RecipeChoice.MaterialChoice) recipeChoice).getChoices().stream()
-					.map(mat -> new RecipeItemStack.StackProvider(
-							CraftItemStack.asNMSCopy(new org.bukkit.inventory.ItemStack(mat)))));
-
-		} else if (recipeChoice instanceof RecipeChoice.ExactChoice) {
-			stack = new RecipeItemStack(((RecipeChoice.ExactChoice) recipeChoice).getChoices().stream()
-					.map(mat -> new RecipeItemStack.StackProvider(CraftItemStack.asNMSCopy(mat))));
-			stack.exact = true;
-
-		} else {
-			throw new IllegalArgumentException("Unknown recipe stack instance " + recipeChoice);
-		}
-
-		stack.buildChoices();
-		if (requireNotEmpty && stack.choices.length == 0) {
-			throw new IllegalArgumentException("Recipe requires at least one non-air choice!");
-		}
-
-		return stack;
-	}
-
-	public static RecipeChoice getBukkit(RecipeItemStack recipeItem) {
+	public static RecipeChoice getBukkit(Ingredient recipeItem) {
 		return CraftRecipe.toBukkit(recipeItem);
 	}
 
-	public static int getMinecraftServerTick() {
-		return MinecraftServer.currentTick;
+	public static Ingredient toNMS(RecipeChoice bukkit, boolean requireNotEmpty) {
+		Ingredient stack;
+		if (bukkit == null) {
+			stack = Ingredient.EMPTY;
+		} else if (bukkit instanceof RecipeChoice.MaterialChoice) {
+			stack = new Ingredient(
+					((RecipeChoice.MaterialChoice) bukkit).getChoices().stream().map((mat) -> new Ingredient.ItemValue(
+							CraftItemStack.asNMSCopy(new org.bukkit.inventory.ItemStack(mat)))));
+
+		} else if (bukkit instanceof RecipeChoice.ExactChoice) {
+			stack = new Ingredient(((RecipeChoice.ExactChoice) bukkit).getChoices().stream()
+					.map((mat) -> new Ingredient.ItemValue(CraftItemStack.asNMSCopy(mat))));
+			stack.exact = true;
+		} else {
+			throw new IllegalArgumentException("Unknown recipe stack instance " + bukkit);
+		}
+
+		stack.getItems();
+		if (requireNotEmpty) {
+			Preconditions.checkArgument(stack.itemStacks.length != 0, "Recipe requires at least one non-air choice");
+		}
+		return stack;
 	}
 
 	public static void setBukkitEntity(Entity entity, CraftEntity value) {
@@ -360,7 +304,7 @@ public class NMS extends NMSUtils {
 		}
 	}
 
-	public static boolean isJumping(EntityLiving entityLiving) {
+	public static boolean isJumping(LivingEntity entityLiving) {
 		try {
 			return (boolean) NMS.ENTITYLIVING_JUMPING_GET.invoke(entityLiving);
 		} catch (Throwable e) {
@@ -379,52 +323,35 @@ public class NMS extends NMSUtils {
 	}
 
 	public static Object getEntityTrackerEntry(org.bukkit.entity.Entity entity) {
-		try {
-			Object chunkProvider = WORLDSERVER_CHUNK_PROVIDER_GET.invoke(NMS.getNMS(entity.getLocation().getWorld()));
-			Object chunkMap = CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET.invoke(chunkProvider);
-			Map<Object, Object> trackedEntities = (Map<Object, Object>) PLAYERCHUNKMAP_TRACKED_ENTITIES_GET
-					.invoke(chunkMap);
-
-			Object entityTracker = trackedEntities.get(entity.getEntityId());
-			return ENTITYTRACKER_TRACKER_ENTRY_GET.invoke(entityTracker);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not get EntityTrackerEntry", e);
-			return null;
-		}
+//		try {
+//			Object chunkProvider = WORLDSERVER_CHUNK_PROVIDER_GET.invoke(NMS.getNMS(entity.getLocation().getWorld()));
+//			Object chunkMap = CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET.invoke(chunkProvider);
+//			Map<Object, Object> trackedEntities = (Map<Object, Object>) PLAYERCHUNKMAP_TRACKED_ENTITIES_GET
+//					.invoke(chunkMap);
+//
+//			Object entityTracker = trackedEntities.get(entity.getEntityId());
+//			return ENTITYTRACKER_TRACKER_ENTRY_GET.invoke(entityTracker);
+//		} catch (Throwable e) {
+//			Logger.err("NMS: Error! Could not get EntityTrackerEntry", e);
+//			return null;
+//		}
+		return Collections.emptySet();
 	}
 
-	public static Set<EntityPlayer> getTrackedPlayers(org.bukkit.entity.Entity entity) {
+	public static Set<ServerPlayer> getTrackedPlayers(org.bukkit.entity.Entity entity) {
 		return getTrackedPlayers(getEntityTrackerEntry(entity));
 	}
 
-	public static Set<EntityPlayer> getTrackedPlayers(Entity entity) {
+	public static Set<ServerPlayer> getTrackedPlayers(Entity entity) {
 		return getTrackedPlayers(getEntityTrackerEntry(entity.getBukkitEntity()));
 	}
 
-	public static Set<EntityPlayer> getTrackedPlayers(Object entityTrackerEntry) {
+	public static Set<ServerPlayer> getTrackedPlayers(Object entityTrackerEntry) {
 		try {
-			return (Set<EntityPlayer>) ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET.invoke(entityTrackerEntry);
+//			return (Set<ServerPlayer>) ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET.invoke(entityTrackerEntry);
+			return Collections.emptySet();
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get tracked players", e);
-			return null;
-		}
-	}
-
-	public Object createPathfinderGoalSpiderMeleeAttack(EntitySpider entitySpider) {
-		try {
-			return PATHFINDER_GOAL_SPIDER_MELEE_ATTACK_CONSTRUCTOR.invoke(entitySpider);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not create PathfinderGoalSpiderMeleeAttack", e);
-			return null;
-		}
-	}
-
-	public Object createPathfinderGoalSpiderNearestAttackableTarget(EntitySpider entitySpider,
-			Class<? extends EntityInsentient> clazz) {
-		try {
-			return PATHFINDER_GOAL_SPIDER_NEAREST_ATTACKABLE_TARGET_CONSTRUCTOR.invoke(entitySpider, clazz);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not create PathfinderGoalSpiderNearestAttackableTarget", e);
 			return null;
 		}
 	}
@@ -438,125 +365,73 @@ public class NMS extends NMSUtils {
 		}
 	}
 
-	public static ItemPickaxe createItemPickaxe(ToolMaterial toolMaterial, int damage, float attackSpeed,
-			Item.Info info) {
-		try {
-			return (ItemPickaxe) NMS.ITEM_PICKAXE_CONSTRUCTOR.invoke(toolMaterial, damage, attackSpeed, info);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not create ItemPickaxe", e);
-			return null;
-		}
+	public static org.bukkit.inventory.EquipmentSlot getArmorSlot(Item item) {
+		return CraftEquipmentSlot.getSlot(((ArmorItem) item).getEquipmentSlot());
 	}
 
-	public static ItemAxe createItemAxe(ToolMaterial toolMaterial, float damage, float attackSpeed, Item.Info info) {
-		try {
-			return (ItemAxe) NMS.ITEM_AXE_CONSTRUCTOR.invoke(toolMaterial, damage, attackSpeed, info);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not create ItemAxe", e);
-			return null;
-		}
+	public static org.bukkit.inventory.EquipmentSlot getArmorSlot(ArmorItem item) {
+		return CraftEquipmentSlot.getSlot(item.getEquipmentSlot());
 	}
 
-	public static BlockPosition createBlockPosition(int x, int y, int z) {
-		return new BlockPosition(x, y, z);
-	}
-
-	public static BlockPosition createBlockPosition(double x, double y, double z) {
-		return new BlockPosition(x, y, z);
-	}
-
-	public static EquipmentSlot getArmorSlot(Item item) {
-		return CraftEquipmentSlot.getSlot(((ItemArmor) item).b());
-	}
-
-	public static EquipmentSlot getArmorSlot(ItemArmor item) {
-		return CraftEquipmentSlot.getSlot(item.b());
-	}
-
-	public static EquipmentSlot getArmorSlot(Object item) {
-		return CraftEquipmentSlot.getSlot(((ItemArmor) item).b());
+	public static org.bukkit.inventory.EquipmentSlot getArmorSlot(Object item) {
+		return CraftEquipmentSlot.getSlot(((ArmorItem) item).getEquipmentSlot());
 	}
 
 	public static boolean isArmor(Item item) {
-		return item instanceof ItemArmor;
+		return item instanceof ArmorItem;
 	}
 
 	public static boolean isArmor(Object item) {
-		return item instanceof ItemArmor;
+		return item instanceof ArmorItem;
 	}
 
 	public static boolean isElytra(Item item) {
-		return item instanceof ItemElytra;
+		return item instanceof ElytraItem;
 	}
 
 	public static boolean isElytra(Object item) {
-		return item instanceof ItemElytra;
+		return item instanceof ElytraItem;
 	}
 
 	public static void loadPlayerInventoryFromNBTString(ServerPlayer serverPlayer, String inventory) {
-		PlayerInventory playerInv = ((CraftInventoryPlayer) serverPlayer.player.getInventory()).getInventory();
-		NBTTagCompound comp = NBTHelper.fromString(inventory);
-		NBTTagList list = comp.getList("inventory", NBTType.COMPOUND);
-		playerInv.b(list);
+		CompoundTag comp = NBTHelper.fromString(inventory);
+		ListTag list = comp.getList("inventory", NBTType.COMPOUND);
+		((CraftInventoryPlayer) serverPlayer.player.getInventory()).getInventory().load(list);
 	}
 
 	public static String savePlayerInventoryToNBTString(ServerPlayer serverPlayer) {
-		NBTTagCompound tag = new NBTTagCompound();
-		NBTTagList list = new NBTTagList();
-		((CraftInventoryPlayer) serverPlayer.player.getInventory()).getInventory().a(list);
-		tag.set("inventory", list);
+		CompoundTag tag = new CompoundTag();
+		ListTag list = new ListTag();
+		((CraftInventoryPlayer) serverPlayer.player.getInventory()).getInventory().save(list);
+		tag.put("inventory", list);
 		return tag.toString();
 	}
 
-	public static MinecraftKey createMinecraftKey(String key) {
-		return new MinecraftKey(key);
+	public static Direction getEnumDirection(double x, double y, double z) {
+		return Direction.getNearest(x, y, z);
 	}
 
-	public static EnumDirection getEnumDirection(double x, double y, double z) {
-		return EnumDirection.a(x, y, z);
+	public static Direction getEnumDirection(float x, float y, float z) {
+		return Direction.getNearest(x, y, z);
 	}
 
-	public static EnumDirection getEnumDirection(float x, float y, float z) {
-		return EnumDirection.a(x, y, z);
+	public static Direction getEnumDirection(int x, int y, int z) {
+		return Direction.getNearest(x, y, z);
 	}
 
-	public static EnumDirection getEnumDirection(int x, int y, int z) {
-		return EnumDirection.a(x, y, z);
-	}
-
-	public static BlockFace notchToBlockFace(EnumDirection direction) {
+	public static BlockFace notchToBlockFace(Direction direction) {
 		return CraftBlock.notchToBlockFace(direction);
 	}
 
-	public static MinecraftServer getMinecraftServer() {
-		return (Bukkit.getServer() instanceof CraftServer) ? ((CraftServer) Bukkit.getServer()).getServer() : null;
+	public static PlayerChatMessage createChatMessage(String text) {
+		return PlayerChatMessage.system(text);
 	}
 
-	public static ChatMessage createChatMessage(String text) {
-		return new ChatMessage(text);
-	}
+//	public static PlayerChatMessage createChatMessage(String text, Object... args) {
+//		return new PlayerChatMessage(text, args);
+//	}
 
-	public static ChatMessage createChatMessage(String text, Object... args) {
-		return new ChatMessage(text, args);
-	}
-
-	public static int getCombinedId(IBlockData block) {
-		return Block.getCombinedId(block);
-	}
-
-	public static int getCombinedId(Block block) {
-		return Block.getCombinedId(block.getBlockData());
-	}
-
-	public static IBlockData getByCombinedId(int id) {
-		return Block.getByCombinedId(id);
-	}
-
-	public static Block getBlock(Material material) {
-		return CraftMagicNumbers.getBlock(material);
-	}
-
-	public static IBlockData getBlock(Material material, byte data) {
-		return CraftMagicNumbers.getBlock(material, data);
+	public static Component createChatComponent(String text) {
+		return ComponentUtils.fromMessage(new LiteralMessage(text));
 	}
 }

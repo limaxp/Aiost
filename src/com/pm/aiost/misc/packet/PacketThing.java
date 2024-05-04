@@ -4,11 +4,12 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ChunkWatcher;
+
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class PacketThing {
 
@@ -52,9 +53,9 @@ public abstract class PacketThing {
 		return PacketFactory.packetEntityDestroy(id);
 	}
 
-	public abstract void load(INBTTagCompound nbt);
+	public abstract void load(CompoundTag nbt);
 
-	public abstract INBTTagCompound save(INBTTagCompound nbt);
+	public abstract CompoundTag save(CompoundTag nbt);
 
 	public void onPlayerAttack(ServerPlayer serverPlayer) {
 		remove();

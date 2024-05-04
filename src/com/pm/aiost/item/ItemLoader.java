@@ -9,14 +9,13 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.nms.NMSItemLoader;
-import com.pm.aiost.item.nms.NMSItems;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.Item;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.Item;
 
 public class ItemLoader {
 
@@ -35,7 +34,6 @@ public class ItemLoader {
 			return;
 		}
 		loadConfigs(file);
-		NMSItems.cleanupItems();
 	}
 
 	private static void loadConfigs(File dir) {
@@ -67,8 +65,8 @@ public class ItemLoader {
 		return loadItemsOrDefault(itemsSection, Material.AIR);
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItems(ConfigurationSection itemsSection) {
-		return loadNMSItemsOrDefault(itemsSection, net.minecraft.server.v1_15_R1.Items.AIR);
+	public static net.minecraft.world.item.ItemStack[] loadNMSItems(ConfigurationSection itemsSection) {
+		return loadNMSItemsOrDefault(itemsSection, net.minecraft.world.item.Items.AIR);
 	}
 
 	public static ItemStack[] loadItemsOrDefault(ConfigurationSection itemsSection, Material defaultMaterial) {
@@ -80,20 +78,20 @@ public class ItemLoader {
 		return items;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
+	public static net.minecraft.world.item.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
 			Material defaultMaterial) {
 		Set<String> itemNames = itemsSection.getKeys(false);
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[itemNames.size()];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[itemNames.size()];
 		int i = 0;
 		for (String itemName : itemNames)
 			items[i++] = loadNMSItemOrDefault(itemsSection.get(itemName), defaultMaterial);
 		return items;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
+	public static net.minecraft.world.item.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
 			Item defaultMaterial) {
 		Set<String> itemNames = itemsSection.getKeys(false);
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[itemNames.size()];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[itemNames.size()];
 		int i = 0;
 		for (String itemName : itemNames)
 			items[i++] = loadNMSItemOrDefault(itemsSection.get(itemName), defaultMaterial);
@@ -109,20 +107,20 @@ public class ItemLoader {
 		return items;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
+	public static net.minecraft.world.item.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
 			ItemStack defaultItem) {
 		Set<String> itemNames = itemsSection.getKeys(false);
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[itemNames.size()];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[itemNames.size()];
 		int i = 0;
 		for (String itemName : itemNames)
 			items[i++] = loadNMSItemOrDefault(itemsSection.get(itemName), defaultItem);
 		return items;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
-			net.minecraft.server.v1_15_R1.ItemStack defaultItem) {
+	public static net.minecraft.world.item.ItemStack[] loadNMSItemsOrDefault(ConfigurationSection itemsSection,
+			net.minecraft.world.item.ItemStack defaultItem) {
 		Set<String> itemNames = itemsSection.getKeys(false);
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[itemNames.size()];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[itemNames.size()];
 		int i = 0;
 		for (String itemName : itemNames)
 			items[i++] = loadNMSItemOrDefault(itemsSection.get(itemName), defaultItem);
@@ -138,9 +136,9 @@ public class ItemLoader {
 		return items;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack[] loadNMSItemsOrNull(ConfigurationSection itemsSection) {
+	public static net.minecraft.world.item.ItemStack[] loadNMSItemsOrNull(ConfigurationSection itemsSection) {
 		Set<String> itemNames = itemsSection.getKeys(false);
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[itemNames.size()];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[itemNames.size()];
 		int i = 0;
 		for (String itemName : itemNames)
 			items[i++] = loadNMSItemOrNull(itemsSection.get(itemName));
@@ -151,8 +149,8 @@ public class ItemLoader {
 		return loadItemOrDefault(itemObject, Material.AIR);
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItem(Object itemObject) {
-		return loadNMSItemOrDefault(itemObject, net.minecraft.server.v1_15_R1.Items.AIR);
+	public static net.minecraft.world.item.ItemStack loadNMSItem(Object itemObject) {
+		return loadNMSItemOrDefault(itemObject, net.minecraft.world.item.Items.AIR);
 	}
 
 	public static ItemStack loadItemOrDefault(Object itemObject, Material defaultMaterial) {
@@ -165,8 +163,7 @@ public class ItemLoader {
 		return new ItemStack(defaultMaterial);
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItemOrDefault(Object itemObject,
-			Material defaultMaterial) {
+	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject, Material defaultMaterial) {
 		if (itemObject instanceof String)
 			return loadNMSItem((String) itemObject);
 		else if (itemObject instanceof ConfigurationSection) {
@@ -177,8 +174,7 @@ public class ItemLoader {
 		return NMS.getNMS(new ItemStack(defaultMaterial));
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItemOrDefault(Object itemObject,
-			Item defaultMaterial) {
+	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject, Item defaultMaterial) {
 		if (itemObject instanceof String)
 			return loadNMSItem((String) itemObject);
 		else if (itemObject instanceof ConfigurationSection) {
@@ -186,7 +182,7 @@ public class ItemLoader {
 			return loadNMSItem(itemSection.getConfigurationSection(itemSection.getKeys(false).iterator().next()),
 					false);
 		}
-		return new net.minecraft.server.v1_15_R1.ItemStack(defaultMaterial);
+		return new net.minecraft.world.item.ItemStack(defaultMaterial);
 	}
 
 	public static ItemStack loadItemOrDefault(Object itemObject, ItemStack defaultItem) {
@@ -199,8 +195,7 @@ public class ItemLoader {
 		return defaultItem.clone();
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItemOrDefault(Object itemObject,
-			ItemStack defaultItem) {
+	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject, ItemStack defaultItem) {
 		if (itemObject instanceof String)
 			return loadNMSItem((String) itemObject);
 		else if (itemObject instanceof ConfigurationSection) {
@@ -211,8 +206,8 @@ public class ItemLoader {
 		return NMS.getNMS(defaultItem.clone());
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItemOrDefault(Object itemObject,
-			net.minecraft.server.v1_15_R1.ItemStack defaultItem) {
+	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject,
+			net.minecraft.world.item.ItemStack defaultItem) {
 		if (itemObject instanceof String)
 			return loadNMSItem((String) itemObject);
 		else if (itemObject instanceof ConfigurationSection) {
@@ -220,7 +215,7 @@ public class ItemLoader {
 			return loadNMSItem(itemSection.getConfigurationSection(itemSection.getKeys(false).iterator().next()),
 					false);
 		}
-		return defaultItem.cloneItemStack();
+		return defaultItem.copy();
 	}
 
 	public static ItemStack loadItemOrNull(Object itemObject) {
@@ -233,7 +228,7 @@ public class ItemLoader {
 		return null;
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItemOrNull(Object itemObject) {
+	public static net.minecraft.world.item.ItemStack loadNMSItemOrNull(Object itemObject) {
 		if (itemObject instanceof String)
 			return loadNMSItem((String) itemObject);
 		else if (itemObject instanceof ConfigurationSection) {
@@ -252,7 +247,7 @@ public class ItemLoader {
 		}
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItem(String itemName) {
+	public static net.minecraft.world.item.ItemStack loadNMSItem(String itemName) {
 		return NMS.getNMS(loadItem(itemName));
 	}
 
@@ -264,26 +259,26 @@ public class ItemLoader {
 		return NMS.getBukkit(loadNMSItem(itemSection, canRegister));
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItem(ConfigurationSection itemSection) {
+	public static net.minecraft.world.item.ItemStack loadNMSItem(ConfigurationSection itemSection) {
 		return loadNMSItem(itemSection, false);
 	}
 
-	private static net.minecraft.server.v1_15_R1.ItemStack loadNMSItem(ConfigurationSection itemSection,
+	private static net.minecraft.world.item.ItemStack loadNMSItem(ConfigurationSection itemSection,
 			boolean canRegister) {
 		Material material = loadMaterial(itemSection);
-		net.minecraft.server.v1_15_R1.ItemStack nmsIs;
+		net.minecraft.world.item.ItemStack nmsIs;
 		if (itemSection.contains("item") && canRegister)
 			nmsIs = loadNMSItem(itemSection, material);
 		else
 			nmsIs = NMS.getNMS(new ItemStack(material));
 
-		NBTTagCompound nbtTag;
+		CompoundTag nbtTag;
 		if (itemSection.contains("nbt"))
 			nbtTag = loadNBT(itemSection);
 		else
-			nbtTag = new NBTTagCompound();
+			nbtTag = new CompoundTag();
 
-		NBTTagCompound display = NBTHelper.addDisplay(nbtTag);
+		CompoundTag display = NBTHelper.addDisplay(nbtTag);
 		NBTHelper.setDisplayName(display, itemSection.getName());
 		if (itemSection.contains("lore"))
 			NBTHelper.setLore(display, itemSection.getStringList("lore"));
@@ -294,7 +289,7 @@ public class ItemLoader {
 		if (itemSection.contains("effects"))
 			loadEffects(itemSection, nbtTag);
 
-		nmsIs.setTag(nbtTag);
+		NBTHelper.setNBT(nmsIs, nbtTag);
 		return nmsIs;
 	}
 
@@ -313,14 +308,14 @@ public class ItemLoader {
 		return material;
 	}
 
-	public static NBTTagCompound loadNBT(ConfigurationSection itemSection) {
+	public static CompoundTag loadNBT(ConfigurationSection itemSection) {
 		String nbtString = itemSection.getString("nbt");
 		if (nbtString != null && !nbtString.isEmpty())
 			return NBTHelper.fromString(nbtString);
-		return new NBTTagCompound();
+		return new CompoundTag();
 	}
 
-	public static void loadPredicates(ConfigurationSection itemSection, Material material, NBTTagCompound nbtTag) {
+	public static void loadPredicates(ConfigurationSection itemSection, Material material, CompoundTag nbtTag) {
 		ConfigurationSection predicateSection = itemSection.getConfigurationSection("predicate");
 		if (predicateSection.contains("durability")) {
 			int durability = predicateSection.getInt("durability");
@@ -331,13 +326,13 @@ public class ItemLoader {
 			NBTHelper.setCustomModelData(nbtTag, predicateSection.getInt("custom_model_data"));
 	}
 
-	public static void loadEffects(ConfigurationSection itemSection, NBTTagCompound nbtTag) {
+	public static void loadEffects(ConfigurationSection itemSection, CompoundTag nbtTag) {
 		NBTHelper.setItemEffect(nbtTag, EffectBuilder.loadEffects(itemSection.getConfigurationSection("effects"))
 				.createItemEntry(itemSection.getName()));
 	}
 
-	public static net.minecraft.server.v1_15_R1.ItemStack loadNMSItem(ConfigurationSection itemSection, Material mat) {
-		return new net.minecraft.server.v1_15_R1.ItemStack(
+	public static net.minecraft.world.item.ItemStack loadNMSItem(ConfigurationSection itemSection, Material mat) {
+		return new net.minecraft.world.item.ItemStack(
 				NMSItemLoader.registerItem(itemSection.getName(), mat, itemSection.getConfigurationSection("item")));
 	}
 }

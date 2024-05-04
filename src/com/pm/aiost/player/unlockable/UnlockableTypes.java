@@ -18,7 +18,7 @@ import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.settings.PlayerSettings;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class UnlockableTypes {
 
@@ -166,7 +166,7 @@ public class UnlockableTypes {
 		}
 	};
 
-	public static final UnlockableType<EntityTypes<?>> PETS = new UnlockableType<EntityTypes<?>>("Pets") {
+	public static final UnlockableType<EntityType<?>> PETS = new UnlockableType<EntityType<?>>("Pets") {
 
 		@Override
 		public void load(ConfigurationSection section) {

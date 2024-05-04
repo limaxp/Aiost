@@ -9,9 +9,10 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class PacketEntityFallingBlock extends PacketEntity {
 
@@ -42,27 +43,26 @@ public class PacketEntityFallingBlock extends PacketEntity {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		setBlockId(nbt.getInt("blockId"));
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setInt("blockId", blockId);
+		nbt.putInt("blockId", blockId);
 		return nbt;
 	}
 
 	@Override
 	public Object createSpawnPacket() {
-		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.FALLING_BLOCK, blockId,
-				NMS.EMTPY_VEC_3D);
+		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.FALLING_BLOCK, blockId);
 	}
 
 	@Override
 	public String getName() {
-		return NMS.getByCombinedId(blockId).getBlock().getItem().getName();
+		return NMS.getByCombinedId(blockId).getBlock().getName().getString();
 	}
 
 	public void setBlock(Block block) {
@@ -78,7 +78,7 @@ public class PacketEntityFallingBlock extends PacketEntity {
 	}
 
 	public void setMaterial(Material material) {
-		this.blockId = NMS.getCombinedId(NMS.getBlock(material));
+		this.blockId = NMS.getCombinedId(NMS.getBlock(material).defaultBlockState());
 	}
 
 	public Material getMaterial() {

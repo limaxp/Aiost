@@ -1,198 +1,185 @@
 package com.pm.aiost.misc.packet;
 
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.EntityHuman;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.Packet;
-import net.minecraft.server.v1_15_R1.PlayerConnection;
-import net.minecraft.server.v1_15_R1.World;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.server.network.ServerGamePacketListenerImpl;
 
 public class PacketSender {
 
 	public static final double NEARBY_DISTANCE = 64;
 
 	public static void send(Player player, Packet<?> packet) {
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+		NMS.getNMS(player).connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Object packet) {
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket((Packet<?>) packet);
+		NMS.getNMS(player).connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(EntityPlayer player, Packet<?> packet) {
-		player.playerConnection.sendPacket(packet);
+	public static void sendNMS(ServerPlayer player, Packet<?> packet) {
+		player.connection.sendPacket(packet);
 	}
 
-	public static void sendNMS_(EntityPlayer player, Object packet) {
-		player.playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMS_(ServerPlayer player, Object packet) {
+		player.connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendReflected(Object player, Packet<?> packet) {
-		((EntityPlayer) player).playerConnection.sendPacket(packet);
+		NMS.getNMS((Player) player).connection.sendPacket(packet);
 	}
 
 	public static void sendReflected_(Object player, Object packet) {
-		((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+		NMS.getNMS((Player) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void send(Player player, Packet<?>... packets) {
-		PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Object... packets) {
-		PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(EntityPlayer player, Packet<?>... packets) {
-		PlayerConnection connection = player.playerConnection;
+	public static void sendNMS(ServerPlayer player, Packet<?>... packets) {
+		ServerGamePacketListenerImpl connection = player.connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
-	public static void sendNMS_(EntityPlayer player, Object... packets) {
-		PlayerConnection connection = player.playerConnection;
+	public static void sendNMS_(ServerPlayer player, Object... packets) {
+		ServerGamePacketListenerImpl connection = player.connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendReflected(Object player, Packet<?>... packets) {
-		PlayerConnection connection = ((EntityPlayer) player).playerConnection;
+		ServerGamePacketListenerImpl connection = ((ServerPlayer) player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void sendReflected_(Object player, Object... packets) {
-		PlayerConnection connection = ((EntityPlayer) player).playerConnection;
+		ServerGamePacketListenerImpl connection = ((ServerPlayer) player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void send(Player[] player, Packet<?> packet) {
-		for (Player p : player) {
-			PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
-			connection.sendPacket(packet);
-		}
+		for (Player p : player)
+			NMS.getNMS(p).connection.sendPacket(packet);
 	}
 
 	public static void send_(Player[] player, Object packet) {
-		for (Player p : player) {
-			PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
-			connection.sendPacket((Packet<?>) packet);
-		}
+		for (Player p : player)
+			NMS.getNMS(p).connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(EntityPlayer[] player, Packet<?> packet) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
-			connection.sendPacket(packet);
-		}
+	public static void sendNMS(ServerPlayer[] player, Packet<?> packet) {
+		for (ServerPlayer p : player)
+			p.connection.sendPacket(packet);
 	}
 
-	public static void sendNMS_(EntityPlayer[] player, Object packet) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
-			connection.sendPacket((Packet<?>) packet);
-		}
+	public static void sendNMS_(ServerPlayer[] player, Object packet) {
+		for (ServerPlayer p : player)
+			p.connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendReflected(Object[] player, Packet<?> packet) {
-		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
-			connection.sendPacket(packet);
-		}
+		for (Object p : player)
+			((ServerPlayer) p).connection.sendPacket(packet);
 	}
 
 	public static void sendReflected_(Object[] player, Object packet) {
-		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
-			connection.sendPacket((Packet<?>) packet);
-		}
+		for (Object p : player)
+			((ServerPlayer) p).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void send(Player player, Iterable<Packet<?>> packets) {
-		PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Iterable<Object> packets) {
-		PlayerConnection connection = ((CraftPlayer) player).getHandle().playerConnection;
+		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(EntityPlayer player, Iterable<Packet<?>> packets) {
-		PlayerConnection connection = player.playerConnection;
+	public static void sendNMS(ServerPlayer player, Iterable<Packet<?>> packets) {
+		ServerGamePacketListenerImpl connection = player.connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
-	public static void sendNMS_(EntityPlayer player, Iterable<Object> packets) {
-		PlayerConnection connection = player.playerConnection;
+	public static void sendNMS_(ServerPlayer player, Iterable<Object> packets) {
+		ServerGamePacketListenerImpl connection = player.connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendReflected(Object player, Iterable<Packet<?>> packets) {
-		PlayerConnection connection = ((EntityPlayer) player).playerConnection;
+		ServerGamePacketListenerImpl connection = ((ServerPlayer) player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void sendReflected_(Object player, Iterable<Object> packets) {
-		PlayerConnection connection = ((EntityPlayer) player).playerConnection;
+		ServerGamePacketListenerImpl connection = ((ServerPlayer) player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void send(Iterable<Player> player, Packet<?> packet) {
 		for (Player p : player)
-			((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+			((CraftPlayer) p).getHandle().connection.sendPacket(packet);
 	}
 
 	public static void send_(Iterable<Player> player, Object packet) {
 		for (Player p : player)
-			((CraftPlayer) p).getHandle().playerConnection.sendPacket((Packet<?>) packet);
+			((CraftPlayer) p).getHandle().connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(Iterable<EntityPlayer> player, Packet<?> packet) {
-		for (EntityPlayer p : player)
-			p.playerConnection.sendPacket(packet);
+	public static void sendNMS(Iterable<ServerPlayer> player, Packet<?> packet) {
+		for (ServerPlayer p : player)
+			p.connection.sendPacket(packet);
 	}
 
-	public static void sendNMS_(Iterable<EntityPlayer> player, Object packet) {
-		for (EntityPlayer p : player)
-			p.playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMS_(Iterable<ServerPlayer> player, Object packet) {
+		for (ServerPlayer p : player)
+			p.connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendReflected(Iterable<Object> player, Packet<?> packet) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			connection.sendPacket(packet);
 		}
 	}
 
 	public static void sendReflected_(Iterable<Object> player, Object packet) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
 	public static void send(Player[] player, Packet<?>... packets) {
 		for (Player p : player) {
-			PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
+			ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
@@ -200,23 +187,23 @@ public class PacketSender {
 
 	public static void send_(Player[] player, Object... packets) {
 		for (Player p : player) {
-			PlayerConnection connection = ((CraftPlayer) p).getHandle().playerConnection;
+			ServerGamePacketListenerImpl connection = ((CraftPlayer) p).getHandle().connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
-	public static void sendNMS(EntityPlayer[] player, Packet<?>... packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS(ServerPlayer[] player, Packet<?>... packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMS_(EntityPlayer[] player, Object... packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS_(ServerPlayer[] player, Object... packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
@@ -224,7 +211,7 @@ public class PacketSender {
 
 	public static void sendReflected(Object[] player, Packet<?>... packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
@@ -232,7 +219,7 @@ public class PacketSender {
 
 	public static void sendReflected_(Object[] player, Object... packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
@@ -241,26 +228,26 @@ public class PacketSender {
 	public static void send(Iterable<Player> player, Packet<?>... packets) {
 		for (Player p : player)
 			for (Packet<?> packet : packets)
-				((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+				((CraftPlayer) p).getHandle().connection.sendPacket(packet);
 	}
 
 	public static void send_(Iterable<Player> player, Object... packets) {
 		for (Player p : player)
 			for (Object packet : packets)
-				((CraftPlayer) p).getHandle().playerConnection.sendPacket((Packet<?>) packet);
+				((CraftPlayer) p).getHandle().connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(Iterable<EntityPlayer> player, Packet<?>... packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS(Iterable<ServerPlayer> player, Packet<?>... packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMS_(Iterable<EntityPlayer> player, Object... packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS_(Iterable<ServerPlayer> player, Object... packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
@@ -268,7 +255,7 @@ public class PacketSender {
 
 	public static void sendReflected(Iterable<Object> player, Packet<?>... packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
@@ -276,7 +263,7 @@ public class PacketSender {
 
 	public static void sendReflected_(Iterable<Object> player, Object... packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
@@ -285,26 +272,26 @@ public class PacketSender {
 	public static void send(Iterable<Player> player, Iterable<Packet<?>> packets) {
 		for (Player p : player)
 			for (Packet<?> packet : packets)
-				((CraftPlayer) p).getHandle().playerConnection.sendPacket(packet);
+				((CraftPlayer) p).getHandle().connection.sendPacket(packet);
 	}
 
 	public static void send_(Iterable<Player> player, Iterable<Object> packets) {
 		for (Player p : player)
 			for (Object packet : packets)
-				((CraftPlayer) p).getHandle().playerConnection.sendPacket((Packet<?>) packet);
+				((CraftPlayer) p).getHandle().connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMS(Iterable<EntityPlayer> player, Iterable<Packet<?>> packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS(Iterable<ServerPlayer> player, Iterable<Packet<?>> packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMS_(Iterable<EntityPlayer> player, Iterable<Object> packets) {
-		for (EntityPlayer p : player) {
-			PlayerConnection connection = p.playerConnection;
+	public static void sendNMS_(Iterable<ServerPlayer> player, Iterable<Object> packets) {
+		for (ServerPlayer p : player) {
+			ServerGamePacketListenerImpl connection = p.connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
@@ -312,7 +299,7 @@ public class PacketSender {
 
 	public static void sendReflected(Iterable<Object> player, Iterable<Packet<?>> packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Packet<?> packet : packets)
 				connection.sendPacket(packet);
 		}
@@ -320,154 +307,154 @@ public class PacketSender {
 
 	public static void sendReflected_(Iterable<Object> player, Iterable<Object> packets) {
 		for (Object p : player) {
-			PlayerConnection connection = ((EntityPlayer) p).playerConnection;
+			ServerGamePacketListenerImpl connection = ((ServerPlayer) p).connection;
 			for (Object packet : packets)
 				connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
 	public static void sendAll(Packet<?> packet) {
-		for (EntityPlayer player : NMS.getMinecraftServer().getPlayerList().players)
-			player.playerConnection.sendPacket(packet);
+		for (ServerPlayer player : NMS.getMinecraftServer().getPlayerList().players)
+			player.connection.sendPacket(packet);
 	}
 
 	public static void sendAll_(Object packet) {
-		for (EntityPlayer player : NMS.getMinecraftServer().getPlayerList().players)
-			player.playerConnection.sendPacket((Packet<?>) packet);
+		for (ServerPlayer player : NMS.getMinecraftServer().getPlayerList().players)
+			player.connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendAll(Packet<?>... packets) {
-		for (EntityPlayer player : NMS.getMinecraftServer().getPlayerList().players)
+		for (ServerPlayer player : NMS.getMinecraftServer().getPlayerList().players)
 			for (Packet<?> packet : packets)
-				player.playerConnection.sendPacket(packet);
+				player.connection.sendPacket(packet);
 	}
 
 	public static void sendAll_(Object... packets) {
-		for (EntityPlayer player : NMS.getMinecraftServer().getPlayerList().players)
+		for (ServerPlayer player : NMS.getMinecraftServer().getPlayerList().players)
 			for (Object packet : packets)
-				player.playerConnection.sendPacket((Packet<?>) packet);
+				player.connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Packet<?> packet) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), packet);
+		sendNMSWorld(NMS.getNMS(world), packet);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Object packet) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), packet);
+		sendNMSWorld_(NMS.getNMS(world), packet);
 	}
 
-	public static void sendNMSWorld(World world, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers())
-			((EntityPlayer) player).playerConnection.sendPacket(packet);
+	public static void sendNMSWorld(ServerLevel world, Packet<?> packet) {
+		for (ServerPlayer player : world.players())
+			((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, Object packet) {
-		for (EntityHuman player : world.getPlayers())
-			((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMSWorld_(ServerLevel world, Object packet) {
+		for (ServerPlayer player : world.players())
+			((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Packet<?> packet) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packet);
+		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packet);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Object packet) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packet);
+		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packet);
 	}
 
-	public static void sendNMSWorld(World world, EntityPlayer except, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld(ServerLevel world, ServerPlayer except, Packet<?> packet) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+				((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, EntityPlayer except, Object packet) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld_(ServerLevel world, ServerPlayer except, Object packet) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Packet<?>... packets) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), packets);
+		sendNMSWorld(NMS.getNMS(world), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Object... packets) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), packets);
+		sendNMSWorld_(NMS.getNMS(world), packets);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Iterable<Packet<?>> packets) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), packets);
+		sendNMSWorld(NMS.getNMS(world), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Iterable<Object> packets) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), packets);
+		sendNMSWorld_(NMS.getNMS(world), packets);
 	}
 
-	public static void sendNMSWorld(World world, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld(ServerLevel world, Packet<?>... packets) {
+		for (ServerPlayer player : world.players())
 			for (Packet<?> packet : packets)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+				((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, Object... packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld_(ServerLevel world, Object... packets) {
+		for (ServerPlayer player : world.players())
 			for (Object packet : packets)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMSWorld(World world, Iterable<Packet<?>> packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld(ServerLevel world, Iterable<Packet<?>> packets) {
+		for (ServerPlayer player : world.players())
 			for (Packet<?> packet : packets)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+				((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, Iterable<Object> packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld_(ServerLevel world, Iterable<Object> packets) {
+		for (ServerPlayer player : world.players())
 			for (Object packet : packets)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Packet<?>... packets) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Object... packets) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Iterable<Packet<?>> packets) {
-		sendNMSWorld(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Iterable<Object> packets) {
-		sendNMSWorld_(((CraftWorld) world).getHandle(), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
-	public static void sendNMSWorld(World world, EntityPlayer except, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld(ServerLevel world, ServerPlayer except, Packet<?>... packets) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, EntityPlayer except, Object... packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld_(ServerLevel world, ServerPlayer except, Object... packets) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
-	public static void sendNMSWorld(World world, EntityPlayer except, Iterable<Packet<?>> packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld(ServerLevel world, ServerPlayer except, Iterable<Packet<?>> packets) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 	}
 
-	public static void sendNMSWorld_(World world, EntityPlayer except, Iterable<Object> packets) {
-		for (EntityHuman player : world.getPlayers())
+	public static void sendNMSWorld_(ServerLevel world, ServerPlayer except, Iterable<Object> packets) {
+		for (ServerPlayer player : world.players())
 			if (player != except)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendNear(Location loc, int distance, Packet<?> packet) {
@@ -481,24 +468,24 @@ public class PacketSender {
 	}
 
 	public static void sendNear(org.bukkit.World world, int x, int y, int z, int distance, Packet<?> packet) {
-		sendNMSNear(((CraftWorld) world).getHandle(), x, y, z, distance, packet);
+		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNear_(org.bukkit.World world, int x, int y, int z, int distance, Object packet) {
-		sendNMSNear_(((CraftWorld) world).getHandle(), x, y, z, distance, packet);
+		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packet);
 	}
 
-	public static void sendNMSNear(World world, int x, int y, int z, int distance, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+	public static void sendNMSNear(ServerLevel world, int x, int y, int z, int distance, Packet<?> packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
+				((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNear_(World world, int x, int y, int z, int distance, Object packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMSNear_(ServerLevel world, int x, int y, int z, int distance, Object packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
@@ -513,26 +500,26 @@ public class PacketSender {
 	}
 
 	public static void sendNear(org.bukkit.World world, int x, int y, int z, int distance, Packet<?>... packets) {
-		sendNMSNear(((CraftWorld) world).getHandle(), x, y, z, distance, packets);
+		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNear_(org.bukkit.World world, int x, int y, int z, int distance, Object... packets) {
-		sendNMSNear_(((CraftWorld) world).getHandle(), x, y, z, distance, packets);
+		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packets);
 	}
 
-	public static void sendNMSNear(World world, int x, int y, int z, int distance, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
+	public static void sendNMSNear(ServerLevel world, int x, int y, int z, int distance, Packet<?>... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNear_(World world, int x, int y, int z, int distance, Object... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
+	public static void sendNMSNear_(ServerLevel world, int x, int y, int z, int distance, Object... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
@@ -548,24 +535,24 @@ public class PacketSender {
 
 	public static void sendNear(org.bukkit.World world, double x, double y, double z, double distance,
 			Packet<?> packet) {
-		sendNMSNear(((CraftWorld) world).getHandle(), x, y, z, distance, packet);
+		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNear_(org.bukkit.World world, double x, double y, double z, double distance, Object packet) {
-		sendNMSNear_(((CraftWorld) world).getHandle(), x, y, z, distance, packet);
+		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packet);
 	}
 
-	public static void sendNMSNear(World world, double x, double y, double z, double distance, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+	public static void sendNMSNear(ServerLevel world, double x, double y, double z, double distance, Packet<?> packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
+				((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNear_(World world, double x, double y, double z, double distance, Object packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMSNear_(ServerLevel world, double x, double y, double z, double distance, Object packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
@@ -581,27 +568,29 @@ public class PacketSender {
 
 	public static void sendNear(org.bukkit.World world, double x, double y, double z, double distance,
 			Packet<?>... packets) {
-		sendNMSNear(((CraftWorld) world).getHandle(), x, y, z, distance, packets);
+		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNear_(org.bukkit.World world, double x, double y, double z, double distance,
 			Object... packets) {
-		sendNMSNear_(((CraftWorld) world).getHandle(), x, y, z, distance, packets);
+		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packets);
 	}
 
-	public static void sendNMSNear(World world, double x, double y, double z, double distance, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
+	public static void sendNMSNear(ServerLevel world, double x, double y, double z, double distance,
+			Packet<?>... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNear_(World world, double x, double y, double z, double distance, Object... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= distance)
+	public static void sendNMSNear_(ServerLevel world, double x, double y, double z, double distance,
+			Object... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= distance)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
@@ -616,70 +605,70 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, int x, int y, int z, Packet<?> packet) {
-		sendNMSNearby(((CraftWorld) world).getHandle(), x, y, z, packet);
+		sendNMSNearby(NMS.getNMS(world), x, y, z, packet);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, int x, int y, int z, Object packet) {
-		sendNMSNearby_(((CraftWorld) world).getHandle(), x, y, z, packet);
+		sendNMSNearby_(NMS.getNMS(world), x, y, z, packet);
 	}
 
-	public static void sendNMSNearby(World world, int x, int y, int z, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+	public static void sendNMSNearby(ServerLevel world, int x, int y, int z, Packet<?> packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
+				((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNearby_(World world, int x, int y, int z, Object packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMSNearby_(ServerLevel world, int x, int y, int z, Object packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
 	public static void sendNearby(org.bukkit.World world, int x, int y, int z, Packet<?>... packets) {
-		sendNMSNearby(((CraftWorld) world).getHandle(), x, y, z, packets);
+		sendNMSNearby(NMS.getNMS(world), x, y, z, packets);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, int x, int y, int z, Object... packets) {
-		sendNMSNearby_(((CraftWorld) world).getHandle(), x, y, z, packets);
+		sendNMSNearby_(NMS.getNMS(world), x, y, z, packets);
 	}
 
-	public static void sendNMSNearby(World world, int x, int y, int z, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
+	public static void sendNMSNearby(ServerLevel world, int x, int y, int z, Packet<?>... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNearby_(World world, int x, int y, int z, Object... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
+	public static void sendNMSNearby_(ServerLevel world, int x, int y, int z, Object... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
 	public static void sendNearby(org.bukkit.World world, double x, double y, double z, Packet<?> packet) {
-		sendNMSNearby(((CraftWorld) world).getHandle(), x, y, z, packet);
+		sendNMSNearby(NMS.getNMS(world), x, y, z, packet);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, double x, double y, double z, Object packet) {
-		sendNMSNearby_(((CraftWorld) world).getHandle(), x, y, z, packet);
+		sendNMSNearby_(NMS.getNMS(world), x, y, z, packet);
 	}
 
-	public static void sendNMSNearby(World world, double x, double y, double z, Packet<?> packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
-				((EntityPlayer) player).playerConnection.sendPacket(packet);
+	public static void sendNMSNearby(ServerLevel world, double x, double y, double z, Packet<?> packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
+				((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNearby_(World world, double x, double y, double z, Object packet) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
-				((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+	public static void sendNMSNearby_(ServerLevel world, double x, double y, double z, Object packet) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
+				((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 
@@ -694,26 +683,26 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, double x, double y, double z, Packet<?>... packets) {
-		sendNMSNearby(((CraftWorld) world).getHandle(), x, y, z, packets);
+		sendNMSNearby(NMS.getNMS(world), x, y, z, packets);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, double x, double y, double z, Object... packets) {
-		sendNMSNearby_(((CraftWorld) world).getHandle(), x, y, z, packets);
+		sendNMSNearby_(NMS.getNMS(world), x, y, z, packets);
 	}
 
-	public static void sendNMSNearby(World world, double x, double y, double z, Packet<?>... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
+	public static void sendNMSNearby(ServerLevel world, double x, double y, double z, Packet<?>... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
 				for (Packet<?> packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket(packet);
+					((ServerPlayer) player).connection.sendPacket(packet);
 		}
 	}
 
-	public static void sendNMSNearby_(World world, double x, double y, double z, Object... packets) {
-		for (EntityHuman player : world.getPlayers()) {
-			if (LocationHelper.distance(x, z, player.locX(), player.locZ()) <= NEARBY_DISTANCE)
+	public static void sendNMSNearby_(ServerLevel world, double x, double y, double z, Object... packets) {
+		for (ServerPlayer player : world.players()) {
+			if (LocationHelper.distance(x, z, player.getX(), player.getZ()) <= NEARBY_DISTANCE)
 				for (Object packet : packets)
-					((EntityPlayer) player).playerConnection.sendPacket((Packet<?>) packet);
+					((ServerPlayer) player).connection.sendPacket((Packet<?>) packet);
 		}
 	}
 }

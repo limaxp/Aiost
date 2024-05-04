@@ -4,13 +4,11 @@ import java.util.Iterator;
 
 import org.bukkit.entity.Player;
 
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-
 public class EntityPlayerIterator implements Iterator<Player>, Iterable<Player> {
 
-	private final Iterator<EntityPlayer> iterator;
+	private final Iterator<net.minecraft.world.entity.player.Player> iterator;
 
-	public EntityPlayerIterator(Iterable<EntityPlayer> iterable) {
+	public EntityPlayerIterator(Iterable<net.minecraft.world.entity.player.Player> iterable) {
 		this.iterator = iterable.iterator();
 	}
 
@@ -21,7 +19,7 @@ public class EntityPlayerIterator implements Iterator<Player>, Iterable<Player> 
 
 	@Override
 	public Player next() {
-		return iterator.next().getBukkitEntity();
+		return (Player) iterator.next().getBukkitEntity();
 	}
 
 	@Override

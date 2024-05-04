@@ -1,106 +1,69 @@
 package com.pm.aiost.misc.packet;
 
 import java.lang.invoke.MethodHandle;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 
-import javax.annotation.Nullable;
-
 import org.bukkit.Location;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 import com.mojang.authlib.GameProfile;
+import com.mojang.datafixers.util.Pair;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMSUtils;
+import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.misc.utils.reflection.ReflectionUtils;
 
-import net.minecraft.server.v1_15_R1.BlockPosition;
-import net.minecraft.server.v1_15_R1.ChatMessage;
-import net.minecraft.server.v1_15_R1.ChatMessageType;
-import net.minecraft.server.v1_15_R1.Container;
-import net.minecraft.server.v1_15_R1.Containers;
-import net.minecraft.server.v1_15_R1.DataWatcher;
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityHuman;
-import net.minecraft.server.v1_15_R1.EntityLiving;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.EnumGamemode;
-import net.minecraft.server.v1_15_R1.EnumHand;
-import net.minecraft.server.v1_15_R1.EnumItemSlot;
-import net.minecraft.server.v1_15_R1.IChatBaseComponent;
-import net.minecraft.server.v1_15_R1.IScoreboardCriteria.EnumScoreboardHealthDisplay;
-import net.minecraft.server.v1_15_R1.PacketPlayOutAnimation;
-import net.minecraft.server.v1_15_R1.PacketPlayOutChat;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntity;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMove;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityDestroy;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityEquipment;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityHeadRotation;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityMetadata;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityStatus;
-import net.minecraft.server.v1_15_R1.PacketPlayOutEntityTeleport;
-import net.minecraft.server.v1_15_R1.PacketPlayOutNamedEntitySpawn;
-import net.minecraft.server.v1_15_R1.PacketPlayOutOpenBook;
-import net.minecraft.server.v1_15_R1.PacketPlayOutOpenWindow;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo.EnumPlayerInfoAction;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerInfo.PlayerInfoData;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPlayerListHeaderFooter;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPosition;
-import net.minecraft.server.v1_15_R1.PacketPlayOutPosition.EnumPlayerTeleportFlags;
-import net.minecraft.server.v1_15_R1.PacketPlayOutScoreboardDisplayObjective;
-import net.minecraft.server.v1_15_R1.PacketPlayOutScoreboardObjective;
-import net.minecraft.server.v1_15_R1.PacketPlayOutScoreboardScore;
-import net.minecraft.server.v1_15_R1.PacketPlayOutSetSlot;
-import net.minecraft.server.v1_15_R1.PacketPlayOutSpawnEntity;
-import net.minecraft.server.v1_15_R1.PacketPlayOutSpawnEntityLiving;
-import net.minecraft.server.v1_15_R1.PacketPlayOutWorldParticles;
-import net.minecraft.server.v1_15_R1.ParticleParam;
-import net.minecraft.server.v1_15_R1.ScoreboardObjective;
-import net.minecraft.server.v1_15_R1.ScoreboardServer;
-import net.minecraft.server.v1_15_R1.Vec3D;
+import it.unimi.dsi.fastutil.ints.IntList;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.numbers.NumberFormat;
+import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundAnimatePacket;
+import net.minecraft.network.protocol.game.ClientboundContainerSetSlotPacket;
+import net.minecraft.network.protocol.game.ClientboundEntityEventPacket;
+import net.minecraft.network.protocol.game.ClientboundLevelParticlesPacket;
+import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
+import net.minecraft.network.protocol.game.ClientboundOpenBookPacket;
+import net.minecraft.network.protocol.game.ClientboundOpenScreenPacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoRemovePacket;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundRemoveEntitiesPacket;
+import net.minecraft.network.protocol.game.ClientboundResetScorePacket;
+import net.minecraft.network.protocol.game.ClientboundRotateHeadPacket;
+import net.minecraft.network.protocol.game.ClientboundSetDisplayObjectivePacket;
+import net.minecraft.network.protocol.game.ClientboundSetEntityDataPacket;
+import net.minecraft.network.protocol.game.ClientboundSetEquipmentPacket;
+import net.minecraft.network.protocol.game.ClientboundSetObjectivePacket;
+import net.minecraft.network.protocol.game.ClientboundSetScorePacket;
+import net.minecraft.network.protocol.game.ClientboundSystemChatPacket;
+import net.minecraft.network.protocol.game.ClientboundTabListPacket;
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraft.world.inventory.MenuType;
+import net.minecraft.world.level.GameType;
+import net.minecraft.world.phys.Vec3;
+import net.minecraft.world.scores.DisplaySlot;
+import net.minecraft.world.scores.Objective;
 
 public class PacketFactory {
 
-	public static final EnumPlayerInfoAction ENUM_PLAYER_INFO_ACTION_ADD_PLAYER = EnumPlayerInfoAction.ADD_PLAYER;
-	public static final EnumPlayerInfoAction ENUM_PLAYER_INFO_ACTION_REMOVE_PLAYER = EnumPlayerInfoAction.REMOVE_PLAYER;
-	public static final EnumPlayerInfoAction ENUM_PLAYER_INFO_ACTION_UPDATE_DISPLAY_NAME = EnumPlayerInfoAction.UPDATE_DISPLAY_NAME;
-	public static final EnumPlayerInfoAction ENUM_PLAYER_INFO_ACTION_UPDATE_GAMEMODE = EnumPlayerInfoAction.UPDATE_GAME_MODE;
-	public static final EnumPlayerInfoAction ENUM_PLAYER_INFO_ACTION_UPDATE_LATENCY = EnumPlayerInfoAction.UPDATE_LATENCY;
-
-	public static final Class<?> PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_PLAYER_INFO_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_HEAD_ROTATION_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ANIMATION_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_STATUS_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_SCOREBOARD_DISPLAY_OBJECTIVE_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_EQUIPMENT_CLASS;
-	public static final Class<?> PACKET_PLAY_OUT_ENTITY_METADATA_CLASS;
-
-	public static final Class<?> PACKET_PLAY_IN_USE_ENTITY_CLASS;
-
-	public static final MethodHandle SPAWNENTITYLIVING_ID_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_UUID_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_MOBID_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_X_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_Y_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_Z_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_G_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_H_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_I_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_YAW_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_PITCH_SET;
-	public static final MethodHandle SPAWNENTITYLIVING_L_SET;
-
+	public static final MethodHandle ENTITYTELEPORT_CONSTRUCTOR;
 	public static final MethodHandle ENTITYTELEPORT_ID_SET;
 	public static final MethodHandle ENTITYTELEPORT_ID_GET;
 	public static final MethodHandle ENTITYTELEPORT_X_SET;
@@ -111,329 +74,185 @@ public class PacketFactory {
 	public static final MethodHandle ENTITYTELEPORT_PITCH_SET;
 	public static final MethodHandle ENTITYTELEPORT_ONGROUND_SET;
 
-	public static final MethodHandle NAMEDENTITYSPAWN_ID_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_ID_GET;
-	public static final MethodHandle NAMEDENTITYSPAWN_UUID_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_UUID_GET;
-	public static final MethodHandle NAMEDENTITYSPAWN_X_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_Y_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_Z_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_YAW_SET;
-	public static final MethodHandle NAMEDENTITYSPAWN_PITCH_SET;
-
-	public static final MethodHandle PLAYERINFO_ACTION_SET;
+	public static final MethodHandle PLAYERINFO_CONSTRUCTOR;
+	public static final MethodHandle PLAYERINFO_ACTIONSET_SET;
 	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET;
-	public static final MethodHandle PLAYERINFO_PLAYERLIST_GET;
-
-	public static final MethodHandle ENTITYHEADROTATION_ID_SET;
-	public static final MethodHandle ENTITYHEADROTATION_YAW_SET;
-
-	public static final MethodHandle ANIMATION_ID_SET;
-	public static final MethodHandle ANIMATION_ANIMATIONID_SET;
-
-	public static final MethodHandle ENTITYSTATUS_ID_SET;
-	public static final MethodHandle ENTITYSTATUS_STATUSID_SET;
-
-	public static final MethodHandle SCOREBOARDOBJECTIVE_NAME_SET;
-	public static final MethodHandle SCOREBOARDOBJECTIVE_DISPLAYNAME_SET;
-	public static final MethodHandle SCOREBOARDOBJECTIVE_TYPE_SET;
-	public static final MethodHandle SCOREBOARDOBJECTIVE_ACTION_SET;
-
-	public static final MethodHandle SCOREBOARDDISPLAYOBJECTIVE_SLOTID_SET;
-	public static final MethodHandle SCOREBOARDDISPLAYOBJECTIVE_NAME_SET;
-
-	public static final MethodHandle USE_ENTITY_ID_GET;
-
-	public static final MethodHandle ENTITY_ID_GET;
-	public static final MethodHandle ENTITY_Y_GET;
-	public static final MethodHandle ENTITY_Y_SET;
-
-	public static final MethodHandle ENTITYEQUIPMENT_ID_GET;
-
-	public static final MethodHandle ENTITYMETADATA_ID_GET;
 
 	static {
 		try {
-			PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS = NMSUtils.getNMSClass("PacketPlayOutSpawnEntityLiving");
-			SPAWNENTITYLIVING_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "a");
-			SPAWNENTITYLIVING_UUID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS,
-					"b");
-			SPAWNENTITYLIVING_MOBID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS,
-					"c");
-			SPAWNENTITYLIVING_X_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "d");
-			SPAWNENTITYLIVING_Y_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "e");
-			SPAWNENTITYLIVING_Z_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "f");
-			SPAWNENTITYLIVING_G_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "g");
-			SPAWNENTITYLIVING_H_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "h");
-			SPAWNENTITYLIVING_I_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "i");
-			SPAWNENTITYLIVING_YAW_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "j");
-			SPAWNENTITYLIVING_PITCH_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS,
-					"k");
-			SPAWNENTITYLIVING_L_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SPAWN_ENTITY_LIVING_CLASS, "l");
+			ENTITYTELEPORT_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ClientboundTeleportEntityPacket.class,
+					new Class[] {});
+			ENTITYTELEPORT_ID_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "id");
+			ENTITYTELEPORT_ID_GET = ReflectionUtils.unreflectGetter(ClientboundTeleportEntityPacket.class, "id");
+			ENTITYTELEPORT_X_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "x");
+			ENTITYTELEPORT_Y_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "y");
+			ENTITYTELEPORT_Y_GET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "y");
+			ENTITYTELEPORT_Z_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "z");
+			ENTITYTELEPORT_YAW_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "xRot");
+			ENTITYTELEPORT_PITCH_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "yRot");
+			ENTITYTELEPORT_ONGROUND_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class,
+					"onGround");
 
-			PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntityTeleport");
-			ENTITYTELEPORT_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "a");
-			ENTITYTELEPORT_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "a");
-			ENTITYTELEPORT_X_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "b");
-			ENTITYTELEPORT_Y_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "c");
-			ENTITYTELEPORT_Y_GET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "c");
-			ENTITYTELEPORT_Z_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "d");
-			ENTITYTELEPORT_YAW_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "e");
-			ENTITYTELEPORT_PITCH_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "f");
-			ENTITYTELEPORT_ONGROUND_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_TELEPORT_CLASS, "g");
-
-			PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS = NMSUtils.getNMSClass("PacketPlayOutNamedEntitySpawn");
-			NAMEDENTITYSPAWN_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "a");
-			NAMEDENTITYSPAWN_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "a");
-			NAMEDENTITYSPAWN_UUID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "b");
-			NAMEDENTITYSPAWN_UUID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "b");
-			NAMEDENTITYSPAWN_X_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "c");
-			NAMEDENTITYSPAWN_Y_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "d");
-			NAMEDENTITYSPAWN_Z_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "e");
-			NAMEDENTITYSPAWN_YAW_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "f");
-			NAMEDENTITYSPAWN_PITCH_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_NAMED_ENTITY_SPAWN_CLASS, "g");
-
-			PACKET_PLAY_OUT_PLAYER_INFO_CLASS = NMSUtils.getNMSClass("PacketPlayOutPlayerInfo");
-			PLAYERINFO_ACTION_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_PLAYER_INFO_CLASS, "a");
-			PLAYERINFO_PLAYERLIST_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_PLAYER_INFO_CLASS, "b");
-			PLAYERINFO_PLAYERLIST_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_PLAYER_INFO_CLASS, "b");
-
-			PACKET_PLAY_OUT_ENTITY_HEAD_ROTATION_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntityHeadRotation");
-			ENTITYHEADROTATION_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_HEAD_ROTATION_CLASS,
-					"a");
-			ENTITYHEADROTATION_YAW_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_HEAD_ROTATION_CLASS,
-					"b");
-
-			PACKET_PLAY_OUT_ANIMATION_CLASS = NMSUtils.getNMSClass("PacketPlayOutAnimation");
-			ANIMATION_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ANIMATION_CLASS, "a");
-			ANIMATION_ANIMATIONID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ANIMATION_CLASS, "b");
-
-			PACKET_PLAY_OUT_ENTITY_STATUS_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntityStatus");
-			ENTITYSTATUS_ID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_STATUS_CLASS, "a");
-			ENTITYSTATUS_STATUSID_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_STATUS_CLASS, "b");
-
-			PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS = NMSUtils.getNMSClass("PacketPlayOutScoreboardObjective");
-			SCOREBOARDOBJECTIVE_NAME_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS,
-					"a");
-			SCOREBOARDOBJECTIVE_DISPLAYNAME_SET = ReflectionUtils
-					.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS, "b");
-			SCOREBOARDOBJECTIVE_TYPE_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS,
-					"c");
-			SCOREBOARDOBJECTIVE_ACTION_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_OBJECTIVE_CLASS,
-					"d");
-
-			PACKET_PLAY_OUT_SCOREBOARD_DISPLAY_OBJECTIVE_CLASS = NMSUtils
-					.getNMSClass("PacketPlayOutScoreboardDisplayObjective");
-			SCOREBOARDDISPLAYOBJECTIVE_SLOTID_SET = ReflectionUtils
-					.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_DISPLAY_OBJECTIVE_CLASS, "a");
-			SCOREBOARDDISPLAYOBJECTIVE_NAME_SET = ReflectionUtils
-					.unreflectSetter(PACKET_PLAY_OUT_SCOREBOARD_DISPLAY_OBJECTIVE_CLASS, "b");
-
-			PACKET_PLAY_IN_USE_ENTITY_CLASS = NMSUtils.getNMSClass("PacketPlayInUseEntity");
-			USE_ENTITY_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_IN_USE_ENTITY_CLASS, "a");
-
-			PACKET_PLAY_OUT_ENTITY_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntity");
-			ENTITY_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_ENTITY_CLASS, "a");
-			ENTITY_Y_SET = ReflectionUtils.unreflectSetter(PACKET_PLAY_OUT_ENTITY_CLASS, "c");
-			ENTITY_Y_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_ENTITY_CLASS, "c");
-
-			PACKET_PLAY_OUT_ENTITY_EQUIPMENT_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntityEquipment");
-			ENTITYEQUIPMENT_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_ENTITY_EQUIPMENT_CLASS, "a");
-
-			PACKET_PLAY_OUT_ENTITY_METADATA_CLASS = NMSUtils.getNMSClass("PacketPlayOutEntityMetadata");
-			ENTITYMETADATA_ID_GET = ReflectionUtils.unreflectGetter(PACKET_PLAY_OUT_ENTITY_METADATA_CLASS, "a");
-
-		} catch (NoSuchFieldException | SecurityException | ClassNotFoundException | IllegalAccessException e) {
+			PLAYERINFO_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ClientboundPlayerInfoUpdatePacket.class,
+					new Class[] {});
+			PLAYERINFO_ACTIONSET_SET = ReflectionUtils.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class,
+					"actions");
+			PLAYERINFO_PLAYERLIST_SET = ReflectionUtils.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class,
+					"entries");
+		} catch (NoSuchMethodException | NoSuchFieldException | SecurityException | IllegalAccessException e) {
 			Logger.err("PacketFactory: Error on packet field reflection!", e);
 			throw new RuntimeException();
 		}
 	}
 
-	public static PacketPlayOutSpawnEntity packetEntitySpawn(Entity entity) {
-		return new PacketPlayOutSpawnEntity(entity);
+	public static ClientboundAddEntityPacket packetEntitySpawn(Entity entity) {
+		return new ClientboundAddEntityPacket(entity);
 	}
 
-	public static PacketPlayOutSpawnEntity packetEntitySpawn(Entity entity, int flag) {
-		return new PacketPlayOutSpawnEntity(entity, flag);
+	public static ClientboundAddEntityPacket packetEntitySpawn(Entity entity, int flag) {
+		return new ClientboundAddEntityPacket(entity, flag);
 	}
 
-	public static PacketPlayOutSpawnEntity packetEntitySpawn(Entity entity, EntityTypes<?> type, int flag,
-			BlockPosition pos) {
-		return new PacketPlayOutSpawnEntity(entity, type, flag, pos);
+	public static ClientboundAddEntityPacket packetEntitySpawn(Entity entity, int flag, BlockPos pos) {
+		return new ClientboundAddEntityPacket(entity, flag, pos);
 	}
 
-	public static PacketPlayOutSpawnEntity packetEntitySpawn(int id, UUID uuid, double x, double y, double z, float yaw,
-			float pitch, EntityTypes<?> type, int flag, Vec3D vec) {
-		return new PacketPlayOutSpawnEntity(id, uuid, x, y, z, yaw, pitch, type, flag, vec);
+	public static ClientboundAddEntityPacket packetEntitySpawn(int id, UUID uuid, double x, double y, double z,
+			float yaw, float pitch, EntityType<?> type) {
+		return packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, type, 0, Vec3.ZERO, 0.0);
 	}
 
-	public static PacketPlayOutEntityDestroy packetEntityDestroy(int... id) {
-		return new PacketPlayOutEntityDestroy(id);
+	public static ClientboundAddEntityPacket packetEntitySpawn(int id, UUID uuid, double x, double y, double z,
+			float yaw, float pitch, EntityType<?> type, int flag) {
+		return packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, type, flag, Vec3.ZERO, 0.0);
 	}
 
-	public static PacketPlayOutSpawnEntityLiving packetEntityLivingSpawn(EntityLiving entity) {
-		return new PacketPlayOutSpawnEntityLiving(entity);
+	public static ClientboundAddEntityPacket packetEntitySpawn(int id, UUID uuid, double x, double y, double z,
+			float yaw, float pitch, EntityType<?> type, int flag, Vec3 vec) {
+		return packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, type, flag, vec, 0.0);
 	}
 
-	public static PacketPlayOutSpawnEntityLiving packetEntityLivingSpawn(EntityLiving entity, int id) {
-		PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving(entity);
+	public static ClientboundAddEntityPacket packetEntitySpawn(int id, UUID uuid, double x, double y, double z,
+			float yaw, float pitch, EntityType<?> type, int flag, Vec3 vec, double d) {
+		return new ClientboundAddEntityPacket(id, uuid, x, y, z, toCompressedAngle(yaw), toCompressedAngle(pitch), type,
+				flag, vec, d);
+	}
+
+	public static ClientboundRemoveEntitiesPacket packetEntityDestroy(int... id) {
+		return new ClientboundRemoveEntitiesPacket(id);
+	}
+
+	public static ClientboundRemoveEntitiesPacket packetEntityDestroy(IntList id) {
+		return new ClientboundRemoveEntitiesPacket(id);
+	}
+
+	public static ClientboundSetEquipmentPacket packetEntityEquipment(int id,
+			net.minecraft.world.entity.EquipmentSlot slot, net.minecraft.world.item.ItemStack item) {
+		List<Pair<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>> list = new ArrayList<Pair<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>>();
+		list.add(new Pair<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>(slot, item));
+		return new ClientboundSetEquipmentPacket(id, list);
+	}
+
+	public static ClientboundSetEquipmentPacket packetEntityEquipment(int id,
+			List<Pair<net.minecraft.world.entity.EquipmentSlot, net.minecraft.world.item.ItemStack>> list) {
+		return new ClientboundSetEquipmentPacket(id, list);
+	}
+
+	public static ClientboundSetEntityDataPacket packetEntityMetadata(int id, List<DataValue<?>> data) {
+		return new ClientboundSetEntityDataPacket(id, data);
+	}
+
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(
+			ClientboundPlayerInfoUpdatePacket.Action infoAction, ServerPlayer player) {
+		return new ClientboundPlayerInfoUpdatePacket(infoAction, player);
+	}
+
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(
+			EnumSet<ClientboundPlayerInfoUpdatePacket.Action> infoAction, Collection<ServerPlayer> player) {
+		return new ClientboundPlayerInfoUpdatePacket(infoAction, player);
+	}
+
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(UUID uuid, GameProfile profile, int paramInt,
+			GameType gamemode, Component chatComponent, ClientboundPlayerInfoUpdatePacket.Action action) {
 		try {
-			SPAWNENTITYLIVING_ID_SET.invoke(packet, id);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutSpawnEntityLiving!", e);
-		}
-		return packet;
-	}
-
-	public static PacketPlayOutSpawnEntityLiving packetEntityLivingSpawn(int id, UUID uuid, int mobID, Location loc) {
-		return packetEntityLivingSpawn(mobID, uuid, mobID, loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(),
-				loc.getPitch());
-	}
-
-	public static PacketPlayOutSpawnEntityLiving packetEntityLivingSpawn(int id, UUID uuid, int mobID, double x,
-			double y, double z, float yaw, float pitch) {
-		PacketPlayOutSpawnEntityLiving packet = new PacketPlayOutSpawnEntityLiving();
-		try {
-			SPAWNENTITYLIVING_ID_SET.invoke(packet, id);
-			SPAWNENTITYLIVING_UUID_SET.invoke(packet, uuid);
-			SPAWNENTITYLIVING_MOBID_SET.invoke(packet, mobID);
-			SPAWNENTITYLIVING_X_SET.invoke(packet, x);
-			SPAWNENTITYLIVING_Y_SET.invoke(packet, y);
-			SPAWNENTITYLIVING_Z_SET.invoke(packet, z);
-			SPAWNENTITYLIVING_G_SET.invoke(packet, 0);
-			SPAWNENTITYLIVING_H_SET.invoke(packet, 0);
-			SPAWNENTITYLIVING_I_SET.invoke(packet, 0);
-			SPAWNENTITYLIVING_YAW_SET.invoke(packet, toCompressedAngle(yaw));
-			SPAWNENTITYLIVING_PITCH_SET.invoke(packet, toCompressedAngle(pitch));
-			SPAWNENTITYLIVING_L_SET.invoke(packet, (byte) 0);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutSpawnEntityLiving!", e);
-		}
-		return packet;
-	}
-
-	public static PacketPlayOutNamedEntitySpawn packetNamedEntitySpawn(EntityHuman entity) {
-		return new PacketPlayOutNamedEntitySpawn(entity);
-	}
-
-	public static PacketPlayOutNamedEntitySpawn packetNamedEntitySpawn(EntityHuman entity, int id) {
-		PacketPlayOutNamedEntitySpawn packet = new PacketPlayOutNamedEntitySpawn(entity);
-		try {
-			NAMEDENTITYSPAWN_ID_SET.invoke(packet, id);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutNamedEntitySpawn!", e);
-		}
-		return packet;
-	}
-
-	public static PacketPlayOutNamedEntitySpawn packetNamedEntitySpawn(int id, UUID uuid, Location loc,
-			DataWatcher dataWatcher) {
-		return packetNamedEntitySpawn(id, uuid, loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
-	}
-
-	public static PacketPlayOutNamedEntitySpawn packetNamedEntitySpawn(int id, UUID uuid, double x, double y, double z,
-			float yaw, float pitch) {
-		PacketPlayOutNamedEntitySpawn packet = new PacketPlayOutNamedEntitySpawn();
-		try {
-			NAMEDENTITYSPAWN_ID_SET.invoke(packet, id);
-			NAMEDENTITYSPAWN_UUID_SET.invoke(packet, uuid);
-			NAMEDENTITYSPAWN_X_SET.invoke(packet, x);
-			NAMEDENTITYSPAWN_Y_SET.invoke(packet, y);
-			NAMEDENTITYSPAWN_Z_SET.invoke(packet, z);
-			NAMEDENTITYSPAWN_YAW_SET.invoke(packet, toCompressedAngle(yaw));
-			NAMEDENTITYSPAWN_PITCH_SET.invoke(packet, toCompressedAngle(pitch));
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutNamedEntitySpawn!", e);
-		}
-		return packet;
-	}
-
-	public static PacketPlayOutEntityEquipment packetEntityEquipment(int id, EnumItemSlot slot, ItemStack is) {
-		return new PacketPlayOutEntityEquipment(id, slot, CraftItemStack.asNMSCopy(is));
-	}
-
-	public static PacketPlayOutEntityEquipment packetEntityEquipment(int id, EnumItemSlot slot,
-			net.minecraft.server.v1_15_R1.ItemStack is) {
-		return new PacketPlayOutEntityEquipment(id, slot, is);
-	}
-
-	public static PacketPlayOutEntityMetadata packetEntityMetadata(int id, DataWatcher dataWatcher, boolean bool) {
-		return new PacketPlayOutEntityMetadata(id, dataWatcher, bool);
-	}
-
-	public static PacketPlayOutPlayerInfo packetPlayerInfo(EnumPlayerInfoAction infoAction, EntityPlayer... player) {
-		return new PacketPlayOutPlayerInfo(infoAction, player);
-	}
-
-	public static PacketPlayOutPlayerInfo packetPlayerInfo(EnumPlayerInfoAction infoAction,
-			Iterable<EntityPlayer> player) {
-		return new PacketPlayOutPlayerInfo(infoAction, player);
-	}
-
-	public static PacketPlayOutPlayerInfo packetPlayerInfo(GameProfile profile, int paramInt, EnumGamemode gamemode,
-			IChatBaseComponent chatComponent, EnumPlayerInfoAction infoAction) {
-		PacketPlayOutPlayerInfo playerInfo = new PacketPlayOutPlayerInfo();
-		try {
-			List<PlayerInfoData> players = (List<PlayerInfoData>) PLAYERINFO_PLAYERLIST_GET.invoke(playerInfo);
-			players.add(playerInfo.new PlayerInfoData(profile, paramInt, gamemode, chatComponent));
-			PLAYERINFO_ACTION_SET.invoke(playerInfo, infoAction);
-			PLAYERINFO_PLAYERLIST_SET.invoke(playerInfo, players);
+			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) PLAYERINFO_CONSTRUCTOR
+					.invoke();
+			Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
+			actionSet.add(action);
+			PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
+			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
+			entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(uuid, profile, false, paramInt, gamemode,
+					chatComponent, null));
+			PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
+			return packet;
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
+			return null;
 		}
-		return playerInfo;
 	}
 
-	public static PacketPlayOutPlayerInfo packetPlayerInfo_(EnumPlayerInfoAction infoAction, GameProfile profile) {
-		PacketPlayOutPlayerInfo playerInfo = new PacketPlayOutPlayerInfo();
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action action,
+			GameProfile profile) {
+		Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
+		actionSet.add(action);
+		List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
+		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(profile.getId(), profile, false, 0, GameType.SURVIVAL,
+				NMS.createChatComponent(""), null));
+		return packetPlayerInfo_(actionSet, entryList);
+	}
+
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo_(
+			Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet,
+			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList) {
+
 		try {
-			List<PlayerInfoData> players = (List<PlayerInfoData>) PLAYERINFO_PLAYERLIST_GET.invoke(playerInfo);
-			players.add(playerInfo.new PlayerInfoData(profile, 0, EnumGamemode.SURVIVAL, null));
-			PLAYERINFO_ACTION_SET.invoke(playerInfo, infoAction);
-			PLAYERINFO_PLAYERLIST_SET.invoke(playerInfo, players);
+			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) PLAYERINFO_CONSTRUCTOR
+					.invoke();
+			PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
+			PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
+			return packet;
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
+			return null;
 		}
-		return playerInfo;
 	}
 
-	public static PacketPlayOutPlayerInfo packetPlayerInfo_(EnumPlayerInfoAction infoAction,
-			Iterable<GameProfile> profiles) {
-		PacketPlayOutPlayerInfo playerInfo = new PacketPlayOutPlayerInfo();
-		try {
-			List<PlayerInfoData> players = (List<PlayerInfoData>) PLAYERINFO_PLAYERLIST_GET.invoke(playerInfo);
-			for (GameProfile profile : profiles)
-				players.add(playerInfo.new PlayerInfoData(profile, 0, EnumGamemode.SURVIVAL, null));
-			PLAYERINFO_ACTION_SET.invoke(playerInfo, infoAction);
-			PLAYERINFO_PLAYERLIST_SET.invoke(playerInfo, players);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
-		}
-		return playerInfo;
+	public static ClientboundPlayerInfoRemovePacket packetPlayerInfoRemove(UUID uuid) {
+		return new ClientboundPlayerInfoRemovePacket(Arrays.asList(uuid));
 	}
 
-	public static PacketPlayOutRelEntityMoveLook packetRelEntityMoveLook(int id, short x, short y, short z, float yaw,
-			float pitch, boolean onGround) {
-		return new PacketPlayOutEntity.PacketPlayOutRelEntityMoveLook(id, x, y, z, toCompressedAngle(yaw),
-				toCompressedAngle(pitch), onGround);
+	public static ClientboundPlayerInfoRemovePacket packetPlayerInfoRemove(List<UUID> uuids) {
+		return new ClientboundPlayerInfoRemovePacket(uuids);
 	}
 
-	public static PacketPlayOutRelEntityMove packetRelativeMove(int id, short x, short y, short z, boolean onGround) {
-		return new PacketPlayOutEntity.PacketPlayOutRelEntityMove(id, x, y, z, onGround);
+	public static ClientboundMoveEntityPacket.Pos packetRelativeMove(int id, short x, short y, short z,
+			boolean onGround) {
+		return new ClientboundMoveEntityPacket.Pos(id, x, y, z, onGround);
 	}
 
-	public static PacketPlayOutEntityTeleport packetEntityTeleport(Entity entity) {
-		return new PacketPlayOutEntityTeleport(entity);
+	public static ClientboundMoveEntityPacket.Rot packetRelativeLook(int id, float yaw, float pitch, boolean onGround) {
+		return new ClientboundMoveEntityPacket.Rot(id, toCompressedAngle(yaw), toCompressedAngle(pitch), onGround);
 	}
 
-	public static PacketPlayOutEntityTeleport packetEntityTeleport(int id, Location loc, boolean onGround) {
+	public static ClientboundMoveEntityPacket.PosRot packetRelEntityMoveLook(int id, short x, short y, short z,
+			float yaw, float pitch, boolean onGround) {
+		return new ClientboundMoveEntityPacket.PosRot(id, x, y, z, toCompressedAngle(yaw), toCompressedAngle(pitch),
+				onGround);
+	}
+
+	public static ClientboundTeleportEntityPacket packetEntityTeleport(Entity entity) {
+		return new ClientboundTeleportEntityPacket(entity);
+	}
+
+	public static ClientboundTeleportEntityPacket packetEntityTeleport(int id, Location loc, boolean onGround) {
 		return packetEntityTeleport(id, loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch(), onGround);
 	}
 
-	public static PacketPlayOutEntityTeleport packetEntityTeleport(int id, double x, double y, double z, float yaw,
+	public static ClientboundTeleportEntityPacket packetEntityTeleport(int id, double x, double y, double z, float yaw,
 			float pitch, boolean onGround) {
-		PacketPlayOutEntityTeleport packet = new PacketPlayOutEntityTeleport();
 		try {
+			ClientboundTeleportEntityPacket packet = (ClientboundTeleportEntityPacket) ENTITYTELEPORT_CONSTRUCTOR
+					.invoke();
 			ENTITYTELEPORT_ID_SET.invoke(packet, id);
 			ENTITYTELEPORT_X_SET.invoke(packet, x);
 			ENTITYTELEPORT_Y_SET.invoke(packet, y);
@@ -441,195 +260,121 @@ public class PacketFactory {
 			ENTITYTELEPORT_YAW_SET.invoke(packet, toCompressedAngle(yaw));
 			ENTITYTELEPORT_PITCH_SET.invoke(packet, toCompressedAngle(pitch));
 			ENTITYTELEPORT_ONGROUND_SET.invoke(packet, onGround);
+			return packet;
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutEntityTeleport!", e);
+			return null;
 		}
-		return packet;
 	}
 
-	public static PacketPlayOutPosition packetPosition(double x, double y, double z, float yaw, float pitch,
-			Set<EnumPlayerTeleportFlags> teleportFlags, int id) {
-		return new PacketPlayOutPosition(x, y, z, yaw, pitch, teleportFlags, id);
+	public static ClientboundRotateHeadPacket packetHeadRotation(Entity entity, float yaw) {
+		return new ClientboundRotateHeadPacket(entity, toCompressedAngle(yaw));
 	}
 
-	public static PacketPlayOutEntityHeadRotation packetHeadRotation(Entity entity, float yaw) {
-		return new PacketPlayOutEntityHeadRotation(entity, toCompressedAngle(yaw));
+	public static ClientboundAnimatePacket packetAnimation(Entity entity, int id) {
+		return new ClientboundAnimatePacket(entity, id);
 	}
 
-	public static PacketPlayOutEntityHeadRotation packetHeadRotation(int id, float yaw) {
-		PacketPlayOutEntityHeadRotation packet = new PacketPlayOutEntityHeadRotation();
-		try {
-			ENTITYHEADROTATION_ID_SET.invoke(packet, id);
-			ENTITYHEADROTATION_YAW_SET.invoke(packet, toCompressedAngle(yaw));
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutEntityHeadRotation!", e);
-		}
-		return packet;
+	public static ClientboundEntityEventPacket packetEntityStatus(Entity entity, byte statusId) {
+		return new ClientboundEntityEventPacket(entity, statusId);
 	}
 
-	public static PacketPlayOutAnimation packetAnimation(Entity entity, int animationId) {
-		return new PacketPlayOutAnimation(entity, animationId);
+	public static ClientboundSetObjectivePacket packetScoreboardSetObjective(Objective objective, int method) {
+		return new ClientboundSetObjectivePacket(objective, method);
 	}
 
-	public static PacketPlayOutAnimation packetAnimation(int id, int animationId) {
-		PacketPlayOutAnimation packet = new PacketPlayOutAnimation();
-		try {
-			ANIMATION_ID_SET.invoke(packet, id);
-			ANIMATION_ANIMATIONID_SET.invoke(packet, animationId);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutAnimation!", e);
-		}
-		return packet;
+	public static ClientboundSetDisplayObjectivePacket packetScoreboardSetDisplayObjective(DisplaySlot slot,
+			Objective objective) {
+		return new ClientboundSetDisplayObjectivePacket(slot, objective);
 	}
 
-	public static PacketPlayOutEntityStatus packetEntityStatus(Entity entity, byte statusId) {
-		return new PacketPlayOutEntityStatus(entity, statusId);
+	public static ClientboundSetScorePacket packetScoreboardSetScore(String owner, String name, int score) {
+		return packetScoreboardSetScore(owner, name, score, Optional.empty(), Optional.empty());
 	}
 
-	public static PacketPlayOutEntityStatus packetEntityStatus(int id, byte statusId) {
-		PacketPlayOutEntityStatus packet = new PacketPlayOutEntityStatus();
-		try {
-			ENTITYSTATUS_ID_SET.invoke(packet, id);
-			ENTITYSTATUS_STATUSID_SET.invoke(packet, statusId);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutEntityStatus!", e);
-		}
-		return packet;
+	public static ClientboundSetScorePacket packetScoreboardSetScore(String owner, String name, int score,
+			Optional<Component> display, Optional<NumberFormat> format) {
+		return new ClientboundSetScorePacket(owner, name, score, display, format);
 	}
 
-	public static PacketPlayOutScoreboardObjective packetScoreboardObjective(ScoreboardObjective objective,
-			int action) {
-		return new PacketPlayOutScoreboardObjective(objective, action);
+	public static ClientboundResetScorePacket packetScoreboardResetScore(String owner, String name) {
+		return new ClientboundResetScorePacket(owner, name);
 	}
 
-	public static PacketPlayOutScoreboardObjective packetScoreboardObjective(String name,
-			IChatBaseComponent displayName, EnumScoreboardHealthDisplay scoreDisplayType, int action) {
-		PacketPlayOutScoreboardObjective packet = new PacketPlayOutScoreboardObjective();
-		try {
-			SCOREBOARDOBJECTIVE_NAME_SET.invoke(packet, name);
-			SCOREBOARDOBJECTIVE_DISPLAYNAME_SET.invoke(packet, displayName);
-			SCOREBOARDOBJECTIVE_TYPE_SET.invoke(packet, scoreDisplayType);
-			SCOREBOARDOBJECTIVE_ACTION_SET.invoke(packet, action);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutScoreboardObjective!", e);
-		}
-		return packet;
+	public static ClientboundSystemChatPacket packetChat(BaseComponent[] components, boolean overlay) {
+		return new ClientboundSystemChatPacket(components, overlay);
 	}
 
-	public static PacketPlayOutScoreboardDisplayObjective packetScoreboardDisplayObjective(int i,
-			ScoreboardObjective objective) {
-		return new PacketPlayOutScoreboardDisplayObjective(i, objective);
+	public static ClientboundSystemChatPacket packetChat(Component component, boolean overlay) {
+		return new ClientboundSystemChatPacket(component, overlay);
 	}
 
-	public static PacketPlayOutScoreboardDisplayObjective packetScoreboardDisplayObjective(int i, String name) {
-		PacketPlayOutScoreboardDisplayObjective packet = new PacketPlayOutScoreboardDisplayObjective();
-		try {
-			SCOREBOARDDISPLAYOBJECTIVE_SLOTID_SET.invoke(packet, i);
-			SCOREBOARDDISPLAYOBJECTIVE_NAME_SET.invoke(packet, name);
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutScoreboardDisplayObjective!", e);
-		}
-		return packet;
+	public static ClientboundContainerSetSlotPacket packetSetSlot(int id, int slot, ItemStack is) {
+		return new ClientboundContainerSetSlotPacket(id, 1, slot, CraftItemStack.asNMSCopy(is));
 	}
 
-	public static PacketPlayOutScoreboardScore packetScoreboardScoreChange(@Nullable String objectiveName,
-			String scoreName, int score) {
-		return new PacketPlayOutScoreboardScore(ScoreboardServer.Action.CHANGE, objectiveName, scoreName, score);
+	public static ClientboundContainerSetSlotPacket packetSetSlot(int id, int slot,
+			net.minecraft.world.item.ItemStack is) {
+		return new ClientboundContainerSetSlotPacket(id, 1, slot, is);
 	}
 
-	public static PacketPlayOutScoreboardScore packetScoreboardScoreRemove(@Nullable String objectiveName,
-			String scoreName) {
-		return new PacketPlayOutScoreboardScore(ScoreboardServer.Action.REMOVE, objectiveName, scoreName, 0);
+	public static ClientboundContainerSetSlotPacket packetSetSlot(int id, int state, int slot, ItemStack is) {
+		return new ClientboundContainerSetSlotPacket(id, state, slot, CraftItemStack.asNMSCopy(is));
 	}
 
-	public static PacketPlayOutChat packetChat(String msg) {
-		return new PacketPlayOutChat(new ChatMessage(msg));
+	public static ClientboundContainerSetSlotPacket packetSetSlot(int id, int state, int slot,
+			net.minecraft.world.item.ItemStack is) {
+		return new ClientboundContainerSetSlotPacket(id, state, slot, is);
 	}
 
-	public static PacketPlayOutChat packetChat(IChatBaseComponent chatComponent) {
-		return new PacketPlayOutChat(chatComponent);
-	}
-
-	public static PacketPlayOutChat packetChat(String msg, ChatMessageType type) {
-		return new PacketPlayOutChat(new ChatMessage(msg), type);
-	}
-
-	public static PacketPlayOutChat packetChat(IChatBaseComponent chatComponent, ChatMessageType type) {
-		return new PacketPlayOutChat(chatComponent, type);
-	}
-
-	public static PacketPlayOutSetSlot packetSetSlot(int windowId, int slot, ItemStack is) {
-		return new PacketPlayOutSetSlot(windowId, slot, CraftItemStack.asNMSCopy(is));
-	}
-
-	public static PacketPlayOutSetSlot packetSetSlot(int windowId, int slot,
-			net.minecraft.server.v1_15_R1.ItemStack is) {
-		return new PacketPlayOutSetSlot(windowId, slot, is);
-	}
-
-	public static <T extends ParticleParam> PacketPlayOutWorldParticles packetParticles(T particle,
+	public static <T extends ParticleOptions> ClientboundLevelParticlesPacket packetParticles(T particle,
 			boolean longDistance, Location loc, float offsetX, float offsetY, float offsetZ, float data, int count) {
-		return new PacketPlayOutWorldParticles(particle, longDistance, loc.getX(), loc.getY(), loc.getZ(), offsetX,
+		return new ClientboundLevelParticlesPacket(particle, longDistance, loc.getX(), loc.getY(), loc.getZ(), offsetX,
 				offsetY, offsetZ, data, count);
 	}
 
-	public static <T extends ParticleParam> PacketPlayOutWorldParticles packetParticles(T particle,
+	public static <T extends ParticleOptions> ClientboundLevelParticlesPacket packetParticles(T particle,
 			boolean longDistance, Location loc, float offset, float data, int count) {
-		return new PacketPlayOutWorldParticles(particle, longDistance, loc.getX(), loc.getY(), loc.getZ(), offset,
+		return new ClientboundLevelParticlesPacket(particle, longDistance, loc.getX(), loc.getY(), loc.getZ(), offset,
 				offset, offset, data, count);
 	}
 
-	public static <T extends ParticleParam> PacketPlayOutWorldParticles packetParticles(T particle,
+	public static <T extends ParticleOptions> ClientboundLevelParticlesPacket packetParticles(T particle,
 			boolean longDistance, double x, double y, double z, float offsetX, float offsetY, float offsetZ, float data,
 			int count) {
-		return new PacketPlayOutWorldParticles(particle, longDistance, x, y, z, offsetX, offsetY, offsetZ, data, count);
+		return new ClientboundLevelParticlesPacket(particle, longDistance, x, y, z, offsetX, offsetY, offsetZ, data,
+				count);
 	}
 
-	public static <T extends ParticleParam> PacketPlayOutWorldParticles packetParticles(T particle,
+	public static <T extends ParticleOptions> ClientboundLevelParticlesPacket packetParticles(T particle,
 			boolean longDistance, double x, double y, double z, float offset, float data, int count) {
-		return new PacketPlayOutWorldParticles(particle, longDistance, x, y, z, offset, offset, offset, data, count);
+		return new ClientboundLevelParticlesPacket(particle, longDistance, x, y, z, offset, offset, offset, data,
+				count);
 	}
 
-	public static PacketPlayOutOpenWindow packetOpenWindow(int windowId, Containers<?> containers, String title) {
-		return new PacketPlayOutOpenWindow(windowId, containers, new ChatMessage(title));
+	public static ClientboundOpenScreenPacket packetOpenWindow(int windowId, MenuType<?> type, Component component) {
+		return new ClientboundOpenScreenPacket(windowId, type, component);
 	}
 
-	public static PacketPlayOutOpenWindow packetOpenWindow(int windowId, Containers<?> containers,
-			IChatBaseComponent title) {
-		return new PacketPlayOutOpenWindow(windowId, containers, title);
+	public static ClientboundOpenScreenPacket packetOpenWindow(AbstractContainerMenu container) {
+		return new ClientboundOpenScreenPacket(container.containerId, container.getType(), container.getTitle());
 	}
 
-	public static PacketPlayOutOpenWindow packetOpenWindow(Container container) {
-		return new PacketPlayOutOpenWindow(container.windowId, container.getType(), container.getTitle());
+	public static ClientboundOpenScreenPacket packetOpenWindow(AbstractContainerMenu container, Component title) {
+		return new ClientboundOpenScreenPacket(container.containerId, container.getType(), title);
 	}
 
-	public static PacketPlayOutOpenWindow packetOpenWindow(Container container, String title) {
-		return new PacketPlayOutOpenWindow(container.windowId, container.getType(), new ChatMessage(title));
+	public static ClientboundOpenBookPacket packetOpenWindow(EquipmentSlot slot) {
+		return slot == EquipmentSlot.HAND ? new ClientboundOpenBookPacket(InteractionHand.MAIN_HAND)
+				: new ClientboundOpenBookPacket(InteractionHand.OFF_HAND);
 	}
 
-	public static PacketPlayOutOpenWindow packetOpenWindow(Container container, IChatBaseComponent title) {
-		return new PacketPlayOutOpenWindow(container.windowId, container.getType(), title);
+	public static ClientboundOpenBookPacket packetOpenWindow(InteractionHand hand) {
+		return new ClientboundOpenBookPacket(hand);
 	}
 
-	public static PacketPlayOutOpenBook packetOpenWindow(EquipmentSlot slot) {
-		return slot == EquipmentSlot.HAND ? new PacketPlayOutOpenBook(EnumHand.MAIN_HAND)
-				: new PacketPlayOutOpenBook(EnumHand.OFF_HAND);
-	}
-
-	public static PacketPlayOutOpenBook packetOpenWindow(EnumHand hand) {
-		return new PacketPlayOutOpenBook(hand);
-	}
-
-	public static PacketPlayOutPlayerListHeaderFooter packetPlayerListHeaderFooter(String header, String footer) {
-		return packetPlayerListHeaderFooter(new ChatMessage(header), new ChatMessage(footer));
-	}
-
-	public static PacketPlayOutPlayerListHeaderFooter packetPlayerListHeaderFooter(IChatBaseComponent header,
-			IChatBaseComponent footer) {
-		PacketPlayOutPlayerListHeaderFooter packet = new PacketPlayOutPlayerListHeaderFooter();
-		packet.header = header;
-		packet.footer = footer;
-		return packet;
+	public static ClientboundTabListPacket packetPlayerListHeaderFooter(Component header, Component footer) {
+		return new ClientboundTabListPacket(header, footer);
 	}
 
 	private static byte toCompressedAngle(float f) {

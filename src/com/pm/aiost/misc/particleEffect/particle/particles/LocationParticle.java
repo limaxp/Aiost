@@ -22,9 +22,10 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class LocationParticle<T> extends DataParticle<T> {
 
@@ -96,7 +97,7 @@ public class LocationParticle<T> extends DataParticle<T> {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		x = nbt.getDouble("x");
 		y = nbt.getDouble("y");
@@ -104,11 +105,11 @@ public class LocationParticle<T> extends DataParticle<T> {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setDouble("x", x);
-		nbt.setDouble("y", y);
-		nbt.setDouble("z", z);
+		nbt.putDouble("x", x);
+		nbt.putDouble("y", y);
+		nbt.putDouble("z", z);
 	}
 
 	@Override

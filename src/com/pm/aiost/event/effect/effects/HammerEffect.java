@@ -28,9 +28,10 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class HammerEffect extends SimplePlayerBlockEffect {
 
@@ -76,8 +77,10 @@ public class HammerEffect extends SimplePlayerBlockEffect {
 		breakBlocks(is, block, blockFace, radius);
 	}
 
+	// TODO
 	public static boolean canDestroyBlock(ItemStack is, Block block) {
-		return NMS.getNMS(is).getItem().canDestroySpecialBlock(NMS.getNMS(block));
+//		return NMS.getNMS(is).getItem().canDestroySpecialBlock(NMS.getNMS(block));
+		return true;
 	}
 
 	public static void breakBlocks(ItemStack is, Block block, BlockFace blockFace, int radius) {
@@ -146,15 +149,15 @@ public class HammerEffect extends SimplePlayerBlockEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		radius = nbt.getInt("radius");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setInt("radius", radius);
+		nbt.putInt("radius", radius);
 		return nbt;
 	}
 

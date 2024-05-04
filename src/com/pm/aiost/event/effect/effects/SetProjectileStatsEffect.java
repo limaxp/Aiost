@@ -20,8 +20,9 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class SetProjectileStatsEffect extends Effect {
 
@@ -87,7 +88,7 @@ public class SetProjectileStatsEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 		fireTicks = nbt.getInt("fireTicks");
@@ -95,11 +96,11 @@ public class SetProjectileStatsEffect extends Effect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
-		nbt.setInt("fireTicks", fireTicks);
-		nbt.setBoolean("hasGravity", hasGravity);
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putInt("fireTicks", fireTicks);
+		nbt.putBoolean("hasGravity", hasGravity);
 		return nbt;
 	}
 

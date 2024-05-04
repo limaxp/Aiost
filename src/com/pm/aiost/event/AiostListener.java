@@ -74,7 +74,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.pm.aiost.block.CustomBlock;
-import com.pm.aiost.entity.spawner.AiostSpawnerCreature;
 import com.pm.aiost.event.effect.EffectAction;
 import com.pm.aiost.event.effect.EffectHandler;
 import com.pm.aiost.event.effect.collection.EffectData;
@@ -204,9 +203,9 @@ public class AiostListener implements Listener {
 		Player player = serverPlayer.player;
 		if (player.getVelocity().getY() > 0) {
 			double jumpVelocity = (double) 0.42F;
-			if (player.hasPotionEffect(PotionEffectType.JUMP))
-				jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP).getAmplifier() + 1)
-						* 0.1F);
+			if (player.hasPotionEffect(PotionEffectType.JUMP_BOOST))
+				jumpVelocity += (double) ((float) (player.getPotionEffect(PotionEffectType.JUMP_BOOST).getAmplifier()
+						+ 1) * 0.1F);
 
 			if (player.getLocation().getBlock().getType() != Material.LADDER && serverPlayer.onGround) {
 				if (!player.isOnGround() && Double.compare(player.getVelocity().getY(), jumpVelocity) == 0) {
@@ -681,7 +680,7 @@ public class AiostListener implements Listener {
 		if (event.isCancelled())
 			return;
 
-		AiostSpawnerCreature.onCreatureSpawn(event);
+//		AiostSpawnerCreature.onCreatureSpawn(event);
 		if (event.isCancelled())
 			return;
 

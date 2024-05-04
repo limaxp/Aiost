@@ -19,8 +19,9 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.particleEffect.particle.particles.AnimationParticle;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.Geometric;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class Ball extends AnimationParticle {
 
@@ -82,7 +83,7 @@ public class Ball extends AnimationParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		radius = nbt.getDouble("radius");
 		upSize = nbt.getInt("upSize");
@@ -90,11 +91,11 @@ public class Ball extends AnimationParticle {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setDouble("radius", radius);
-		nbt.setInt("upSize", upSize);
-		nbt.setInt("sideSize", sideSize);
+		nbt.putDouble("radius", radius);
+		nbt.putInt("upSize", upSize);
+		nbt.putInt("sideSize", sideSize);
 	}
 
 	@Override

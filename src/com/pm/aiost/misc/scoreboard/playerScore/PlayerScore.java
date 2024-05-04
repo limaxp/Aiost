@@ -18,18 +18,18 @@ public class PlayerScore extends AbstractPlayerScore {
 
 	public void setScore(int score) {
 		this.score = score;
-		PacketSender.send(player, PacketFactory.packetScoreboardScoreChange(objectiveName, name, score));
+		PacketSender.send(player, PacketFactory.packetScoreboardSetScore(objectiveName, name, score));
 	}
 
 	public void setName(String name) {
 		remove();
-		PacketSender.send(player, PacketFactory.packetScoreboardScoreChange(objectiveName, name, score));
+		PacketSender.send(player, PacketFactory.packetScoreboardSetScore(objectiveName, name, score));
 		this.name = name;
 	}
 
 	@Override
 	public void remove() {
-		PacketSender.send(player, PacketFactory.packetScoreboardScoreRemove(objectiveName, name));
+		PacketSender.send(player, PacketFactory.packetScoreboardResetScore(objectiveName, name));
 	}
 
 	public String getName() {

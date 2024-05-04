@@ -1,5 +1,6 @@
 package com.pm.aiost.misc.packet.listen;
 
+import java.lang.invoke.MethodHandle;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -7,16 +8,27 @@ import org.bukkit.Bukkit;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.event.AiostEventFactory;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketThing;
+import com.pm.aiost.misc.utils.reflection.ReflectionUtils;
 import com.pm.aiost.player.ServerPlayer;
 
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
-import net.minecraft.server.v1_15_R1.Packet;
-import net.minecraft.server.v1_15_R1.PacketPlayInUseEntity;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 
 public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
+
+	public static final MethodHandle USE_ENTITY_ID_GET;
+
+	static {
+		try {
+			USE_ENTITY_ID_GET = ReflectionUtils.unreflectGetter(ServerboundInteractPacket.class, "entityId");
+		} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
+			Logger.err("PacketFactory: Error on packet field reflection!", e);
+			throw new RuntimeException();
+		}
+	}
 
 	protected final ServerPlayer serverPlayer;
 
@@ -26,11 +38,11 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 
 	@Override
 	protected void decode(ChannelHandlerContext chc, Packet<?> packet, List<Object> out) throws Exception {
-		if (packet instanceof PacketPlayInUseEntity) {
-			PacketPlayInUseEntity usePacket = (PacketPlayInUseEntity) packet;
+		if (packet instanceof ServerboundInteractPacket) {
+			ServerboundInteractPacket usePacket = (ServerboundInteractPacket) packet;
 			int id;
 			try {
-				id = (int) PacketFactory.USE_ENTITY_ID_GET.invoke(usePacket);
+				id = (int) USE_ENTITY_ID_GET.invoke(usePacket);
 			} catch (Throwable e) {
 				Logger.err("AiostPacketDecoder: Error on getting PacketPlayInUseEntity id", e);
 				return;
@@ -38,27 +50,43 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 
 			PacketThing packetThing = serverPlayer.getServerWorld().getPacketThing(id);
 			if (packetThing != null) {
-				switch (usePacket.b()) {
-				case ATTACK:
+				if (!usePacket.isUsingSecondaryAction()) {
+					Logger.log("AiostPacketDecoder: attack");
 					Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
 						if (!AiostEventFactory.callPacketThingAttackEvent(serverPlayer, packetThing).isCancelled())
 							packetThing.onPlayerAttack(serverPlayer);
 					});
-					break;
+				}
 
-				case INTERACT_AT:
+				else {
+					Logger.log("AiostPacketDecoder: interact");
 					Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
 						if (!AiostEventFactory.callPacketThingInteractEvent(serverPlayer, packetThing).isCancelled())
 							packetThing.onPlayerInteract(serverPlayer);
 					});
-					break;
-
-				case INTERACT:
-					break;
-
-				default:
-					break;
 				}
+
+//				switch (usePacket.b()) {
+//				case ATTACK:
+//					Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
+//						if (!AiostEventFactory.callPacketThingAttackEvent(serverPlayer, packetThing).isCancelled())
+//							packetThing.onPlayerAttack(serverPlayer);
+//					});
+//					break;
+//
+//				case INTERACT_AT:
+//					Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
+//						if (!AiostEventFactory.callPacketThingInteractEvent(serverPlayer, packetThing).isCancelled())
+//							packetThing.onPlayerInteract(serverPlayer);
+//					});
+//					break;
+//
+//				case INTERACT:
+//					break;
+//
+//				default:
+//					break;
+//				}
 			}
 		}
 

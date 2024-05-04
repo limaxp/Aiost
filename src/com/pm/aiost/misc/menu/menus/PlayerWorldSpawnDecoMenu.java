@@ -29,7 +29,7 @@ import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class PlayerWorldSpawnDecoMenu {
 
@@ -92,7 +92,7 @@ public class PlayerWorldSpawnDecoMenu {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnEntityLiving(serverPlayer, (EntityTypes<?>) obj);
+								spawnEntityLiving(serverPlayer, (EntityType<?>) obj);
 							}
 						});
 				break;
@@ -159,7 +159,7 @@ public class PlayerWorldSpawnDecoMenu {
 		PacketEntityTypes.spawn(furniture, serverPlayer.player.getLocation());
 	}
 
-	private static void spawnEntityLiving(ServerPlayer serverPlayer, EntityTypes<?> type) {
+	private static void spawnEntityLiving(ServerPlayer serverPlayer, EntityType<?> type) {
 		PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);
 		PacketEntityTypes.spawn(entity, serverPlayer.player.getLocation());
 	}

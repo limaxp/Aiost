@@ -45,7 +45,7 @@ public class Banner {
 		bannerMeta.addPattern(pattern);
 		bannerMeta.setDisplayName(name);
 		bannerMeta.setLore(lore);
-		bannerMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		bannerMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		is.setItemMeta(bannerMeta);
 		return is;
 	}
@@ -82,7 +82,7 @@ public class Banner {
 		bannerMeta.setPatterns(patterns);
 		bannerMeta.setDisplayName(name);
 		bannerMeta.setLore(lore);
-		bannerMeta.addItemFlags(ItemFlag.HIDE_POTION_EFFECTS);
+		bannerMeta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
 		is.setItemMeta(bannerMeta);
 		return is;
 	}
@@ -109,7 +109,7 @@ public class Banner {
 	public static List<Pattern> twoPattern(DyeColor baseColor, DyeColor color) {
 		List<Pattern> patterns = new ArrayList<Pattern>();
 		patterns.add(new Pattern(color, PatternType.STRIPE_TOP));
-		patterns.add(new Pattern(baseColor, PatternType.RHOMBUS_MIDDLE));
+		patterns.add(new Pattern(baseColor, PatternType.RHOMBUS));
 		patterns.add(new Pattern(color, PatternType.STRIPE_DOWNLEFT));
 		patterns.add(new Pattern(color, PatternType.STRIPE_BOTTOM));
 		patterns.add(new Pattern(baseColor, PatternType.BORDER));
@@ -151,7 +151,7 @@ public class Banner {
 
 	public static List<Pattern> sixPattern(DyeColor baseColor, DyeColor color) {
 		List<Pattern> patterns = new ArrayList<Pattern>();
-		patterns.add(new Pattern(baseColor, PatternType.HALF_HORIZONTAL_MIRROR));
+		patterns.add(new Pattern(baseColor, PatternType.HALF_HORIZONTAL));
 		patterns.add(new Pattern(color, PatternType.STRIPE_RIGHT));
 		patterns.add(new Pattern(baseColor, PatternType.STRIPE_TOP));
 		patterns.add(new Pattern(color, PatternType.STRIPE_MIDDLE));
@@ -233,7 +233,7 @@ public class Banner {
 	}
 
 	public static Pattern dotPattern(DyeColor baseColor, DyeColor color) {
-		return new Pattern(color, PatternType.CIRCLE_MIDDLE);
+		return new Pattern(color, PatternType.CIRCLE);
 	}
 
 	public static List<Pattern> creeperPattern(DyeColor baseColor, DyeColor color) {
@@ -303,7 +303,7 @@ public class Banner {
 		List<Pattern> patterns = new ArrayList<Pattern>();
 		patterns.add(new Pattern(color, PatternType.STRIPE_LEFT));
 		patterns.add(new Pattern(color, PatternType.STRIPE_BOTTOM));
-		patterns.add(new Pattern(baseColor, PatternType.DIAGONAL_RIGHT_MIRROR));
+		patterns.add(new Pattern(baseColor, PatternType.DIAGONAL_RIGHT));
 		patterns.add(new Pattern(color, PatternType.STRIPE_DOWNRIGHT));
 		return patterns;
 	}
@@ -363,7 +363,7 @@ public class Banner {
 	public static List<Pattern> yPattern(DyeColor baseColor, DyeColor color) {
 		List<Pattern> patterns = new ArrayList<Pattern>();
 		patterns.add(new Pattern(color, PatternType.CROSS));
-		patterns.add(new Pattern(baseColor, PatternType.HALF_VERTICAL_MIRROR));
+		patterns.add(new Pattern(baseColor, PatternType.HALF_VERTICAL));
 		patterns.add(new Pattern(color, PatternType.STRIPE_DOWNLEFT));
 		return patterns;
 	}

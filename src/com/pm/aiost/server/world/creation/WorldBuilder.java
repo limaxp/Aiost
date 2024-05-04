@@ -12,14 +12,14 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
-import org.bukkit.craftbukkit.libs.org.apache.commons.io.FileUtils;
 import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.entity.npc.NpcBase.BaseNpc;
+import com.pm.aiost.entity.npc.NpcBase;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.utils.FileUtils;
 import com.pm.aiost.server.request.ServerRequest;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.WorldManager;
@@ -140,7 +140,7 @@ public class WorldBuilder {
 	public static void kickPlayer(World world) {
 		if (world.getPlayers().size() > 0)
 			ServerRequest.getHandler().sendLobby(ServerWorld.getByWorld(world).getServerPlayer());
-		Iterator<Entity> npcIter = world.getEntitiesByClasses(BaseNpc.class).iterator();
+		Iterator<Entity> npcIter = world.getEntitiesByClasses(NpcBase.class).iterator();
 		while (npcIter.hasNext()) {
 			npcIter.next().remove(); // TODO find a way to be still able to save npcs!
 		}
@@ -157,7 +157,7 @@ public class WorldBuilder {
 		File dir = new File(Bukkit.getWorldContainer(), name);
 		if (dir.exists()) {
 			try {
-				FileUtils.forceDelete(dir);
+				FileUtils.delete(dir);
 			} catch (IOException e) {
 				Logger.err("WorldBuilder: Error on deleting world folder for '" + name + "'", e);
 			}

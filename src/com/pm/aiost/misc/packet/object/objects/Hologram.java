@@ -1,14 +1,14 @@
 package com.pm.aiost.misc.packet.object.objects;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
-import com.pm.aiost.entity.dataWatcher.AiostDataWatcherObject;
-import com.pm.aiost.entity.dataWatcher.AiostDataWatcherRegistry;
-import com.pm.aiost.entity.dataWatcher.EmptyDataWatcher;
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.PacketObject;
@@ -16,23 +16,26 @@ import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTListWrapper;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 
 public class Hologram extends PacketObject {
 
 	public static final double ABS = 0.3D;
-	public static final AiostDataWatcherObject<Byte> FLAG_WATCHER = new AiostDataWatcherObject<>(0,
-			AiostDataWatcherRegistry.BYTE);
+	public static final EntityDataAccessor<Byte> FLAG_WATCHER = new EntityDataAccessor<Byte>(0,
+			EntityDataSerializers.BYTE);
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public static final AiostDataWatcherObject<Optional<?>> NAME_WATCHER = new AiostDataWatcherObject(2,
-			AiostDataWatcherRegistry.OPTIONAL_I_CHAT_BASE_COMPONENT);
-	public static final AiostDataWatcherObject<Boolean> NAME_VISIBLE_WATCHER = new AiostDataWatcherObject<>(3,
-			AiostDataWatcherRegistry.BOOLEAN);
+	public static final EntityDataAccessor<Optional<Component>> NAME_WATCHER = new EntityDataAccessor(2,
+			EntityDataSerializers.COMPONENT);
+	public static final EntityDataAccessor<Boolean> NAME_VISIBLE_WATCHER = new EntityDataAccessor<>(3,
+			EntityDataSerializers.BOOLEAN);
 
 	protected String[] text;
 	protected Object[] spawnPackets;
@@ -81,21 +84,21 @@ public class Hologram extends PacketObject {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		INBTTagList list = new NBTListWrapper(nbt.getList("text", NBTType.STRING));
+		ListTag list = nbt.getList("text", NBTType.STRING);
 		int size = list.size();
 		id = generateIds(size);
 		text = new String[size];
 		for (int i = 0; i < size; i++)
-			text[i] = list.get(i).asString();
+			text[i] = list.get(i).getAsString();
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		INBTTagList list = new NBTList();
-		nbt.set("text", list);
+		ListTag list = new ListTag();
+		nbt.put("text", list);
 		for (int i = 0; i < text.length; i++)
 			list.add(NBTHelper.createNBTTagString(text[i]));
 		return nbt;
@@ -130,19 +133,19 @@ public class Hologram extends PacketObject {
 	}
 
 	public Object createSpawnPacket(int index) {
-		return PacketFactory.packetEntityLivingSpawn(id + index, UUID.randomUUID(), Furniture.ARMOR_STAND_ID, x + 0.5,
-				y - (ABS * index), z + 0.5, 0, 0);
+		return PacketFactory.packetEntitySpawn(id + index, UUID.randomUUID(), x + 0.5, y - (ABS * index), z + 0.5, 0, 0,
+				AiostEntityTypes.ARMOR_STAND);
 	}
 
 	public Object createMetaDataPacket(int index, String text) {
-		return PacketFactory.packetEntityMetadata(id + index, createDataWatcher(text), true);
+		return PacketFactory.packetEntityMetadata(id + index, createDataWatcher(text));
 	}
 
-	public static EmptyDataWatcher createDataWatcher(String text) {
-		EmptyDataWatcher dataWatcher = new EmptyDataWatcher();
-		dataWatcher.register(FLAG_WATCHER, (byte) 0x20);
-		dataWatcher.register(NAME_WATCHER, Optional.ofNullable(NMS.createChatMessage(text)));
-		dataWatcher.register(NAME_VISIBLE_WATCHER, true);
+	public static List<DataValue<?>> createDataWatcher(String text) {
+		List<DataValue<?>> dataWatcher = new ArrayList<DataValue<?>>();
+		dataWatcher.add(DataValue.create(FLAG_WATCHER, (byte) 0x20));
+		dataWatcher.add(DataValue.create(NAME_WATCHER, Optional.ofNullable(NMS.createChatComponent(text))));
+		dataWatcher.add(DataValue.create(NAME_VISIBLE_WATCHER, true));
 		return dataWatcher;
 	}
 

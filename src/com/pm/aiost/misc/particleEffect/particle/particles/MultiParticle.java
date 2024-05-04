@@ -17,12 +17,10 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
 import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTListWrapper;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class MultiParticle implements IParticle {
 
@@ -63,8 +61,8 @@ public class MultiParticle implements IParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
-		INBTTagList nbtList = new NBTListWrapper(nbt.getList("particles", NBTType.COMPOUND));
+	public void load(CompoundTag nbt) {
+		ListTag nbtList = nbt.getList("particles", NBTType.COMPOUND);
 		int size = nbtList.size();
 		particles = new IParticle[size];
 		for (int i = 0; i < size; i++)
@@ -72,15 +70,15 @@ public class MultiParticle implements IParticle {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		int size = particles.length;
-		INBTTagList nbtList = new NBTList();
+		ListTag nbtList = new ListTag();
 		for (int i = 0; i < size; i++) {
-			INBTTagCompound particleNBT = new NBTCompound();
+			CompoundTag particleNBT = new CompoundTag();
 			ParticleBuilder.save(particles[i], particleNBT);
 			nbtList.add(particleNBT);
 		}
-		nbt.set("particles", nbtList);
+		nbt.put("particles", nbtList);
 	}
 
 	@Override

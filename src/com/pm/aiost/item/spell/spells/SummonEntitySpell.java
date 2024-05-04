@@ -8,27 +8,27 @@ import org.bukkit.Particle;
 import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.ownable.OwnableEntity;
+import com.pm.aiost.entity.OwnableEntity;
 import com.pm.aiost.item.spell.Spell;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class SummonEntitySpell extends Spell {
 
 	protected final static int RANGE = 20;
 	protected final static int DEFAULT_BOUND_TIME = 1200;
 
-	private final EntityTypes<? extends OwnableEntity> entityType;
+	private final EntityType<? extends OwnableEntity> entityType;
 	private final int duration;
 
-	public SummonEntitySpell(String name, int cooldown, double cost, EntityTypes<? extends OwnableEntity> entityType,
+	public SummonEntitySpell(String name, int cooldown, double cost, EntityType<? extends OwnableEntity> entityType,
 			int duration) {
 		this(name, name, cooldown, cost, entityType, duration);
 	}
 
 	public SummonEntitySpell(String name, String displayName, int cooldown, double cost,
-			EntityTypes<? extends OwnableEntity> entityType, int duration) {
+			EntityType<? extends OwnableEntity> entityType, int duration) {
 		super(name, displayName, cooldown, cost);
 		this.entityType = entityType;
 		this.duration = duration;
@@ -64,7 +64,7 @@ public class SummonEntitySpell extends Spell {
 		return (OwnableEntity) AiostEntityTypes.spawnEntity(entityType, loc);
 	}
 
-	public EntityTypes<? extends OwnableEntity> getEntityType() {
+	public EntityType<? extends OwnableEntity> getEntityType() {
 		return entityType;
 	}
 

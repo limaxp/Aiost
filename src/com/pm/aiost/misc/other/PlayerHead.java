@@ -1,6 +1,5 @@
 package com.pm.aiost.misc.other;
 
-import java.lang.invoke.MethodHandle;
 import java.util.List;
 import java.util.UUID;
 
@@ -15,7 +14,6 @@ import com.mojang.authlib.properties.Property;
 import com.pm.aiost.collection.list.FastArrayList;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nms.NMS;
-import com.pm.aiost.misc.utils.reflection.Reflection;
 
 public class PlayerHead {
 
@@ -28,9 +26,6 @@ public class PlayerHead {
 			"MHF_Chest", "MHF_CoconutB", "MHF_CoconutG", "MHF_Melon", "MHF_OakLog", "MHF_Present1", "MHF_Present2",
 			"MHF_Pumkin", "MHF_TNT", "MHF_TNT2", "MHF_ArrowUp", "MHF_ArrowDown", "MHF_ArrowLeft", "MHF_ArrowRight",
 			"MHF_Exclamation", "MHF_Question" });
-
-	private static final MethodHandle CRAFTSKULLMETA_SET_PROFILE = Reflection
-			.unreflectSetter(NMS.CRAFT_META_SKULL_CLASS, "profile");;
 
 	public static void addHeadName(String name) {
 		HEAD_NAMES.add(name);
@@ -171,7 +166,7 @@ public class PlayerHead {
 
 	public static void set(SkullMeta skullMeta, GameProfile profile) {
 		try {
-			CRAFTSKULLMETA_SET_PROFILE.invoke(skullMeta, profile);
+			skullMeta.setOwnerProfile(NMS.getBukkit(profile));
 		} catch (Throwable e) {
 			Logger.err("PlayerHead: Error on setting CraftMetaSkull profile field!", e);
 		}

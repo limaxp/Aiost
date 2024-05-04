@@ -18,23 +18,23 @@ public class PlayerScores extends AbstractPlayerScore {
 		this.names = names;
 		int i = names.length - 1;
 		for (String name : names)
-			PacketSender.send(player, PacketFactory.packetScoreboardScoreChange(objectiveName, name, i--));
+			PacketSender.send(player, PacketFactory.packetScoreboardSetScore(objectiveName, name, i--));
 	}
 
 	public void setName(int score, String name) {
 		remove(score);
-		PacketSender.send(player, PacketFactory.packetScoreboardScoreChange(objectiveName, name, score));
+		PacketSender.send(player, PacketFactory.packetScoreboardSetScore(objectiveName, name, score));
 		names[score] = name;
 	}
 
 	public void remove(int score) {
-		PacketSender.send(player, PacketFactory.packetScoreboardScoreRemove(objectiveName, names[score]));
+		PacketSender.send(player, PacketFactory.packetScoreboardResetScore(objectiveName, names[score]));
 	}
 
 	@Override
 	public void remove() {
 		for (String name : names)
-			PacketSender.send(player, PacketFactory.packetScoreboardScoreRemove(objectiveName, name));
+			PacketSender.send(player, PacketFactory.packetScoreboardResetScore(objectiveName, name));
 	}
 
 	public String[] getNames() {

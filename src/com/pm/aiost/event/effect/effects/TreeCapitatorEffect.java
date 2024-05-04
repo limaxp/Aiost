@@ -1,16 +1,15 @@
 package com.pm.aiost.event.effect.effects;
 
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.event.block.BlockBreakEvent;
 
-import com.pm.aiost.block.AiostMaterial;
 import com.pm.aiost.event.effect.EffectAction;
 import com.pm.aiost.event.effect.EffectCondition;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.effect.EffectTypes;
 import com.pm.aiost.event.effect.blueprints.SingletonEffect;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 public class TreeCapitatorEffect extends SingletonEffect {
@@ -29,7 +28,7 @@ public class TreeCapitatorEffect extends SingletonEffect {
 	}
 
 	public void treeCapacitor(Block block) {
-		if (block != null && NMS.getNMS(block).getMaterial() == AiostMaterial.WOOD) {
+		if (block != null && Tag.LOGS.isTagged(block.getType())) {
 			block.breakNaturally();
 			breakLeaves(block);
 			treeCapacitor(block.getRelative(BlockFace.UP));
@@ -46,7 +45,7 @@ public class TreeCapitatorEffect extends SingletonEffect {
 	}
 
 	public void breakLeave(Block block) {
-		if (block != null && NMS.getNMS(block).getMaterial() == AiostMaterial.LEAVES) {
+		if (block != null && Tag.LEAVES.isTagged(block.getType())) {
 			block.breakNaturally();
 			breakLeaves(block);
 		}

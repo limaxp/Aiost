@@ -28,20 +28,20 @@ import com.pm.aiost.misc.utils.nbt.GenericAttribute;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 
 	public ItemAttributeModifierMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Attribute modifiers", GenericAttribute.size() * 9, false);
 		setCategories(BORDER_ITEM, GenericAttribute.getItems());
-		NBTTagList nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		@SuppressWarnings("unchecked")
 		List<ItemStack>[] items = new List[GenericAttribute.size()];
 		int size = nbtList.size();
 		for (int i = 0; i < size; i++) {
-			NBTTagCompound attribute = nbtList.getCompound(i);
+			CompoundTag attribute = nbtList.getCompound(i);
 			GenericAttribute genericAttribute = GenericAttribute.get(attribute.getString(NBTHelper.ATTRIBUTE_NAME_KEY));
 			int attributeId = genericAttribute.id;
 			List<ItemStack> list = items[attributeId];
@@ -173,7 +173,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 				attribute.name, is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
-	protected NBTTagList getList(NBTTagCompound nbtTag) {
+	protected ListTag getList(CompoundTag nbtTag) {
 		return NBTHelper.getAttributeModifiersList(nbtTag);
 	}
 }

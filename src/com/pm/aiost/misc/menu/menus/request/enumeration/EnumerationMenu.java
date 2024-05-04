@@ -42,7 +42,7 @@ import com.pm.aiost.server.world.EnvironmentHelper;
 import com.pm.aiost.server.world.object.tileObject.TileObjectType;
 import com.pm.aiost.server.world.type.AiostWorldType;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class EnumerationMenu<T> extends ArrayInventoryMenu {
 
@@ -116,8 +116,8 @@ public class EnumerationMenu<T> extends ArrayInventoryMenu {
 				MenuHelper.createLore(GRAY + "Click to choose this effect", GRAY, type.lore));
 	}
 
-	public static ItemStack createItem(EntityTypes<?> type) {
-		String name = type.f();
+	public static ItemStack createItem(EntityType<?> type) {
+		String name = type.toShortString();
 		name = name.substring(name.lastIndexOf(".") + 1).replace("_", " ");
 		name = name.substring(0, 1).toUpperCase() + name.substring(1);
 		return MetaHelper.setMeta(new ItemStack(Material.CHICKEN_SPAWN_EGG), GRAY + BOLD + name, ENTITY_TYPE_LORE);

@@ -16,7 +16,7 @@ import com.pm.aiost.misc.utils.Geometric;
 public class Portal extends VerticalRing {
 
 	private static final DataParticle<DustOptions> BASE_PARTICLE = new DataParticle<DustOptions>(
-			org.bukkit.Particle.REDSTONE, 3, 0.05F, 0, false, new DustOptions(Color.BLACK, 0.8F));
+			org.bukkit.Particle.DUST, 3, 0.05F, 0, false, new DustOptions(Color.BLACK, 0.8F));
 
 	private static final Particle PORTAL_PARTICLE = new Particle(org.bukkit.Particle.PORTAL, 30, 0.2F, 0, false);
 

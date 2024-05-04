@@ -16,7 +16,7 @@ import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
@@ -53,7 +53,7 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 	private static void lockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityTypes<?>>(BOLD + "Lock entity type",
+		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityType<?>>(BOLD + "Lock entity type",
 				game.getEntityTypes(), EnumerationMenu::createItem)) {
 
 			@Override
@@ -63,26 +63,25 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.removeEntityType((EntityTypes<?>) obj);
+				game.removeEntityType((EntityType<?>) obj);
 			}
 		});
 	}
 
 	private static void unlockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer
-				.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityTypes<?>>(BOLD + "Unlock entity type",
-						game.getLockedTypes(), EnumerationMenu::createItem)) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityType<?>>(BOLD + "Unlock entity type",
+				game.getLockedTypes(), EnumerationMenu::createItem)) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						serverPlayer.openInventory(event.getInventory());
-					}
+			@Override
+			public void openRequest(ServerPlayer serverPlayer) {
+				serverPlayer.openInventory(event.getInventory());
+			}
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						game.addEntityType((EntityTypes<?>) obj);
-					}
-				});
+			@Override
+			public void onResult(ServerPlayer serverPlayer, Object obj) {
+				game.addEntityType((EntityType<?>) obj);
+			}
+		});
 	}
 }

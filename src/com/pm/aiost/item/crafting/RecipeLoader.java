@@ -6,12 +6,14 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
-import org.bukkit.inventory.Recipe;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.inventory.MerchantRecipe;
 import org.bukkit.inventory.ShapedRecipe;
 import org.bukkit.inventory.ShapelessRecipe;
 
@@ -19,21 +21,21 @@ import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.FurnaceRecipe;
-import net.minecraft.server.v1_15_R1.IRecipe;
-import net.minecraft.server.v1_15_R1.ItemStack;
-import net.minecraft.server.v1_15_R1.MerchantRecipe;
-import net.minecraft.server.v1_15_R1.MinecraftKey;
-import net.minecraft.server.v1_15_R1.NonNullList;
-import net.minecraft.server.v1_15_R1.RecipeBlasting;
-import net.minecraft.server.v1_15_R1.RecipeCampfire;
-import net.minecraft.server.v1_15_R1.RecipeCooking;
-import net.minecraft.server.v1_15_R1.RecipeItemStack;
-import net.minecraft.server.v1_15_R1.RecipeSmoking;
-import net.minecraft.server.v1_15_R1.RecipeStonecutting;
-import net.minecraft.server.v1_15_R1.ShapedRecipes;
-import net.minecraft.server.v1_15_R1.ShapelessRecipes;
+import net.minecraft.core.NonNullList;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.AbstractCookingRecipe;
+import net.minecraft.world.item.crafting.BlastingRecipe;
+import net.minecraft.world.item.crafting.CampfireCookingRecipe;
+import net.minecraft.world.item.crafting.CookingBookCategory;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.ShapedRecipePattern;
+import net.minecraft.world.item.crafting.SmeltingRecipe;
+import net.minecraft.world.item.crafting.SmokingRecipe;
+import net.minecraft.world.item.crafting.StonecutterRecipe;
 
 public class RecipeLoader {
 
@@ -77,36 +79,36 @@ public class RecipeLoader {
 			loadRecipe(section.getConfigurationSection(recipeName), is);
 	}
 
-	public static IRecipe<?> loadRecipe(ConfigurationSection section) {
+	public static Recipe<?> loadRecipe(ConfigurationSection section) {
 		if (!section.contains("item")) {
 			Logger.warn("RecipeLoader: No item for recipe '" + section.getName() + "' defined!");
 			return null;
 		}
 		ItemStack is = ItemLoader.loadNMSItem(section.get("item"));
 		if (section.contains("amount")) {
-			is = is.cloneItemStack();
+			is = is.copy();
 			is.setCount(section.getInt("amount"));
 		}
 		return loadRecipe(section, is);
 	}
 
-	public static IRecipe<?> loadRecipe(ConfigurationSection section, ItemStack is) {
+	public static Recipe<?> loadRecipe(ConfigurationSection section, ItemStack is) {
+		String name = section.getName();
 		String typeString = section.getString("type");
 		if (typeString == null || typeString.isEmpty()) {
-			Logger.warn("RecipeLoader: No type for recipe '" + section.getName() + "' defined!");
+			Logger.warn("RecipeLoader: No type for recipe '" + name + "' defined!");
 			return null;
 		}
-		IRecipe<?> recipe = loadRecipeFromType(typeString, section, is);
+		Recipe<?> recipe = loadRecipeFromType(typeString, section, is);
 		if (recipe == null) {
-			Logger.warn(
-					"RecipeLoader: Type '" + typeString + "' for recipe '" + section.getName() + "' does not exist!");
+			Logger.warn("RecipeLoader: Type '" + typeString + "' for recipe '" + name + "' does not exist!");
 			return null;
 		}
-		RecipeManager.addRecipe(recipe);
+		RecipeManager.addRecipe(name, recipe);
 		return recipe;
 	}
 
-	private static IRecipe<?> loadRecipeFromType(String type, ConfigurationSection section, ItemStack is) {
+	private static Recipe<?> loadRecipeFromType(String type, ConfigurationSection section, ItemStack is) {
 		switch (type.toLowerCase()) {
 		case "shaped":
 			return loadShapedRecipe(section, is);
@@ -138,35 +140,38 @@ public class RecipeLoader {
 		}
 	}
 
-	public static ShapedRecipes loadShapedRecipe(ConfigurationSection section, ItemStack is) {
+	public static net.minecraft.world.item.crafting.ShapedRecipe loadShapedRecipe(ConfigurationSection section,
+			ItemStack is) {
 		List<String> shape = section.getStringList("shape");
 		if (shape == null || shape.isEmpty()) {
 			Logger.warn("RecipeLoader: No shape for shaped recipe '" + section.getName() + "' defined!");
 			return null;
 		}
-		Map<Character, RecipeItemStack> ingredients = loadShapedIngredients(section);
+		Map<Character, Ingredient> ingredients = loadShapedIngredients(section);
 		int width = shape.get(0).length();
-		int length = shape.size();
-		NonNullList<RecipeItemStack> data = NonNullList.a(length * width, RecipeItemStack.a);
-		for (int i = 0; i < length; i++) {
+		int height = shape.size();
+		NonNullList<Ingredient> data = NonNullList.<Ingredient>withSize(width * height, Ingredient.EMPTY);
+		for (int i = 0; i < height; i++) {
 			String row = shape.get(i);
 			for (int j = 0; j < row.length(); j++)
-				data.set(i * width + j, ingredients.getOrDefault(row.charAt(j), RecipeItemStack.a));
+				data.set(i * width + j, ingredients.getOrDefault(row.charAt(j), Ingredient.EMPTY));
 		}
-		return new CustomShapedRecipes(loadKey(section), loadGroup(section), width, length, data, is);
+		ShapedRecipePattern pattern = new ShapedRecipePattern(width, height, data, Optional.empty());
+		return new CustomShapedRecipes(loadKey(section), loadCraftingCategory(section), pattern, is, true);
 	}
 
-	public static ShapelessRecipes loadShapelessRecipe(ConfigurationSection section, ItemStack is) {
-		List<RecipeItemStack> ingredients = loadShapelessIngredients(section);
+	public static net.minecraft.world.item.crafting.ShapelessRecipe loadShapelessRecipe(ConfigurationSection section,
+			ItemStack is) {
+		List<Ingredient> ingredients = loadShapelessIngredients(section);
 		int length = ingredients.size();
-		NonNullList<RecipeItemStack> data = NonNullList.a(length, RecipeItemStack.a);
+		NonNullList<Ingredient> data = NonNullList.<Ingredient>withSize(length, Ingredient.EMPTY);
 		for (int i = 0; i < length; i++)
 			data.set(i, ingredients.get(i));
-		return new CustomShapelessRecipes(loadKey(section), loadGroup(section), is, data);
+		return new CustomShapelessRecipes(loadKey(section), loadCraftingCategory(section), is, data);
 	}
 
-	public static <T extends RecipeCooking> RecipeCooking loadCookingRecipe(ConfigurationSection section, ItemStack is,
-			RecipeCookingConstructor<T> constructor) {
+	public static <T extends AbstractCookingRecipe> AbstractCookingRecipe loadCookingRecipe(
+			ConfigurationSection section, ItemStack is, RecipeCookingConstructor<T> constructor) {
 		if (!section.contains("experience")) {
 			Logger.warn("RecipeLoader: No experience for cooking recipe '" + section.getName() + "' defined!");
 			return null;
@@ -175,11 +180,11 @@ public class RecipeLoader {
 			Logger.warn("RecipeLoader: No cookingTime for cooking recipe '" + section.getName() + "' defined!");
 			return null;
 		}
-		return constructor.create(loadKey(section), loadGroup(section), loadIngredient(section), is,
+		return constructor.create(loadKey(section), loadCookingCategory(section), loadIngredient(section), is,
 				(float) section.getDouble("experience"), section.getInt("cookingTime"));
 	}
 
-	public static RecipeStonecutting loadStonecuttingRecipe(ConfigurationSection section, ItemStack is) {
+	public static StonecutterRecipe loadStonecuttingRecipe(ConfigurationSection section, ItemStack is) {
 		// TODO: implement this!
 		return null;
 	}
@@ -189,19 +194,26 @@ public class RecipeLoader {
 		return null;
 	}
 
-	private static MinecraftKey loadKey(ConfigurationSection section) {
-		return new MinecraftKey(section.getName().replace(" ", "_").toLowerCase());
+	private static String loadKey(ConfigurationSection section) {
+		return section.getName().replace(" ", "_").toLowerCase();
 	}
 
-	private static String loadGroup(ConfigurationSection section) {
-		String group = section.getString("group");
+	private static CraftingBookCategory loadCraftingCategory(ConfigurationSection section) {
+		CraftingBookCategory group = CraftingBookCategory.valueOf(section.getString("group"));
 		if (group == null)
-			return "";
+			return CraftingBookCategory.MISC;
 		return group;
 	}
 
-	private static Map<Character, RecipeItemStack> loadShapedIngredients(ConfigurationSection section) {
-		Map<Character, RecipeItemStack> map = new HashMap<Character, RecipeItemStack>();
+	private static CookingBookCategory loadCookingCategory(ConfigurationSection section) {
+		CookingBookCategory group = CookingBookCategory.valueOf(section.getString("group"));
+		if (group == null)
+			return CookingBookCategory.MISC;
+		return group;
+	}
+
+	private static Map<Character, Ingredient> loadShapedIngredients(ConfigurationSection section) {
+		Map<Character, Ingredient> map = new HashMap<Character, Ingredient>();
 		if (section.contains("ingredients")) {
 			ConfigurationSection ingredientsSection = section.getConfigurationSection("ingredients");
 			for (String ingredient : ingredientsSection.getKeys(false))
@@ -226,8 +238,8 @@ public class RecipeLoader {
 		return map;
 	}
 
-	private static List<RecipeItemStack> loadShapelessIngredients(ConfigurationSection section) {
-		List<RecipeItemStack> list = new ArrayList<RecipeItemStack>();
+	private static List<Ingredient> loadShapelessIngredients(ConfigurationSection section) {
+		List<Ingredient> list = new ArrayList<Ingredient>();
 		if (section.contains("ingredients")) {
 			ConfigurationSection ingredientsSection = section.getConfigurationSection("ingredients");
 			for (String ingredient : ingredientsSection.getKeys(false))
@@ -242,7 +254,7 @@ public class RecipeLoader {
 		return list;
 	}
 
-	private static RecipeItemStack loadIngredient(ConfigurationSection section) {
+	private static Ingredient loadIngredient(ConfigurationSection section) {
 		if (section.contains("ingredient"))
 			return createRecipeItemStack(Arrays.asList(loadMaterials(section.get("ingredient"))), true);
 		if (section.contains("exact_ingredient"))
@@ -294,26 +306,14 @@ public class RecipeLoader {
 			return ItemLoader.loadNMSItems(section);
 	}
 
-	public static RecipeItemStack createRecipeItemStack(List<Material> materials, boolean requireNotEmpty) {
-		return buildRecipeItemStack(
-				new RecipeItemStack(
-						materials.stream()
-								.map(mat -> new RecipeItemStack.StackProvider(
-										CraftItemStack.asNMSCopy(new org.bukkit.inventory.ItemStack(mat))))),
-				requireNotEmpty);
+	public static Ingredient createRecipeItemStack(List<Material> materials, boolean requireNotEmpty) {
+		return new Ingredient(materials.stream()
+				.map(mat -> new Ingredient.ItemValue(NMS.getNMS(new org.bukkit.inventory.ItemStack(mat)))));
 	}
 
-	public static RecipeItemStack createExactRecipeItemStack(List<ItemStack> items, boolean requireNotEmpty) {
-		RecipeItemStack stack = new RecipeItemStack(items.stream().map(mat -> new RecipeItemStack.StackProvider(mat)));
+	public static Ingredient createExactRecipeItemStack(List<ItemStack> items, boolean requireNotEmpty) {
+		Ingredient stack = new Ingredient(items.stream().map(mat -> new Ingredient.ItemValue(mat)));
 		stack.exact = true;
-		return buildRecipeItemStack(stack, requireNotEmpty);
-	}
-
-	private static RecipeItemStack buildRecipeItemStack(RecipeItemStack stack, boolean requireNotEmpty) {
-		stack.buildChoices();
-		if (requireNotEmpty && stack.choices.length == 0) {
-			throw new IllegalArgumentException("Recipe requires at least one non-air choice!");
-		}
 		return stack;
 	}
 
@@ -367,108 +367,108 @@ public class RecipeLoader {
 	}
 
 	@FunctionalInterface
-	public static interface RecipeCookingConstructor<T extends RecipeCooking> {
+	public static interface RecipeCookingConstructor<T extends AbstractCookingRecipe> {
 
-		public T create(MinecraftKey key, String group, RecipeItemStack source, ItemStack result, float experience,
+		public T create(String s, CookingBookCategory category, Ingredient source, ItemStack result, float experience,
 				int cookingTime);
 	}
 
-	public static class CustomShapedRecipes extends ShapedRecipes {
+	public static class CustomShapedRecipes extends net.minecraft.world.item.crafting.ShapedRecipe {
 
-		public CustomShapedRecipes(MinecraftKey minecraftkey, String s, int i, int j,
-				NonNullList<RecipeItemStack> nonnulllist, ItemStack itemstack) {
-			super(minecraftkey, s, i, j, nonnulllist, itemstack);
+		public CustomShapedRecipes(String s, CraftingBookCategory category, ShapedRecipePattern pattern,
+				ItemStack result, boolean flag) {
+			super(s, category, pattern, result, flag);
 		}
 
 		@Override
-		public ShapedRecipe toBukkitRecipe() {
+		public ShapedRecipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		}
 	}
 
-	public static class CustomShapelessRecipes extends ShapelessRecipes {
+	public static class CustomShapelessRecipes extends net.minecraft.world.item.crafting.ShapelessRecipe {
 
-		public CustomShapelessRecipes(MinecraftKey minecraftkey, String s, ItemStack itemstack,
-				NonNullList<RecipeItemStack> nonnulllist) {
-			super(minecraftkey, s, itemstack, nonnulllist);
+		public CustomShapelessRecipes(String s, CraftingBookCategory category, ItemStack result,
+				NonNullList<Ingredient> ingredients) {
+			super(s, category, result, ingredients);
 		}
 
 		@Override
-		public ShapelessRecipe toBukkitRecipe() {
+		public ShapelessRecipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		}
 	}
 
-	public static class CustomFurnaceRecipes extends FurnaceRecipe {
+	public static class CustomFurnaceRecipes extends SmeltingRecipe {
 
-		public CustomFurnaceRecipes(MinecraftKey minecraftkey, String s, RecipeItemStack recipeitemstack,
-				ItemStack itemstack, float f, int i) {
-			super(minecraftkey, s, recipeitemstack, itemstack, f, i);
+		public CustomFurnaceRecipes(String s, CookingBookCategory category, Ingredient ingredient, ItemStack result,
+				float experience, int cookingTime) {
+			super(s, category, ingredient, result, experience, cookingTime);
 		}
 
 		@Override
-		public Recipe toBukkitRecipe() {
+		public org.bukkit.inventory.Recipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		}
 	}
 
-	public static class CustomRecipeBlasting extends RecipeBlasting {
+	public static class CustomRecipeBlasting extends BlastingRecipe {
 
-		public CustomRecipeBlasting(MinecraftKey minecraftkey, String s, RecipeItemStack recipeitemstack,
-				ItemStack itemstack, float f, int i) {
-			super(minecraftkey, s, recipeitemstack, itemstack, f, i);
+		public CustomRecipeBlasting(String s, CookingBookCategory category, Ingredient ingredient, ItemStack result,
+				float experience, int cookingTime) {
+			super(s, category, ingredient, result, experience, cookingTime);
 		}
 
 		@Override
-		public Recipe toBukkitRecipe() {
+		public org.bukkit.inventory.Recipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		}
 	}
 
-	public static class CustomRecipeCampfire extends RecipeCampfire {
+	public static class CustomRecipeCampfire extends CampfireCookingRecipe {
 
-		public CustomRecipeCampfire(MinecraftKey minecraftkey, String s, RecipeItemStack recipeitemstack,
-				ItemStack itemstack, float f, int i) {
-			super(minecraftkey, s, recipeitemstack, itemstack, f, i);
+		public CustomRecipeCampfire(String s, CookingBookCategory category, Ingredient ingredient, ItemStack result,
+				float experience, int cookingTime) {
+			super(s, category, ingredient, result, experience, cookingTime);
 		}
 
 		@Override
-		public Recipe toBukkitRecipe() {
+		public org.bukkit.inventory.Recipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}
 		}
 	}
 
-	public static class CustomRecipeSmoking extends RecipeSmoking {
+	public static class CustomRecipeSmoking extends SmokingRecipe {
 
-		public CustomRecipeSmoking(MinecraftKey minecraftkey, String s, RecipeItemStack recipeitemstack,
-				ItemStack itemstack, float f, int i) {
-			super(minecraftkey, s, recipeitemstack, itemstack, f, i);
+		public CustomRecipeSmoking(String s, CookingBookCategory category, Ingredient recipeitemstack,
+				ItemStack itemstack, float experience, int cookingTime) {
+			super(s, category, recipeitemstack, itemstack, experience, cookingTime);
 		}
 
 		@Override
-		public Recipe toBukkitRecipe() {
+		public org.bukkit.inventory.Recipe toBukkitRecipe(NamespacedKey key) {
 			try {
-				return super.toBukkitRecipe();
+				return super.toBukkitRecipe(key);
 			} catch (IllegalArgumentException e) {
 				return null;
 			}

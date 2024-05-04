@@ -5,20 +5,19 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTList;
-import com.pm.aiost.misc.utils.nbt.custom.NBTListWrapper;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class EntityHologram extends PacketEntity {
 
@@ -69,21 +68,21 @@ public class EntityHologram extends PacketEntity {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		INBTTagList list = new NBTListWrapper(nbt.getList("text", NBTType.STRING));
+		ListTag list = nbt.getList("text", NBTType.STRING);
 		int size = list.size();
 		id = generateIds(size);
 		text = new String[size];
 		for (int i = 0; i < size; i++)
-			text[i] = list.get(i).asString();
+			text[i] = list.get(i).getAsString();
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		INBTTagList list = new NBTList();
-		nbt.set("text", list);
+		ListTag list = new ListTag();
+		nbt.put("text", list);
 		for (int i = 0; i < text.length; i++)
 			list.add(NBTHelper.createNBTTagString(text[i]));
 		return nbt;
@@ -118,12 +117,12 @@ public class EntityHologram extends PacketEntity {
 	}
 
 	public Object createSpawnPacket(int index) {
-		return PacketFactory.packetEntityLivingSpawn(id + index, UUID.randomUUID(), Furniture.ARMOR_STAND_ID, x,
-				y - (Hologram.ABS * index), z, 0, 0);
+		return PacketFactory.packetEntitySpawn(id + index, UUID.randomUUID(), x, y - (Hologram.ABS * index), z, 0, 0,
+				AiostEntityTypes.ARMOR_STAND);
 	}
 
 	public Object createMetaDataPacket(int index, String text) {
-		return PacketFactory.packetEntityMetadata(id + index, Hologram.createDataWatcher(text), true);
+		return PacketFactory.packetEntityMetadata(id + index, Hologram.createDataWatcher(text));
 	}
 
 	public String getText() {

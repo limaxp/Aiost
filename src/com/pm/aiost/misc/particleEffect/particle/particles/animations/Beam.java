@@ -19,8 +19,9 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.particleEffect.particle.particles.AnimationParticle;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.Geometric;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class Beam extends AnimationParticle {
 
@@ -76,7 +77,7 @@ public class Beam extends AnimationParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		range = nbt.getDouble("range");
 		yaw = nbt.getFloat("yaw");
@@ -84,11 +85,11 @@ public class Beam extends AnimationParticle {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setDouble("range", range);
-		nbt.setFloat("yaw", yaw);
-		nbt.setFloat("pitch", pitch);
+		nbt.putDouble("range", range);
+		nbt.putFloat("yaw", yaw);
+		nbt.putFloat("pitch", pitch);
 	}
 
 	@Override

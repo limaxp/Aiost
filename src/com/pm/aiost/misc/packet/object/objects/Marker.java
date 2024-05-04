@@ -1,16 +1,19 @@
 package com.pm.aiost.misc.packet.object.objects;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.bukkit.entity.Player;
 
-import com.pm.aiost.entity.dataWatcher.EmptyDataWatcher;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 
 public class Marker extends SimpleText {
 
@@ -53,14 +56,14 @@ public class Marker extends SimpleText {
 
 	@Override
 	public Object createMetaDataPacket() {
-		return PacketFactory.packetEntityMetadata(id, createDataWatcher(text), true);
+		return PacketFactory.packetEntityMetadata(id, createDataWatcher(text));
 	}
 
-	public static EmptyDataWatcher createDataWatcher(String text) {
-		EmptyDataWatcher dataWatcher = new EmptyDataWatcher();
-		dataWatcher.register(Hologram.FLAG_WATCHER, (byte) (0x20 + 0x40));
-		dataWatcher.register(Hologram.NAME_WATCHER, Optional.ofNullable(NMS.createChatMessage(text)));
-		dataWatcher.register(Hologram.NAME_VISIBLE_WATCHER, true);
+	public static List<DataValue<?>> createDataWatcher(String text) {
+		List<DataValue<?>> dataWatcher = new ArrayList<DataValue<?>>();
+		dataWatcher.add(DataValue.create(Hologram.FLAG_WATCHER, (byte) (0x20 + 0x40)));
+		dataWatcher.add(DataValue.create(Hologram.NAME_WATCHER, Optional.ofNullable(NMS.createChatComponent(text))));
+		dataWatcher.add(DataValue.create(Hologram.NAME_VISIBLE_WATCHER, true));
 		return dataWatcher;
 	}
 

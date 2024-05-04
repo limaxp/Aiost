@@ -3,10 +3,12 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
-import net.minecraft.server.v1_15_R1.AttributeInstance;
-import net.minecraft.server.v1_15_R1.AttributeMapBase;
-import net.minecraft.server.v1_15_R1.EntityInsentient;
-import net.minecraft.server.v1_15_R1.GenericAttributes;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeMap;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 
 public class EntityHelper {
 
@@ -14,88 +16,92 @@ public class EntityHelper {
 
 	public static final int MAX_LEVEL = 100;
 
-	public static int calculateRandomLevel(EntityInsentient entity) {
+	public static void save(EntityType<?> type, CompoundTag nbttagcompound) {
+		nbttagcompound.putString("id", AiostEntityTypes.getKey(type).getNamespace());
+	}
+
+	public static int calculateRandomLevel(Mob entity) {
 		return calculateRandomLevel(entity, MAX_LEVEL);
 	}
 
-	public static int calculateRandomLevel(EntityInsentient entity, int maxLevel) {
+	public static int calculateRandomLevel(Mob entity, int maxLevel) {
 		return entity.getRandom().nextInt(maxLevel);
 	}
 
-	public static void initRandomLevelAttributes(EntityInsentient entity, double baseDamage, double baseKnockback,
-			double baseHealth, double baseMovementSpeed, double baseFollowRange, double baseArmor) {
+	public static void initRandomLevelAttributes(Mob entity, double baseDamage, double baseKnockback, double baseHealth,
+			double baseMovementSpeed, double baseFollowRange, double baseArmor) {
 		initLevelAttributes(entity, calculateRandomLevel(entity), baseDamage, baseKnockback, baseHealth,
 				baseMovementSpeed, baseFollowRange, baseArmor);
 	}
 
-	public static void initLevelAttributes(EntityInsentient entity, int level, double baseDamage, double baseKnockback,
+	public static void initLevelAttributes(Mob entity, int level, double baseDamage, double baseKnockback,
 			double baseHealth, double baseMovementSpeed, double baseFollowRange, double baseArmor) {
-		AttributeMapBase attributeMap = entity.getAttributeMap();
-		attributeMap.b(GenericAttributes.ATTACK_DAMAGE).setValue(baseDamage + (baseDamage / 100) * level);
-		attributeMap.b(GenericAttributes.ATTACK_KNOCKBACK).setValue(baseKnockback + (baseKnockback / 100) * level);
-		attributeMap.b(GenericAttributes.MAX_HEALTH).setValue(baseHealth + ((baseHealth / 100D) * level));
-		attributeMap.b(GenericAttributes.MOVEMENT_SPEED)
-				.setValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
-		attributeMap.b(GenericAttributes.FOLLOW_RANGE).setValue(baseFollowRange + (baseFollowRange / 100) * level);
-		attributeMap.b(GenericAttributes.ARMOR).setValue(baseArmor + (baseArmor / 100) * level);
-		attributeMap.b(GenericAttributes.ARMOR_TOUGHNESS).setValue(0.1 * level);
-		attributeMap.b(GenericAttributes.KNOCKBACK_RESISTANCE).setValue(0.01 * level);
-		attributeMap.b(GenericAttributes.LUCK).setValue(0.01 * level);
+		AttributeMap attributeMap = entity.getAttributes();
+		attributeMap.getInstance(Attributes.ATTACK_DAMAGE).setBaseValue(baseDamage + (baseDamage / 100) * level);
+		attributeMap.getInstance(Attributes.ATTACK_KNOCKBACK)
+				.setBaseValue(baseKnockback + (baseKnockback / 100) * level);
+		attributeMap.getInstance(Attributes.MAX_HEALTH).setBaseValue(baseHealth + ((baseHealth / 100D) * level));
+		attributeMap.getInstance(Attributes.MOVEMENT_SPEED)
+				.setBaseValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
+		attributeMap.getInstance(Attributes.FOLLOW_RANGE)
+				.setBaseValue(baseFollowRange + (baseFollowRange / 100) * level);
+		attributeMap.getInstance(Attributes.ARMOR).setBaseValue(baseArmor + (baseArmor / 100) * level);
+		attributeMap.getInstance(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.1 * level);
+		attributeMap.getInstance(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.01 * level);
+		attributeMap.getInstance(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 
-	public static void setRandomLevelAttributes(EntityInsentient entity, double baseDamage, double baseKnockback,
-			double baseHealth, double baseMovementSpeed, double baseFollowRange, double baseArmor) {
+	public static void setRandomLevelAttributes(Mob entity, double baseDamage, double baseKnockback, double baseHealth,
+			double baseMovementSpeed, double baseFollowRange, double baseArmor) {
 		setLevelAttributes(entity, calculateRandomLevel(entity), baseDamage, baseKnockback, baseHealth,
 				baseMovementSpeed, baseFollowRange, baseArmor);
 	}
 
-	public static void setLevelAttributes(EntityInsentient entity, int level, double baseDamage, double baseKnockback,
+	public static void setLevelAttributes(Mob entity, int level, double baseDamage, double baseKnockback,
 			double baseHealth, double baseMovementSpeed, double baseFollowRange, double baseArmor) {
-		entity.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE).setValue(baseDamage + (baseDamage / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.ATTACK_KNOCKBACK)
-				.setValue(baseKnockback + (baseKnockback / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.MAX_HEALTH).setValue(baseHealth + (baseHealth / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED)
-				.setValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.FOLLOW_RANGE)
-				.setValue(baseFollowRange + (baseFollowRange / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.ARMOR).setValue(baseArmor + (baseArmor / 100) * level);
-		entity.getAttributeInstance(GenericAttributes.ARMOR_TOUGHNESS).setValue(0.1 * level);
-		entity.getAttributeInstance(GenericAttributes.KNOCKBACK_RESISTANCE).setValue(0.01 * level);
-		entity.getAttributeInstance(GenericAttributes.LUCK).setValue(0.01 * level);
+		entity.getAttribute(Attributes.ATTACK_DAMAGE).setBaseValue(baseDamage + (baseDamage / 100) * level);
+		entity.getAttribute(Attributes.ATTACK_KNOCKBACK).setBaseValue(baseKnockback + (baseKnockback / 100) * level);
+		entity.getAttribute(Attributes.MAX_HEALTH).setBaseValue(baseHealth + (baseHealth / 100) * level);
+		entity.getAttribute(Attributes.MOVEMENT_SPEED)
+				.setBaseValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
+		entity.getAttribute(Attributes.FOLLOW_RANGE).setBaseValue(baseFollowRange + (baseFollowRange / 100) * level);
+		entity.getAttribute(Attributes.ARMOR).setBaseValue(baseArmor + (baseArmor / 100) * level);
+		entity.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.1 * level);
+		entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.01 * level);
+		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 
-	public static void setRandomLevel(EntityInsentient entity) {
+	public static void setRandomLevel(Mob entity) {
 		setLevel(entity, calculateRandomLevel(entity));
 	}
 
-	public static void setLevel(EntityInsentient entity, int level) {
-		AttributeInstance damageAttribute = entity.getAttributeInstance(GenericAttributes.ATTACK_DAMAGE);
+	public static void setLevel(Mob entity, int level) {
+		AttributeInstance damageAttribute = entity.getAttribute(Attributes.ATTACK_DAMAGE);
 		double baseDamage = damageAttribute.getValue();
-		damageAttribute.setValue(baseDamage + (baseDamage / 100) * level);
+		damageAttribute.setBaseValue(baseDamage + (baseDamage / 100) * level);
 
-		AttributeInstance knockbackAttribute = entity.getAttributeInstance(GenericAttributes.ATTACK_KNOCKBACK);
+		AttributeInstance knockbackAttribute = entity.getAttribute(Attributes.ATTACK_KNOCKBACK);
 		double baseKnockback = knockbackAttribute.getValue();
-		knockbackAttribute.setValue(baseKnockback + (baseKnockback / 100) * level);
+		knockbackAttribute.setBaseValue(baseKnockback + (baseKnockback / 100) * level);
 
-		AttributeInstance maxHealthAttribute = entity.getAttributeInstance(GenericAttributes.MAX_HEALTH);
+		AttributeInstance maxHealthAttribute = entity.getAttribute(Attributes.MAX_HEALTH);
 		double baseHealth = maxHealthAttribute.getValue();
-		maxHealthAttribute.setValue(baseHealth + (baseHealth / 100) * level);
+		maxHealthAttribute.setBaseValue(baseHealth + (baseHealth / 100) * level);
 
-		AttributeInstance movementSpeedAttribute = entity.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED);
+		AttributeInstance movementSpeedAttribute = entity.getAttribute(Attributes.MOVEMENT_SPEED);
 		double baseMovementSpeed = movementSpeedAttribute.getValue();
-		movementSpeedAttribute.setValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
+		movementSpeedAttribute.setBaseValue(baseMovementSpeed + (baseMovementSpeed / 100) * level);
 
-		AttributeInstance followRangeAttribute = entity.getAttributeInstance(GenericAttributes.FOLLOW_RANGE);
+		AttributeInstance followRangeAttribute = entity.getAttribute(Attributes.FOLLOW_RANGE);
 		double baseFollowRange = followRangeAttribute.getValue();
-		followRangeAttribute.setValue(baseFollowRange + (baseFollowRange / 100) * level);
+		followRangeAttribute.setBaseValue(baseFollowRange + (baseFollowRange / 100) * level);
 
-		AttributeInstance armorAttribute = entity.getAttributeInstance(GenericAttributes.ARMOR);
+		AttributeInstance armorAttribute = entity.getAttribute(Attributes.ARMOR);
 		double baseArmor = armorAttribute.getValue();
-		armorAttribute.setValue(baseArmor + (baseArmor / 100) * level);
+		armorAttribute.setBaseValue(baseArmor + (baseArmor / 100) * level);
 
-		entity.getAttributeInstance(GenericAttributes.ARMOR_TOUGHNESS).setValue(0.1 * level);
-		entity.getAttributeInstance(GenericAttributes.KNOCKBACK_RESISTANCE).setValue(0.01 * level);
-		entity.getAttributeInstance(GenericAttributes.LUCK).setValue(0.01 * level);
+		entity.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.1 * level);
+		entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.01 * level);
+		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 }

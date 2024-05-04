@@ -59,7 +59,7 @@ public class Items {
 		return NAME_MAP.size();
 	}
 
-	public static Collection<org.bukkit.inventory.ItemStack> values(ItemGroup group) {
+	public static Collection<ItemStack> values(ItemGroup group) {
 		return group.values();
 	}
 
@@ -67,9 +67,9 @@ public class Items {
 		return getEffectID(NMS.getNMS(is));
 	}
 
-	public static int getEffectID(net.minecraft.server.v1_15_R1.ItemStack nmsIs) {
-		if (nmsIs.hasTag())
-			return NBTHelper.getItemEffect(nmsIs.getTag());
+	public static int getEffectID(net.minecraft.world.item.ItemStack nmsIs) {
+		if (NBTHelper.hasTag(nmsIs))
+			return NBTHelper.getItemEffect(NBTHelper.getNBT(nmsIs));
 		return 0;
 	}
 

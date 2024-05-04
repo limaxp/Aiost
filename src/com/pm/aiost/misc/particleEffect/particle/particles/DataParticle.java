@@ -30,10 +30,10 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.particleEffect.particle.RandomColorDustOptions;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class DataParticle<T> extends Particle {
 
@@ -72,13 +72,13 @@ public class DataParticle<T> extends Particle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		data = loadData(nbt);
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
 		saveData(nbt);
 	}
@@ -101,39 +101,39 @@ public class DataParticle<T> extends Particle {
 	}
 
 	@SuppressWarnings("unchecked")
-	private final T loadData(INBTTagCompound nbt) {
-		if (nbt.hasKey("material"))
+	private final T loadData(CompoundTag nbt) {
+		if (NBTHelper.hasKey(nbt, "material"))
 			return (T) loadBlockData(nbt.getString("material"));
 
-		if (nbt.hasKey("randomColor"))
+		if (NBTHelper.hasKey(nbt, "randomColor"))
 			return (T) new RandomColorDustOptions(nbt.getFloat("size"));
 
-		if (nbt.hasKey("color"))
+		if (NBTHelper.hasKey(nbt, "color"))
 			return (T) new DustOptions(Color.fromRGB(nbt.getInt("color")), nbt.getFloat("size"));
 
-		if (nbt.hasKey("item"))
+		if (NBTHelper.hasKey(nbt, "item"))
 			return (T) NBTHelper.loadItem(nbt.getCompound("item"));
 
 		return data;
 	}
 
-	private final void saveData(INBTTagCompound nbt) {
+	private final void saveData(CompoundTag nbt) {
 		if (data instanceof BlockData)
-			nbt.setString("material", ((BlockData) data).getMaterial().name());
+			nbt.putString("material", ((BlockData) data).getMaterial().name());
 
 		else if (data instanceof RandomColorDustOptions) {
-			nbt.setBoolean("randomColor", true);
-			nbt.setFloat("size", ((RandomColorDustOptions) data).getSize());
+			nbt.putBoolean("randomColor", true);
+			nbt.putFloat("size", ((RandomColorDustOptions) data).getSize());
 		}
 
 		else if (data instanceof DustOptions) {
 			DustOptions dustOptions = (DustOptions) data;
-			nbt.setFloat("size", dustOptions.getSize());
-			nbt.setInt("color", dustOptions.getColor().asRGB());
+			nbt.putFloat("size", dustOptions.getSize());
+			nbt.putInt("color", dustOptions.getColor().asRGB());
 		}
 
 		else if (data instanceof ItemStack)
-			nbt.set("item", NBTHelper.saveItem(new NBTCompound(), (ItemStack) data));
+			nbt.put("item", NBTHelper.saveItem(new CompoundTag(), (ItemStack) data));
 	}
 
 	private static BlockData loadBlockData(String materialName) {

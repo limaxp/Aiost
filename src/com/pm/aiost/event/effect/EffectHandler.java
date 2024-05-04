@@ -35,7 +35,7 @@ import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class EffectHandler {
 
@@ -222,9 +222,9 @@ public class EffectHandler {
 
 	public static <T extends Event> void runItem(ItemStack is, ServerWorld world, byte action, T event,
 			EventFunction<T> func) {
-		net.minecraft.server.v1_15_R1.ItemStack nmsIs = NMS.getNMS(is);
-		if (nmsIs.hasTag()) {
-			NBTTagCompound nbtTag = nmsIs.getTag();
+		net.minecraft.world.item.ItemStack nmsIs = NMS.getNMS(is);
+		if (NBTHelper.hasTag(nmsIs)) {
+			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
 			if (effectID != 0)
 				runItemSelf(effectID, action, event, func);
@@ -235,9 +235,9 @@ public class EffectHandler {
 
 	public static <T extends Event> void runItem(ItemStack is, ServerPlayer serverPlayer, byte action, T event,
 			ServerPlayerEventFunction<T> func) {
-		net.minecraft.server.v1_15_R1.ItemStack nmsIs = NMS.getNMS(is);
-		if (nmsIs.hasTag()) {
-			NBTTagCompound nbtTag = nmsIs.getTag();
+		net.minecraft.world.item.ItemStack nmsIs = NMS.getNMS(is);
+		if (NBTHelper.hasTag(nmsIs)) {
+			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
 			if (effectID != 0)
 				runItemSelf(effectID, serverPlayer, action, event, func);

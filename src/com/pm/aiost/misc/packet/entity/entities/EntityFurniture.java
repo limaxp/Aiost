@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.Aiost;
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
@@ -21,10 +22,11 @@ import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class EntityFurniture extends PacketEntity {
 
@@ -59,24 +61,25 @@ public class EntityFurniture extends PacketEntity {
 
 	@Override
 	public Object createSpawnPacket() {
-		return PacketFactory.packetEntityLivingSpawn(id, uuid, Furniture.ARMOR_STAND_ID, x, y - 1.188, z, yaw, pitch);
+		return PacketFactory.packetEntitySpawn(id, uuid, x, y - 1.188, z, yaw, pitch, AiostEntityTypes.ARMOR_STAND);
 	}
 
 	protected Object createMetadataPacket() {
-		return PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER, true);
+		return PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER);
 	}
 
 	protected Object createEquipmentPacket() {
 		if (is != null)
-			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, is);
+			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(is));
 		else
-			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, Furniture.FURNITURES.get(furnitureID));
+			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot,
+					NMS.getNMS(Furniture.FURNITURES.get(furnitureID)));
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		if (nbt.hasKey("mat")) {
+		if (NBTHelper.hasKey(nbt, "mat")) {
 			ItemStack is = new ItemStack(Material.valueOf(nbt.getString("mat")));
 			setItemStack(NBTHelper.setNBT(NMS.getNMS(is), nbt.getCompound("itemNBT")));
 		} else
@@ -84,13 +87,13 @@ public class EntityFurniture extends PacketEntity {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		if (is != null) {
-			nbt.setString("mat", is.getType().name());
-			nbt.set("itemNBT", NBTHelper.getNBT(NMS.getNMS(is)));
+			nbt.putString("mat", is.getType().name());
+			nbt.put("itemNBT", NBTHelper.getNBT(NMS.getNMS(is)));
 		} else
-			nbt.setInt("fur", furnitureID);
+			nbt.putInt("fur", furnitureID);
 		return nbt;
 	}
 

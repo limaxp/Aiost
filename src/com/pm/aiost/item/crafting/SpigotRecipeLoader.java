@@ -28,7 +28,6 @@ import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.log.Logger;
 
-@SuppressWarnings("deprecation")
 public class SpigotRecipeLoader {
 
 	static void loadRecipeConfig(ConfigurationSection recipesSection) {

@@ -22,15 +22,7 @@ import javax.annotation.Nullable;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ShortMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ShortOpenHashMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntArrayList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntOpenHashSet;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntSet;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2IntMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -42,8 +34,6 @@ import org.bukkit.potion.PotionEffect;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.ownable.OwnableEntity;
 import com.pm.aiost.event.EquipmentListener;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectHandler;
@@ -72,14 +62,20 @@ import com.pm.aiost.player.handler.ItemBarHandler;
 import com.pm.aiost.player.handler.VisibilityManager;
 import com.pm.aiost.player.settings.PlayerSettings;
 import com.pm.aiost.player.unlockable.UnlockableType;
-import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.region.IRegion;
 
+import it.unimi.dsi.fastutil.ints.Int2ShortMap;
+import it.unimi.dsi.fastutil.ints.Int2ShortOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
+import it.unimi.dsi.fastutil.ints.IntSet;
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
-import net.minecraft.server.v1_15_R1.ChatMessageType;
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.EntityTypes;
 
 public class ServerPlayer implements AutoCloseable {
 
@@ -130,7 +126,8 @@ public class ServerPlayer implements AutoCloseable {
 	private final List<ChatHologram> chatHolograms;
 	private final Object2IntMap<Object> cooldowns;
 	final List<IParticle> particles;
-	private OwnableEntity petEntity;
+//	private OwnableEntity petEntity;
+	private Entity petEntity;
 	private PlayerDataCache dataCache;
 
 	ServerPlayer(Player player) {
@@ -381,7 +378,7 @@ public class ServerPlayer implements AutoCloseable {
 		if (this.disguise != null)
 			this.disguise.removePackets(player, packets);
 		disguise.addPackets(player, packets);
-		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
+//		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
 		setSelfDisguise();
 		this.disguise = disguise;
 	}
@@ -398,16 +395,16 @@ public class ServerPlayer implements AutoCloseable {
 			return;
 
 		List packets = new ArrayList();
-		EntityPlayer entityPlayer = NMS.getNMS(player);
+		net.minecraft.world.entity.player.Player entityPlayer = NMS.getNMS(player);
 		packets.add(PacketFactory.packetEntityDestroy(entityPlayer.getId()));
 		disguise.removePackets(player, packets);
 		if (defaultDisguise != null)
 			defaultDisguise.addPackets(player, packets);
 		else {
-			packets.add(PacketFactory.packetNamedEntitySpawn(entityPlayer));
+			packets.add(PacketFactory.packetEntitySpawn(entityPlayer));
 			Disguise.addPlayerStatePackets(entityPlayer, packets);
 		}
-		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
+//		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
 		removeSelfDisguise();
 		this.disguise = null;
 	}
@@ -1032,19 +1029,20 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void spawnPet(int id) {
-		petEntity = (OwnableEntity) AiostEntityTypes.spawnEntity((EntityTypes<?>) UnlockableTypes.PETS.getObject(id),
-				player.getLocation());
-		if (petEntity != null)
-			petEntity.setOwner(player);
+//		petEntity = (OwnableEntity) AiostEntityTypes.spawnEntity((EntityType<?>) UnlockableTypes.PETS.getObject(id),
+//				player.getLocation());
+//		if (petEntity != null)
+//			petEntity.setOwner(player);
 	}
 
 	public void despawnPet() {
-		petEntity.die();
-		petEntity = null;
+//		petEntity.die();
+//		petEntity = null;
 	}
 
 	public boolean hasPet() {
-		return petEntity != null;
+//		return petEntity != null;
+		return false;
 	}
 
 	public boolean hidesChat() {
@@ -1134,12 +1132,12 @@ public class ServerPlayer implements AutoCloseable {
 
 	@SuppressWarnings("deprecation")
 	public boolean collidesWithEntities() {
-		return player.spigot().getCollidesWithEntities();
+		return player.isCollidable();
 	}
 
 	@SuppressWarnings("deprecation")
 	public void setCollidesWithEntities(boolean collides) {
-		player.spigot().setCollidesWithEntities(collides);
+		player.setCollidable(collides);
 	}
 
 	public Set<Player> getHiddenPlayers() {
@@ -1167,6 +1165,6 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public static void sendActionBar(Player player, String msg) {
-		PacketSender.send(player, PacketFactory.packetChat(msg, ChatMessageType.GAME_INFO));
+//		PacketSender.send(player, PacketFactory.packetChat(msg, ChatMessageType.GAME_INFO));
 	}
 }

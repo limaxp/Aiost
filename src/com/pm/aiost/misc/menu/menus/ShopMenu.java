@@ -13,7 +13,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
 
 import com.pm.aiost.item.ItemHelper;
@@ -24,6 +23,8 @@ import com.pm.aiost.misc.menu.merchantMenu.MerchantMenu;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.world.item.alchemy.Potion;
 
 @SuppressWarnings("deprecation")
 public class ShopMenu extends SingleInventoryMenu {
@@ -407,18 +408,18 @@ public class ShopMenu extends SingleInventoryMenu {
 
 	private static Merchant createPotionMenu() {
 		List<MerchantRecipe> recipes = new ArrayList<MerchantRecipe>();
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.REGEN, 1, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 10)));
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.REGEN, 2, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 20)));
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.INSTANT_HEAL, 1, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 15)));
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.SPEED, 1, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 30)));
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.JUMP, 1, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 30)));
-		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.FIRE_RESISTANCE, 1, true).toItemStack(1),
-				new ItemStack(Material.GOLD_NUGGET, 30)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.REGENERATION, 1, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 10)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.REGENERATION, 2, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 20)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.HEALING, 1, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 15)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.SPEED, 1, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 30)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.JUMP, 1, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 30)));
+//		recipes.add(MerchantMenu.createRecipe(new Potion(PotionType.FIRE_RESISTANCE, 1, true).toItemStack(1),
+//				new ItemStack(Material.GOLD_NUGGET, 30)));
 		return MerchantMenu.createMerchant(ChatColor.BOLD + "Potion shop", recipes);
 	}
 

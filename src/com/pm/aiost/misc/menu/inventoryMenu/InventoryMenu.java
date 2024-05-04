@@ -18,7 +18,7 @@ import java.util.function.Consumer;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -1130,12 +1130,12 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	}
 
 	public static void displayInSlot(Player player, ItemStack is, int slot) {
-		int windowId = ((CraftPlayer) player).getHandle().activeContainer.windowId;
+		int windowId = ((CraftPlayer) player).getHandle().containerMenu.containerId;
 		PacketSender.send(player, PacketFactory.packetSetSlot(windowId, slot, is));
 	}
 
 	public static void displayInSlot(Player player, ItemStack is, ItemStack prev, int slot, int ticks) {
-		int windowId = ((CraftPlayer) player).getHandle().activeContainer.windowId;
+		int windowId = ((CraftPlayer) player).getHandle().containerMenu.containerId;
 		PacketSender.send(player, PacketFactory.packetSetSlot(windowId, slot, is));
 		Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(),
 				() -> PacketSender.send(player, PacketFactory.packetSetSlot(windowId, slot, prev)), ticks);

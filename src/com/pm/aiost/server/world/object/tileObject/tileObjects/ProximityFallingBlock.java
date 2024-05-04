@@ -132,7 +132,7 @@ public class ProximityFallingBlock extends TileObject implements TickingObject {
 		public void hitFallingBlock(FallingBlock fallingBlock) {
 			isFalling = false;
 			getBlock().setBlockData(fallingBlock.getBlockData(), true);
-			fallingBlock.getWorld().spawnParticle(Particle.BLOCK_CRACK, fallingBlock.getLocation(), 10, 0.0, 0.0, 0.0,
+			fallingBlock.getWorld().spawnParticle(Particle.BLOCK, fallingBlock.getLocation(), 10, 0.0, 0.0, 0.0,
 					0.0, fallingBlock.getBlockData(), false);
 		}
 

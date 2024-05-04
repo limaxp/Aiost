@@ -35,8 +35,9 @@ import com.pm.aiost.event.events.PlayerEquipItemEvent.EquipmentAction;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest.SimpleSingleMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class StackEffect extends Effect {
 
@@ -260,13 +261,13 @@ public class StackEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		size = nbt.getInt("size");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setInt("size", size);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putInt("size", size);
 		return nbt;
 	}
 

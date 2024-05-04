@@ -6,7 +6,7 @@ import java.util.function.Function;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import net.minecraft.server.v1_15_R1.Item;
+import net.minecraft.world.item.Item;
 
 public class NMSItemLoaderFunctionRegistry {
 
@@ -22,21 +22,12 @@ public class NMSItemLoaderFunctionRegistry {
 		register("Shield", NMSItemLoader::loadShield);
 		register("Bow", NMSItemLoader::loadBow);
 		register("Crossbow", NMSItemLoader::loadCrossbow);
-		register("MaterialBow", NMSItemLoader::loadMaterialBow);
 		register("Arrow", NMSItemLoader::loadArrow);
 		register("FlintAndSteel", NMSItemLoader::loadFlintAndSteel);
-		register("Soup", NMSItemLoader::loadSoup);
 		register("Armor", NMSItemLoader::loadArmor);
-		register("ArmorColorable", NMSItemLoader::loadColoredArmor);
 		register("Snowball", NMSItemLoader::loadSnowball);
 		register("Egg", NMSItemLoader::loadEgg);
 		register("EnderPearl", NMSItemLoader::loadEnderPearl);
-		register("Spell", NMSItemLoader::loadSpell);
-		register("LeftClickSpell", NMSItemLoader::loadLeftClickSpell);
-		register("Scroll", NMSItemLoader::loadScroll);
-		register("LeftClickScroll", NMSItemLoader::loadLeftClickScroll);
-		register("EffectPotion", NMSItemLoader::loadEffectPotion);
-		register("Gun", NMSItemLoader::loadGun);
 	}
 
 	public static void register(String name, Function<ConfigurationSection, ? extends Item> itemType) {

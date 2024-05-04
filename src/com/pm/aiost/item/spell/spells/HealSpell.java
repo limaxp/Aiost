@@ -25,6 +25,6 @@ public class HealSpell extends Spell {
 		double finalHealth = entity.getHealth() + health;
 		entity.setHealth(finalHealth > entity.getMaxHealth() ? entity.getMaxHealth() : finalHealth);
 		Location loc = entity.getLocation();
-		loc.getWorld().spawnParticle(Particle.VILLAGER_HAPPY, loc, 20, 0.5F, 0.5F, 0.5F, 0.1F, null, false);
+		loc.getWorld().spawnParticle(Particle.HAPPY_VILLAGER, loc, 20, 0.5F, 0.5F, 0.5F, 0.1F, null, false);
 	}
 }

@@ -65,9 +65,7 @@ public class TemperatureEffect extends SingletonEffect {
 			BIOME_TEMPERATURES = new float[Biome.values().length];
 			Arrays.fill(BIOME_TEMPERATURES, ServerPlayer.BASE_TEMPERATURE);
 
-			set(Biome.DESERT_LAKES, 30);
 			set(Biome.DESERT, 40);
-			set(Biome.DESERT_HILLS, 50);
 
 			set(Biome.FROZEN_RIVER, -20);
 			set(Biome.FROZEN_OCEAN, -30);

@@ -19,14 +19,15 @@ import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTList;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.object.TickingObject;
 import com.pm.aiost.server.world.object.tileObject.TileObject;
 import com.pm.aiost.server.world.object.tileObject.TileObjectType;
 import com.pm.aiost.server.world.object.tileObject.TileObjectTypes;
+
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class MovingBlock extends TileObject implements TickingObject {
 
@@ -53,17 +54,17 @@ public class MovingBlock extends TileObject implements TickingObject {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		locations = Arrays.asList(LocationHelper.load(nbt.getList("locations", NBTType.COMPOUND)));
 		delay = nbt.getInt("delay");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.set("locations", LocationHelper.save(locations, new NBTList()));
-		nbt.setInt("delay", delay);
+		nbt.put("locations", LocationHelper.save(locations, new ListTag()));
+		nbt.putInt("delay", delay);
 		return nbt;
 	}
 

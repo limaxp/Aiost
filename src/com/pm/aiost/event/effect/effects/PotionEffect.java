@@ -21,8 +21,9 @@ import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class PotionEffect extends SimplePlayerEffect {
 
@@ -95,7 +96,7 @@ public class PotionEffect extends SimplePlayerEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		type = PotionEffectType.getById(nbt.getInt("type"));
 		duration = nbt.getInt("duration");
@@ -103,11 +104,11 @@ public class PotionEffect extends SimplePlayerEffect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setInt("type", type.getId());
-		nbt.setInt("duration", duration);
-		nbt.setInt("amplifier", amplifier);
+		nbt.putInt("type", type.getId());
+		nbt.putInt("duration", duration);
+		nbt.putInt("amplifier", amplifier);
 		return nbt;
 	}
 

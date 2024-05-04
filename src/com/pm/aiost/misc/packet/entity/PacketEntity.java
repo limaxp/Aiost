@@ -10,9 +10,10 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.PacketThing;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class PacketEntity extends PacketThing {
 
@@ -42,7 +43,7 @@ public abstract class PacketEntity extends PacketThing {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		x = nbt.getDouble("x");
 		y = nbt.getDouble("y");
 		z = nbt.getDouble("z");
@@ -51,13 +52,13 @@ public abstract class PacketEntity extends PacketThing {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setInt("id", getPacketEntityType().id);
-		nbt.setDouble("x", x);
-		nbt.setDouble("y", y);
-		nbt.setDouble("z", z);
-		nbt.setFloat("yaw", yaw);
-		nbt.setFloat("pitch", pitch);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putInt("id", getPacketEntityType().id);
+		nbt.putDouble("x", x);
+		nbt.putDouble("y", y);
+		nbt.putDouble("z", z);
+		nbt.putFloat("yaw", yaw);
+		nbt.putFloat("pitch", pitch);
 		return nbt;
 	}
 
@@ -85,7 +86,7 @@ public abstract class PacketEntity extends PacketThing {
 	// TODO: Implements this in PacketEntityfurniture
 	public void setEquipment(EquipmentSlot slot, ItemStack is) {
 		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
-				PacketFactory.packetEntityEquipment(id, NMS.getNMS(slot), is));
+				PacketFactory.packetEntityEquipment(id, NMS.getNMS(slot), NMS.getNMS(is)));
 	}
 
 	@Override

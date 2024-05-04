@@ -12,8 +12,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.entity.AiostEntityTypes;
 
-import net.minecraft.server.v1_15_R1.Entity;
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 
 public abstract class EntitySpawner {
 
@@ -26,7 +26,7 @@ public abstract class EntitySpawner {
 	private int intervallTime;
 	private int time;
 	private int spawnSize;
-	private List<EntityTypes<?>> entityTypes;
+	private List<EntityType<?>> entityTypes;
 	public final Random random;
 	private Consumer<Entity> spawnCallback;
 	private BukkitRunnable scheduler;
@@ -37,18 +37,18 @@ public abstract class EntitySpawner {
 	}
 
 	public EntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), new Random());
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
 	}
 
 	public EntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), random);
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
 	}
 
-	public EntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes) {
+	public EntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
 		this(intervallTime, spawnSize, entityTypes, new Random());
 	}
 
-	public EntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes, Random random) {
+	public EntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
 		this(random);
 		this.intervallTime = intervallTime;
 		this.spawnSize = spawnSize;
@@ -90,7 +90,7 @@ public abstract class EntitySpawner {
 		while (size > 0) {
 			int groupSize = Math.min(1 + random.nextInt(size), size);
 			size -= groupSize;
-			EntityTypes<?> type = getRandomEntityType();
+			EntityType<?> type = getRandomEntityType();
 			for (int i = 0; i < groupSize; i++)
 				spawnCallback.accept(AiostEntityTypes.spawnEntity(type, loc));
 		}
@@ -124,33 +124,33 @@ public abstract class EntitySpawner {
 		return spawnSize;
 	}
 
-	public void setEntityTypes(List<EntityTypes<?>> entityTypes) {
+	public void setEntityTypes(List<EntityType<?>> entityTypes) {
 		this.entityTypes = entityTypes;
 	}
 
-	public List<EntityTypes<?>> getEntityTypes() {
+	public List<EntityType<?>> getEntityTypes() {
 		return entityTypes;
 	}
 
-	public EntityTypes<?> getRandomEntityType() {
+	public EntityType<?> getRandomEntityType() {
 		return entityTypes.get(random.nextInt(entityTypes.size()));
 	}
 
-	public void addEntityType(EntityTypes<?> type) {
+	public void addEntityType(EntityType<?> type) {
 		entityTypes.add(type);
 	}
 
-	public void addEntityTypes(EntityTypes<?>... types) {
+	public void addEntityTypes(EntityType<?>... types) {
 		int length = types.length;
 		for (int i = 0; i < length; i++)
 			entityTypes.add(types[i]);
 	}
 
-	public void removeEntityType(EntityTypes<?> type) {
+	public void removeEntityType(EntityType<?> type) {
 		entityTypes.remove(type);
 	}
 
-	public void removeEntityTypes(EntityTypes<?>... types) {
+	public void removeEntityTypes(EntityType<?>... types) {
 		int length = types.length;
 		for (int i = 0; i < length; i++)
 			entityTypes.remove(types[i]);

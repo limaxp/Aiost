@@ -25,7 +25,7 @@ import com.pm.aiost.misc.utils.StringUtils;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class SpawnCommands {
 
@@ -87,7 +87,7 @@ public class SpawnCommands {
 							CommandUtil.parseInt(sender, args[0]));
 					PacketEntityTypes.spawn(entity, loc);
 				} else {
-					EntityTypes<?> type = CommandUtil.parseEntityTypes(sender, args[0]);
+					EntityType<?> type = CommandUtil.parseEntityTypes(sender, args[0]);
 					if (type == null)
 						return false;
 					PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);
@@ -103,7 +103,7 @@ public class SpawnCommands {
 							args.length >= 5 ? CommandUtil.parseFloat(sender, args[4]) : 0,
 							args.length == 6 ? CommandUtil.parseFloat(sender, args[5]) : 0);
 				} else {
-					EntityTypes<?> type = CommandUtil.parseEntityTypes(sender, args[3]);
+					EntityType<?> type = CommandUtil.parseEntityTypes(sender, args[3]);
 					if (type == null)
 						return false;
 					PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);

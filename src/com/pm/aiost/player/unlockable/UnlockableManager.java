@@ -19,7 +19,7 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class UnlockableManager {
 
@@ -91,11 +91,11 @@ public class UnlockableManager {
 		type.init(names, descriptions, prices, items, item);
 	}
 
-	public static void loadEntityTypes(ConfigurationSection petsSection, UnlockableType<EntityTypes<?>> type,
+	public static void loadEntityTypes(ConfigurationSection petsSection, UnlockableType<EntityType<?>> type,
 			ItemStack item) {
 		Set<String> names = petsSection.getKeys(false);
 		int size = names.size() + 1;
-		EntityTypes<?>[] entityTypes = new EntityTypes<?>[size];
+		EntityType<?>[] entityTypes = new EntityType<?>[size];
 		@SuppressWarnings("unchecked")
 		List<String>[] descriptions = new List[size];
 		int[] prices = new int[size];

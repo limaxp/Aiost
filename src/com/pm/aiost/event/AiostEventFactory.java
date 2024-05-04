@@ -8,8 +8,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_15_R1.block.CraftBlock;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -23,9 +21,6 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
-import com.pm.aiost.entity.projectile.CustomProjectile;
-import com.pm.aiost.entity.projectile.projectiles.EntityItemProjectile;
-import com.pm.aiost.event.events.ItemProjectileHitEvent;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.event.events.PacketThingInteractEvent;
 import com.pm.aiost.event.events.PlayerEquipHandItemEvent;
@@ -34,11 +29,6 @@ import com.pm.aiost.event.events.PlayerEquipItemEvent.EquipmentAction;
 import com.pm.aiost.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.packet.PacketThing;
 import com.pm.aiost.player.ServerPlayer;
-
-import net.minecraft.server.v1_15_R1.BlockPosition;
-import net.minecraft.server.v1_15_R1.MovingObjectPosition;
-import net.minecraft.server.v1_15_R1.MovingObjectPositionBlock;
-import net.minecraft.server.v1_15_R1.MovingObjectPositionEntity;
 
 public class AiostEventFactory {
 
@@ -124,40 +114,40 @@ public class AiostEventFactory {
 		return event;
 	}
 
-	public static ProjectileHitEvent callProjectileHitEvent(@Nonnull CustomProjectile projectile,
-			@Nonnull MovingObjectPosition movingObjectPosition) {
-		ProjectileHitEvent event;
-		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
-			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity());
-		} else {
-			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
-			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
-			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(), null,
-					CraftBlock.at(projectile.getWorld(), pos),
-					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()));
-		}
-		PLUGIN_MANAGER.callEvent(event);
-		return event;
-	}
-
-	public static ProjectileHitEvent callItemProjectileHitEvent(@Nonnull EntityItemProjectile projectile,
-			@Nonnull MovingObjectPosition movingObjectPosition) {
-		ProjectileHitEvent event;
-		ItemStack is = CraftItemStack.asCraftMirror(projectile.getItemStack());
-		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
-			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity(), is);
-		} else {
-			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
-			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
-			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-					CraftBlock.at(projectile.world, pos),
-					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()), is);
-		}
-		PLUGIN_MANAGER.callEvent(event);
-		return event;
-	}
+//	public static ProjectileHitEvent callProjectileHitEvent(@Nonnull CustomProjectile projectile,
+//			@Nonnull MovingObjectPosition movingObjectPosition) {
+//		ProjectileHitEvent event;
+//		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
+//			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
+//					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity());
+//		} else {
+//			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
+//			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
+//			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(), null,
+//					CraftBlock.at(projectile.getWorld(), pos),
+//					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()));
+//		}
+//		PLUGIN_MANAGER.callEvent(event);
+//		return event;
+//	}
+//
+//	public static ProjectileHitEvent callItemProjectileHitEvent(@Nonnull EntityItemProjectile projectile,
+//			@Nonnull MovingObjectPosition movingObjectPosition) {
+//		ProjectileHitEvent event;
+//		ItemStack is = CraftItemStack.asCraftMirror(projectile.getItemStack());
+//		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
+//			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
+//					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity(), is);
+//		} else {
+//			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
+//			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
+//			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
+//					CraftBlock.at(projectile.world, pos),
+//					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()), is);
+//		}
+//		PLUGIN_MANAGER.callEvent(event);
+//		return event;
+//	}
 
 	public static PacketThingAttackEvent callPacketThingAttackEvent(@Nonnull ServerPlayer serverPlayer,
 			@Nonnull PacketThing packetThing) {

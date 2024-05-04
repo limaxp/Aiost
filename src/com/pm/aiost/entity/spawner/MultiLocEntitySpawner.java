@@ -9,7 +9,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.pm.aiost.misc.utils.LocationHelper;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class MultiLocEntitySpawner extends EntitySpawner {
 
@@ -21,18 +21,18 @@ public class MultiLocEntitySpawner extends EntitySpawner {
 	}
 
 	public MultiLocEntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), new Random());
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
 	}
 
 	public MultiLocEntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), random);
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
 	}
 
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes) {
+	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
 		this(intervallTime, spawnSize, entityTypes, new Random());
 	}
 
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes, Random random) {
+	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
 		super(intervallTime, spawnSize, entityTypes, random);
 		locationVaraety = 1;
 	}

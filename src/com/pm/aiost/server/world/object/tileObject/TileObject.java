@@ -11,10 +11,11 @@ import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ServerChunk;
+
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class TileObject implements Cloneable {
 
@@ -39,17 +40,17 @@ public abstract class TileObject implements Cloneable {
 		this.z = z;
 	}
 
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		x = nbt.getInt("x");
 		y = nbt.getInt("y");
 		z = nbt.getInt("z");
 	}
 
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setInt("id", getTileObjectType().id);
-		nbt.setInt("x", x);
-		nbt.setInt("y", y);
-		nbt.setInt("z", z);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putInt("id", getTileObjectType().id);
+		nbt.putInt("x", x);
+		nbt.putInt("y", y);
+		nbt.putInt("z", z);
 		return nbt;
 	}
 

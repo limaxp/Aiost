@@ -1,73 +1,53 @@
 package com.pm.aiost.item;
 
-import java.lang.invoke.MethodHandle;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Supplier;
 
-import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
-import com.pm.aiost.misc.utils.reflection.Reflection;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Tier;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 
-import net.minecraft.server.v1_15_R1.EnumToolMaterial;
-import net.minecraft.server.v1_15_R1.IMaterial;
-import net.minecraft.server.v1_15_R1.LazyInitVar;
-import net.minecraft.server.v1_15_R1.RecipeItemStack;
-import net.minecraft.server.v1_15_R1.ToolMaterial;
+public class AiostToolMaterial implements Tier {
 
-public class AiostToolMaterial implements ToolMaterial {
-
-	private static final Class<?> ENUM_TOOL_MATERIAL_CLASS = NMS.getNMSClass("EnumToolMaterial");
-	private static final MethodHandle ENUMTOOLMATERIAL_K_GET = Reflection.unreflectGetter(ENUM_TOOL_MATERIAL_CLASS,
-			"k");
 	private static final Map<String, AiostToolMaterial> NAME_MAP = new HashMap<String, AiostToolMaterial>();
 
-	public static final AiostToolMaterial WOOD = a("wood", EnumToolMaterial.WOOD);
+	public static final AiostToolMaterial COPPER = register("copper", 200, 1.5F, 5.0F, 8,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial STONE = a("stone", EnumToolMaterial.STONE);
+	public static final AiostToolMaterial TIN = register("tin", 200, 1.5F, 5.0F, 8,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial IRON = a("iron", EnumToolMaterial.IRON);
+	public static final AiostToolMaterial BRONZE = register("bronze", 250, 2.0F, 6.0F, 18,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial DIAMOND = a("diamond", EnumToolMaterial.DIAMOND);
+	public static final AiostToolMaterial EMERALD = register("emerald", 1000, 2.5F, 7.0F, 10,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial GOLD = a("gold", EnumToolMaterial.GOLD);
+	public static final AiostToolMaterial RUBY = register("ruby", 1444, 2.5F, 7.0F, 14,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial COPPER = a("copper", 1, 200, 5.0F, 1.5F, 8,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
+	public static final AiostToolMaterial BLACK_DIAMOND = register("black_diamond", 2372, 4.0F, 9.0F, 18,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial TIN = a("tin", 1, 200, 5.0F, 1.5F, 8,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
+	public static final AiostToolMaterial OBSIDIAN_CRYSTAL = register("obsidian_crystal", 3000, 4.0F, 9.0F, 12,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial BRONZE = a("bronze", 2, 250, 6.0F, 2.0F, 18,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
+	public static final AiostToolMaterial LAVA_CRYSTAL = register("lava_crystal", 2700, 4.0F, 9.0F, 20,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial EMERALD = a("emerald", 3, 1000, 7.0F, 2.5F, 10,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
+	public static final AiostToolMaterial QUARTZ_CRYSTAL = register("quartz_crystal", 3500, 5.0F, 10.0F, 22,
+			Ingredient.of(net.minecraft.world.item.Items.DIAMOND));
 
-	public static final AiostToolMaterial RUBY = a("ruby", 3, 1444, 7.0F, 2.5F, 14,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
-
-	public static final AiostToolMaterial BLACK_DIAMOND = a("black_diamond", 4, 2372, 9.0F, 4.0F, 18,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
-
-	public static final AiostToolMaterial OBSIDIAN_CRYSTAL = a("obsidian_crystal", 4, 3000, 9.0F, 4.0F, 12,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
-
-	public static final AiostToolMaterial LAVA_CRYSTAL = a("lava_crystal", 4, 2700, 9.0F, 4.0F, 20,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
-
-	public static final AiostToolMaterial QUARTZ_CRYSTAL = a("quartz_crystal", 5, 3500, 10.0F, 5.0F, 22,
-			() -> RecipeItemStack.a(new IMaterial[] {}));
-
-	public static AiostToolMaterial a(String name, EnumToolMaterial toolMaterial) {
-		AiostToolMaterial aiostToolMaterial = new AiostToolMaterial(toolMaterial);
-		register(name, aiostToolMaterial);
-		return aiostToolMaterial;
+	public static AiostToolMaterial register(String name, int uses, float speed, float damage, int enchantmentValue,
+			Ingredient repairItem) {
+		return register(name, uses, speed, damage, null, enchantmentValue, repairItem);
 	}
 
-	public static AiostToolMaterial a(String name, int var2, int durability, float damage, float var5, int var6,
-			Supplier<RecipeItemStack> var7) {
-		AiostToolMaterial aiostToolMaterial = new AiostToolMaterial(var2, durability, damage, var5, var6, var7);
+	public static AiostToolMaterial register(String name, int uses, float speed, float damage,
+			TagKey<Block> incorrectBlocksForDrops, int enchantmentValue, Ingredient repairItem) {
+		AiostToolMaterial aiostToolMaterial = new AiostToolMaterial(uses, speed, damage, incorrectBlocksForDrops,
+				enchantmentValue, repairItem);
 		register(name, aiostToolMaterial);
 		return aiostToolMaterial;
 	}
@@ -88,64 +68,50 @@ public class AiostToolMaterial implements ToolMaterial {
 		return NAME_MAP.get(name.toLowerCase());
 	}
 
-	private final int f;
-	private final int g;
-	private final float h;
-	private final float i;
-	private final int j;
-	private LazyInitVar<RecipeItemStack> k;
+	private final int uses;
+	private final float speed;
+	private final float damage;
+	private final TagKey<Block> incorrectBlocksForDrops;
+	private final int enchantmentValue;
+	private final Ingredient repairItem;
 
-	public AiostToolMaterial(EnumToolMaterial toolMaterial) {
-		this.f = toolMaterial.d();
-		this.g = toolMaterial.a();
-		this.h = toolMaterial.b();
-		this.i = toolMaterial.c();
-		this.j = toolMaterial.e();
-		try {
-			this.k = (LazyInitVar<RecipeItemStack>) ENUMTOOLMATERIAL_K_GET.invoke(toolMaterial);
-		} catch (Throwable e) {
-			Logger.err("AiostToolMaterial: Error could not reflect 'k' field", e);
-			throw new RuntimeException();
-		}
-	}
-
-	public AiostToolMaterial(int var2, int durability, float damage, float var5, int var6,
-			Supplier<RecipeItemStack> var7) {
-		this.f = var2;
-		this.g = durability;
-		this.h = damage;
-		this.i = var5;
-		this.j = var6;
-		this.k = new LazyInitVar<RecipeItemStack>(var7);
+	public AiostToolMaterial(int uses, float speed, float damage, TagKey<Block> incorrectBlocksForDrops,
+			int enchantmentValue, Ingredient repairItem) {
+		this.uses = uses;
+		this.speed = speed;
+		this.damage = damage;
+		this.incorrectBlocksForDrops = incorrectBlocksForDrops;
+		this.enchantmentValue = enchantmentValue;
+		this.repairItem = repairItem;
 	}
 
 	@Override
-	public int a() {
-		return this.g;
+	public int getUses() {
+		return this.uses;
 	}
 
 	@Override
-	public float b() {
-		return this.h;
+	public float getSpeed() {
+		return this.speed;
 	}
 
 	@Override
-	public float c() {
-		return this.i;
+	public float getAttackDamageBonus() {
+		return this.damage;
 	}
 
 	@Override
-	public int d() {
-		return this.f;
+	public TagKey<Block> getIncorrectBlocksForDrops() {
+		return this.incorrectBlocksForDrops;
 	}
 
 	@Override
-	public int e() {
-		return this.j;
+	public int getEnchantmentValue() {
+		return this.enchantmentValue;
 	}
 
 	@Override
-	public RecipeItemStack f() {
-		return (RecipeItemStack) this.k.a();
+	public Ingredient getRepairIngredient() {
+		return this.repairItem;
 	}
 }

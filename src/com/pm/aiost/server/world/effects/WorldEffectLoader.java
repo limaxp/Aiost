@@ -6,8 +6,8 @@ import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class WorldEffectLoader {
 
@@ -24,8 +24,8 @@ public class WorldEffectLoader {
 		if (!effectFile.exists())
 			return;
 
-		NBTTagCompound nbt = NBTHelper.fromFile(effectFile);
-		NBTTagList effectList = nbt.getList("effects", NBTType.COMPOUND);
+		CompoundTag nbt = NBTHelper.fromFile(effectFile);
+		ListTag effectList = nbt.getList("effects", NBTType.COMPOUND);
 		int size = effectList.size();
 		if (size > 0) {
 			Effect[] effects = new Effect[size];
@@ -34,7 +34,7 @@ public class WorldEffectLoader {
 			worldEffects.addSynchronized(id, effects);
 		}
 
-		NBTTagList selfEffectList = nbt.getList("selfEffects", NBTType.COMPOUND);
+		ListTag selfEffectList = nbt.getList("selfEffects", NBTType.COMPOUND);
 		size = selfEffectList.size();
 		if (size > 0) {
 			Effect[] selfEffects = new Effect[size];
@@ -49,16 +49,16 @@ public class WorldEffectLoader {
 		if (effectFile.exists())
 			effectFile.delete();
 
-		NBTTagCompound nbt = new NBTTagCompound();
-		NBTTagList effectList = new NBTTagList();
+		CompoundTag nbt = new CompoundTag();
+		ListTag effectList = new ListTag();
 		for (int i = 0; i < effects.length; i++)
-			effectList.add(Effect.saveNBT(effects[i], new NBTTagCompound()));
-		nbt.set("effects", effectList);
+			effectList.add(Effect.saveNBT(effects[i], new CompoundTag()));
+		nbt.put("effects", effectList);
 
-		NBTTagList selfEffectList = new NBTTagList();
+		ListTag selfEffectList = new ListTag();
 		for (int i = 0; i < selfEffects.length; i++)
-			selfEffectList.add(Effect.saveNBT(selfEffects[i], new NBTTagCompound()));
-		nbt.set("selfEffects", selfEffectList);
+			selfEffectList.add(Effect.saveNBT(selfEffects[i], new CompoundTag()));
+		nbt.put("selfEffects", selfEffectList);
 		NBTHelper.toFile(effectFile, nbt);
 	}
 

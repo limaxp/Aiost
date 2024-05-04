@@ -1,10 +1,11 @@
 package com.pm.aiost.misc.scoreboard;
 
+import java.util.Arrays;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.craftbukkit.v1_15_R1.scoreboard.CraftScoreboard;
+import org.bukkit.craftbukkit.v1_20_R4.scoreboard.CraftScoreboard;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -13,19 +14,13 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.ScoreboardManager;
 import org.bukkit.scoreboard.Team;
 
-import com.pm.aiost.misc.packet.PacketFactory;
-import com.pm.aiost.misc.packet.PacketScoreboardDisplaySlot;
-import com.pm.aiost.misc.packet.PacketScoreboardObjectiveAction;
-import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.scoreboard.playerScore.PlayerScore;
 import com.pm.aiost.misc.scoreboard.playerScore.PlayerScores;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.IChatBaseComponent.ChatSerializer;
-import net.minecraft.server.v1_15_R1.IScoreboardCriteria;
-import net.minecraft.server.v1_15_R1.IScoreboardCriteria.EnumScoreboardHealthDisplay;
-import net.minecraft.server.v1_15_R1.ScoreboardObjective;
-import net.minecraft.server.v1_15_R1.ScoreboardTeam;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 
 public class Scoreboard {
 
@@ -39,7 +34,7 @@ public class Scoreboard {
 	}
 
 	public final org.bukkit.scoreboard.Scoreboard scoreboard;
-	public final net.minecraft.server.v1_15_R1.Scoreboard nmsScoreboard;
+	public final net.minecraft.world.scores.Scoreboard nmsScoreboard;
 
 	public Scoreboard() {
 		scoreboard = SCOREBOARD_MANAGER.getNewScoreboard();
@@ -65,31 +60,25 @@ public class Scoreboard {
 	}
 
 	public Objective createTeamSidebar(String name, String displayName, Team team) {
-		return createTeamSidebar(name, displayName, team.getColor().ordinal());
+		return createTeamSidebar(name, displayName, team.getColor());
 	}
 
 	public Objective createTeamSidebar(String name, String displayName, ChatColor color) {
-		return createTeamSidebar(name, displayName, color.ordinal());
-	}
-
-	public Objective createTeamSidebar(String name, String displayName, int color) {
-		ScoreboardObjective objective = nmsScoreboard.registerObjective(name,
-				new IScoreboardCriteria(ObjectiveType.DUMMY), ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
-				EnumScoreboardHealthDisplay.INTEGER);
-		nmsScoreboard.setDisplaySlot(3 + color, objective);
+		Component Component = ComponentUtils.formatList(Arrays.asList(name));
+		net.minecraft.world.scores.Objective objective = nmsScoreboard.addObjective(name, ObjectiveCriteria.HEALTH,
+				Component, net.minecraft.world.scores.criteria.ObjectiveCriteria.RenderType.INTEGER, false, null);
+		nmsScoreboard.setDisplayObjective(net.minecraft.world.scores.DisplaySlot.valueOf("TEAM" + color.name()),
+				objective);
 		return scoreboard.getObjective(name);
 	}
 
 	public void removeTeamSidebar(Team team) {
-		removeTeamSidebar(team.getColor().ordinal());
+		removeTeamSidebar(team.getColor());
 	}
 
 	public void removeTeamSidebar(ChatColor color) {
-		removeTeamSidebar(color.ordinal());
-	}
-
-	public void removeTeamSidebar(int color) {
-		nmsScoreboard.unregisterObjective(nmsScoreboard.getObjectiveForSlot(3 + color));
+		nmsScoreboard.removeObjective(nmsScoreboard
+				.getDisplayObjective(net.minecraft.world.scores.DisplaySlot.valueOf("TEAM" + color.name())));
 	}
 
 	public void removeScore(Score score) {
@@ -105,19 +94,19 @@ public class Scoreboard {
 			scoreboard.resetScores(score);
 	}
 
+	// TODO
 	public void createPlayerSidebar(Player player, String name, String displayName) {
-		PacketSender.send(player,
-				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
-						EnumScoreboardHealthDisplay.INTEGER, PacketScoreboardObjectiveAction.CREATE));
-
-		PacketSender.send(player,
-				PacketFactory.packetScoreboardDisplayObjective(PacketScoreboardDisplaySlot.SIDEBAR, name));
+//		PacketSender.send(player,
+//				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
+//						EnumScoreboardHealthDisplay.INTEGER, ObjectiveMethod.CREATE));
+//
+//		PacketSender.send(player, PacketFactory.packetScoreboardSetDisplayObjective(DisplaySlot.SIDEBAR, name));
 	}
 
 	public void removePlayerSidebar(Player player, String name, String displayName) {
-		PacketSender.send(player,
-				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
-						EnumScoreboardHealthDisplay.INTEGER, PacketScoreboardObjectiveAction.REMOVE));
+//		PacketSender.send(player,
+//				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
+//						EnumScoreboardHealthDisplay.INTEGER, ObjectiveMethod.REMOVE));
 	}
 
 	public PlayerScore addPlayerScore(Player player, String objectiveName, String scoreName, int score) {
@@ -186,8 +175,8 @@ public class Scoreboard {
 		return scoreboard.getEntryTeam(name);
 	}
 
-	public ScoreboardTeam getNMSTeam(String name) {
-		return nmsScoreboard.getTeam(name);
+	public net.minecraft.world.scores.Team getNMSTeam(String name) {
+		return nmsScoreboard.getPlayerTeam(name);
 	}
 
 	public static Score setScore(Objective objective, String name, int value) {
@@ -229,5 +218,12 @@ public class Scoreboard {
 	public static void removeFromTeam(Player player) {
 		String name = player.getName();
 		player.getScoreboard().getEntryTeam(name).removeEntry(name);
+	}
+
+	public class ObjectiveMethod {
+
+		public static final byte CREATE = 0;
+		public static final byte REMOVE = 1;
+		public static final byte UPDATE = 2;
 	}
 }

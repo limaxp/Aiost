@@ -19,8 +19,8 @@ import com.pm.aiost.misc.other.Banner;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class ItemCanPlaceMenu extends SingleInventoryMenu {
 
@@ -33,7 +33,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 
 	public ItemCanPlaceMenu(String name, ServerPlayer serverPlayer) {
 		super(BOLD + name, 6, false);
-		NBTTagList nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		int size = nbtList.size();
 		ItemStack[] items = new ItemStack[size + 1];
 		for (int i = 0; i < size; i++)
@@ -89,7 +89,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.removeMaterial(getList(nbtTag), is.getType()));
 	}
 
-	protected NBTTagList getList(NBTTagCompound nbtTag) {
+	protected ListTag getList(CompoundTag nbtTag) {
 		return NBTHelper.getCanPlaceOnList(nbtTag);
 	}
 
@@ -100,7 +100,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 		}
 
 		@Override
-		protected NBTTagList getList(NBTTagCompound nbtTag) {
+		protected ListTag getList(CompoundTag nbtTag) {
 			return NBTHelper.getCanDestroyList(nbtTag);
 		}
 	}

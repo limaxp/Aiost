@@ -20,12 +20,6 @@ import org.bukkit.GameRule;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntArrayList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockPistonExtendEvent;
@@ -56,6 +50,13 @@ import com.pm.aiost.server.world.region.IRegion;
 import com.pm.aiost.server.world.region.Region;
 import com.pm.aiost.server.world.region.WorldRegions;
 
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
+
 public class ServerWorld implements AutoCloseable, IRegion {
 
 	// chunks are saved as map where key = x und y combined and value ServerChunk
@@ -82,7 +83,7 @@ public class ServerWorld implements AutoCloseable, IRegion {
 		File aiostFile = new File(Bukkit.getWorldContainer(), world.getName() + File.separator + "aiost");
 		if (!aiostFile.exists())
 			aiostFile.mkdir();
-		regionFileCache = new RegionFileCache(new File(aiostFile, "region"));
+		regionFileCache = new RegionFileCache(this, new File(aiostFile, "region"));
 		eventHandlerLoader = new EventHandlerLoader(new File(aiostFile, "eventHandler.yml"));
 		worldEffects = new WorldEffects(new File(aiostFile, "effects"));
 		worldRegions = new WorldRegions(new File(aiostFile, "regions"));

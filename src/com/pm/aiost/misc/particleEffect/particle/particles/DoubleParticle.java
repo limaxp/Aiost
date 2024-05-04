@@ -15,9 +15,9 @@ import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
 import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class DoubleParticle implements IParticle {
 
@@ -54,18 +54,18 @@ public class DoubleParticle implements IParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		particle1 = ParticleBuilder.create(nbt.getCompound("particle1"));
 		particle2 = ParticleBuilder.create(nbt.getCompound("particle2"));
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
-		INBTTagCompound particleNbt;
-		ParticleBuilder.save(particle1, particleNbt = new NBTCompound());
-		nbt.set("particle1", particleNbt);
-		ParticleBuilder.save(particle2, particleNbt = new NBTCompound());
-		nbt.set("particle2", particleNbt);
+	public void save(CompoundTag nbt) {
+		CompoundTag particleNbt;
+		ParticleBuilder.save(particle1, particleNbt = new CompoundTag());
+		nbt.put("particle1", particleNbt);
+		ParticleBuilder.save(particle2, particleNbt = new CompoundTag());
+		nbt.put("particle2", particleNbt);
 	}
 
 	@Override

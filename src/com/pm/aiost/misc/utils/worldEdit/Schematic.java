@@ -8,13 +8,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTList;
 import com.pm.aiost.misc.utils.worldEdit.WorldEdit.WorldEditTask;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class Schematic {
 
@@ -40,14 +37,14 @@ public class Schematic {
 		new PlaceSchematicTask(block).runTaskTimer(Aiost.getPlugin(), 0, WorldEdit.DEFAULT_INTERVALL);
 	}
 
-	public void load(INBTTagCompound nbt) {
-		NBTTagList yList = nbt.getList("schematic", NBTType.LIST);
+	public void load(CompoundTag nbt) {
+		ListTag yList = nbt.getList("schematic", NBTType.LIST);
 		for (int y = 0; y < yList.size(); y++) {
-			NBTTagList xList = (NBTTagList) yList.get(y);
+			ListTag xList = (ListTag) yList.get(y);
 			for (int x = 0; x < xList.size(); x++) {
-				NBTTagList zList = (NBTTagList) xList.get(x);
+				ListTag zList = (ListTag) xList.get(x);
 				for (int z = 0; z < zList.size(); z++) {
-					NBTTagCompound nbtData = zList.getCompound(z);
+					CompoundTag nbtData = zList.getCompound(z);
 					System.out.println(nbtData.getString("data"));
 					BlockData data = null;
 					this.data[x][y][z] = data;
@@ -56,22 +53,22 @@ public class Schematic {
 		}
 	}
 
-	public void save(INBTTagCompound nbt) {
-		NBTList yList = new NBTList();
-		nbt.set("schematic", yList);
+	public void save(CompoundTag nbt) {
+		ListTag yList = new ListTag();
+		nbt.put("schematic", yList);
 		int yLast = data.length;
 		for (int y = 0; y < yLast; y++) {
-			NBTList xList = new NBTList();
+			ListTag xList = new ListTag();
 			yList.add(xList);
 			int xLast = data[y].length;
 			for (int x = 0; x < xLast; x++) {
-				NBTList zList = new NBTList();
+				ListTag zList = new ListTag();
 				xList.add(zList);
 				int zLast = data[y][x].length;
 				for (int z = 0; z < zLast; z++) {
 					BlockData data = this.data[x][y][z];
-					NBTCompound nbtData = new NBTCompound();
-					nbtData.setString("data", data.getAsString());
+					CompoundTag nbtData = new CompoundTag();
+					nbtData.putString("data", data.getAsString());
 					zList.add(nbtData);
 				}
 			}

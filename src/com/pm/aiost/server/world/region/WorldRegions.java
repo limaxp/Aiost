@@ -5,9 +5,9 @@ import java.util.Random;
 
 import javax.annotation.Nullable;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
-
 import com.pm.aiost.server.world.ServerWorld;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
 
 public class WorldRegions extends RegionLoader {
 

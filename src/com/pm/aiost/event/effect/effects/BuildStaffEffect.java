@@ -21,9 +21,10 @@ import com.pm.aiost.event.effect.EffectTypes;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.worldEdit.WorldEdit;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class BuildStaffEffect extends Effect {
 
@@ -76,13 +77,13 @@ public class BuildStaffEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		radius = nbt.getInt("radius");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setInt("radius", radius);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putInt("radius", radius);
 		return nbt;
 	}
 

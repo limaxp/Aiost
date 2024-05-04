@@ -11,12 +11,10 @@ import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ServerChunk;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class PacketEntityTypes {
 
@@ -46,58 +44,32 @@ public class PacketEntityTypes {
 		return type;
 	}
 
-	public static PacketEntity spawn(int id, ServerChunk chunk, NBTTagCompound nbt) {
+	public static PacketEntity spawn(int id, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(AiostRegistry.PACKET_ENTITIES.get(id).constructor, chunk, nbt);
 	}
 
-	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, ServerChunk chunk, NBTTagCompound nbt) {
+	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, ServerChunk chunk, CompoundTag nbt) {
 		return spawn(type.constructor, chunk, nbt);
 	}
 
 	public static <T extends PacketEntity> T spawn(PacketEntityConstructor<T> constructor, ServerChunk chunk,
-			NBTTagCompound nbt) {
-		return spawn(constructor, chunk, new NBTCompoundWrapper(nbt));
-	}
-
-	public static PacketEntity spawn(int id, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.PACKET_ENTITIES.get(id).constructor, chunk, nbt);
-	}
-
-	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, ServerChunk chunk, INBTTagCompound nbt) {
-		return spawn(type.constructor, chunk, nbt);
-	}
-
-	public static <T extends PacketEntity> T spawn(PacketEntityConstructor<T> constructor, ServerChunk chunk,
-			INBTTagCompound nbt) {
+			CompoundTag nbt) {
 		T t = constructor.get(chunk.world);
 		t.load(nbt);
 		chunk.loadPacketEntity(t);
 		return t;
 	}
 
-	public static PacketEntity spawn(int id, Location loc, NBTTagCompound nbt) {
+	public static PacketEntity spawn(int id, Location loc, CompoundTag nbt) {
 		return spawn(AiostRegistry.PACKET_ENTITIES.get(id).constructor, loc, nbt);
 	}
 
-	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, Location loc, NBTTagCompound nbt) {
+	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, Location loc, CompoundTag nbt) {
 		return spawn(type.constructor, loc, nbt);
 	}
 
 	public static <T extends PacketEntity> T spawn(PacketEntityConstructor<T> constructor, Location loc,
-			NBTTagCompound nbt) {
-		return spawn(constructor, loc, new NBTCompoundWrapper(nbt));
-	}
-
-	public static PacketEntity spawn(int id, Location loc, INBTTagCompound nbt) {
-		return spawn(AiostRegistry.PACKET_ENTITIES.get(id).constructor, loc, nbt);
-	}
-
-	public static <T extends PacketEntity> T spawn(PacketEntityType<T> type, Location loc, INBTTagCompound nbt) {
-		return spawn(type.constructor, loc, nbt);
-	}
-
-	public static <T extends PacketEntity> T spawn(PacketEntityConstructor<T> constructor, Location loc,
-			INBTTagCompound nbt) {
+			CompoundTag nbt) {
 		ServerWorld world = ServerWorld.getByWorld(loc.getWorld());
 		T t = constructor.get(world);
 		t.load(nbt);

@@ -12,6 +12,9 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.utils.nms.NMS;
 
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.world.entity.EntityType;
+
 public class DisguisePlayer implements Disguise {
 
 	protected GameProfile profile;
@@ -26,17 +29,17 @@ public class DisguisePlayer implements Disguise {
 	@Override
 	public void addPackets(Player player, List<Object> packets) {
 		Location loc = player.getLocation();
-		packets.add(PacketFactory.packetPlayerInfo_(PacketFactory.ENUM_PLAYER_INFO_ACTION_ADD_PLAYER, profile));
-		packets.add(PacketFactory.packetNamedEntitySpawn(player.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
-				loc.getZ(), loc.getYaw(), loc.getPitch()));
+		packets.add(PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile));
+		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
+				loc.getZ(), loc.getYaw(), loc.getPitch(), EntityType.PLAYER));
 		Disguise.addPlayerStatePackets(NMS.getNMS(player), packets);
 	}
 
 	@Override
 	public void removePackets(Player player, List<Object> packets) {
-		packets.add(PacketFactory.packetPlayerInfo_(PacketFactory.ENUM_PLAYER_INFO_ACTION_REMOVE_PLAYER, profile));
-		packets.add(PacketFactory.packetPlayerInfo_(PacketFactory.ENUM_PLAYER_INFO_ACTION_ADD_PLAYER,
-				NMS.getNMS(player).getProfile()));
+		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
+		packets.add(PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+				NMS.getNMS(player).getGameProfile()));
 	}
 
 	@Override

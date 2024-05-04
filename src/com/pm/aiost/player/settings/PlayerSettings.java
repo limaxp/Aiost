@@ -5,8 +5,6 @@ import java.util.Collection;
 import java.util.List;
 
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2IntMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 import com.pm.aiost.entity.npc.profile.Profiles;
 import com.pm.aiost.misc.command.commands.PlayerCommands.DisguisePlayerCommand;
@@ -14,6 +12,9 @@ import com.pm.aiost.misc.command.commands.PlayerCommands.DisguiseRemoveCommand;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.VisibilityManager;
+
+import it.unimi.dsi.fastutil.objects.Object2IntMap;
+import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 
 public class PlayerSettings {
 

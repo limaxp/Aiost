@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.bytes.ByteArrayList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.bytes.ByteList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ByteMap;
 import org.bukkit.inventory.EquipmentSlot;
+
+import it.unimi.dsi.fastutil.bytes.ByteArrayList;
+import it.unimi.dsi.fastutil.bytes.ByteList;
+import it.unimi.dsi.fastutil.objects.Object2ByteLinkedOpenHashMap;
+import it.unimi.dsi.fastutil.objects.Object2ByteMap;
 
 public class EffectAction {
 

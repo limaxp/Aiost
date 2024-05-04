@@ -9,9 +9,8 @@ import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.FileUtils;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class SchematicFileLoader {
 
@@ -27,7 +26,7 @@ public class SchematicFileLoader {
 		File src = new File(SCHEMATIC_FOLDER, name);
 		if (!src.exists())
 			return null;
-		INBTTagCompound nbt = new NBTCompoundWrapper(NBTHelper.fromFile(src));
+		CompoundTag nbt = NBTHelper.fromFile(src);
 		Schematic schematic = new Schematic();
 		schematic.load(nbt);
 		return schematic;
@@ -43,7 +42,7 @@ public class SchematicFileLoader {
 				return false;
 			}
 		}
-		NBTCompound nbt = new NBTCompound();
+		CompoundTag nbt = new CompoundTag();
 		schematic.save(nbt);
 		return NBTHelper.toFile(dest, nbt);
 	}

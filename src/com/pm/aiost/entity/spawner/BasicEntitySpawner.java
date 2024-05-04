@@ -7,7 +7,7 @@ import java.util.Random;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class BasicEntitySpawner extends EntitySpawner {
 
@@ -18,18 +18,18 @@ public class BasicEntitySpawner extends EntitySpawner {
 	}
 
 	public BasicEntitySpawner(int intervallTime, int spawnSize) {
-		super(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), new Random());
+		super(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
 	}
 
 	public BasicEntitySpawner(int intervallTime, int spawnSize, Random random) {
-		super(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), random);
+		super(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
 	}
 
-	public BasicEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes) {
+	public BasicEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
 		super(intervallTime, spawnSize, entityTypes, new Random());
 	}
 
-	public BasicEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes, Random random) {
+	public BasicEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
 		super(intervallTime, spawnSize, entityTypes, random);
 	}
 

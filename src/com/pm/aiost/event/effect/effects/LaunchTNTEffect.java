@@ -8,11 +8,8 @@ import java.util.function.Supplier;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.craftbukkit.v1_15_R1.entity.CraftLivingEntity;
 import org.bukkit.entity.LivingEntity;
 
-import com.pm.aiost.entity.projectile.ProjectileHelper;
-import com.pm.aiost.entity.projectile.projectiles.TNTProjectile;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.effect.EffectTypes;
@@ -23,9 +20,9 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 
@@ -55,19 +52,19 @@ public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 
 	@Override
 	public void runEffect(LivingEntity entity) {
-		launchTNT(entity, velocityMultiplier, damage, knockback, fuseTicks, effect);
+//		launchTNT(entity, velocityMultiplier, damage, knockback, fuseTicks, effect);
 	}
 
-	public static TNTProjectile launchTNT(LivingEntity entity, float velocityMultiplier, float damage, float knockback,
-			int fuseTicks, Effect effect) {
-		TNTProjectile projectile = new TNTProjectile(((CraftLivingEntity) entity).getHandle());
-		projectile.setDamage(damage);
-		projectile.setKnockback(knockback);
-		projectile.setEffect(effect);
-		projectile.setFuseTicks(fuseTicks);
-		ProjectileHelper.launchProjectile(entity, projectile, velocityMultiplier);
-		return projectile;
-	}
+//	public static TNTProjectile launchTNT(LivingEntity entity, float velocityMultiplier, float damage, float knockback,
+//			int fuseTicks, Effect effect) {
+//		TNTProjectile projectile = new TNTProjectile(((CraftLivingEntity) entity).getHandle());
+//		projectile.setDamage(damage);
+//		projectile.setKnockback(knockback);
+//		projectile.setEffect(effect);
+//		projectile.setFuseTicks(fuseTicks);
+//		ProjectileHelper.launchProjectile(entity, projectile, velocityMultiplier);
+//		return projectile;
+//	}
 
 	@Override
 	public boolean equals(Effect effect) {
@@ -114,7 +111,7 @@ public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 		damage = nbt.getFloat("damage");
@@ -124,13 +121,13 @@ public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
-		nbt.setFloat("damage", damage);
-		nbt.setFloat("knockback", knockback);
-		nbt.setFloat("fuseTicks", fuseTicks);
-		nbt.set("effect", Effect.saveNBT(effect, new NBTCompound()));
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putFloat("damage", damage);
+		nbt.putFloat("knockback", knockback);
+		nbt.putFloat("fuseTicks", fuseTicks);
+		nbt.put("effect", Effect.saveNBT(effect, new CompoundTag()));
 		return nbt;
 	}
 

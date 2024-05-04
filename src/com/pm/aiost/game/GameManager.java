@@ -3,11 +3,11 @@ package com.pm.aiost.game;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.Long2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.misc.registry.AiostRegistry;
+
+import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
+import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
 
 @SuppressWarnings("unchecked")
 public final class GameManager {

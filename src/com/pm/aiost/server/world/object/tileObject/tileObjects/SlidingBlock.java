@@ -23,8 +23,7 @@ public class SlidingBlock extends TileObject implements TickingObject {
 		for (Entity entity : world.world.getNearbyEntities(center, 1.0D, 1.0D, 1.0D,
 				(entity) -> entity instanceof LivingEntity)) {
 			Location loc = entity.getLocation();
-			world.world.spawnParticle(Particle.BLOCK_CRACK, center, 10, 0.0, 0.0, 0.0, 0.0, getBlock().getBlockData(),
-					false);
+			world.world.spawnParticle(Particle.BLOCK, center, 10, 0.0, 0.0, 0.0, 0.0, getBlock().getBlockData(), false);
 			int x, z;
 			if (loc.getBlockX() > this.x)
 				x = this.x - 1;

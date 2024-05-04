@@ -126,7 +126,7 @@ public class LuckyBlockEffect extends SingletonEffect {
 			ItemStack oldLuckySword = MetaHelper.setMeta(new ItemStack(Material.GOLDEN_SWORD),
 					ChatColor.GOLD + "Old Lucky Sword");
 			oldLuckySword.addEnchantment(Enchantment.KNOCKBACK, 1);
-			oldLuckySword.addEnchantment(Enchantment.DAMAGE_ALL, 3);
+			oldLuckySword.addEnchantment(Enchantment.SHARPNESS, 3);
 			oldLuckySword.addEnchantment(Enchantment.FIRE_ASPECT, 1);
 			world.dropItemNaturally(loc, oldLuckySword);
 			break;
@@ -176,12 +176,12 @@ public class LuckyBlockEffect extends SingletonEffect {
 			ItemStack luckySword = MetaHelper.setMeta(new ItemStack(Material.GOLDEN_SWORD),
 					ChatColor.GOLD + "Lucky Sword");
 			luckySword.addUnsafeEnchantment(Enchantment.KNOCKBACK, 5);
-			luckySword.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 6);
+			luckySword.addUnsafeEnchantment(Enchantment.SHARPNESS, 6);
 			luckySword.addEnchantment(Enchantment.FIRE_ASPECT, 2);
-			luckySword.addEnchantment(Enchantment.DAMAGE_ARTHROPODS, 2);
-			luckySword.addEnchantment(Enchantment.DAMAGE_UNDEAD, 2);
-			luckySword.addEnchantment(Enchantment.LOOT_BONUS_MOBS, 2);
-			luckySword.addUnsafeEnchantment(Enchantment.DURABILITY, 4);
+			luckySword.addEnchantment(Enchantment.BANE_OF_ARTHROPODS, 2);
+			luckySword.addEnchantment(Enchantment.SMITE, 2);
+			luckySword.addEnchantment(Enchantment.LOOTING, 2);
+			luckySword.addUnsafeEnchantment(Enchantment.UNBREAKING, 4);
 			world.dropItemNaturally(loc, luckySword);
 			break;
 
@@ -249,7 +249,7 @@ public class LuckyBlockEffect extends SingletonEffect {
 			Spider spiderQueen = (Spider) world.spawnEntity(loc, EntityType.SPIDER);
 			spiderQueen.setCustomName(ChatColor.RED + "SpiderQueen");
 			spiderQueen.setCustomNameVisible(true);
-			spiderQueen.addPotionEffect(new PotionEffect(PotionEffectType.HEAL, 2000, 2));
+			spiderQueen.addPotionEffect(new PotionEffect(PotionEffectType.INSTANT_HEALTH, 2000, 2));
 			for (int i = 0; i < 10; i++)
 				world.spawnEntity(loc, EntityType.CAVE_SPIDER);
 			break;

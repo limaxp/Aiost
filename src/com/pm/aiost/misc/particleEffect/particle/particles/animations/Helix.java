@@ -18,8 +18,9 @@ import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
 import com.pm.aiost.misc.particleEffect.particle.particles.AnimationParticle;
 import com.pm.aiost.misc.utils.ChatColor;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class Helix extends AnimationParticle {
 
@@ -96,7 +97,7 @@ public class Helix extends AnimationParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		radius = nbt.getDouble("radius");
 		height = nbt.getDouble("height");
@@ -105,12 +106,12 @@ public class Helix extends AnimationParticle {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
+	public void save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setDouble("radius", radius);
-		nbt.setDouble("height", height);
-		nbt.setInt("size", size);
-		nbt.setDouble("phi", phi);
+		nbt.putDouble("radius", radius);
+		nbt.putDouble("height", height);
+		nbt.putInt("size", size);
+		nbt.putDouble("phi", phi);
 	}
 
 	@Override

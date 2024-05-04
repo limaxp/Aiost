@@ -25,7 +25,6 @@ import com.pm.aiost.server.ServerType;
 import com.pm.aiost.server.world.type.AiostWorldType;
 
 import net.md_5.bungee.api.ChatColor;
-import net.minecraft.server.v1_15_R1.EntityTypes;
 
 public class CommandUtil {
 
@@ -294,8 +293,8 @@ public class CommandUtil {
 		return type;
 	}
 
-	public static EntityTypes<?> parseEntityTypes(CommandSender sender, String string) {
-		EntityTypes<?> type = AiostEntityTypes.getByKey(NMS.createMinecraftKey(string));
+	public static net.minecraft.world.entity.EntityType<?> parseEntityTypes(CommandSender sender, String string) {
+		net.minecraft.world.entity.EntityType<?> type = AiostEntityTypes.getByKey(NMS.createMinecraftKey(string));
 		if (type == null)
 			sendError(sender, "No entity type found for name '" + string + "'!");
 		return type;

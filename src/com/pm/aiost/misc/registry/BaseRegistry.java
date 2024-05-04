@@ -3,13 +3,13 @@ package com.pm.aiost.misc.registry;
 import java.util.Collection;
 import java.util.Iterator;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.misc.log.Logger;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class BaseRegistry<T> extends AiostRegistry<T> {
 

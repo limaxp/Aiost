@@ -10,9 +10,10 @@ import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectAction;
 import com.pm.aiost.event.effect.EffectCondition;
 import com.pm.aiost.event.effect.EffectType;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.object.tileObject.TileObject;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class PlaceTileObjectEffect extends Effect {
 
@@ -57,11 +58,11 @@ public class PlaceTileObjectEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		return nbt;
 	}
 

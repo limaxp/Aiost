@@ -2,25 +2,27 @@ package com.pm.aiost.item.custom;
 
 import org.bukkit.inventory.EquipmentSlot;
 
-import net.minecraft.server.v1_15_R1.EnumHand;
-import net.minecraft.server.v1_15_R1.EnumItemSlot;
+import net.minecraft.world.InteractionHand;
 
 public enum Slot {
 
-	MAIN_HAND(0, EnumHand.MAIN_HAND, EnumItemSlot.MAINHAND, EquipmentSlot.HAND),
-	OFF_HAND(1, EnumHand.OFF_HAND, EnumItemSlot.OFFHAND, EquipmentSlot.OFF_HAND),
-	FEET(2, null, EnumItemSlot.FEET, EquipmentSlot.FEET), LEGS(3, null, EnumItemSlot.LEGS, EquipmentSlot.LEGS),
-	CHEST(4, null, EnumItemSlot.CHEST, EquipmentSlot.CHEST), HEAD(5, null, EnumItemSlot.HEAD, EquipmentSlot.HEAD);
+	MAIN_HAND(0, InteractionHand.MAIN_HAND, net.minecraft.world.entity.EquipmentSlot.MAINHAND, EquipmentSlot.HAND),
+	OFF_HAND(1, InteractionHand.OFF_HAND, net.minecraft.world.entity.EquipmentSlot.OFFHAND, EquipmentSlot.OFF_HAND),
+	FEET(2, null, net.minecraft.world.entity.EquipmentSlot.FEET, EquipmentSlot.FEET),
+	LEGS(3, null, net.minecraft.world.entity.EquipmentSlot.LEGS, EquipmentSlot.LEGS),
+	CHEST(4, null, net.minecraft.world.entity.EquipmentSlot.CHEST, EquipmentSlot.CHEST),
+	HEAD(5, null, net.minecraft.world.entity.EquipmentSlot.HEAD, EquipmentSlot.HEAD);
 
 	public final byte id;
 	public final String name;
-	public final EnumHand hand;
-	public final EnumItemSlot nmsSlot;
+	public final InteractionHand hand;
+	public final net.minecraft.world.entity.EquipmentSlot nmsSlot;
 	public final EquipmentSlot bukkitSlot;
 
-	private Slot(int id, EnumHand hand, EnumItemSlot nmsSlot, EquipmentSlot bukkitSlot) {
+	private Slot(int id, InteractionHand hand, net.minecraft.world.entity.EquipmentSlot nmsSlot,
+			EquipmentSlot bukkitSlot) {
 		this.id = (byte) id;
-		this.name = nmsSlot.getSlotName();
+		this.name = nmsSlot.getName();
 		this.hand = hand;
 		this.nmsSlot = nmsSlot;
 		this.bukkitSlot = bukkitSlot;
@@ -42,11 +44,11 @@ public enum Slot {
 	public static final int HEAD_ID = 5;
 	public static final int SLOT_SIZE = 6;
 
-	public static Slot get(EnumHand hand) {
-		return hand == EnumHand.MAIN_HAND ? MAIN_HAND : OFF_HAND;
+	public static Slot get(InteractionHand hand) {
+		return hand == InteractionHand.MAIN_HAND ? MAIN_HAND : OFF_HAND;
 	}
 
-	public static Slot get(EnumItemSlot nmsSlot) {
+	public static Slot get(net.minecraft.world.entity.EquipmentSlot nmsSlot) {
 		switch (nmsSlot) {
 		case MAINHAND:
 			return MAIN_HAND;

@@ -10,10 +10,8 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.pm.aiost.event.effect.collection.EffectEntryBuilder;
 import com.pm.aiost.event.effect.group.EffectGroup;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class EffectBuilder {
 
@@ -92,14 +90,7 @@ public class EffectBuilder {
 		return Effect.EMPTY;
 	}
 
-	public static Effect createEffect(String name, INBTTagCompound nbt) {
-		Supplier<? extends Effect> constructor = EffectRegistry.getConstructor(name);
-		if (constructor != null)
-			return createEffect(constructor, nbt);
-		return Effect.EMPTY;
-	}
-
-	public static Effect createEffect(String name, NBTTagCompound nbt) {
+	public static Effect createEffect(String name, CompoundTag nbt) {
 		Supplier<? extends Effect> constructor = EffectRegistry.getConstructor(name);
 		if (constructor != null)
 			return createEffect(constructor, nbt);
@@ -113,14 +104,7 @@ public class EffectBuilder {
 		return Effect.EMPTY;
 	}
 
-	public static Effect createEffect(INBTTagCompound nbt) {
-		Supplier<? extends Effect> constructor = EffectRegistry.getConstructor(nbt.getString("effectId"));
-		if (constructor != null)
-			return createEffect(constructor, nbt);
-		return Effect.EMPTY;
-	}
-
-	public static Effect createEffect(NBTTagCompound nbt) {
+	public static Effect createEffect(CompoundTag nbt) {
 		Supplier<? extends Effect> constructor = EffectRegistry.getConstructor(nbt.getString("effectId"));
 		if (constructor != null)
 			return createEffect(constructor, nbt);
@@ -137,15 +121,9 @@ public class EffectBuilder {
 		return registerEffect(constructor, newEffect);
 	}
 
-	public static Effect createEffect(Supplier<? extends Effect> constructor, INBTTagCompound nbt) {
+	public static Effect createEffect(Supplier<? extends Effect> constructor, CompoundTag nbt) {
 		Effect newEffect = constructor.get();
 		newEffect.load(nbt);
-		return registerEffect(constructor, newEffect);
-	}
-
-	public static Effect createEffect(Supplier<? extends Effect> constructor, NBTTagCompound nbt) {
-		Effect newEffect = constructor.get();
-		newEffect.load(new NBTCompoundWrapper(nbt));
 		return registerEffect(constructor, newEffect);
 	}
 

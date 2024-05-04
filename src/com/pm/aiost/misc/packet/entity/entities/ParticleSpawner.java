@@ -5,9 +5,10 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.TrackedPacketEntity;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.object.TickingObject;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class ParticleSpawner extends TrackedPacketEntity implements TickingObject {
 
@@ -28,13 +29,13 @@ public class ParticleSpawner extends TrackedPacketEntity implements TickingObjec
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		particle = ParticleBuilder.create(nbt);
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		ParticleBuilder.save(particle, nbt);
 		return nbt;

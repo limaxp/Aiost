@@ -21,8 +21,9 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class TeleportEffect extends SimpleEntityEffect {
 
@@ -89,7 +90,7 @@ public class TeleportEffect extends SimpleEntityEffect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		deltaX = nbt.getDouble("x");
 		deltaY = nbt.getDouble("y");
@@ -97,11 +98,11 @@ public class TeleportEffect extends SimpleEntityEffect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setDouble("x", deltaX);
-		nbt.setDouble("y", deltaY);
-		nbt.setDouble("z", deltaZ);
+		nbt.putDouble("x", deltaX);
+		nbt.putDouble("y", deltaY);
+		nbt.putDouble("z", deltaZ);
 		return nbt;
 	}
 

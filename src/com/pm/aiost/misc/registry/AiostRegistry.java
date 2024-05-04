@@ -5,7 +5,6 @@ import java.util.Iterator;
 import java.util.function.Supplier;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.block.tileEntity.AiostTileEntityTypes;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.effect.EffectTypes;
@@ -64,7 +63,6 @@ public abstract class AiostRegistry<T> {
 	@SuppressWarnings("unused")
 	public static void init() {
 		AiostEntityTypes.init();
-		AiostTileEntityTypes.init();
 		EventHandlerRegistry.init();
 		GameType<?> gameType = GameTypes.SPLEEF;
 		UnlockableType<?> unlockableType = UnlockableTypes.HATS;
@@ -79,7 +77,6 @@ public abstract class AiostRegistry<T> {
 
 	public static void terminate() {
 		AiostEntityTypes.terminate();
-		AiostTileEntityTypes.terminate();
 	}
 
 	public final String name;

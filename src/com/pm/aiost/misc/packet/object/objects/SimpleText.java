@@ -4,13 +4,15 @@ import java.util.UUID;
 
 import org.bukkit.entity.Player;
 
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class SimpleText extends PacketObject {
 
@@ -37,26 +39,26 @@ public class SimpleText extends PacketObject {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		text = nbt.getString("text");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setString("text", text);
+		nbt.putString("text", text);
 		return nbt;
 	}
 
 	@Override
 	public Object createSpawnPacket() {
-		return PacketFactory.packetEntityLivingSpawn(id, UUID.randomUUID(), Furniture.ARMOR_STAND_ID, x + 0.5, y,
-				z + 0.5, 0, 0);
+		return PacketFactory.packetEntitySpawn(id, UUID.randomUUID(), x + 0.5, y, z + 0.5, 0, 0,
+				AiostEntityTypes.ARMOR_STAND);
 	}
 
 	public Object createMetaDataPacket() {
-		return PacketFactory.packetEntityMetadata(id, Hologram.createDataWatcher(text), true);
+		return PacketFactory.packetEntityMetadata(id, Hologram.createDataWatcher(text));
 	}
 
 	public String getText() {

@@ -5,8 +5,9 @@ import org.bukkit.block.Block;
 
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.PacketThing;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.server.world.ServerWorld;
+
+import net.minecraft.nbt.CompoundTag;
 
 public abstract class PacketObject extends PacketThing {
 
@@ -32,18 +33,18 @@ public abstract class PacketObject extends PacketThing {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		x = nbt.getInt("x");
 		y = nbt.getInt("y");
 		z = nbt.getInt("z");
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
-		nbt.setInt("id", getPacketObjectType().id);
-		nbt.setInt("x", x);
-		nbt.setInt("y", y);
-		nbt.setInt("z", z);
+	public CompoundTag save(CompoundTag nbt) {
+		nbt.putInt("id", getPacketObjectType().id);
+		nbt.putInt("x", x);
+		nbt.putInt("y", y);
+		nbt.putInt("z", z);
 		return nbt;
 	}
 

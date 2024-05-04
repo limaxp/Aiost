@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
-import org.bukkit.craftbukkit.v1_15_R1.CraftWorld;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,10 +11,13 @@ import com.pm.aiost.item.nms.NMSItems;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.BlockPosition;
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
-import net.minecraft.server.v1_15_R1.TileEntityMobSpawner;
+import net.minecraft.core.BlockPos;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
+import net.minecraft.world.level.chunk.ChunkAccess;
 
 public class CustomBlock {
 
@@ -29,52 +31,54 @@ public class CustomBlock {
 		place(block.getWorld(), block.getX(), block.getY(), block.getZ(), is);
 	}
 
-	public static void place(Location loc, net.minecraft.server.v1_15_R1.ItemStack is) {
+	public static void place(Location loc, net.minecraft.world.item.ItemStack is) {
 		loc.getBlock().setType(Material.SPAWNER);
-		place(((CraftWorld) loc.getWorld()).getHandle(), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), is);
+		place(NMS.getNMS(loc.getWorld()), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), is);
 	}
 
-	public static void place(Block block, net.minecraft.server.v1_15_R1.ItemStack is) {
+	public static void place(Block block, net.minecraft.world.item.ItemStack is) {
 		block.setType(Material.SPAWNER);
-		place(((CraftWorld) block.getWorld()).getHandle(), block.getX(), block.getY(), block.getZ(), is);
+		place(NMS.getNMS(block.getWorld()), block.getX(), block.getY(), block.getZ(), is);
 	}
 
 	public static void place(World world, int x, int y, int z, ItemStack is) {
-		place(((CraftWorld) world).getHandle(), x, y, z, NMS.getNMS(is));
+		place(NMS.getNMS(world), x, y, z, NMS.getNMS(is));
 	}
 
-	public static void place(net.minecraft.server.v1_15_R1.World world, int x, int y, int z,
-			net.minecraft.server.v1_15_R1.ItemStack is) {
-		TileEntityMobSpawner spawner = new TileEntityMobSpawner();
-		NBTTagCompound nbt = spawner.b();
+	public static void place(ServerLevel world, int x, int y, int z, net.minecraft.world.item.ItemStack is) {
+		BlockPos pos = new BlockPos(x, y, z);
+		ChunkAccess chunk = world.getChunk(pos);
+		SpawnerBlockEntity spawner = new SpawnerBlockEntity(pos, Blocks.SPAWNER.defaultBlockState());
+		CompoundTag nbt = chunk.getBlockEntityNbt(pos);
 		NBTHelper.setSpawnerStats(nbt, (short) 0, (short) 0, (short) 0, (short) 0);
-		NBTTagCompound entityTag = NBTHelper.addSpawnData(nbt);
+		CompoundTag entityTag = NBTHelper.addSpawnData(nbt);
 		NBTHelper.setEntityId(entityTag, "minecraft:armor_stand");
 		NBTHelper.setMarker(entityTag, true);
 		NBTHelper.setInvisible(entityTag, true);
 
-		NBTTagList armorList = NBTHelper.addArmorItemsList(entityTag);
-		armorList.add(new NBTTagCompound());
-		armorList.add(new NBTTagCompound());
-		armorList.add(new NBTTagCompound());
-		if (is.hasTag())
+		ListTag armorList = NBTHelper.addArmorItemsList(entityTag);
+		armorList.add(new CompoundTag());
+		armorList.add(new CompoundTag());
+		armorList.add(new CompoundTag());
+		if (NBTHelper.hasTag(is))
 			NBTHelper.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1, NBTHelper.getNBT(is));
 		else
 			NBTHelper.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1);
 
-		spawner.load(nbt);
-		world.setTileEntity(new BlockPosition(x, y, z), spawner);
+		chunk.setBlockEntityNbt(nbt);
+		world.setBlockEntity(spawner);
 	}
 
 	public static void blockBreak(BlockBreakEvent event) {
 		// TODO: fix this!
 		if (event.getBlock().getType() == Material.SPAWNER) {
 			Block block = event.getBlock();
-			TileEntityMobSpawner spawner = (TileEntityMobSpawner) ((CraftWorld) block.getWorld()).getHandle()
-					.getTileEntity(new BlockPosition(block.getX(), block.getY(), block.getZ()));
-			NBTTagCompound nbt = spawner.b();
+			ServerLevel world = NMS.getNMS(block.getWorld());
+			BlockPos pos = new BlockPos(block.getX(), block.getY(), block.getZ());
+			SpawnerBlockEntity spawner = (SpawnerBlockEntity) world.getBlockEntity(pos);
+			CompoundTag nbt = world.getChunk(pos).getBlockEntityNbt(pos);
 			System.out.println(nbt);
-			NBTTagCompound entityTag = NBTHelper.getSpawnData(nbt);
+			CompoundTag entityTag = NBTHelper.getSpawnData(nbt);
 			String entityId = NBTHelper.getEntityId(entityTag);
 			System.out.println(entityId);
 			if (entityId.equals("minecraft:armor_stand")) {

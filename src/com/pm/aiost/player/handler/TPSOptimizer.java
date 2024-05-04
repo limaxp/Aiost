@@ -1,14 +1,9 @@
 package com.pm.aiost.player.handler;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
-
-import net.minecraft.server.v1_15_R1.EntityPlayer;
-import net.minecraft.server.v1_15_R1.MathHelper;
-import net.minecraft.server.v1_15_R1.PlayerChunk;
 
 public class TPSOptimizer {
 
@@ -98,7 +93,7 @@ public class TPSOptimizer {
 
 		@Override
 		public void run() {
-			NMS.getNMS(player).clientViewDistance = viewDistance;
+//			NMS.getNMS(player).clientViewDistance = viewDistance;
 //			player.setViewDistance(viewDistance); PaperSpigot
 		}
 	}

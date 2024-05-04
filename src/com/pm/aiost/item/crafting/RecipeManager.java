@@ -2,28 +2,25 @@ package com.pm.aiost.item.crafting;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.function.Predicate;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
-import org.bukkit.craftbukkit.v1_15_R1.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_15_R1.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_20_R4.CraftRegistry;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_20_R4.util.CraftMagicNumbers;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.utils.nms.NMS;
 
-import net.minecraft.server.v1_15_R1.CraftingManager;
-import net.minecraft.server.v1_15_R1.IRecipe;
-import net.minecraft.server.v1_15_R1.Item;
-import net.minecraft.server.v1_15_R1.MinecraftKey;
-import net.minecraft.server.v1_15_R1.Recipes;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.crafting.RecipeHolder;
 
 public class RecipeManager {
 
-	private static List<IRecipe<?>> recipes;
+	private static List<RecipeHolder<?>> recipes;
 
 	static {
 		initRecipes();
@@ -36,36 +33,25 @@ public class RecipeManager {
 	}
 
 	private static void initRecipes() {
-		List<IRecipe<?>> recipes = new ArrayList<IRecipe<?>>();
-		Map<Recipes<?>, Object2ObjectLinkedOpenHashMap<MinecraftKey, IRecipe<?>>> recipeMap = getCraftingManager().recipes;
-		for (Object2ObjectLinkedOpenHashMap<MinecraftKey, IRecipe<?>> typeMap : recipeMap.values())
-			for (IRecipe<?> recipe : typeMap.values())
-				recipes.add(recipe);
+		List<RecipeHolder<?>> recipes = new ArrayList<RecipeHolder<?>>();
 		RecipeManager.recipes = recipes;
+		for (RecipeHolder<?> recipe : getCraftingManager().getRecipes())
+			recipes.add(recipe);
 	}
 
 	public static void updateRecipes() {
-		CraftingManager craftingManager = getCraftingManager();
-		clearRecipes(craftingManager);
-		for (IRecipe<?> recipe : recipes)
+		net.minecraft.world.item.crafting.RecipeManager craftingManager = getCraftingManager();
+		craftingManager.clearRecipes();
+		for (RecipeHolder<?> recipe : recipes)
 			craftingManager.addRecipe(recipe);
 	}
 
-	private static void clearRecipes(CraftingManager craftingManager) {
-		for (Object2ObjectLinkedOpenHashMap<MinecraftKey, IRecipe<?>> typeMap : craftingManager.recipes.values())
-			typeMap.clear();
+	public static boolean addRecipe(String key, net.minecraft.world.item.crafting.Recipe<?> recipe) {
+		return recipes
+				.add(new RecipeHolder<net.minecraft.world.item.crafting.Recipe<?>>(new ResourceLocation(key), recipe));
 	}
 
-	public static boolean addRecipe(IRecipe<?> recipe) {
-		return recipes.add(recipe);
-	}
-
-	public static void addRecipes(IRecipe<?>... recipes) {
-		for (IRecipe<?> recipe : recipes)
-			RecipeManager.recipes.add(recipe);
-	}
-
-	public static void removeRecipe(IRecipe<?> recipe) {
+	public static void removeRecipe(net.minecraft.world.item.crafting.Recipe<?> recipe) {
 		removeRecipes((recipe_) -> recipe == recipe_);
 	}
 
@@ -74,15 +60,15 @@ public class RecipeManager {
 	}
 
 	public static void removeRecipes(Item item) {
-		removeRecipes((recipe) -> item == recipe.getResult().getItem());
+		removeRecipes((recipe) -> item == recipe.getResultItem(CraftRegistry.getMinecraftRegistry()).getItem());
 	}
 
 	public static void removeRecipes(ItemStack itemStack) {
 		removeRecipes(CraftItemStack.asNMSCopy(itemStack));
 	}
 
-	public static void removeRecipes(net.minecraft.server.v1_15_R1.ItemStack itemStack) {
-		removeRecipes((recipe) -> itemStack.equals(recipe.getResult()));
+	public static void removeRecipes(net.minecraft.world.item.ItemStack itemStack) {
+		removeRecipes((recipe) -> itemStack.equals(recipe.getResultItem(CraftRegistry.getMinecraftRegistry())));
 	}
 
 	public static void removeRecipes(Recipe... recipes) {
@@ -105,7 +91,7 @@ public class RecipeManager {
 
 	public static void removeRecipes(Item... items) {
 		removeRecipes((recipe) -> {
-			Item result = recipe.getResult().getItem();
+			Item result = recipe.getResultItem(CraftRegistry.getMinecraftRegistry()).getItem();
 			for (Item item : items) {
 				if (item == result)
 					return true;
@@ -116,16 +102,16 @@ public class RecipeManager {
 
 	public static void removeRecipes(ItemStack... itemStacks) {
 		int length = itemStacks.length;
-		net.minecraft.server.v1_15_R1.ItemStack[] items = new net.minecraft.server.v1_15_R1.ItemStack[length];
+		net.minecraft.world.item.ItemStack[] items = new net.minecraft.world.item.ItemStack[length];
 		for (int i = 0; i < length; i++)
 			items[i] = CraftItemStack.asNMSCopy(itemStacks[i]);
 		removeRecipes(items);
 	}
 
-	public static void removeRecipes(net.minecraft.server.v1_15_R1.ItemStack... itemStacks) {
+	public static void removeRecipes(net.minecraft.world.item.ItemStack... itemStacks) {
 		removeRecipes((recipe) -> {
-			net.minecraft.server.v1_15_R1.ItemStack result = recipe.getResult();
-			for (net.minecraft.server.v1_15_R1.ItemStack itemStack : itemStacks) {
+			net.minecraft.world.item.ItemStack result = recipe.getResultItem(CraftRegistry.getMinecraftRegistry());
+			for (net.minecraft.world.item.ItemStack itemStack : itemStacks) {
 				if (itemStack.equals(result))
 					return true;
 			}
@@ -133,17 +119,16 @@ public class RecipeManager {
 		});
 	}
 
-	public static void removeRecipes(Predicate<IRecipe<?>> predicate) {
+	public static void removeRecipes(Predicate<net.minecraft.world.item.crafting.Recipe<?>> predicate) {
 		int length = recipes.size();
 		for (int i = length - 1; i >= 0; i--) {
-			IRecipe<?> recipe = recipes.get(i);
-			if (predicate.test(recipe)) {
+			RecipeHolder<?> recipe = recipes.get(i);
+			if (predicate.test(recipe.value()))
 				recipes.remove(recipe);
-			}
 		}
 	}
 
-	public static CraftingManager getCraftingManager() {
-		return NMS.getMinecraftServer().getCraftingManager();
+	public static net.minecraft.world.item.crafting.RecipeManager getCraftingManager() {
+		return NMS.getMinecraftServer().getRecipeManager();
 	}
 }

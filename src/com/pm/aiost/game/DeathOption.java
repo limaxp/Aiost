@@ -102,7 +102,7 @@ public interface DeathOption {
 	public static void instantPlayerDeath(ServerPlayer serverPlayer) {
 		serverPlayer.resetStats();
 		PotionEffect.potionEffect(serverPlayer.player, PotionEffectType.BLINDNESS, 40, 5);
-		PotionEffect.potionEffect(serverPlayer.player, PotionEffectType.DAMAGE_RESISTANCE, 100, 10);
+		PotionEffect.potionEffect(serverPlayer.player, PotionEffectType.RESISTANCE, 100, 10);
 	}
 
 	public static void spawnBody(ServerPlayer serverPlayer) {

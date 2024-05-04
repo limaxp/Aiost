@@ -24,7 +24,8 @@ import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.effects.WorldEffects;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.item.ItemStack;
 
 public class EffectData extends EffectList {
 
@@ -45,9 +46,9 @@ public class EffectData extends EffectList {
 	}
 
 	public void setEffect(PlayerEquipItemEvent event) {
-		net.minecraft.server.v1_15_R1.ItemStack is = NMS.getNMS(event.getItemStack());
-		if (is.hasTag()) {
-			NBTTagCompound nbtTag = is.getTag();
+		ItemStack is = NMS.getNMS(event.getItemStack());
+		if (NBTHelper.hasTag(is)) {
+			CompoundTag nbtTag = NBTHelper.getNBT(is);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
 			if (effectID != 0) {
 				slotIds[event.getSlot().ordinal()] = effectID;
@@ -64,9 +65,9 @@ public class EffectData extends EffectList {
 	}
 
 	public void setHandEffect(PlayerEquipHandItemEvent event) {
-		net.minecraft.server.v1_15_R1.ItemStack is = NMS.getNMS(event.getItemStack());
-		if (is.hasTag()) {
-			NBTTagCompound nbtTag = is.getTag();
+		ItemStack is = NMS.getNMS(event.getItemStack());
+		if (NBTHelper.hasTag(is)) {
+			CompoundTag nbtTag = NBTHelper.getNBT(is);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
 			if (effectID != 0) {
 				EquipmentSlot slot = event.getSlot();

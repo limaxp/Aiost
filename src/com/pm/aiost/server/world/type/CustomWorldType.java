@@ -17,7 +17,7 @@ public class CustomWorldType<T extends ChunkGenerator> extends AiostWorldType<T>
 
 	@Override
 	public void apply(WorldCreator worldCreator) {
-		worldCreator.type(WorldType.CUSTOMIZED);
+		worldCreator.type(WorldType.NORMAL);
 		worldCreator.generator(constructor.get());
 	}
 }

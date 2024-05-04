@@ -21,9 +21,10 @@ import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleType;
 import com.pm.aiost.misc.particleEffect.particle.ParticleTypes;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class Particle implements IParticle {
 
@@ -67,8 +68,8 @@ public class Particle implements IParticle {
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		PacketSender.send(player, PacketFactory.packetParticles(NMS.getNMS(particle), longDistance, x, y, z, offsetX,
-				offsetY, offsetZ, extra, count));
+		PacketSender.send(player, PacketFactory.packetParticles(NMS.getNMS(particle, null), longDistance, x, y, z,
+				offsetX, offsetY, offsetZ, extra, count));
 	}
 
 	@Override
@@ -93,7 +94,7 @@ public class Particle implements IParticle {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		particle = org.bukkit.Particle.valueOf(nbt.getString("particle"));
 		count = nbt.getInt("count");
 		offsetX = nbt.getFloat("offsetX");
@@ -104,14 +105,14 @@ public class Particle implements IParticle {
 	}
 
 	@Override
-	public void save(INBTTagCompound nbt) {
-		nbt.setString("particle", particle.name());
-		nbt.setInt("count", count);
-		nbt.setFloat("offsetX", offsetX);
-		nbt.setFloat("offsetY", offsetY);
-		nbt.setFloat("offsetZ", offsetZ);
-		nbt.setFloat("extra", extra);
-		nbt.setBoolean("longDistance", longDistance);
+	public void save(CompoundTag nbt) {
+		nbt.putString("particle", particle.name());
+		nbt.putInt("count", count);
+		nbt.putFloat("offsetX", offsetX);
+		nbt.putFloat("offsetY", offsetY);
+		nbt.putFloat("offsetZ", offsetZ);
+		nbt.putFloat("extra", extra);
+		nbt.putBoolean("longDistance", longDistance);
 	}
 
 	@Override

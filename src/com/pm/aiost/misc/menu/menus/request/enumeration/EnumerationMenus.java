@@ -15,6 +15,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.block.BlockMaterial;
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandlerRegistry;
@@ -32,8 +33,7 @@ import com.pm.aiost.player.unlockable.UnlockableType;
 import com.pm.aiost.server.world.object.tileObject.TileObjectType;
 import com.pm.aiost.server.world.type.AiostWorldType;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
-import net.minecraft.server.v1_15_R1.IRegistry;
+import net.minecraft.world.entity.EntityType;
 
 public class EnumerationMenus {
 
@@ -43,8 +43,8 @@ public class EnumerationMenus {
 	public static final InventoryMenu EFFECT_TYPE_MENU = new EnumerationMenu<EffectType<?>>(BOLD + "Choose Effect",
 			AiostRegistry.EFFECTS.size(), AiostRegistry.EFFECTS::getByIndex, EnumerationMenu::createItem);
 
-	public static final InventoryMenu ENTITY_TYPE_MENU = new EnumerationMenu<EntityTypes<?>>(
-			BOLD + "Choose entity type", iteratorToList(IRegistry.ENTITY_TYPE.iterator()), EnumerationMenu::createItem);
+	public static final InventoryMenu ENTITY_TYPE_MENU = new EnumerationMenu<EntityType<?>>(BOLD + "Choose entity type",
+			iteratorToList(AiostEntityTypes.iterator()), EnumerationMenu::createItem);
 
 	public static final InventoryMenu PARTICLE_TYPE_MENU = new EnumerationMenu<ParticleType<?>>(
 			BOLD + "Choose particle type", AiostRegistry.PARTICLE_TYPES.size(),

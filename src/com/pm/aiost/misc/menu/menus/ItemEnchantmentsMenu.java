@@ -28,8 +28,8 @@ import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
-import net.minecraft.server.v1_15_R1.NBTTagList;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
 
 public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 
@@ -39,11 +39,11 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 
 	public ItemEnchantmentsMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Enchantments", 6, false);
-		NBTTagList nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		int size = nbtList.size();
 		ItemStack[] items = new ItemStack[size + 1];
 		for (int i = 0; i < size; i++) {
-			NBTTagCompound enchantment = nbtList.getCompound(i);
+			CompoundTag enchantment = nbtList.getCompound(i);
 			items[i] = createItem(enchantment.getString(NBTHelper.ID_KEY), enchantment.getShort(NBTHelper.LEVEL_KEY));
 		}
 		items[size] = ADD_ENCHANTMENT_ITEM;
@@ -139,7 +139,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 		return menu;
 	}
 
-	protected NBTTagList getList(NBTTagCompound nbtTag) {
+	protected ListTag getList(CompoundTag nbtTag) {
 		return NBTHelper.getEnchantmentList(nbtTag);
 	}
 }

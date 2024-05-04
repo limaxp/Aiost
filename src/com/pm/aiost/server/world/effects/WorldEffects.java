@@ -4,11 +4,11 @@ import java.io.File;
 import java.util.List;
 import java.util.Random;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
-
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.collection.EffectEntryList;
 import com.pm.aiost.event.effect.collection.EffectList;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
 
 public class WorldEffects extends WorldEffectLoader {
 

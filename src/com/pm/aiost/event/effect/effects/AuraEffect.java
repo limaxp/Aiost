@@ -24,9 +24,9 @@ import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class AuraEffect extends Effect {
 
@@ -103,7 +103,7 @@ public class AuraEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		particle = ParticleBuilder.create(nbt);
 		effect = Effect.loadNBT(nbt.getCompound("effect"));
@@ -111,11 +111,11 @@ public class AuraEffect extends Effect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
 		ParticleBuilder.save(particle, nbt);
-		nbt.set("effect", Effect.saveNBT(effect, new NBTCompound()));
-		nbt.setDouble("range", range);
+		nbt.put("effect", Effect.saveNBT(effect, new CompoundTag()));
+		nbt.putDouble("range", range);
 		return nbt;
 	}
 

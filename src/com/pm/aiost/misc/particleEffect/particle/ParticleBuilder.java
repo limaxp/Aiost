@@ -10,10 +10,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
-import com.pm.aiost.misc.utils.nbt.custom.NBTCompoundWrapper;
 
-import net.minecraft.server.v1_15_R1.NBTTagCompound;
+import net.minecraft.nbt.CompoundTag;
 
 public class ParticleBuilder {
 
@@ -65,15 +63,9 @@ public class ParticleBuilder {
 		return checkDuplicate(particle);
 	}
 
-	public static IParticle create(INBTTagCompound nbt) {
+	public static IParticle create(CompoundTag nbt) {
 		IParticle particle = AiostRegistry.PARTICLE_TYPES.get(nbt.getString("type")).create();
 		particle.load(nbt);
-		return getDuplicate(particle);
-	}
-
-	public static IParticle create(NBTTagCompound nbt) {
-		IParticle particle = AiostRegistry.PARTICLE_TYPES.get(nbt.getString("type")).create();
-		particle.load(new NBTCompoundWrapper(nbt));
 		return getDuplicate(particle);
 	}
 
@@ -96,13 +88,9 @@ public class ParticleBuilder {
 		return particle.init();
 	}
 
-	public static void save(IParticle particle, INBTTagCompound nbt) {
-		nbt.setString("type", particle.getType().name);
+	public static void save(IParticle particle, CompoundTag nbt) {
+		nbt.putString("type", particle.getType().name);
 		particle.save(nbt);
 	}
 
-	public static void save(IParticle particle, NBTTagCompound nbt) {
-		nbt.setString("type", particle.getType().name);
-		particle.save(new NBTCompoundWrapper(nbt));
-	}
 }

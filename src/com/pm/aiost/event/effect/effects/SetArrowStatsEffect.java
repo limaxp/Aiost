@@ -20,8 +20,9 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.nbt.custom.INBTTagCompound;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class SetArrowStatsEffect extends Effect {
 
@@ -121,7 +122,7 @@ public class SetArrowStatsEffect extends Effect {
 	}
 
 	@Override
-	public void load(INBTTagCompound nbt) {
+	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 		extraDamage = nbt.getFloat("extraDamage");
@@ -133,15 +134,15 @@ public class SetArrowStatsEffect extends Effect {
 	}
 
 	@Override
-	public INBTTagCompound save(INBTTagCompound nbt) {
+	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.setFloat("velocityMultiplier", velocityMultiplier);
-		nbt.setFloat("extraDamage", extraDamage);
-		nbt.setInt("knockbackStrength", knockbackStrength);
-		nbt.setInt("fireTicks", fireTicks);
-		nbt.setBoolean("mustCrit", mustCrit);
-		nbt.setBoolean("doesBounce", doesBounce);
-		nbt.setBoolean("hasGravity", hasGravity);
+		nbt.putFloat("velocityMultiplier", velocityMultiplier);
+		nbt.putFloat("extraDamage", extraDamage);
+		nbt.putInt("knockbackStrength", knockbackStrength);
+		nbt.putInt("fireTicks", fireTicks);
+		nbt.putBoolean("mustCrit", mustCrit);
+		nbt.putBoolean("doesBounce", doesBounce);
+		nbt.putBoolean("hasGravity", hasGravity);
 		return nbt;
 	}
 

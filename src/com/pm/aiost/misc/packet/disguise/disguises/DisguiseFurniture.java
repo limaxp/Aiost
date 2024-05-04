@@ -10,12 +10,14 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
+import com.pm.aiost.misc.utils.nms.NMS;
 
 public class DisguiseFurniture implements Disguise {
 
@@ -41,14 +43,14 @@ public class DisguiseFurniture implements Disguise {
 		Location loc = player.getLocation();
 		int id = player.getEntityId();
 
-		packets.add(PacketFactory.packetEntityLivingSpawn(id, player.getUniqueId(), Furniture.ARMOR_STAND_ID,
-				loc.getX(), loc.getY() - 1.188, loc.getZ(), loc.getYaw(), loc.getPitch()));
-		packets.add(PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER, true));
+		packets.add(PacketFactory.packetEntitySpawn(id, player.getUniqueId(), loc.getX(), loc.getY() - 1.188,
+				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.ARMOR_STAND));
+		packets.add(PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER));
 		if (is != null)
-			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, is));
+			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(is)));
 		else
-			packets.add(
-					PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, Furniture.FURNITURES.get(furnitureID)));
+			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot,
+					NMS.getNMS(Furniture.FURNITURES.get(furnitureID))));
 	}
 
 	@Override

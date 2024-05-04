@@ -2,11 +2,11 @@ package com.pm.aiost.item;
 
 import java.util.List;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectMap;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.collection.EffectEntryList;
+
+import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
+import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 
 public class ItemEffects {
 

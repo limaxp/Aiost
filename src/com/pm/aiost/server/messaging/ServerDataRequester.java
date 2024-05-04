@@ -3,9 +3,6 @@ package com.pm.aiost.server.messaging;
 import java.util.List;
 import java.util.UUID;
 
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntArrayList;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.ints.IntList;
-
 import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
@@ -18,6 +15,9 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.server.Server;
 import com.pm.aiost.server.ServerState;
 import com.pm.aiost.server.ServerType;
+
+import it.unimi.dsi.fastutil.ints.IntArrayList;
+import it.unimi.dsi.fastutil.ints.IntList;
 
 public class ServerDataRequester {
 

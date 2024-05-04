@@ -6,7 +6,7 @@ import java.util.Random;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import net.minecraft.server.v1_15_R1.EntityTypes;
+import net.minecraft.world.entity.EntityType;
 
 public class StageEntitySpawner extends MultiLocEntitySpawner {
 
@@ -25,18 +25,18 @@ public class StageEntitySpawner extends MultiLocEntitySpawner {
 	}
 
 	public StageEntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), new Random());
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
 	}
 
 	public StageEntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityTypes<?>>(), random);
+		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
 	}
 
-	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes) {
+	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
 		this(intervallTime, spawnSize, entityTypes, new Random());
 	}
 
-	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityTypes<?>> entityTypes, Random random) {
+	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
 		super(intervallTime, spawnSize, entityTypes, random);
 		toSpawn = spawnSize;
 		maxSpawnSize = DEFAULT_MAX_SPAWN_SIZE;
