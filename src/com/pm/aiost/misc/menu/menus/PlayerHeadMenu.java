@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.LazyInventoryMenu;
-import com.pm.aiost.misc.other.PlayerHead;
+import com.pm.aiost.misc.utils.PlayerHead;
 import com.pm.aiost.player.ServerPlayer;
 
 public class PlayerHeadMenu {

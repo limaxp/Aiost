@@ -11,9 +11,9 @@ import org.json.simple.JSONObject;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GamePlayer;
 import com.pm.aiost.game.GameTeam;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.other.DataManager;
 import com.pm.aiost.misc.rank.Ranks;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 @SuppressWarnings("unchecked")

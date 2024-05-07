@@ -5,11 +5,11 @@ import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 
 import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;

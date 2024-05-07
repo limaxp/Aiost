@@ -21,7 +21,7 @@ import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.NonNullList;
 import net.minecraft.world.item.ItemStack;

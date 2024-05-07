@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.other;
+package com.pm.aiost.misc.utils;
 
 import java.util.List;
 import java.util.UUID;
@@ -13,7 +13,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import com.pm.aiost.collection.list.FastArrayList;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 public class PlayerHead {
 

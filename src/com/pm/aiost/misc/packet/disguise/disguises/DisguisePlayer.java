@@ -8,9 +8,9 @@ import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.entity.npc.profile.Profiles;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.world.entity.EntityType;

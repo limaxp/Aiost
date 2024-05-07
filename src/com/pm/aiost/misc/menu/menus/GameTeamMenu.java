@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameTeam;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.other.TeamData;
+import com.pm.aiost.misc.utils.TeamData;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

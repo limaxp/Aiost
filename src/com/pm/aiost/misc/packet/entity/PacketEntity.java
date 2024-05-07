@@ -7,10 +7,10 @@ import org.bukkit.block.Block;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.PacketThing;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;

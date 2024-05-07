@@ -4,7 +4,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ChunkWatcher;

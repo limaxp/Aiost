@@ -22,10 +22,10 @@ import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ArrayInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
+import com.pm.aiost.misc.nms.GenericAttribute;
+import com.pm.aiost.misc.nms.NBTHelper;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
-import com.pm.aiost.misc.utils.nbt.GenericAttribute;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;

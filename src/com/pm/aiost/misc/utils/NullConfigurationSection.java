@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.other;
+package com.pm.aiost.misc.utils;
 
 import java.util.List;
 import java.util.Map;

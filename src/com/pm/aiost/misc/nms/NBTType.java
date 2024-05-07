@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.utils.nbt;
+package com.pm.aiost.misc.nms;
 
 public class NBTType {
 

@@ -10,11 +10,11 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.block.CustomBlock;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectHelper;
 import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.effect.EffectTypes;
+import com.pm.aiost.item.block.CustomBlock;
 import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;

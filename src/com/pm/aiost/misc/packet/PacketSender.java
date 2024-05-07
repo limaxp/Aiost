@@ -5,8 +5,8 @@ import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.utils.LocationHelper;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.level.ServerLevel;

@@ -7,9 +7,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.world.entity.EntityType;
 

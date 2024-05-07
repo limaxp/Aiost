@@ -13,12 +13,12 @@ import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.world.entity.EntityType;
 

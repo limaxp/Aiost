@@ -20,8 +20,8 @@ import com.pm.aiost.event.effect.effects.WorldBrushEffect;
 import com.pm.aiost.event.effect.effects.WorldEditorEffect;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
+import com.pm.aiost.misc.nms.NBTHelper;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 public class PlayerWorldToolMenu {

@@ -12,7 +12,7 @@ import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.server.ServerManager;
 import com.pm.aiost.server.ServerType;
 import com.pm.aiost.server.messaging.PluginMessage;

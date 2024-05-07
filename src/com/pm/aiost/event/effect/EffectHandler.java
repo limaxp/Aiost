@@ -30,8 +30,8 @@ import com.pm.aiost.event.effect.collection.EffectData.ServerPlayerEventFunction
 import com.pm.aiost.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.event.events.PlayerJumpEvent;
 import com.pm.aiost.item.ItemEffects;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 

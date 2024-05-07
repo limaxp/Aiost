@@ -13,8 +13,8 @@ import com.pm.aiost.game.GamePlayer;
 import com.pm.aiost.game.GameTeam;
 import com.pm.aiost.misc.database.Database;
 import com.pm.aiost.misc.database.DatabaseManager;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.rank.Ranks;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 public class SpigotDatabaseAccess extends DatabaseAccess implements SpigotDataAccess {

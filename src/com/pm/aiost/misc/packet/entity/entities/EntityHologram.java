@@ -6,14 +6,14 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBTType;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.NBTType;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;

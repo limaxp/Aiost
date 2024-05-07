@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
+import com.pm.aiost.misc.nms.NBTHelper;
 
 import net.minecraft.nbt.CompoundTag;
 

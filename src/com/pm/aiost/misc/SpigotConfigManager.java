@@ -8,8 +8,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.other.WordFilter;
 import com.pm.aiost.misc.rank.Ranks;
+import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.player.settings.PlayerPermissions;
 import com.pm.aiost.player.settings.PlayerSettings;
 

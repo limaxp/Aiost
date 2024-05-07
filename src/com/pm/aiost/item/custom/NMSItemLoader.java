@@ -1,4 +1,4 @@
-package com.pm.aiost.item.nms;
+package com.pm.aiost.item.custom;
 
 import java.util.List;
 import java.util.function.Function;
@@ -11,7 +11,7 @@ import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.AiostToolMaterial;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EquipmentSlot;

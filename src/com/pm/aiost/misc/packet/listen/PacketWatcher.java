@@ -1,7 +1,7 @@
 package com.pm.aiost.misc.packet.listen;
 
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 import io.netty.channel.Channel;

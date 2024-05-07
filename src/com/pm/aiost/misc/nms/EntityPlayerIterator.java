@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.utils.nms;
+package com.pm.aiost.misc.nms;
 
 import java.util.Iterator;
 

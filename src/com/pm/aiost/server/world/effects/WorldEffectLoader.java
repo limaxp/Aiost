@@ -3,8 +3,8 @@ package com.pm.aiost.server.world.effects;
 import java.io.File;
 
 import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.NBTType;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBTType;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

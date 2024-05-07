@@ -18,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Pair;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.IntList;

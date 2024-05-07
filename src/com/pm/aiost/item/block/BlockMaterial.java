@@ -1,4 +1,4 @@
-package com.pm.aiost.block;
+package com.pm.aiost.item.block;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,10 +14,10 @@ import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 public class DisguiseFurniture implements Disguise {
 

@@ -17,8 +17,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.utils.ChatColor;
-import com.pm.aiost.misc.utils.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 public class DuelEventHandler implements LobbyEventHandler {

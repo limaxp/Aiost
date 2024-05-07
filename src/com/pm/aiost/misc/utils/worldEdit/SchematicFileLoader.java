@@ -7,8 +7,8 @@ import javax.annotation.Nullable;
 
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.nms.NBTHelper;
 import com.pm.aiost.misc.utils.FileUtils;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
 
 import net.minecraft.nbt.CompoundTag;
 

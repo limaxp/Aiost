@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.utils.nbt;
+package com.pm.aiost.misc.nms;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;

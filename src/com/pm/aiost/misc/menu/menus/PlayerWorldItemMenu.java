@@ -21,7 +21,7 @@ import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.menu.menus.request.CustomItemMenu;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.other.PlayerHead;
+import com.pm.aiost.misc.utils.PlayerHead;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

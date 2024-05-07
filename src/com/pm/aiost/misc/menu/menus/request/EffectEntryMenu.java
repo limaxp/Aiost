@@ -19,7 +19,7 @@ import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
-import com.pm.aiost.misc.other.Banner;
+import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

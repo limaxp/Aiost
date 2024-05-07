@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.utils.nms;
+package com.pm.aiost.misc.nms;
 
 import java.lang.invoke.MethodHandle;
 import java.util.Collections;
@@ -36,8 +36,6 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.LiteralMessage;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nbt.NBTType;
 import com.pm.aiost.misc.utils.reflection.Reflection;
 import com.pm.aiost.player.ServerPlayer;
 

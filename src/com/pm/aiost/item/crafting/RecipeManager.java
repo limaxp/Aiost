@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Recipe;
 
 import com.pm.aiost.misc.SpigotConfigManager;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

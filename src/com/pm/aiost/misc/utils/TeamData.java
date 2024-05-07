@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.other;
+package com.pm.aiost.misc.utils;
 
 import java.util.function.Consumer;
 
@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
+import com.pm.aiost.misc.nms.NBTHelper;
 
 import net.minecraft.nbt.CompoundTag;
 

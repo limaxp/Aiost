@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import com.pm.aiost.event.events.PlayerEquipItemEvent.EquipmentAction;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 public class EquipmentListener {

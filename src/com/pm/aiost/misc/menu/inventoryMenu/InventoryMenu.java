@@ -33,14 +33,14 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.InventoryEventHandler;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler.InventoryMenuAnimationHandler;
-import com.pm.aiost.misc.other.Banner;
-import com.pm.aiost.misc.other.PlayerHead;
 import com.pm.aiost.misc.other.interfaces.ExpandedIntFunction;
 import com.pm.aiost.misc.other.interfaces.ThrowingFunction;
 import com.pm.aiost.misc.other.interfaces.ThrowingIntFunction;
 import com.pm.aiost.misc.other.interfaces.TriConsumer;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
+import com.pm.aiost.misc.utils.Banner;
+import com.pm.aiost.misc.utils.PlayerHead;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

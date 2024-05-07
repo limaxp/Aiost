@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.utils.nbt;
+package com.pm.aiost.misc.nms;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
@@ -27,9 +27,8 @@ import org.bukkit.inventory.ItemStack;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.item.nms.NMSItems;
+import com.pm.aiost.item.custom.NMSItems;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;

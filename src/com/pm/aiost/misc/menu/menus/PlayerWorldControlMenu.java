@@ -21,7 +21,7 @@ import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.other.WordFilter;
+import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.request.ServerRequest;

@@ -11,7 +11,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
-import com.pm.aiost.misc.other.PlayerHead;
+import com.pm.aiost.misc.utils.PlayerHead;
 import com.pm.aiost.player.ServerPlayer;
 
 public class PlayerListMenu extends ListInventoryMenu {

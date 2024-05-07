@@ -1,4 +1,4 @@
-package com.pm.aiost.block;
+package com.pm.aiost.item.block;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -7,9 +7,9 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.item.nms.NMSItems;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.item.custom.NMSItems;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

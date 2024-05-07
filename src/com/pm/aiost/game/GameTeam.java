@@ -11,7 +11,7 @@ import org.bukkit.scoreboard.Team;
 import org.bukkit.scoreboard.Team.Option;
 import org.bukkit.scoreboard.Team.OptionStatus;
 
-import com.pm.aiost.misc.other.TeamData;
+import com.pm.aiost.misc.utils.TeamData;
 
 public class GameTeam extends TeamData {
 

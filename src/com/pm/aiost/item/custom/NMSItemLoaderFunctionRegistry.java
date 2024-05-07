@@ -1,4 +1,4 @@
-package com.pm.aiost.item.nms;
+package com.pm.aiost.item.custom;
 
 import java.util.HashMap;
 import java.util.Map;

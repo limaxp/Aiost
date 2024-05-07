@@ -8,11 +8,11 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.event.effect.EffectBuilder;
-import com.pm.aiost.item.nms.NMSItemLoader;
+import com.pm.aiost.item.custom.NMSItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.item.Item;

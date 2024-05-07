@@ -2,7 +2,7 @@ package com.pm.aiost.player.handler;
 
 import org.bukkit.entity.Player;
 
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 
 public class TPSOptimizer {

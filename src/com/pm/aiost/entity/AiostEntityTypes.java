@@ -8,7 +8,7 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.google.common.collect.ImmutableSet;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;

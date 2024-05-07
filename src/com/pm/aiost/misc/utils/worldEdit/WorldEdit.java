@@ -20,7 +20,7 @@ import org.bukkit.util.Vector;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.misc.utils.nms.NMS;
+import com.pm.aiost.misc.nms.NMS;
 
 public class WorldEdit {
 

@@ -13,9 +13,9 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.item.crafting.RecipeManager;
 import com.pm.aiost.misc.SpigotConfig;
 import com.pm.aiost.misc.SpigotConfigManager;
+import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.resourcePack.ResourcePackBuilder;
-import com.pm.aiost.misc.utils.nbt.NBTHelper;
-import com.pm.aiost.misc.utils.nms.NMS;
 
 public class Items {
 
