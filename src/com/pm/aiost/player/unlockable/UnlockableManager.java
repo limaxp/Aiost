@@ -12,6 +12,7 @@ import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
+import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
@@ -31,7 +32,15 @@ public class UnlockableManager {
 		for (UnlockableType<?> type : AiostRegistry.UNLOCKABLE_TYPES.values())
 			if (nameList.contains(type.name))
 				if (unlockablesConfig.contains(type.name))
-					type.load(unlockablesConfig.getConfigurationSection(type.name));
+					load(type, unlockablesConfig);
+	}
+
+	public static void load(UnlockableType<?> type, ConfigurationSection config) {
+		try {
+			type.load(config.getConfigurationSection(type.name));
+		} catch (Exception e) {
+			Logger.warn("UnlockableManager: " + e.getClass().getName() + " loading " + type.name);
+		}
 	}
 
 	public static void loadEffects(ConfigurationSection unlockableSection, UnlockableType<Effect> type,

@@ -58,7 +58,7 @@ public class ItemMenu {
 		ItemStack[] tabIcons = getTabIcons();
 		for (int i = 0; i < size; i++) {
 //			String name = creativeTabs.get(i).c().replace("_", " ");
-			String name = creativeTabs.get(i).row().name().replace("_", " ");
+			String name = creativeTabs.get(i).getDisplayName().getString();
 			List<String> lore = Arrays.asList(GRAY + "Click to view " + name);
 			name = name.substring(0, 1).toUpperCase() + name.substring(1);
 			groupMenus[i] = createItemMenu(items.get(i), name);
@@ -69,7 +69,7 @@ public class ItemMenu {
 	}
 
 	private static List<CreativeModeTab> initTabList() {
-		return CreativeModeTabs.allTabs();
+		return new ArrayList<CreativeModeTab>(CreativeModeTabs.allTabs());
 	}
 
 	private static List<List<ItemStack>> initTabItemLists(int size) {
@@ -114,7 +114,7 @@ public class ItemMenu {
 		int size = creativeTabs.size();
 		for (int i = 0; i < size; i++) {
 //			if (creativeTabs.get(i).c() == name) {
-			if (creativeTabs.get(i).row().name() == name) {
+			if (creativeTabs.get(i).getDisplayName().getString() == name) {
 				creativeTabs.remove(i);
 				items.remove(i);
 				return;
@@ -137,10 +137,11 @@ public class ItemMenu {
 
 	private static int getIndex(List<CreativeModeTab> creativeTabs, String name) {
 		int size = creativeTabs.size();
-		for (int i = 0; i < size; i++)
+		for (int i = 0; i < size; i++) {
 //			if (creativeTabs.get(i).c() == name)
-			if (creativeTabs.get(i).row().name() == name)
+			if (creativeTabs.get(i).getDisplayName().getString() == name)
 				return i;
+		}
 		return -1;
 	}
 

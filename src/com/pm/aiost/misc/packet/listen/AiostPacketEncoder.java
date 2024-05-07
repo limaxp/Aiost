@@ -125,7 +125,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 //				}
 //			}
 //		}
-//
-//		out.add(packet);
+
+		out.add(packet);
 	}
 }

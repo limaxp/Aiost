@@ -55,9 +55,11 @@ import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
+import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.network.ServerCommonPacketListenerImpl;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -123,6 +125,12 @@ public class NMS {
 			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "b"); // ClientboundPlayerInfoUpdatePacket.actions
 	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET = Reflection
 			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "c"); // ClientboundPlayerInfoUpdatePacket.entries
+
+	public static final MethodHandle SERVERCOMMONPACKETLISTENERIMPL_GET_CONNECTION = Reflection
+			.unreflectGetter(ServerCommonPacketListenerImpl.class, "e"); // ServerCommonPacketListenerImpl.connection
+
+	public static final MethodHandle SERVERBOUNDINTERACTPACKET_GET_ID = Reflection
+			.unreflectGetter(ServerboundInteractPacket.class, "b"); // PacketPlayInUseEntity.entityId;
 
 	public static void unfreezeRegistry(Registry<?> registry) {
 		try {
