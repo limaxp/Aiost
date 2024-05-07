@@ -2,6 +2,7 @@ package com.pm.aiost.misc.utils.nms;
 
 import java.lang.invoke.MethodHandle;
 import java.util.Collections;
+import java.util.IdentityHashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -42,6 +43,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.core.Direction;
 import net.minecraft.core.MappedRegistry;
+import net.minecraft.core.Registry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.nbt.CompoundTag;
@@ -78,8 +80,9 @@ public class NMS {
 	public static final MethodHandle ENTITY_RANDOM_GET = Reflection.unreflectGetter(Entity.class, "ah"); // Entity.random
 	public static final MethodHandle ENTITY_ENTITY_COUNT_GET = Reflection.unreflectGetter(Entity.class, "c"); // Entity.ENTITY_COUNTER
 
-	public static final MethodHandle ENTITYTYPE_SET_FROZEN = Reflection.unreflectSetter(MappedRegistry.class, "l"); // RegistryMaterials.frozen
-	public static final MethodHandle ENTITYTYPE_SET_UNREGISTERED_INTRUSIVE_HOLDERS = Reflection
+	public static final MethodHandle REGISTRYMATERIALS_SET_FROZEN = Reflection.unreflectSetter(MappedRegistry.class,
+			"l"); // RegistryMaterials.frozen
+	public static final MethodHandle REGISTRYMATERIALS_SET_UNREGISTERED_INTRUSIVE_HOLDERS = Reflection
 			.unreflectSetter(MappedRegistry.class, "m"); // RegistryMaterials.unregisteredIntrusiveHolders
 
 //	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET = Reflection.unreflectMethod(WORLD_SERVER_CLASS,
@@ -120,6 +123,15 @@ public class NMS {
 			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "b"); // ClientboundPlayerInfoUpdatePacket.actions
 	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET = Reflection
 			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "c"); // ClientboundPlayerInfoUpdatePacket.entries
+
+	public static void unfreezeRegistry(Registry<?> registry) {
+		try {
+			NMS.REGISTRYMATERIALS_SET_FROZEN.invoke(registry, false);
+			NMS.REGISTRYMATERIALS_SET_UNREGISTERED_INTRUSIVE_HOLDERS.invoke(registry, new IdentityHashMap<>());
+		} catch (Throwable e) {
+			Logger.err("NMS: Error on " + registry.getClass().getName() + " unfreeze!", e);
+		}
+	}
 
 	public static ItemStack getNMS(org.bukkit.inventory.ItemStack is) {
 		return CraftItemStack.asNMSCopy(is);

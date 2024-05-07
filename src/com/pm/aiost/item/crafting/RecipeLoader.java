@@ -80,32 +80,42 @@ public class RecipeLoader {
 	}
 
 	public static Recipe<?> loadRecipe(ConfigurationSection section) {
-		if (!section.contains("item")) {
-			Logger.warn("RecipeLoader: No item for recipe '" + section.getName() + "' defined!");
+		try {
+			if (!section.contains("item")) {
+				Logger.warn("RecipeLoader: No item for recipe '" + section.getName() + "' defined!");
+				return null;
+			}
+			ItemStack is = ItemLoader.loadNMSItem(section.get("item"));
+			if (section.contains("amount")) {
+				is = is.copy();
+				is.setCount(section.getInt("amount"));
+			}
+			return loadRecipe(section, is);
+		} catch (Exception e) {
+			Logger.warn("RecipeLoader: " + e.getClass().getName() + " loading " + section.getName());
 			return null;
 		}
-		ItemStack is = ItemLoader.loadNMSItem(section.get("item"));
-		if (section.contains("amount")) {
-			is = is.copy();
-			is.setCount(section.getInt("amount"));
-		}
-		return loadRecipe(section, is);
 	}
 
 	public static Recipe<?> loadRecipe(ConfigurationSection section, ItemStack is) {
-		String name = section.getName();
-		String typeString = section.getString("type");
-		if (typeString == null || typeString.isEmpty()) {
-			Logger.warn("RecipeLoader: No type for recipe '" + name + "' defined!");
+		try {
+			String name = section.getName();
+			String typeString = section.getString("type");
+			if (typeString == null || typeString.isEmpty()) {
+				Logger.warn("RecipeLoader: No type for recipe '" + name + "' defined!");
+				return null;
+			}
+			Recipe<?> recipe = loadRecipeFromType(typeString, section, is);
+			if (recipe == null) {
+				Logger.warn("RecipeLoader: Type '" + typeString + "' for recipe '" + name + "' does not exist!");
+				return null;
+			}
+			RecipeManager.addRecipe(name, recipe);
+			return recipe;
+		} catch (Exception e) {
+			Logger.warn("RecipeLoader: " + e.getClass().getName() + " loading " + section.getName());
 			return null;
 		}
-		Recipe<?> recipe = loadRecipeFromType(typeString, section, is);
-		if (recipe == null) {
-			Logger.warn("RecipeLoader: Type '" + typeString + "' for recipe '" + name + "' does not exist!");
-			return null;
-		}
-		RecipeManager.addRecipe(name, recipe);
-		return recipe;
 	}
 
 	private static Recipe<?> loadRecipeFromType(String type, ConfigurationSection section, ItemStack is) {

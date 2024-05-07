@@ -1,7 +1,6 @@
 package com.pm.aiost.entity;
 
 import java.util.ArrayList;
-import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -9,7 +8,6 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.google.common.collect.ImmutableSet;
-import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.core.BlockPos;
@@ -43,19 +41,10 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static <T extends Entity> EntityType<T> register(String name, String extend_from, MobCategory category,
 			EntityFactory<T> factory) {
-		// unfreeze
-		try {
-			NMS.ENTITYTYPE_SET_FROZEN.invoke(BuiltInRegistries.ENTITY_TYPE, false);
-			NMS.ENTITYTYPE_SET_UNREGISTERED_INTRUSIVE_HOLDERS.invoke(BuiltInRegistries.ENTITY_TYPE,
-					new IdentityHashMap<>());
-		} catch (Throwable e) {
-			Logger.err("AiostEntityTypes: Error on register Entity!", e);
-		}
-		// register
+		NMS.unfreezeRegistry(BuiltInRegistries.ENTITY_TYPE);
 		Builder<T> builder = EntityType.Builder.<T>of(factory, category);
 		EntityType<T> type = builder.build(extend_from);
 		Registry.register(BuiltInRegistries.ENTITY_TYPE, name, type);
-		// freeze
 		BuiltInRegistries.ENTITY_TYPE.freeze();
 		VALUES.add(type);
 		return type;

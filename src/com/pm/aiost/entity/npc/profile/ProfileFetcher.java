@@ -1,7 +1,5 @@
 package com.pm.aiost.entity.npc.profile;
 
-import java.lang.reflect.Method;
-import java.net.URL;
 import java.util.UUID;
 
 import org.bukkit.Bukkit;
@@ -9,29 +7,27 @@ import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
 
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.minecraft.MinecraftSessionService;
-import com.mojang.authlib.yggdrasil.YggdrasilAuthenticationService;
 import com.mojang.authlib.yggdrasil.YggdrasilMinecraftSessionService;
-import com.pm.aiost.misc.log.Logger;
 
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 
 public class ProfileFetcher {
 
-	private static final String AUTH_SERVER_URL = "https://sessionserver.mojang.com/session/minecraft/profile/";
-	private static Method MAKE_REQUEST;
+//	private static final String AUTH_SERVER_URL = "https://sessionserver.mojang.com/session/minecraft/profile/";
+//	private static Method MAKE_REQUEST;
 
 	private static final Object2ObjectLinkedOpenHashMap<UUID, GameProfile> CACHE = new Object2ObjectLinkedOpenHashMap<UUID, GameProfile>();
 	private static final int CACHE_SIZE = 256;
 
-	static {
-		try {
-			MAKE_REQUEST = YggdrasilAuthenticationService.class.getDeclaredMethod("makeRequest",
-					new Class[] { URL.class, Object.class, Class.class });
-			MAKE_REQUEST.setAccessible(true);
-		} catch (Exception e) {
-			Logger.err("ProfileFetcher: Error on makeRequest method reflection!", e);
-		}
-	}
+//	static {
+//		try {
+//			MAKE_REQUEST = YggdrasilAuthenticationService.class.getDeclaredMethod("makeRequest",
+//					new Class[] { URL.class, Object.class, Class.class });
+//			MAKE_REQUEST.setAccessible(true);
+//		} catch (Exception e) {
+//			Logger.err("ProfileFetcher: Error on makeRequest method reflection!", e);
+//		}
+//	}
 
 	public static GameProfile fetch(String name, boolean requireSecure) {
 		return fetch(name, UUIDFetcher.fetch(name), true);

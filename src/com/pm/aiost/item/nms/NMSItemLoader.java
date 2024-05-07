@@ -11,7 +11,9 @@ import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.AiostToolMaterial;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.utils.nms.NMS;
 
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.food.FoodData;
 import net.minecraft.world.item.ArmorItem;
@@ -40,8 +42,11 @@ import net.minecraft.world.item.Tiers;
 public class NMSItemLoader {
 
 	public static Item registerItem(String name, Material mat, ConfigurationSection itemSection) {
-		return NMSItems.registerItem(name.toLowerCase().replace(' ', '_'), CraftMagicNumbers.getItem(mat),
+		NMS.unfreezeRegistry(BuiltInRegistries.ITEM);
+		Item item = NMSItems.registerItem(name.toLowerCase().replace(' ', '_'), CraftMagicNumbers.getItem(mat),
 				loadItem(itemSection));
+		BuiltInRegistries.ITEM.freeze();
+		return item;
 	}
 
 	public static Item loadItem(ConfigurationSection section) {

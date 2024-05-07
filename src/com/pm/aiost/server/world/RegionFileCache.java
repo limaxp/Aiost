@@ -55,7 +55,7 @@ public class RegionFileCache implements AutoCloseable {
 		ServerLevel level = NMS.getNMS(serverWorld.world);
 		RegionStorageInfo info = new RegionStorageInfo(serverWorld.getName(), level.dimension(),
 				level.getTypeKey().registry().getNamespace());
-		RegionFile regionfile1 = new RegionFile(info, path, path, true);
+		RegionFile regionfile1 = new RegionFile(info, path, regionFile.toPath(), true);
 		cache.putAndMoveToFirst(key, regionfile1);
 		return regionfile1;
 	}
