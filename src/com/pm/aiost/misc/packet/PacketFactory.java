@@ -1,6 +1,5 @@
 package com.pm.aiost.misc.packet;
 
-import java.lang.invoke.MethodHandle;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
@@ -20,12 +19,13 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.datafixers.util.Pair;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nms.NMS;
-import com.pm.aiost.misc.utils.reflection.ReflectionUtils;
 
+import io.netty.buffer.Unpooled;
 import it.unimi.dsi.fastutil.ints.IntList;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.numbers.NumberFormat;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -62,48 +62,6 @@ import net.minecraft.world.scores.DisplaySlot;
 import net.minecraft.world.scores.Objective;
 
 public class PacketFactory {
-
-	public static final MethodHandle ENTITYTELEPORT_CONSTRUCTOR;
-	public static final MethodHandle ENTITYTELEPORT_ID_SET;
-	public static final MethodHandle ENTITYTELEPORT_ID_GET;
-	public static final MethodHandle ENTITYTELEPORT_X_SET;
-	public static final MethodHandle ENTITYTELEPORT_Y_SET;
-	public static final MethodHandle ENTITYTELEPORT_Y_GET;
-	public static final MethodHandle ENTITYTELEPORT_Z_SET;
-	public static final MethodHandle ENTITYTELEPORT_YAW_SET;
-	public static final MethodHandle ENTITYTELEPORT_PITCH_SET;
-	public static final MethodHandle ENTITYTELEPORT_ONGROUND_SET;
-
-	public static final MethodHandle PLAYERINFO_CONSTRUCTOR;
-	public static final MethodHandle PLAYERINFO_ACTIONSET_SET;
-	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET;
-
-	static {
-		try {
-			ENTITYTELEPORT_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ClientboundTeleportEntityPacket.class,
-					new Class[] {});
-			ENTITYTELEPORT_ID_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "id");
-			ENTITYTELEPORT_ID_GET = ReflectionUtils.unreflectGetter(ClientboundTeleportEntityPacket.class, "id");
-			ENTITYTELEPORT_X_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "x");
-			ENTITYTELEPORT_Y_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "y");
-			ENTITYTELEPORT_Y_GET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "y");
-			ENTITYTELEPORT_Z_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "z");
-			ENTITYTELEPORT_YAW_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "xRot");
-			ENTITYTELEPORT_PITCH_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class, "yRot");
-			ENTITYTELEPORT_ONGROUND_SET = ReflectionUtils.unreflectSetter(ClientboundTeleportEntityPacket.class,
-					"onGround");
-
-			PLAYERINFO_CONSTRUCTOR = ReflectionUtils.unreflectConstructor(ClientboundPlayerInfoUpdatePacket.class,
-					new Class[] {});
-			PLAYERINFO_ACTIONSET_SET = ReflectionUtils.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class,
-					"actions");
-			PLAYERINFO_PLAYERLIST_SET = ReflectionUtils.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class,
-					"entries");
-		} catch (NoSuchMethodException | NoSuchFieldException | SecurityException | IllegalAccessException e) {
-			Logger.err("PacketFactory: Error on packet field reflection!", e);
-			throw new RuntimeException();
-		}
-	}
 
 	public static ClientboundAddEntityPacket packetEntitySpawn(Entity entity) {
 		return new ClientboundAddEntityPacket(entity);
@@ -172,44 +130,34 @@ public class PacketFactory {
 		return new ClientboundPlayerInfoUpdatePacket(infoAction, player);
 	}
 
-	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(UUID uuid, GameProfile profile, int paramInt,
-			GameType gamemode, Component chatComponent, ClientboundPlayerInfoUpdatePacket.Action action) {
-		try {
-			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) PLAYERINFO_CONSTRUCTOR
-					.invoke();
-			Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
-			actionSet.add(action);
-			PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
-			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
-			entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(uuid, profile, false, paramInt, gamemode,
-					chatComponent, null));
-			PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
-			return packet;
-		} catch (Throwable e) {
-			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
-			return null;
-		}
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action action,
+			UUID uuid, GameProfile profile, int paramInt, GameType gamemode, Component chatComponent) {
+		Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
+		List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
+		actionSet.add(action);
+		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(uuid, profile, false, paramInt, gamemode,
+				chatComponent, null));
+		return packetPlayerInfo(actionSet, entryList);
 	}
 
-	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action action,
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action action,
 			GameProfile profile) {
 		Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
-		actionSet.add(action);
 		List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
+		actionSet.add(action);
 		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(profile.getId(), profile, false, 0, GameType.SURVIVAL,
 				NMS.createChatComponent(""), null));
-		return packetPlayerInfo_(actionSet, entryList);
+		return packetPlayerInfo(actionSet, entryList);
 	}
 
-	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo_(
+	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(
 			Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet,
 			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList) {
-
 		try {
-			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) PLAYERINFO_CONSTRUCTOR
-					.invoke();
-			PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
-			PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
+			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) NMS.PLAYERINFO_CONSTRUCTOR
+					.invoke(Unpooled.buffer(0));
+			NMS.PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
+			NMS.PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
 			return packet;
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
@@ -250,17 +198,16 @@ public class PacketFactory {
 
 	public static ClientboundTeleportEntityPacket packetEntityTeleport(int id, double x, double y, double z, float yaw,
 			float pitch, boolean onGround) {
+		FriendlyByteBuf buffer = new FriendlyByteBuf(Unpooled.buffer(31));
+		buffer.writeVarInt(id);
+		buffer.writeDouble(x);
+		buffer.writeDouble(y);
+		buffer.writeDouble(z);
+		buffer.writeByte(toCompressedAngle(yaw));
+		buffer.writeByte(toCompressedAngle(pitch));
+		buffer.writeBoolean(onGround);
 		try {
-			ClientboundTeleportEntityPacket packet = (ClientboundTeleportEntityPacket) ENTITYTELEPORT_CONSTRUCTOR
-					.invoke();
-			ENTITYTELEPORT_ID_SET.invoke(packet, id);
-			ENTITYTELEPORT_X_SET.invoke(packet, x);
-			ENTITYTELEPORT_Y_SET.invoke(packet, y);
-			ENTITYTELEPORT_Z_SET.invoke(packet, z);
-			ENTITYTELEPORT_YAW_SET.invoke(packet, toCompressedAngle(yaw));
-			ENTITYTELEPORT_PITCH_SET.invoke(packet, toCompressedAngle(pitch));
-			ENTITYTELEPORT_ONGROUND_SET.invoke(packet, onGround);
-			return packet;
+			return (ClientboundTeleportEntityPacket) NMS.ENTITYTELEPORT_CONSTRUCTOR.invoke(buffer);
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutEntityTeleport!", e);
 			return null;

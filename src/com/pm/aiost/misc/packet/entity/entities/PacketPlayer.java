@@ -51,7 +51,7 @@ public class PacketPlayer extends PacketEntity {
 	@Override
 	public void spawn() {
 		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
-				PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
+				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
 		Bukkit.getScheduler()
@@ -64,7 +64,7 @@ public class PacketPlayer extends PacketEntity {
 	@Override
 	public void spawn(Player player) {
 		PacketSender.send_(player,
-				PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
+				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
 		Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(),

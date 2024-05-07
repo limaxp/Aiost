@@ -1,6 +1,7 @@
 package com.pm.aiost.entity;
 
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -8,11 +9,13 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.google.common.collect.ImmutableSet;
+import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nms.NMS;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
@@ -40,9 +43,20 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static <T extends Entity> EntityType<T> register(String name, String extend_from, MobCategory category,
 			EntityFactory<T> factory) {
+		// unfreeze
+		try {
+			NMS.ENTITYTYPE_SET_FROZEN.invoke(BuiltInRegistries.ENTITY_TYPE, false);
+			NMS.ENTITYTYPE_SET_UNREGISTERED_INTRUSIVE_HOLDERS.invoke(BuiltInRegistries.ENTITY_TYPE,
+					new IdentityHashMap<>());
+		} catch (Throwable e) {
+			Logger.err("AiostEntityTypes: Error on register Entity!", e);
+		}
+		// register
 		Builder<T> builder = EntityType.Builder.<T>of(factory, category);
 		EntityType<T> type = builder.build(extend_from);
 		Registry.register(BuiltInRegistries.ENTITY_TYPE, name, type);
+		// freeze
+		BuiltInRegistries.ENTITY_TYPE.freeze();
 		VALUES.add(type);
 		return type;
 	}
@@ -104,6 +118,11 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		for (int i = 0; i < size; i++)
 			entityTypes.add(getByKey(new ResourceLocation(typeNames.get(i))));
 		return entityTypes;
+	}
+
+	public static void saveNBT(CompoundTag nbttagcompound, EntityType<?> type) {
+		System.out.println(EntityType.getKey(type).getNamespace());
+		nbttagcompound.putString("id", EntityType.getKey(type).getNamespace());
 	}
 
 	protected AiostEntityTypes(EntityFactory<T> entitytypes_b, MobCategory enumcreaturetype, boolean flag,

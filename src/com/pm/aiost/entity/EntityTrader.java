@@ -7,6 +7,7 @@ import org.bukkit.craftbukkit.v1_20_R4.entity.CraftVillager;
 
 import com.pm.aiost.misc.utils.nms.NMS;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.npc.Villager;
@@ -25,6 +26,12 @@ public class EntityTrader extends Villager {
 	@Override
 	protected void registerGoals() {
 		this.goalSelector.addGoal(1, new FloatGoal(this));
+	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+		super.addAdditionalSaveData(nbttagcompound);
+		AiostEntityTypes.saveNBT(nbttagcompound, AiostEntityTypes.BALL);
 	}
 
 	@Override

@@ -37,17 +37,22 @@ import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.nbt.NBTHelper;
 import com.pm.aiost.misc.utils.nbt.NBTType;
-import com.pm.aiost.misc.utils.reflection.ReflectionUtils;
+import com.pm.aiost.misc.utils.reflection.Reflection;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.core.Direction;
+import net.minecraft.core.MappedRegistry;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
 import net.minecraft.network.chat.PlayerChatMessage;
+import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
+import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.level.ServerLevel;
@@ -57,7 +62,6 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ElytraItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -67,46 +71,55 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NMS {
 
-	public static final MethodHandle ENTITYLIVING_JUMPING_GET;
+	public static final MethodHandle ENTITYLIVING_JUMPING_GET = Reflection.unreflectGetter(LivingEntity.class, "bn"); // EntityLiving.jumping
 
-	public static final MethodHandle ENTITY_BUKKITENTITY_GET;
-	public static final MethodHandle ENTITY_BUKKITENTITY_SET;
-	public static final MethodHandle ENTITY_RANDOM_GET;
-	public static final MethodHandle ENTITY_ENTITY_COUNT_GET;
+	public static final MethodHandle ENTITY_BUKKITENTITY_GET = Reflection.unreflectGetter(Entity.class, "bukkitEntity");
+	public static final MethodHandle ENTITY_BUKKITENTITY_SET = Reflection.unreflectSetter(Entity.class, "bukkitEntity");
+	public static final MethodHandle ENTITY_RANDOM_GET = Reflection.unreflectGetter(Entity.class, "ah"); // Entity.random
+	public static final MethodHandle ENTITY_ENTITY_COUNT_GET = Reflection.unreflectGetter(Entity.class, "c"); // Entity.ENTITY_COUNTER
 
-	public static final MethodHandle CREATIVEMODETAB_ID_GET;
-//
-//	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET;
-//	private static final MethodHandle CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET;
-//	private static final MethodHandle PLAYERCHUNKMAP_TRACKED_ENTITIES_GET;
-//	private static final MethodHandle ENTITYTRACKER_TRACKER_ENTRY_GET;
-//	private static final MethodHandle ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET;
+	public static final MethodHandle ENTITYTYPE_SET_FROZEN = Reflection.unreflectSetter(MappedRegistry.class, "l"); // RegistryMaterials.frozen
+	public static final MethodHandle ENTITYTYPE_SET_UNREGISTERED_INTRUSIVE_HOLDERS = Reflection
+			.unreflectSetter(MappedRegistry.class, "m"); // RegistryMaterials.unregisteredIntrusiveHolders
 
-	static {
-		try {
+//	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET = Reflection.unreflectMethod(WORLD_SERVER_CLASS,
+//			"getChunkProvider");
+//	private static final MethodHandle CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET = Reflection
+//			.unreflectGetter(CHUNK_PROVIDER_SERVER_CLASS, "playerChunkMap");
+//	private static final MethodHandle PLAYERCHUNKMAP_TRACKED_ENTITIES_GET = Reflection
+//			.unreflectGetter(PLAYER_CHUNK_MAP_CLASS, "trackedEntities");
+//	private static final MethodHandle ENTITYTRACKER_TRACKER_ENTRY_GET = Reflection.unreflectGetter(ENTITY_TRACKER_CLASS,
+//			"trackerEntry");
+//	private static final MethodHandle ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET = Reflection
+//			.unreflectGetter(ENTITY_TRACKER_ENTRY_CLASS, "trackedPlayers");
 
-			ENTITYLIVING_JUMPING_GET = ReflectionUtils.unreflectGetter(LivingEntity.class, "jumping");
+	public static final MethodHandle ENTITYTELEPORT_CONSTRUCTOR = Reflection
+			.unreflectConstructor(ClientboundTeleportEntityPacket.class, new Class[] { FriendlyByteBuf.class });
+	public static final MethodHandle ENTITYTELEPORT_ID_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "b"); // PacketPlayOutEntityTeleport.id
+	public static final MethodHandle ENTITYTELEPORT_ID_GET = Reflection
+			.unreflectGetter(ClientboundTeleportEntityPacket.class, "b"); // PacketPlayOutEntityTeleport.id
+	public static final MethodHandle ENTITYTELEPORT_X_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "c");// PacketPlayOutEntityTeleport.x
+	public static final MethodHandle ENTITYTELEPORT_Y_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport
+	public static final MethodHandle ENTITYTELEPORT_Y_GET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport.y
+	public static final MethodHandle ENTITYTELEPORT_Z_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "e");// PacketPlayOutEntityTeleport.z
+	public static final MethodHandle ENTITYTELEPORT_YAW_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "f");// PacketPlayOutEntityTeleport.xRot
+	public static final MethodHandle ENTITYTELEPORT_PITCH_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "g");// PacketPlayOutEntityTeleport.yRot
+	public static final MethodHandle ENTITYTELEPORT_ONGROUND_SET = Reflection
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "h");// PacketPlayOutEntityTeleport.onGround
 
-			ENTITY_BUKKITENTITY_GET = ReflectionUtils.unreflectGetter(Entity.class, "bukkitEntity");
-			ENTITY_BUKKITENTITY_SET = ReflectionUtils.unreflectSetter(Entity.class, "bukkitEntity");
-			ENTITY_RANDOM_GET = ReflectionUtils.unreflectGetter(Entity.class, "random");
-			ENTITY_ENTITY_COUNT_GET = ReflectionUtils.unreflectGetter(Entity.class, "entityCount");
-
-			CREATIVEMODETAB_ID_GET = ReflectionUtils.unreflectGetter(CreativeModeTab.class, "o");
-
-//			WORLDSERVER_CHUNK_PROVIDER_GET = ReflectionUtils.unreflectMethod(WORLD_SERVER_CLASS, "getChunkProvider");
-//			CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET = ReflectionUtils.unreflectGetter(CHUNK_PROVIDER_SERVER_CLASS,
-//					"playerChunkMap");
-//			PLAYERCHUNKMAP_TRACKED_ENTITIES_GET = ReflectionUtils.unreflectGetter(PLAYER_CHUNK_MAP_CLASS,
-//					"trackedEntities");
-//			ENTITYTRACKER_TRACKER_ENTRY_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_CLASS, "trackerEntry");
-//			ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET = ReflectionUtils.unreflectGetter(ENTITY_TRACKER_ENTRY_CLASS,
-//					"trackedPlayers");
-		} catch (NoSuchFieldException | SecurityException | IllegalAccessException e) {
-			Logger.err("NMS: Error on nms field reflection!", e);
-			throw new RuntimeException();
-		}
-	}
+	public static final MethodHandle PLAYERINFO_CONSTRUCTOR = Reflection.unreflectConstructor(
+			ClientboundPlayerInfoUpdatePacket.class, new Class[] { RegistryFriendlyByteBuf.class });
+	public static final MethodHandle PLAYERINFO_ACTIONSET_SET = Reflection
+			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "b"); // ClientboundPlayerInfoUpdatePacket.actions
+	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET = Reflection
+			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "c"); // ClientboundPlayerInfoUpdatePacket.entries
 
 	public static ItemStack getNMS(org.bukkit.inventory.ItemStack is) {
 		return CraftItemStack.asNMSCopy(is);
@@ -353,15 +366,6 @@ public class NMS {
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get tracked players", e);
 			return null;
-		}
-	}
-
-	public static int getCreativeModeTabId(CreativeModeTab tab) {
-		try {
-			return (int) NMS.CREATIVEMODETAB_ID_GET.invoke(tab);
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not get CreativeModeTab id", e);
-			return 0;
 		}
 	}
 

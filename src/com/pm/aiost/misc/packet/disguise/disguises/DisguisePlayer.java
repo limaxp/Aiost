@@ -29,7 +29,7 @@ public class DisguisePlayer implements Disguise {
 	@Override
 	public void addPackets(Player player, List<Object> packets) {
 		Location loc = player.getLocation();
-		packets.add(PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile));
+		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile));
 		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), EntityType.PLAYER));
 		Disguise.addPlayerStatePackets(NMS.getNMS(player), packets);
@@ -38,7 +38,7 @@ public class DisguisePlayer implements Disguise {
 	@Override
 	public void removePackets(Player player, List<Object> packets) {
 		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
-		packets.add(PacketFactory.packetPlayerInfo_(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
+		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
 				NMS.getNMS(player).getGameProfile()));
 	}
 

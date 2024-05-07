@@ -1,5 +1,6 @@
 package com.pm.aiost.entity;
 
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
@@ -27,4 +28,10 @@ public class Ball extends Slime {
 //		float power = Math.max(1, 4 - getSize());
 //		setMot(motX * power, motY * power, motZ * power);
 //	}
+
+	@Override
+	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
+		super.addAdditionalSaveData(nbttagcompound);
+		AiostEntityTypes.saveNBT(nbttagcompound, AiostEntityTypes.BALL);
+	}
 }
