@@ -40,7 +40,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static final EntityType<Ball> BALL = register("ball", "slime", MobCategory.MONSTER, Ball::new);
 
-	public static final EntityType<NpcBase> NPC_BASE = register("npcBase", "player", MobCategory.MISC, NpcBase::new);
+	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", "player", MobCategory.MISC, NpcBase::new);
 
 	public static <T extends Entity> EntityType<T> register(String name, String extend_from, MobCategory category,
 			EntityFactory<T> factory) {
