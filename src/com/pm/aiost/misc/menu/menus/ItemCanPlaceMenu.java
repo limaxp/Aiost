@@ -15,7 +15,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -33,11 +33,11 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 
 	public ItemCanPlaceMenu(String name, ServerPlayer serverPlayer) {
 		super(BOLD + name, 6, false);
-		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBT.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		int size = nbtList.size();
 		ItemStack[] items = new ItemStack[size + 1];
 		for (int i = 0; i < size; i++)
-			items[i] = new ItemStack(NBTHelper.stringToMaterial(nbtList.getString(i)));
+			items[i] = new ItemStack(NBT.stringToMaterial(nbtList.getString(i)));
 		items[size] = ADD_BLOCK_ITEM;
 		set(items);
 		setBackLink(ItemNBTMenu.getMenu());
@@ -70,7 +70,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 				int slot = event.getSlot();
 				inv.setItem(slot + 1, is);
 				inv.setItem(slot, new ItemStack(material));
-				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.addMaterial(getList(nbtTag), material));
+				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.addMaterial(getList(nbtTag), material));
 			}
 		});
 	}
@@ -86,11 +86,11 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 				break;
 			}
 		}
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.removeMaterial(getList(nbtTag), is.getType()));
+		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeMaterial(getList(nbtTag), is.getType()));
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {
-		return NBTHelper.getCanPlaceOnList(nbtTag);
+		return NBT.getCanPlaceOnList(nbtTag);
 	}
 
 	public static class ItemCanDestroyMenu extends ItemCanPlaceMenu {
@@ -101,7 +101,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 
 		@Override
 		protected ListTag getList(CompoundTag nbtTag) {
-			return NBTHelper.getCanDestroyList(nbtTag);
+			return NBT.getCanDestroyList(nbtTag);
 		}
 	}
 }

@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
@@ -21,10 +21,10 @@ public class MetaHelper {
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, String name) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setDisplayName(display, name);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setDisplayName(display, name);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, String name) {
@@ -33,11 +33,11 @@ public class MetaHelper {
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			String name) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		NBTHelper.setDurability(nbt, (short) durability);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setDisplayName(display, name);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		NBT.setDurability(nbt, (short) durability);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setDisplayName(display, name);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, List<String> lore) {
@@ -45,10 +45,10 @@ public class MetaHelper {
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, List<String> lore) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setLore(display, lore);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setLore(display, lore);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, List<String> lore) {
@@ -57,11 +57,11 @@ public class MetaHelper {
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			List<String> lore) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		NBTHelper.setDurability(nbt, (short) durability);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setLore(display, lore);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		NBT.setDurability(nbt, (short) durability);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setLore(display, lore);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, String name, List<String> lore) {
@@ -70,11 +70,11 @@ public class MetaHelper {
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, String name,
 			List<String> lore) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setDisplayName(display, name);
-		NBTHelper.setLore(display, lore);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setDisplayName(display, name);
+		NBT.setLore(display, lore);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, String name, List<String> lore) {
@@ -83,12 +83,12 @@ public class MetaHelper {
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			String name, List<String> lore) {
-		CompoundTag nbt = NBTHelper.getNBT(is);
-		NBTHelper.setDurability(nbt, (short) durability);
-		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
-		NBTHelper.setDisplayName(display, name);
-		NBTHelper.setLore(display, lore);
-		return NBTHelper.loadNMSItem(nbt);
+		CompoundTag nbt = NBT.getNBT(is);
+		NBT.setDurability(nbt, (short) durability);
+		CompoundTag display = NBT.getOrAddDisplay(nbt);
+		NBT.setDisplayName(display, name);
+		NBT.setLore(display, lore);
+		return NBT.loadNMSItem(nbt);
 	}
 
 	public static ItemStack setMeta(Material mat, String name) {

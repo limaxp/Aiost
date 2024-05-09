@@ -3,7 +3,7 @@ package com.pm.aiost.server.world.effects;
 import java.io.File;
 
 import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NBTType;
 
 import net.minecraft.nbt.CompoundTag;
@@ -24,7 +24,7 @@ public class WorldEffectLoader {
 		if (!effectFile.exists())
 			return;
 
-		CompoundTag nbt = NBTHelper.fromFile(effectFile);
+		CompoundTag nbt = NBT.fromFile(effectFile);
 		ListTag effectList = nbt.getList("effects", NBTType.COMPOUND);
 		int size = effectList.size();
 		if (size > 0) {
@@ -59,7 +59,7 @@ public class WorldEffectLoader {
 		for (int i = 0; i < selfEffects.length; i++)
 			selfEffectList.add(Effect.saveNBT(selfEffects[i], new CompoundTag()));
 		nbt.put("selfEffects", selfEffectList);
-		NBTHelper.toFile(effectFile, nbt);
+		NBT.toFile(effectFile, nbt);
 	}
 
 	public boolean fileExists(int id) {

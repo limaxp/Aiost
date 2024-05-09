@@ -38,7 +38,7 @@ import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.world.item.Item;
 
-public class NBTHelper {
+public class NBT {
 
 	public static final String DISPLAY_KEY = "display";
 	public static final String NAME_KEY = "Name";
@@ -1366,8 +1366,8 @@ public class NBTHelper {
 
 	public static ItemStack setItemEffect(ItemStack is, int id) {
 		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
-		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
-		NBTHelper.setItemEffect(nbtTag, id);
+		CompoundTag nbtTag = NBT.getNBT(nmsItem);
+		NBT.setItemEffect(nbtTag, id);
 		return NMS.from(loadNMSItem(nbtTag));
 	}
 
@@ -1389,8 +1389,8 @@ public class NBTHelper {
 
 	public static ItemStack setWorldEffect(ItemStack is, int id) {
 		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
-		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
-		NBTHelper.setWorldEffect(nbtTag, id);
+		CompoundTag nbtTag = NBT.getNBT(nmsItem);
+		NBT.setWorldEffect(nbtTag, id);
 		return NMS.from(loadNMSItem(nbtTag));
 	}
 

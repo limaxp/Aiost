@@ -18,7 +18,7 @@ import com.pm.aiost.event.events.PlayerEquipHandItemEvent;
 import com.pm.aiost.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.item.ItemEffects;
 import com.pm.aiost.item.custom.Slot;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
@@ -47,14 +47,14 @@ public class EffectData extends EffectList {
 
 	public void setEffect(PlayerEquipItemEvent event) {
 		ItemStack is = NMS.to(event.getItemStack());
-		if (NBTHelper.hasTag(is)) {
-			CompoundTag nbtTag = NBTHelper.getNBT(is);
-			int effectID = NBTHelper.getItemEffect(nbtTag);
+		if (NBT.hasTag(is)) {
+			CompoundTag nbtTag = NBT.getNBT(is);
+			int effectID = NBT.getItemEffect(nbtTag);
 			if (effectID != 0) {
 				slotIds[event.getSlot().ordinal()] = effectID;
 				add(ItemEffects.get(effectID));
 				EffectHandler.itemEquipRunEffects(effectID, event);
-			} else if ((effectID = NBTHelper.getWorldEffect(nbtTag)) != 0) {
+			} else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0) {
 				int slot = event.getSlot().ordinal();
 				worldIds[slot] = effectID;
 				Effect effect[] = worldEffects[slot] = event.getServerPlayer().getServerWorld().getEffect(effectID);
@@ -66,15 +66,15 @@ public class EffectData extends EffectList {
 
 	public void setHandEffect(PlayerEquipHandItemEvent event) {
 		ItemStack is = NMS.to(event.getItemStack());
-		if (NBTHelper.hasTag(is)) {
-			CompoundTag nbtTag = NBTHelper.getNBT(is);
-			int effectID = NBTHelper.getItemEffect(nbtTag);
+		if (NBT.hasTag(is)) {
+			CompoundTag nbtTag = NBT.getNBT(is);
+			int effectID = NBT.getItemEffect(nbtTag);
 			if (effectID != 0) {
 				EquipmentSlot slot = event.getSlot();
 				slotIds[slot.ordinal()] = effectID;
 				addHand(slot, ItemEffects.get(effectID));
 				EffectHandler.itemEquipRunEffects(effectID, event);
-			} else if ((effectID = NBTHelper.getWorldEffect(nbtTag)) != 0) {
+			} else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0) {
 				EquipmentSlot slot = event.getSlot();
 				int slotIndex = slot.ordinal();
 				worldIds[slotIndex] = effectID;

@@ -22,7 +22,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -39,12 +39,12 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 
 	public ItemEnchantmentsMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Enchantments", 6, false);
-		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBT.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		int size = nbtList.size();
 		ItemStack[] items = new ItemStack[size + 1];
 		for (int i = 0; i < size; i++) {
 			CompoundTag enchantment = nbtList.getCompound(i);
-			items[i] = createItem(enchantment.getString(NBTHelper.ID_KEY), enchantment.getShort(NBTHelper.LEVEL_KEY));
+			items[i] = createItem(enchantment.getString(NBT.ID_KEY), enchantment.getShort(NBT.LEVEL_KEY));
 		}
 		items[size] = ADD_ENCHANTMENT_ITEM;
 		set(items);
@@ -90,7 +90,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 				NamespacedKey key = ((Enchantment) obj).getKey();
 				inv.setItem(slot, createItem(key.toString(), (short) 1));
 				ItemNBTMenu.modifyNBT(serverPlayer,
-						(nbtTag) -> NBTHelper.setEnchantment(getList(nbtTag), key.toString(), (short) 1));
+						(nbtTag) -> NBT.setEnchantment(getList(nbtTag), key.toString(), (short) 1));
 			}
 		});
 	}
@@ -106,7 +106,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 				break;
 			}
 		}
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.removeEnchantment(getList(nbtTag),
+		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeEnchantment(getList(nbtTag),
 				is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
@@ -129,7 +129,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 					}
 					String id = im.getLore().get(0).substring(2);
 					ItemNBTMenu.modifyNBT(serverPlayer,
-							(nbtTag) -> NBTHelper.setEnchantment(getList(nbtTag), id, level));
+							(nbtTag) -> NBT.setEnchantment(getList(nbtTag), id, level));
 					MetaHelper.setMeta(is, name.substring(0, lastSpaceIndex) + ' ' + level);
 					ItemEnchantmentsMenu.this.open(serverPlayer);
 				}
@@ -140,6 +140,6 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {
-		return NBTHelper.getEnchantmentList(nbtTag);
+		return NBT.getEnchantmentList(nbtTag);
 	}
 }

@@ -25,7 +25,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -121,7 +121,7 @@ public class LaunchArmorStandEffect extends SimpleLivingEntityEffect {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		itemStack = NBTHelper.loadItem(nbt.getCompound("item"));
+		itemStack = NBT.loadItem(nbt.getCompound("item"));
 		velocityMultiplier = nbt.getFloat("velocityMultiplier");
 		damage = nbt.getFloat("damage");
 		knockback = nbt.getFloat("knockback");
@@ -131,7 +131,7 @@ public class LaunchArmorStandEffect extends SimpleLivingEntityEffect {
 	@Override
 	public CompoundTag save(CompoundTag nbt) {
 		super.save(nbt);
-		nbt.put("item", NBTHelper.saveItem(new CompoundTag(), itemStack));
+		nbt.put("item", NBT.saveItem(new CompoundTag(), itemStack));
 		nbt.putFloat("velocityMultiplier", velocityMultiplier);
 		nbt.putFloat("damage", damage);
 		nbt.putFloat("knockback", knockback);

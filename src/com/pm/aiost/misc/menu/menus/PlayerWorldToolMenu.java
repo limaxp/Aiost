@@ -20,7 +20,7 @@ import com.pm.aiost.event.effect.effects.WorldBrushEffect;
 import com.pm.aiost.event.effect.effects.WorldEditorEffect;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -94,7 +94,7 @@ public class PlayerWorldToolMenu {
 		serverPlayer.doMenuRequest(effect.getClass(),
 				effect.getMenuRequest(serverPlayer, MENU::open, (serverPlayer1) -> {
 					int effectId = serverPlayer1.getServerWorld().getWorldEffects().addTemp(effect);
-					serverPlayer1.addItem(NBTHelper.setWorldEffect(createBuildStaff(effect), effectId));
+					serverPlayer1.addItem(NBT.setWorldEffect(createBuildStaff(effect), effectId));
 					serverPlayer1.closeInventory();
 				}));
 	}
@@ -110,7 +110,7 @@ public class PlayerWorldToolMenu {
 
 	public static void giveMarkerItem(ServerPlayer serverPlayer) {
 		int effectId = serverPlayer.getServerWorld().getWorldEffects().addTemp(new MarkerPlacerEffect());
-		serverPlayer.addItem(NBTHelper.setWorldEffect(createMarkerItem(), effectId));
+		serverPlayer.addItem(NBT.setWorldEffect(createMarkerItem(), effectId));
 	}
 
 	private static ItemStack createMarkerItem() {
@@ -122,7 +122,7 @@ public class PlayerWorldToolMenu {
 
 	public static void giveRegionItem(ServerPlayer serverPlayer) {
 		int effectId = serverPlayer.getServerWorld().getWorldEffects().addTemp(new RegionCreatorEffect());
-		serverPlayer.addItem(NBTHelper.setWorldEffect(createRegionItem(), effectId));
+		serverPlayer.addItem(NBT.setWorldEffect(createRegionItem(), effectId));
 	}
 
 	private static ItemStack createRegionItem() {
@@ -135,7 +135,7 @@ public class PlayerWorldToolMenu {
 
 	public static void giveWorldEditItem(ServerPlayer serverPlayer) {
 		int effectId = serverPlayer.getServerWorld().getWorldEffects().addTemp(new WorldEditorEffect());
-		serverPlayer.addItem(NBTHelper.setWorldEffect(createWorldEditItem(), effectId));
+		serverPlayer.addItem(NBT.setWorldEffect(createWorldEditItem(), effectId));
 	}
 
 	private static ItemStack createWorldEditItem() {
@@ -148,7 +148,7 @@ public class PlayerWorldToolMenu {
 
 	public static void giveWorldBrushItem(ServerPlayer serverPlayer) {
 		int effectId = serverPlayer.getServerWorld().getWorldEffects().addTemp(new WorldBrushEffect());
-		serverPlayer.addItem(NBTHelper.setWorldEffect(createWorldBrushItem(), effectId));
+		serverPlayer.addItem(NBT.setWorldEffect(createWorldBrushItem(), effectId));
 	}
 
 	private static ItemStack createWorldBrushItem() {

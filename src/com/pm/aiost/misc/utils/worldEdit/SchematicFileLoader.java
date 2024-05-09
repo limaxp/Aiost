@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.FileUtils;
 
 import net.minecraft.nbt.CompoundTag;
@@ -26,7 +26,7 @@ public class SchematicFileLoader {
 		File src = new File(SCHEMATIC_FOLDER, name);
 		if (!src.exists())
 			return null;
-		CompoundTag nbt = NBTHelper.fromFile(src);
+		CompoundTag nbt = NBT.fromFile(src);
 		Schematic schematic = new Schematic();
 		schematic.load(nbt);
 		return schematic;
@@ -44,7 +44,7 @@ public class SchematicFileLoader {
 		}
 		CompoundTag nbt = new CompoundTag();
 		schematic.save(nbt);
-		return NBTHelper.toFile(dest, nbt);
+		return NBT.toFile(dest, nbt);
 	}
 
 	public static boolean delete(String name) {

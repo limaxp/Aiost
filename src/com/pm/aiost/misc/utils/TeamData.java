@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 
 import net.minecraft.nbt.CompoundTag;
 
@@ -73,12 +73,12 @@ public class TeamData {
 	public void load(ConfigurationSection section) {
 		name = section.getString("name");
 		color = ChatColor.values()[section.getInt("color")];
-		item = NBTHelper.loadItem(NBTHelper.fromString(section.getString("item")));
+		item = NBT.loadItem(NBT.fromString(section.getString("item")));
 	}
 
 	public void save(ConfigurationSection section) {
 		section.set("name", name);
 		section.set("color", color.ordinal());
-		section.set("item", NBTHelper.saveItem(new CompoundTag(), item).toString());
+		section.set("item", NBT.saveItem(new CompoundTag(), item).toString());
 	}
 }

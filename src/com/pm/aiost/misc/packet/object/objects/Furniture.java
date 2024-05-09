@@ -19,7 +19,7 @@ import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.item.ItemGroups;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
@@ -100,8 +100,8 @@ public class Furniture extends PacketObject {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		if (NBTHelper.hasKey(nbt, "itemNBT"))
-			setItemStack(NBTHelper.loadItem(nbt.getCompound("itemNBT")));
+		if (NBT.hasKey(nbt, "itemNBT"))
+			setItemStack(NBT.loadItem(nbt.getCompound("itemNBT")));
 		else
 			setType(nbt.getInt("fur"));
 		yaw = nbt.getFloat("yaw");
@@ -112,7 +112,7 @@ public class Furniture extends PacketObject {
 		super.save(nbt);
 		if (is != null) {
 			nbt.putString("mat", is.getType().name());
-			nbt.put("itemNBT", NBTHelper.getNBT(NMS.to(is)));
+			nbt.put("itemNBT", NBT.getNBT(NMS.to(is)));
 		} else
 			nbt.putInt("fur", furnitureID);
 		if (yaw != 0)

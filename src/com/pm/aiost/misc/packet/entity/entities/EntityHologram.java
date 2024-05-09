@@ -6,7 +6,7 @@ import java.util.UUID;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NBTType;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
@@ -84,7 +84,7 @@ public class EntityHologram extends PacketEntity {
 		ListTag list = new ListTag();
 		nbt.put("text", list);
 		for (int i = 0; i < text.length; i++)
-			list.add(NBTHelper.createNBTTagString(text[i]));
+			list.add(NBT.createNBTTagString(text[i]));
 		return nbt;
 	}
 

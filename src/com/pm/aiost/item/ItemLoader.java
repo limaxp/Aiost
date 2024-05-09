@@ -12,7 +12,7 @@ import com.pm.aiost.item.custom.NMSItemLoader;
 import com.pm.aiost.item.custom.NMSItems;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
@@ -280,10 +280,10 @@ public class ItemLoader {
 			nbtTag = new CompoundTag();
 
 		nbtTag.putString("id", NMSItems.getKey(nmsIs.getItem()).getPath());
-		CompoundTag display = NBTHelper.addDisplay(nbtTag);
-		NBTHelper.setDisplayName(display, itemSection.getName());
+		CompoundTag display = NBT.addDisplay(nbtTag);
+		NBT.setDisplayName(display, itemSection.getName());
 		if (itemSection.contains("lore"))
-			NBTHelper.setLore(display, itemSection.getStringList("lore"));
+			NBT.setLore(display, itemSection.getStringList("lore"));
 
 		if (itemSection.contains("predicate"))
 			loadPredicates(itemSection, material, nbtTag);
@@ -291,7 +291,7 @@ public class ItemLoader {
 		if (itemSection.contains("effects"))
 			loadEffects(itemSection, nbtTag);
 
-		return NBTHelper.loadNMSItem(nbtTag, nmsIs);
+		return NBT.loadNMSItem(nbtTag, nmsIs);
 	}
 
 	public static Material loadMaterial(ConfigurationSection itemSection) {
@@ -312,7 +312,7 @@ public class ItemLoader {
 	public static CompoundTag loadNBT(ConfigurationSection itemSection) {
 		String nbtString = itemSection.getString("nbt");
 		if (nbtString != null && !nbtString.isEmpty())
-			return NBTHelper.fromString(nbtString);
+			return NBT.fromString(nbtString);
 		return new CompoundTag();
 	}
 
@@ -321,14 +321,14 @@ public class ItemLoader {
 		if (predicateSection.contains("durability")) {
 			int durability = predicateSection.getInt("durability");
 			if (durability != 0)
-				NBTHelper.setDurability(nbtTag, (short) (material.getMaxDurability() - durability + 1));
+				NBT.setDurability(nbtTag, (short) (material.getMaxDurability() - durability + 1));
 		}
 		if (predicateSection.contains("custom_model_data"))
-			NBTHelper.setCustomModelData(nbtTag, predicateSection.getInt("custom_model_data"));
+			NBT.setCustomModelData(nbtTag, predicateSection.getInt("custom_model_data"));
 	}
 
 	public static void loadEffects(ConfigurationSection itemSection, CompoundTag nbtTag) {
-		NBTHelper.setItemEffect(nbtTag, EffectBuilder.loadEffects(itemSection.getConfigurationSection("effects"))
+		NBT.setItemEffect(nbtTag, EffectBuilder.loadEffects(itemSection.getConfigurationSection("effects"))
 				.createItemEntry(itemSection.getName()));
 	}
 

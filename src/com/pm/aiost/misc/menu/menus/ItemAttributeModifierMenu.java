@@ -23,7 +23,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ArrayInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.nms.GenericAttribute;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -36,21 +36,21 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 	public ItemAttributeModifierMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Attribute modifiers", GenericAttribute.size() * 9, false);
 		setCategories(BORDER_ITEM, GenericAttribute.getItems());
-		ListTag nbtList = getList(NBTHelper.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBT.getNBT(ItemNBTMenu.getItem(serverPlayer)));
 		@SuppressWarnings("unchecked")
 		List<ItemStack>[] items = new List[GenericAttribute.size()];
 		int size = nbtList.size();
 		for (int i = 0; i < size; i++) {
 			CompoundTag attribute = nbtList.getCompound(i);
-			GenericAttribute genericAttribute = GenericAttribute.get(attribute.getString(NBTHelper.ATTRIBUTE_NAME_KEY));
+			GenericAttribute genericAttribute = GenericAttribute.get(attribute.getString(NBT.ATTRIBUTE_NAME_KEY));
 			int attributeId = genericAttribute.id;
 			List<ItemStack> list = items[attributeId];
 			if (list == null) {
 				list = new FastArrayList<ItemStack>();
 				items[attributeId] = list;
 			}
-			list.add(createItem(genericAttribute, attribute.getString(NBTHelper.SLOT_KEY),
-					attribute.getDouble(NBTHelper.AMOUNT_KEY)));
+			list.add(createItem(genericAttribute, attribute.getString(NBT.SLOT_KEY),
+					attribute.getDouble(NBT.AMOUNT_KEY)));
 		}
 		setCategorized(items);
 		setBackLink(ItemNBTMenu.getMenu());
@@ -94,7 +94,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 				String slotName = Slot.MAIN_HAND.name;
 				inv.setItem(i, createItem(attribute, slotName, (short) 1));
 				ItemNBTMenu.modifyNBT(serverPlayer,
-						(nbtTag) -> NBTHelper.addAttributeModifier(getList(nbtTag), attribute.name, 1.0, slotName));
+						(nbtTag) -> NBT.addAttributeModifier(getList(nbtTag), attribute.name, 1.0, slotName));
 				return;
 			}
 		}
@@ -118,7 +118,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 						return;
 					}
 					GenericAttribute attribute = GenericAttribute.get(attributeId);
-					ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.setAttributeModifier(getList(nbtTag),
+					ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifier(getList(nbtTag),
 							attribute.name, lore.get(0).substring(2), value));
 					lore.set(1, DARK_GRAY + value);
 					im.setLore(lore);
@@ -148,7 +148,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 				im.setLore(lore);
 				is.setItemMeta(im);
 				GenericAttribute attribute = GenericAttribute.get(attributeId);
-				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.setAttributeModifierSlot(getList(nbtTag),
+				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifierSlot(getList(nbtTag),
 						attribute.name, slot, Double.parseDouble(lore.get(1).substring(2))));
 			}
 		});
@@ -169,11 +169,11 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 		}
 		inv.setItem(i - 1, null);
 		GenericAttribute attribute = GenericAttribute.get(attributeId);
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.removeAttributeModifier(getList(nbtTag),
+		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeAttributeModifier(getList(nbtTag),
 				attribute.name, is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {
-		return NBTHelper.getAttributeModifiersList(nbtTag);
+		return NBT.getAttributeModifiersList(nbtTag);
 	}
 }

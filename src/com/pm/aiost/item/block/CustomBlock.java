@@ -8,7 +8,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.item.custom.NMSItems;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.BlockPos;
@@ -50,20 +50,20 @@ public class CustomBlock {
 		ChunkAccess chunk = world.getChunk(pos);
 		SpawnerBlockEntity spawner = new SpawnerBlockEntity(pos, Blocks.SPAWNER.defaultBlockState());
 		CompoundTag nbt = chunk.getBlockEntityNbt(pos);
-		NBTHelper.setSpawnerStats(nbt, (short) 0, (short) 0, (short) 0, (short) 0);
-		CompoundTag entityTag = NBTHelper.addSpawnData(nbt);
-		NBTHelper.setEntityId(entityTag, "minecraft:armor_stand");
-		NBTHelper.setMarker(entityTag, true);
-		NBTHelper.setInvisible(entityTag, true);
+		NBT.setSpawnerStats(nbt, (short) 0, (short) 0, (short) 0, (short) 0);
+		CompoundTag entityTag = NBT.addSpawnData(nbt);
+		NBT.setEntityId(entityTag, "minecraft:armor_stand");
+		NBT.setMarker(entityTag, true);
+		NBT.setInvisible(entityTag, true);
 
-		ListTag armorList = NBTHelper.addArmorItemsList(entityTag);
+		ListTag armorList = NBT.addArmorItemsList(entityTag);
 		armorList.add(new CompoundTag());
 		armorList.add(new CompoundTag());
 		armorList.add(new CompoundTag());
-		if (NBTHelper.hasTag(is))
-			NBTHelper.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1, NBTHelper.getNBT(is));
+		if (NBT.hasTag(is))
+			NBT.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1, NBT.getNBT(is));
 		else
-			NBTHelper.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1);
+			NBT.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1);
 
 		chunk.setBlockEntityNbt(nbt);
 		world.setBlockEntity(spawner);
@@ -78,13 +78,13 @@ public class CustomBlock {
 			SpawnerBlockEntity spawner = (SpawnerBlockEntity) world.getBlockEntity(pos);
 			CompoundTag nbt = world.getChunk(pos).getBlockEntityNbt(pos);
 			System.out.println(nbt);
-			CompoundTag entityTag = NBTHelper.getSpawnData(nbt);
-			String entityId = NBTHelper.getEntityId(entityTag);
+			CompoundTag entityTag = NBT.getSpawnData(nbt);
+			String entityId = NBT.getEntityId(entityTag);
 			System.out.println(entityId);
 			if (entityId.equals("minecraft:armor_stand")) {
 				block.setType(Material.AIR);
 				event.setCancelled(true);
-				ItemStack item = NBTHelper.loadItem(NBTHelper.getArmorItemsList(entityTag).getCompound(3));
+				ItemStack item = NBT.loadItem(NBT.getArmorItemsList(entityTag).getCompound(3));
 				block.getWorld().dropItem(block.getLocation(), item);
 			}
 		}

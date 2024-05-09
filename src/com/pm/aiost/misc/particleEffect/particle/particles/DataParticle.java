@@ -23,7 +23,7 @@ import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
@@ -102,17 +102,17 @@ public class DataParticle<T> extends Particle {
 
 	@SuppressWarnings("unchecked")
 	private final T loadData(CompoundTag nbt) {
-		if (NBTHelper.hasKey(nbt, "material"))
+		if (NBT.hasKey(nbt, "material"))
 			return (T) loadBlockData(nbt.getString("material"));
 
-		if (NBTHelper.hasKey(nbt, "randomColor"))
+		if (NBT.hasKey(nbt, "randomColor"))
 			return (T) new RandomColorDustOptions(nbt.getFloat("size"));
 
-		if (NBTHelper.hasKey(nbt, "color"))
+		if (NBT.hasKey(nbt, "color"))
 			return (T) new DustOptions(Color.fromRGB(nbt.getInt("color")), nbt.getFloat("size"));
 
-		if (NBTHelper.hasKey(nbt, "item"))
-			return (T) NBTHelper.loadItem(nbt.getCompound("item"));
+		if (NBT.hasKey(nbt, "item"))
+			return (T) NBT.loadItem(nbt.getCompound("item"));
 
 		return data;
 	}
@@ -133,7 +133,7 @@ public class DataParticle<T> extends Particle {
 		}
 
 		else if (data instanceof ItemStack)
-			nbt.put("item", NBTHelper.saveItem(new CompoundTag(), (ItemStack) data));
+			nbt.put("item", NBT.saveItem(new CompoundTag(), (ItemStack) data));
 	}
 
 	private static BlockData loadBlockData(String materialName) {

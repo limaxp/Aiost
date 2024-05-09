@@ -14,7 +14,7 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.nms.HideFlag;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -86,7 +86,7 @@ public class ItemHideFlagsMenu {
 
 	private static void flagClick(ServerPlayer serverPlayer, ItemStack is, int slot, byte flag) {
 		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> {
-			boolean activated = NBTHelper.switchHideFlag(nbtTag, flag);
+			boolean activated = NBT.switchHideFlag(nbtTag, flag);
 			Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(), () -> {
 				ItemStack clone = is.clone();
 				if (activated)

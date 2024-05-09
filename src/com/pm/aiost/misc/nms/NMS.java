@@ -420,7 +420,7 @@ public class NMS {
 	}
 
 	public static void loadPlayerInventoryFromNBTString(ServerPlayer serverPlayer, String inventory) {
-		CompoundTag comp = NBTHelper.fromString(inventory);
+		CompoundTag comp = NBT.fromString(inventory);
 		ListTag list = comp.getList("inventory", NBTType.COMPOUND);
 		((CraftInventoryPlayer) serverPlayer.player.getInventory()).getInventory().load(list);
 	}

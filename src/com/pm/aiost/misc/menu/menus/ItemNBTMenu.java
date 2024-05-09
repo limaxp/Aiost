@@ -18,7 +18,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.ItemCanPlaceMenu.ItemCanDestroyMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -92,7 +92,7 @@ public class ItemNBTMenu {
 
 	private static void unbreakableClick(ServerPlayer serverPlayer, ItemStack is, int slot) {
 		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> {
-			boolean activated = NBTHelper.switchUnbreakable(nbtTag);
+			boolean activated = NBT.switchUnbreakable(nbtTag);
 			Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(), () -> {
 				ItemStack clone = is.clone();
 				if (activated)
@@ -106,7 +106,7 @@ public class ItemNBTMenu {
 
 	private static AnvilMenu createChangeCustomModeldataMenu(ServerPlayer serverPlayer) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "custom modeldata", MetaHelper.setMeta(Material.PAPER,
-				Integer.toString(NBTHelper.getCustomModelData(NBTHelper.getNBT(getItem(serverPlayer)))))) {
+				Integer.toString(NBT.getCustomModelData(NBT.getNBT(getItem(serverPlayer)))))) {
 			@Override
 			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
 				event.setCancelled(true);
@@ -118,7 +118,7 @@ public class ItemNBTMenu {
 						serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
 						return;
 					}
-					modifyNBT(serverPlayer, (nbtTag) -> NBTHelper.setCustomModelData(nbtTag, id));
+					modifyNBT(serverPlayer, (nbtTag) -> NBT.setCustomModelData(nbtTag, id));
 					ItemNBTMenu.MENU.open(serverPlayer);
 				}
 			}
@@ -129,9 +129,9 @@ public class ItemNBTMenu {
 
 	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<CompoundTag> consumer) {
 		CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class);
-		CompoundTag nbtTag = NBTHelper.getNBT(createItemMenu.getItem());
+		CompoundTag nbtTag = NBT.getNBT(createItemMenu.getItem());
 		consumer.accept(nbtTag);
-		createItemMenu.setItem(NBTHelper.loadItem(nbtTag));
+		createItemMenu.setItem(NBT.loadItem(nbtTag));
 	}
 
 	public static ItemStack getItem(ServerPlayer serverPlayer) {

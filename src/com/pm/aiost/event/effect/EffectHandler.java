@@ -30,7 +30,7 @@ import com.pm.aiost.event.effect.collection.EffectData.ServerPlayerEventFunction
 import com.pm.aiost.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.event.events.PlayerJumpEvent;
 import com.pm.aiost.item.ItemEffects;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
@@ -223,12 +223,12 @@ public class EffectHandler {
 	public static <T extends Event> void runItem(ItemStack is, ServerWorld world, byte action, T event,
 			EventFunction<T> func) {
 		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
-		if (NBTHelper.hasTag(nmsIs)) {
-			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
-			int effectID = NBTHelper.getItemEffect(nbtTag);
+		if (NBT.hasTag(nmsIs)) {
+			CompoundTag nbtTag = NBT.getNBT(nmsIs);
+			int effectID = NBT.getItemEffect(nbtTag);
 			if (effectID != 0)
 				runItemSelf(effectID, action, event, func);
-			else if ((effectID = NBTHelper.getWorldEffect(nbtTag)) != 0)
+			else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0)
 				runSelf(effectID, world, action, event, func);
 		}
 	}
@@ -236,12 +236,12 @@ public class EffectHandler {
 	public static <T extends Event> void runItem(ItemStack is, ServerPlayer serverPlayer, byte action, T event,
 			ServerPlayerEventFunction<T> func) {
 		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
-		if (NBTHelper.hasTag(nmsIs)) {
-			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
-			int effectID = NBTHelper.getItemEffect(nbtTag);
+		if (NBT.hasTag(nmsIs)) {
+			CompoundTag nbtTag = NBT.getNBT(nmsIs);
+			int effectID = NBT.getItemEffect(nbtTag);
 			if (effectID != 0)
 				runItemSelf(effectID, serverPlayer, action, event, func);
-			else if ((effectID = NBTHelper.getWorldEffect(nbtTag)) != 0)
+			else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0)
 				runSelf(effectID, serverPlayer, action, event, func);
 		}
 	}

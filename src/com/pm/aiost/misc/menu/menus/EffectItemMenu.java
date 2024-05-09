@@ -27,7 +27,7 @@ import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;
 import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu.EffectEntry;
 import com.pm.aiost.misc.menu.menus.request.creation.CreationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -326,7 +326,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 		if (updateItem) {
 			updateItem = false;
 			if (effectId != -1)
-				item = NBTHelper.setWorldEffect(item, effectId);
+				item = NBT.setWorldEffect(item, effectId);
 		}
 	}
 
