@@ -3,22 +3,22 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
-import net.minecraft.nbt.CompoundTag;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeMap;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class EntityHelper {
 
 	public static final String HEALTH_SYMBOL = RED + "" + BOLD + "❤";
 
 	public static final int MAX_LEVEL = 100;
-
-	public static void save(EntityType<?> type, CompoundTag nbttagcompound) {
-		nbttagcompound.putString("id", AiostEntityTypes.getKey(type).getNamespace());
-	}
 
 	public static int calculateRandomLevel(Mob entity) {
 		return calculateRandomLevel(entity, MAX_LEVEL);
@@ -103,5 +103,17 @@ public class EntityHelper {
 		entity.getAttribute(Attributes.ARMOR_TOUGHNESS).setBaseValue(0.1 * level);
 		entity.getAttribute(Attributes.KNOCKBACK_RESISTANCE).setBaseValue(0.01 * level);
 		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
+	}
+
+	public <T extends LivingEntity> void applyNearestAttackableTargetGoal(Mob mob, Class<T> clazz) {
+		mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<T>(mob, clazz, true));
+	}
+
+	public void applyMeleeAttackGoal(PathfinderMob mob, Class<? extends LivingEntity> clazz) {
+		mob.goalSelector.addGoal(1, new MeleeAttackGoal(mob, 1.0D, true));
+	}
+
+	public void applyCantBurnInSun(Mob mob) {
+		mob.equipItemIfPossible(new ItemStack(Items.IRON_HELMET));
 	}
 }

@@ -35,8 +35,10 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.entity.EntityTrader;
+import com.pm.aiost.entity.goal.PathfinderGoalWalkToLocation;
 import com.pm.aiost.entity.spawner.StageEntitySpawner;
 import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameKit;
@@ -51,6 +53,7 @@ import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.PathfinderMob;
 
 public class CastleDefend extends Game {
 
@@ -277,20 +280,16 @@ public class CastleDefend extends Game {
 	}
 
 	protected void spawnCallback(Entity entity) {
-//		if (entity instanceof Mob) {
-//			Mob insentient = (Mob) entity;
-//			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
-//			insentient.setPersistent();
-//			insentient.goalSelector.a(2, new PathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
-//			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
-//					EnumMobSpawn.SPAWNER, null, null);
-//		} else if (entity instanceof CustomInsentient) {
+		if (entity instanceof PathfinderMob) {
+			PathfinderMob insentient = (PathfinderMob) entity;
+			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
+			insentient.setPersistenceRequired();
+			insentient.goalSelector.addGoal(2, new PathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
+		} // else if (entity instanceof CustomInsentient) {
 //			CustomInsentient insentient = (CustomInsentient) entity;
 //			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
-//			insentient.setPersistent();
-//			insentient.getGoalSelector().a(2, new CustomPathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
-//			insentient.prepare(entity.world, entity.world.getDamageScaler(new BlockPosition(entity)),
-//					EnumMobSpawn.SPAWNER, null, null);
+//			insentient.setPersistenceRequired();
+//			insentient.getGoalSelector().addGoal(2, new CustomPathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
 //		}
 	}
 
@@ -301,31 +300,20 @@ public class CastleDefend extends Game {
 	}
 
 	protected void addStartTypes(List<net.minecraft.world.entity.EntityType<?>> list) {
-////		list.add(AiostEntityTypes.TEST_ZOMBIE);
-////		list.add(AiostEntityTypes.NO_COMBUST_ZOMBIE);
-////		list.add(AiostEntityTypes.NO_COMBUST_MELEE_SKELETON);
-//		list.add(AiostEntityTypes.ENEMY_NPC);
+		list.add(AiostEntityTypes.ZOMBIE);
+		list.add(AiostEntityTypes.SKELETON);
 	}
 
 	protected void addLockedTypes(List<net.minecraft.world.entity.EntityType<?>> list) {
-//		list.add(AiostEntityTypes.NO_COMBUST_WITHER_SKELETON);
-//		list.add(AiostEntityTypes.NO_COMBUST_MULTISHOT_SKELETON);
-//		list.add(AiostEntityTypes.ALWAYS_ATTACK_SPIDER);
-//		list.add(AiostEntityTypes.NO_COMBUST_SKELETON);
-//		list.add(AiostEntityTypes.ALWAYS_ATTACK_CAVE_SPIDER);
-////		list.add(EntityTypes.SLIME);
-////		list.add(EntityTypes.MAGMA_CUBE);
-//		list.add(AiostEntityTypes.CREEPER);
-//		list.add(AiostEntityTypes.MELEE_CREEPER);
-//		list.add(AiostEntityTypes.FAKE_CREEPER);
-////		list.add(EntityTypes.MELEE_WITCH);
-//		list.add(AiostEntityTypes.WITCH);
-//		list.add(AiostEntityTypes.MELEE_BLAZE);
-//		list.add(AiostEntityTypes.BLAZE);
-//		list.add(AiostEntityTypes.MULTISHOT_BLAZE);
-//		list.add(AiostEntityTypes.GHAST);
-//		list.add(AiostEntityTypes.ALWAYS_ATTACK_ENDERMAN);
-//		list.add(AiostEntityTypes.HOSTILE_IRON_GOLEM);
+		list.add(AiostEntityTypes.WITHER_SKELETON);
+		list.add(AiostEntityTypes.SPIDER);
+		list.add(AiostEntityTypes.SKELETON);
+		list.add(AiostEntityTypes.CAVE_SPIDER);
+		list.add(AiostEntityTypes.CREEPER);
+		list.add(AiostEntityTypes.WITCH);
+		list.add(AiostEntityTypes.BLAZE);
+		list.add(AiostEntityTypes.GHAST);
+		list.add(AiostEntityTypes.ENDERMAN);
 	}
 
 	protected void addEntityType() {
