@@ -19,7 +19,6 @@ import java.util.zip.InflaterInputStream;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R4.CraftRegistry;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
-import org.bukkit.craftbukkit.v1_20_R4.util.CraftChatMessage;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
@@ -169,7 +168,7 @@ public class NBT {
 	}
 
 	public static boolean hasKey(CompoundTag tag, String key) {
-		return tag.get(key) != null;
+		return tag.contains(key);
 	}
 
 	public static boolean hasKey(DataComponentMap tag, DataComponentType<?> type) {
@@ -253,7 +252,7 @@ public class NBT {
 	}
 
 	public static void setDisplayName(CompoundTag display, String name) {
-		display.put(NAME_KEY, StringTag.valueOf(CraftChatMessage.fromStringToJSON(name)));
+		display.put(NAME_KEY, StringTag.valueOf(name));
 	}
 
 	public static void removeDisplayName(CompoundTag display) {
@@ -272,7 +271,7 @@ public class NBT {
 		ListTag nbtList = new ListTag();
 		int size = lore.size();
 		for (int i = 0; i < size; i++)
-			nbtList.add(StringTag.valueOf(CraftChatMessage.fromStringToJSON(lore.get(i))));
+			nbtList.add(StringTag.valueOf(lore.get(i)));
 		display.put(LORE_KEY, nbtList);
 	}
 
