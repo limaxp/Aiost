@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.nms.NBT;
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;

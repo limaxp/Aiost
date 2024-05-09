@@ -4,7 +4,7 @@ import java.io.File;
 
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.misc.nms.NBT;
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -7,7 +7,7 @@ import org.bukkit.block.data.BlockData;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.worldEdit.WorldEdit.WorldEditTask;
 
 import net.minecraft.nbt.CompoundTag;

@@ -37,6 +37,7 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.LiteralMessage;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.reflection.Reflection;
 import com.pm.aiost.player.ServerPlayer;
 

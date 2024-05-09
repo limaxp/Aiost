@@ -2,7 +2,7 @@ package com.pm.aiost.server.world.chunk;
 
 import java.util.List;
 
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.PacketObject;

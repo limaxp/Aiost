@@ -17,7 +17,7 @@ import com.pm.aiost.misc.menu.menus.request.LocationsMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;

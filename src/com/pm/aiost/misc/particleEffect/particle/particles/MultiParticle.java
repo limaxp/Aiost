@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 import com.pm.aiost.misc.menu.menus.request.MultiParticleMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.nms.NBTType;
+import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.particleEffect.particle.IParticle;
 import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
 import com.pm.aiost.misc.particleEffect.particle.ParticleType;

@@ -87,6 +87,32 @@ public class NBT {
 	public static final String ITEM_EFFECT_KEY = "ITEM_EFFECT";
 	public static final String WORLD_EFFECT_KEY = "WORLD_EFFECT";
 
+	public static class NBTType {
+
+		public static final byte END = 0;
+		public static final byte BYTE = 1;
+		public static final byte SHORT = 2;
+		public static final byte INT = 3;
+		public static final byte LONG = 4;
+		public static final byte FLOAT = 5;
+		public static final byte DOUBLE = 6;
+		public static final byte BYTE_ARRAY = 7;
+		public static final byte STRING = 8;
+		public static final byte LIST = 9;
+		public static final byte COMPOUND = 10;
+		public static final byte INT_ARRAY = 11;
+	}
+
+	public static class HideFlag {
+
+		public static final byte HIDE_ENCHANTMENTS = 1;
+		public static final byte HIDE_ATTRIBUTE_MODIFIERS = 2;
+		public static final byte HIDE_UNBREAKABLE = 4;
+		public static final byte HIDE_CAN_DESTROY = 8;
+		public static final byte HIDE_CAN_PLACE_ON = 16;
+		public static final byte HIDE_OTHERS = 32;
+	}
+
 	public static CompoundTag fromString(String s) {
 		try {
 			return TagParser.parseTag(s);
