@@ -81,7 +81,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	}
 
 	public static org.bukkit.entity.EntityType toEntityType(EntityType<?> type) {
-		return org.bukkit.entity.EntityType.fromName(BuiltInRegistries.ENTITY_TYPE.getKey(type).getNamespace());
+		return org.bukkit.entity.EntityType.fromName(BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath());
 	}
 
 	public static EntityType<?> fromEntityType(org.bukkit.entity.EntityType type) {
@@ -96,7 +96,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		int size = entityTypes.size();
 		String[] typeNames = new String[size];
 		for (int i = 0; i < size; i++)
-			typeNames[i] = getKey(entityTypes.get(i)).getNamespace();
+			typeNames[i] = getKey(entityTypes.get(i)).getPath();
 		section.set(key, typeNames);
 	}
 
@@ -110,8 +110,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	}
 
 	public static void saveNBT(CompoundTag nbttagcompound, EntityType<?> type) {
-		System.out.println(EntityType.getKey(type).getNamespace());
-		nbttagcompound.putString("id", EntityType.getKey(type).getNamespace());
+		nbttagcompound.putString("id", EntityType.getKey(type).getPath());
 	}
 
 	protected AiostEntityTypes(EntityFactory<T> entitytypes_b, MobCategory enumcreaturetype, boolean flag,

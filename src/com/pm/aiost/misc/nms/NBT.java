@@ -885,7 +885,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count, String nbt) {
-		addItem(items, NMSItems.getKey(nmsItem).getNamespace(), count, fromString(nbt));
+		addItem(items, NMSItems.getKey(nmsItem).getPath(), count, fromString(nbt));
 	}
 
 	public static void addItem(ListTag items, String mat, byte count, String nbt) {
@@ -897,7 +897,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count, CompoundTag nbt) {
-		addItem(items, NMSItems.getKey(nmsItem).getNamespace(), count, nbt);
+		addItem(items, NMSItems.getKey(nmsItem).getPath(), count, nbt);
 	}
 
 	public static void addItem(ListTag items, String mat, byte count, CompoundTag nbt) {
@@ -911,7 +911,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count) {
-		addItem(items, NMSItems.getKey(nmsItem).getNamespace(), count);
+		addItem(items, NMSItems.getKey(nmsItem).getPath(), count);
 	}
 
 	public static void addItem(ListTag items, String mat, byte count) {
@@ -933,7 +933,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count, String nbt) {
-		setItem(item, NMSItems.getKey(nmsItem).getNamespace(), count, fromString(nbt));
+		setItem(item, NMSItems.getKey(nmsItem).getPath(), count, fromString(nbt));
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count, String nbt) {
@@ -945,7 +945,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count, CompoundTag nbt) {
-		setItem(item, NMSItems.getKey(nmsItem).getNamespace(), count, nbt);
+		setItem(item, NMSItems.getKey(nmsItem).getPath(), count, nbt);
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count, CompoundTag nbt) {
@@ -959,7 +959,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count) {
-		setItem(item, NMSItems.getKey(nmsItem).getNamespace(), count);
+		setItem(item, NMSItems.getKey(nmsItem).getPath(), count);
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count) {
@@ -1050,7 +1050,7 @@ public class NBT {
 	}
 
 	public static void setEntityId(CompoundTag entityTag, net.minecraft.world.entity.EntityType<?> entityType) {
-		setEntityId(entityTag, AiostEntityTypes.getKey(entityType).getNamespace());
+		setEntityId(entityTag, AiostEntityTypes.getKey(entityType).getPath());
 	}
 
 	// TODO: chek and change name getting
