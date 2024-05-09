@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.pm.aiost.misc.nms.NBTHelper;
+import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
 
@@ -23,12 +24,11 @@ public class MetaHelper {
 		CompoundTag nbt = NBTHelper.getNBT(is);
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setDisplayName(display, name);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, String name) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), durability, name));
+		return NMS.from(set(NMS.to(is), durability, name));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
@@ -37,24 +37,22 @@ public class MetaHelper {
 		NBTHelper.setDurability(nbt, (short) durability);
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setDisplayName(display, name);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, List<String> lore) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), lore));
+		return NMS.from(set(NMS.to(is), lore));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, List<String> lore) {
 		CompoundTag nbt = NBTHelper.getNBT(is);
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setLore(display, lore);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, List<String> lore) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), durability, lore));
+		return NMS.from(set(NMS.to(is), durability, lore));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
@@ -63,12 +61,11 @@ public class MetaHelper {
 		NBTHelper.setDurability(nbt, (short) durability);
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setLore(display, lore);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, String name, List<String> lore) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), name, lore));
+		return NMS.from(set(NMS.to(is), name, lore));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, String name,
@@ -77,12 +74,11 @@ public class MetaHelper {
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setDisplayName(display, name);
 		NBTHelper.setLore(display, lore);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack set(ItemStack is, int durability, String name, List<String> lore) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), durability, name, lore));
+		return NMS.from(set(NMS.to(is), durability, name, lore));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
@@ -92,8 +88,7 @@ public class MetaHelper {
 		CompoundTag display = NBTHelper.getOrAddDisplay(nbt);
 		NBTHelper.setDisplayName(display, name);
 		NBTHelper.setLore(display, lore);
-		NBTHelper.setNBT(is, nbt);
-		return is;
+		return NBTHelper.loadNMSItem(nbt);
 	}
 
 	public static ItemStack setMeta(Material mat, String name) {

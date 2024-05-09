@@ -6,7 +6,6 @@ import javax.annotation.Nullable;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -79,10 +78,9 @@ public class EntityFurniture extends PacketEntity {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		if (NBTHelper.hasKey(nbt, "mat")) {
-			ItemStack is = new ItemStack(Material.valueOf(nbt.getString("mat")));
-			setItemStack(NBTHelper.setNBT(NMS.to(is), nbt.getCompound("itemNBT")));
-		} else
+		if (NBTHelper.hasKey(nbt, "itemNBT"))
+			setItemStack(NBTHelper.loadItem(nbt.getCompound("itemNBT")));
+		else
 			setType(nbt.getInt("fur"));
 	}
 

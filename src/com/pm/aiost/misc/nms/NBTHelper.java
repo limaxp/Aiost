@@ -13,7 +13,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Consumer;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
@@ -21,7 +20,6 @@ import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R4.CraftRegistry;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R4.util.CraftChatMessage;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.inventory.ItemStack;
 
@@ -89,69 +87,6 @@ public class NBTHelper {
 	public static final String ITEM_EFFECT_KEY = "ITEM_EFFECT";
 	public static final String WORLD_EFFECT_KEY = "WORLD_EFFECT";
 
-	public static boolean hasKey(CompoundTag tag, String key) {
-		return tag.get(key) != null;
-	}
-
-	public static CompoundTag getNBT(ItemStack is) {
-		return getNBT(NMS.to(is));
-	}
-
-	public static CompoundTag getNBT(net.minecraft.world.item.ItemStack is) {
-		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry());
-	}
-
-	public static ItemStack setNBT(net.minecraft.world.item.ItemStack is, CompoundTag nbtTag) {
-		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
-				.parse(CraftRegistry.getMinecraftRegistry(), nbtTag);
-		if (optResult.isEmpty())
-			return NMS.from(is);
-		return NMS.from(optResult.get());
-	}
-
-	public static boolean hasTag(ItemStack is) {
-		return hasTag(NMS.to(is));
-	}
-
-	public static boolean hasTag(net.minecraft.world.item.ItemStack is) {
-		return is.getComponents() != null; // TODO NOT NEEDED!
-	}
-
-	public static boolean hasKey(DataComponentMap tag, DataComponentType<?> type) {
-		return tag.has(type);
-	}
-
-	public static ItemStack modifyNBT(ItemStack is, Consumer<CompoundTag> consumer) {
-		return modifyNBT(NMS.to(is), consumer);
-	}
-
-	public static ItemStack modifyNBT(net.minecraft.world.item.ItemStack is, Consumer<CompoundTag> consumer) {
-		CompoundTag nbtTag = getNBT(is);
-		consumer.accept(nbtTag);
-		setNBT(is, nbtTag);
-		return NMS.from(is);
-	}
-
-	public static CompoundTag getNBT(net.minecraft.world.entity.Entity entity) {
-		CompoundTag nbtTag = new CompoundTag();
-		entity.saveWithoutId(nbtTag);
-		return nbtTag;
-	}
-
-	public static void setNBT(net.minecraft.world.entity.Entity entity, CompoundTag nbtTag) {
-		entity.load(nbtTag);
-	}
-
-	public static void modifyNBT(Entity entity, Consumer<CompoundTag> consumer) {
-		modifyNBT(NMS.to(entity), consumer);
-	}
-
-	public static void modifyNBT(net.minecraft.world.entity.Entity entity, Consumer<CompoundTag> consumer) {
-		CompoundTag nbtTag = getNBT(entity);
-		consumer.accept(nbtTag);
-		setNBT(entity, nbtTag);
-	}
-
 	public static CompoundTag fromString(String s) {
 		try {
 			return TagParser.parseTag(s);
@@ -205,6 +140,65 @@ public class NBTHelper {
 			Logger.err("NBTHelper: Error on loading file with name: " + effectFile.getName(), e);
 		}
 		return new CompoundTag();
+	}
+
+	public static boolean hasKey(CompoundTag tag, String key) {
+		return tag.get(key) != null;
+	}
+
+	public static boolean hasKey(DataComponentMap tag, DataComponentType<?> type) {
+		return tag.has(type);
+	}
+
+	public static CompoundTag getNBT(net.minecraft.world.entity.Entity entity) {
+		CompoundTag nbtTag = new CompoundTag();
+		entity.saveWithoutId(nbtTag);
+		return nbtTag;
+	}
+
+	public static void setNBT(net.minecraft.world.entity.Entity entity, CompoundTag nbtTag) {
+		entity.load(nbtTag);
+	}
+
+	public static CompoundTag getNBT(ItemStack is) {
+		return getNBT(NMS.to(is));
+	}
+
+	public static CompoundTag getNBT(net.minecraft.world.item.ItemStack is) {
+		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry());
+	}
+
+	public static boolean hasTag(ItemStack is) {
+		return hasTag(NMS.to(is));
+	}
+
+	public static boolean hasTag(net.minecraft.world.item.ItemStack is) {
+		return is.getComponents() != null; // TODO NOT NEEDED!
+	}
+
+	public static CompoundTag saveItem(CompoundTag item, ItemStack is) {
+		return saveItem(item, NMS.to(is));
+	}
+
+	public static CompoundTag saveItem(CompoundTag item, net.minecraft.world.item.ItemStack is) {
+		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry(), item);
+	}
+
+	public static ItemStack loadItem(CompoundTag item) {
+		return CraftItemStack.asBukkitCopy(loadNMSItem(item));
+	}
+
+	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item) {
+		return loadNMSItem(item, net.minecraft.world.item.ItemStack.EMPTY);
+	}
+
+	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item,
+			net.minecraft.world.item.ItemStack defaultValue) {
+		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
+				.parse(CraftRegistry.getMinecraftRegistry(), item);
+		if (optResult.isEmpty())
+			return defaultValue;
+		return optResult.get();
 	}
 
 	public static CompoundTag getOrAddDisplay(CompoundTag nbtTag) {
@@ -967,31 +961,6 @@ public class NBTHelper {
 		return items.size() > index;
 	}
 
-	public static CompoundTag saveItem(CompoundTag item, ItemStack is) {
-		return saveItem(item, NMS.to(is));
-	}
-
-	public static CompoundTag saveItem(CompoundTag item, net.minecraft.world.item.ItemStack is) {
-		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry(), item);
-	}
-
-	public static ItemStack loadItem(CompoundTag item) {
-		return CraftItemStack.asBukkitCopy(loadNMSItem(item));
-	}
-
-	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item) {
-		return loadNMSItem(item, net.minecraft.world.item.ItemStack.EMPTY);
-	}
-
-	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item,
-			net.minecraft.world.item.ItemStack defaultValue) {
-		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
-				.parse(CraftRegistry.getMinecraftRegistry(), item);
-		if (optResult.isEmpty())
-			return defaultValue;
-		return optResult.get();
-	}
-
 	public static void setUnbreakable(CompoundTag nbtTag, boolean unbreakable) {
 		nbtTag.putBoolean(UNBREAKABLE_KEY, unbreakable);
 	}
@@ -1399,7 +1368,7 @@ public class NBTHelper {
 		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
 		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
 		NBTHelper.setItemEffect(nbtTag, id);
-		return NBTHelper.setNBT(nmsItem, nbtTag);
+		return NMS.from(loadNMSItem(nbtTag));
 	}
 
 	public static void setWorldEffect(CompoundTag nbtTag, int effectId) {
@@ -1422,7 +1391,7 @@ public class NBTHelper {
 		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
 		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
 		NBTHelper.setWorldEffect(nbtTag, id);
-		return NBTHelper.setNBT(nmsItem, nbtTag);
+		return NMS.from(loadNMSItem(nbtTag));
 	}
 
 	public static void setDurability(CompoundTag nbtTag, short durability) {

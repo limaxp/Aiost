@@ -19,7 +19,6 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.ItemCanPlaceMenu.ItemCanDestroyMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.nms.NBTHelper;
-import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -130,7 +129,9 @@ public class ItemNBTMenu {
 
 	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<CompoundTag> consumer) {
 		CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class);
-		createItemMenu.setItem(NBTHelper.modifyNBT(NMS.to(createItemMenu.getItem()), consumer));
+		CompoundTag nbtTag = NBTHelper.getNBT(createItemMenu.getItem());
+		consumer.accept(nbtTag);
+		createItemMenu.setItem(NBTHelper.loadItem(nbtTag));
 	}
 
 	public static ItemStack getItem(ServerPlayer serverPlayer) {
