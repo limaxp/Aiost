@@ -8,6 +8,9 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 import org.bukkit.Material;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryAnvil;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryView;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -21,8 +24,15 @@ import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.menu.InventoryEventHandler;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
+import com.pm.aiost.misc.nms.NMS;
+import com.pm.aiost.misc.packet.PacketFactory;
+import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.core.BlockPos;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.inventory.ContainerLevelAccess;
 
 public abstract class AnvilMenu implements Menu, InventoryEventHandler, InventoryHolder {
 
@@ -71,15 +81,19 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 
 	@Override
 	public void open(Player player) {
-//		net.minecraft.world.entity.player.Player p = ((CraftPlayer) player).getHandle();
-//		AnvilContainer container = new AnvilContainer(p, this);
-//		Inventory inventory = container.getBukkitView().getTopInventory();
-//		inventory.setItem(0, first);
-//		inventory.setItem(1, second);
-//
-//		PacketSender.send(player, PacketFactory.packetOpenWindow(container, name));
-//		p.containerMenu = container;
-//		p.containerMenu.addSlotListener(p);
+		net.minecraft.server.level.ServerPlayer p = ((CraftPlayer) player).getHandle();
+		AnvilContainer container = new AnvilContainer(p.nextContainerCounter(), p.getInventory(),
+				ContainerLevelAccess.create(p.level(), new BlockPos(0, 0, 0)));
+		container.checkReachable = false;
+		container.setTitle(Component.literal(name));
+
+		Inventory inventory = container.getBukkitView().getTopInventory();
+		inventory.setItem(0, first);
+		inventory.setItem(1, second);
+
+		PacketSender.send(player, PacketFactory.packetOpenWindow(container, container.getTitle()));
+		p.containerMenu = container;
+		p.initMenu(container);
 	}
 
 	@Override
@@ -102,13 +116,6 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 			}
 			return;
 		}
-		ItemStack is = event.getCurrentItem();
-		if (is.getAmount() == 0 || (slot == 1 && is.getType() == Material.BARRIER)) {
-			openBackLink(serverPlayer);
-			event.setCancelled(true);
-			return;
-		}
-
 		inventoryClickCallback(serverPlayer, event);
 	}
 
@@ -183,55 +190,49 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 		second = BACK_ITEM;
 	}
 
-//	public static class AnvilContainer extends net.minecraft.world.inventory.AnvilMenu {
-//
-//		private static Field repairInventoryField;
-//		private static Field bukkitOwnerField;
-//
-//		static {
-//			try {
-//				repairInventoryField = net.minecraft.world.inventory.AnvilMenu.class
-//						.getDeclaredField("repairInventory");
-//				repairInventoryField.setAccessible(true);
-//				bukkitOwnerField = InventorySubcontainer.class.getDeclaredField("bukkitOwner");
-//				bukkitOwnerField.setAccessible(true);
-//			} catch (NoSuchFieldException | SecurityException e) {
-//				Logger.err("AnvilContainer: Error on reflection of packet fields!", e);
-//			}
-//		}
-//
-//		public AnvilContainer(Player player) {
-//			this(((CraftPlayer) player).getHandle());
-//		}
-//
-//		public AnvilContainer(Player player, InventoryHolder owner) {
-//			this(((CraftPlayer) player).getHandle());
-//			setInventoryOwner(owner);
-//		}
-//
-//		public AnvilContainer(net.minecraft.world.entity.player.Player player, InventoryHolder owner) {
-//			this(player);
-//			setInventoryOwner(owner);
-//		}
-//
-//		public AnvilContainer(net.minecraft.world.entity.player.Player player) {
-//			super(player.nextContainerCounter(), player.inventory,
-//					ContainerAccess.at(player.getWorld(), new BlockPosition(0, 0, 0)));
-//			this.checkReachable = false;
-//		}
-//
-//		public void setInventoryOwner(InventoryHolder owner) {
-//			try {
-//				bukkitOwnerField.set(repairInventoryField.get(this), owner);
-//			} catch (IllegalArgumentException | IllegalAccessException e) {
-//				Logger.err("AnvilContainer: Error on setting bukkit owner field!", e);
-//			}
-//		}
-//
-//		@Override
-//		public void e() {
-//			super.e();
-//			this.levelCost.set(0);
-//		}
-//	}
+	private class AnvilContainer extends net.minecraft.world.inventory.AnvilMenu {
+
+		public AnvilContainer(int i, net.minecraft.world.entity.player.Inventory playerinventory,
+				ContainerLevelAccess containeraccess) {
+			super(i, playerinventory, containeraccess);
+		}
+
+		public AnvilContainer(int i, net.minecraft.world.entity.player.Inventory playerinventory) {
+			super(i, playerinventory);
+		}
+
+		@Override
+		public CraftInventoryView getBukkitView() {
+			return new AnvilInventoryView(super.getBukkitView());
+		}
+	}
+
+	private class AnvilInventoryView extends CraftInventoryView {
+
+		public AnvilInventoryView(CraftInventoryView view) {
+			super(view.getPlayer(), view.getTopInventory(), view.getHandle());
+		}
+
+		@Override
+		public Inventory getTopInventory() {
+			try {
+				return new AnvilInventory((CraftInventoryAnvil) super.getTopInventory());
+			} catch (Throwable e) {
+				return null;
+			}
+		}
+	}
+
+	private class AnvilInventory extends CraftInventoryAnvil {
+
+		public AnvilInventory(CraftInventoryAnvil inventory) throws Throwable {
+			super(inventory.getLocation(), inventory.getInventory(), inventory.getResultInventory(),
+					(net.minecraft.world.inventory.AnvilMenu) NMS.CRAFTINVENTORYANVIL_GET_CONTAINER.invoke(inventory));
+		}
+
+		@Override
+		public InventoryHolder getHolder() {
+			return AnvilMenu.this;
+		}
+	}
 }

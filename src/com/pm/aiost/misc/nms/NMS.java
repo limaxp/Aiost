@@ -21,6 +21,7 @@ import org.bukkit.craftbukkit.v1_20_R4.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryAnvil;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryPlayer;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftRecipe;
@@ -129,6 +130,9 @@ public class NMS {
 
 	public static final MethodHandle SERVERBOUNDINTERACTPACKET_GET_ID = Reflection
 			.unreflectGetter(ServerboundInteractPacket.class, "b"); // PacketPlayInUseEntity.entityId;
+
+	public static final MethodHandle CRAFTINVENTORYANVIL_GET_CONTAINER = Reflection
+			.unreflectGetter(CraftInventoryAnvil.class, "container");
 
 	public static void unfreezeRegistry(Registry<?> registry) {
 		try {
