@@ -39,7 +39,6 @@ import net.minecraft.nbt.NbtIo;
 import net.minecraft.nbt.StringTag;
 import net.minecraft.nbt.TagParser;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
 
 public class NBTHelper {
 
@@ -981,10 +980,15 @@ public class NBTHelper {
 	}
 
 	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item) {
+		return loadNMSItem(item, net.minecraft.world.item.ItemStack.EMPTY);
+	}
+
+	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item,
+			net.minecraft.world.item.ItemStack defaultValue) {
 		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
 				.parse(CraftRegistry.getMinecraftRegistry(), item);
 		if (optResult.isEmpty())
-			return new net.minecraft.world.item.ItemStack(Items.AIR);
+			return defaultValue;
 		return optResult.get();
 	}
 

@@ -26,12 +26,12 @@ public class Items {
 	public static void init() {
 		FileConfiguration itemsConfig = SpigotConfigManager.getItemConfig();
 		ItemGroups.loadGroups(itemsConfig.getConfigurationSection("Groups"));
-//		ItemLoader.loadItemsConfig(itemsConfig);
-//		ItemLoader.loadConfig(SpigotConfigManager.getItemFolder());
-//		if (!SpigotConfig.HAS_BUNGEE) // TODO: change when resourcepack handling is complete!
-//			ResourcePackBuilder.checkResourcePack(itemsConfig);
-//		ResourcePackBuilder.checkDefaultPack();
-//		RecipeManager.init();
+		ItemLoader.loadItemsConfig(itemsConfig);
+		ItemLoader.loadConfig(SpigotConfigManager.getItemFolder());
+		if (!SpigotConfig.HAS_BUNGEE) // TODO: change when resourcepack handling is complete!
+			ResourcePackBuilder.checkResourcePack(itemsConfig);
+		ResourcePackBuilder.checkDefaultPack();
+		RecipeManager.init();
 	}
 
 	public static void add(String name, ItemGroup group, ItemStack is) {

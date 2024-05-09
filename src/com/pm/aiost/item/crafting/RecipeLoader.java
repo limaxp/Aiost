@@ -80,40 +80,35 @@ public class RecipeLoader {
 	}
 
 	public static Recipe<?> loadRecipe(ConfigurationSection section) {
-		try {
-			if (!section.contains("item")) {
-				Logger.warn("RecipeLoader: No item for recipe '" + section.getName() + "' defined!");
-				return null;
-			}
-			ItemStack is = ItemLoader.loadNMSItem(section.get("item"));
-			if (section.contains("amount")) {
-				is = is.copy();
-				is.setCount(section.getInt("amount"));
-			}
-			return loadRecipe(section, is);
-		} catch (Exception e) {
-			Logger.warn("RecipeLoader: " + e.getClass().getName() + " loading " + section.getName());
+		if (!section.contains("item")) {
+			Logger.warn("RecipeLoader: No item for recipe '" + section.getName() + "' defined!");
 			return null;
 		}
+		ItemStack is = ItemLoader.loadNMSItem(section.get("item"));
+		if (section.contains("amount")) {
+			is = is.copy();
+			is.setCount(section.getInt("amount"));
+		}
+		return loadRecipe(section, is);
 	}
 
 	public static Recipe<?> loadRecipe(ConfigurationSection section, ItemStack is) {
+		String name = section.getName();
+		String typeString = section.getString("type");
+		if (typeString == null || typeString.isEmpty()) {
+			Logger.warn("RecipeLoader: No type for recipe '" + name + "' defined!");
+			return null;
+		}
 		try {
-			String name = section.getName();
-			String typeString = section.getString("type");
-			if (typeString == null || typeString.isEmpty()) {
-				Logger.warn("RecipeLoader: No type for recipe '" + name + "' defined!");
-				return null;
-			}
 			Recipe<?> recipe = loadRecipeFromType(typeString, section, is);
 			if (recipe == null) {
 				Logger.warn("RecipeLoader: Type '" + typeString + "' for recipe '" + name + "' does not exist!");
 				return null;
 			}
-			RecipeManager.addRecipe(name, recipe);
+			RecipeManager.addRecipe(name.replace(' ', '_').toLowerCase(), recipe);
 			return recipe;
 		} catch (Exception e) {
-			Logger.warn("RecipeLoader: " + e.getClass().getName() + " loading " + section.getName());
+			Logger.err("RecipeLoader: " + e.getClass().getName() + " loading " + section.getName(), e);
 			return null;
 		}
 	}
@@ -209,14 +204,20 @@ public class RecipeLoader {
 	}
 
 	private static CraftingBookCategory loadCraftingCategory(ConfigurationSection section) {
-		CraftingBookCategory group = CraftingBookCategory.valueOf(section.getString("group"));
+		String groupName = section.getString("group");
+		if (groupName == null || groupName.isEmpty())
+			return CraftingBookCategory.MISC;
+		CraftingBookCategory group = CraftingBookCategory.valueOf(groupName);
 		if (group == null)
 			return CraftingBookCategory.MISC;
 		return group;
 	}
 
 	private static CookingBookCategory loadCookingCategory(ConfigurationSection section) {
-		CookingBookCategory group = CookingBookCategory.valueOf(section.getString("group"));
+		String groupName = section.getString("group");
+		if (groupName == null || groupName.isEmpty())
+			return CookingBookCategory.MISC;
+		CookingBookCategory group = CookingBookCategory.valueOf(groupName);
 		if (group == null)
 			return CookingBookCategory.MISC;
 		return group;

@@ -9,6 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.custom.NMSItemLoader;
+import com.pm.aiost.item.custom.NMSItems;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NBTHelper;
@@ -267,10 +268,10 @@ public class ItemLoader {
 			boolean canRegister) {
 		Material material = loadMaterial(itemSection);
 		net.minecraft.world.item.ItemStack nmsIs;
-		if (itemSection.contains("item") && canRegister)
-			nmsIs = loadNMSItem(itemSection, material);
-		else
-			nmsIs = NMS.getNMS(new ItemStack(material));
+//		if (itemSection.contains("item") && canRegister)
+//			nmsIs = loadNMSItem(itemSection, material);
+//		else
+		nmsIs = NMS.getNMS(new ItemStack(material));
 
 		CompoundTag nbtTag;
 		if (itemSection.contains("nbt"))
@@ -278,6 +279,7 @@ public class ItemLoader {
 		else
 			nbtTag = new CompoundTag();
 
+		nbtTag.putString("id", NMSItems.getKey(nmsIs.getItem()).getPath());
 		CompoundTag display = NBTHelper.addDisplay(nbtTag);
 		NBTHelper.setDisplayName(display, itemSection.getName());
 		if (itemSection.contains("lore"))
@@ -289,8 +291,7 @@ public class ItemLoader {
 		if (itemSection.contains("effects"))
 			loadEffects(itemSection, nbtTag);
 
-		NBTHelper.setNBT(nmsIs, nbtTag);
-		return nmsIs;
+		return NBTHelper.loadNMSItem(nbtTag, nmsIs);
 	}
 
 	public static Material loadMaterial(ConfigurationSection itemSection) {

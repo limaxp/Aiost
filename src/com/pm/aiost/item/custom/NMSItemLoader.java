@@ -43,7 +43,7 @@ public class NMSItemLoader {
 
 	public static Item registerItem(String name, Material mat, ConfigurationSection itemSection) {
 		NMS.unfreezeRegistry(BuiltInRegistries.ITEM);
-		Item item = NMSItems.registerItem(name.toLowerCase().replace(' ', '_'), CraftMagicNumbers.getItem(mat),
+		Item item = NMSItems.registerItem(name.replace(' ', '_').toLowerCase(), CraftMagicNumbers.getItem(mat),
 				loadItem(itemSection));
 		BuiltInRegistries.ITEM.freeze();
 		return item;
@@ -197,7 +197,7 @@ public class NMSItemLoader {
 
 	public static Tier readToolMaterial(ConfigurationSection section) {
 		if (section.contains("toolMaterial")) {
-			AiostToolMaterial toolmaterial = AiostToolMaterial.getIgnoreCase(section.getString("toolMaterial"));
+			Tier toolmaterial = AiostToolMaterial.getIgnoreCase(section.getString("toolMaterial"));
 			if (toolmaterial != null)
 				return toolmaterial;
 			Logger.warn(
