@@ -18,11 +18,11 @@ public class PacketSender {
 	public static final double NEARBY_DISTANCE = 64;
 
 	public static void send(Player player, Packet<?> packet) {
-		NMS.getNMS(player).connection.sendPacket(packet);
+		NMS.to(player).connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Object packet) {
-		NMS.getNMS(player).connection.sendPacket((Packet<?>) packet);
+		NMS.to(player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendNMS(ServerPlayer player, Packet<?> packet) {
@@ -34,21 +34,21 @@ public class PacketSender {
 	}
 
 	public static void sendReflected(Object player, Packet<?> packet) {
-		NMS.getNMS((Player) player).connection.sendPacket(packet);
+		NMS.to((Player) player).connection.sendPacket(packet);
 	}
 
 	public static void sendReflected_(Object player, Object packet) {
-		NMS.getNMS((Player) player).connection.sendPacket((Packet<?>) packet);
+		NMS.to((Player) player).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void send(Player player, Packet<?>... packets) {
-		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
+		ServerGamePacketListenerImpl connection = NMS.to(player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Object... packets) {
-		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
+		ServerGamePacketListenerImpl connection = NMS.to(player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
@@ -79,12 +79,12 @@ public class PacketSender {
 
 	public static void send(Player[] player, Packet<?> packet) {
 		for (Player p : player)
-			NMS.getNMS(p).connection.sendPacket(packet);
+			NMS.to(p).connection.sendPacket(packet);
 	}
 
 	public static void send_(Player[] player, Object packet) {
 		for (Player p : player)
-			NMS.getNMS(p).connection.sendPacket((Packet<?>) packet);
+			NMS.to(p).connection.sendPacket((Packet<?>) packet);
 	}
 
 	public static void sendNMS(ServerPlayer[] player, Packet<?> packet) {
@@ -108,13 +108,13 @@ public class PacketSender {
 	}
 
 	public static void send(Player player, Iterable<Packet<?>> packets) {
-		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
+		ServerGamePacketListenerImpl connection = NMS.to(player).connection;
 		for (Packet<?> packet : packets)
 			connection.sendPacket(packet);
 	}
 
 	public static void send_(Player player, Iterable<Object> packets) {
-		ServerGamePacketListenerImpl connection = NMS.getNMS(player).connection;
+		ServerGamePacketListenerImpl connection = NMS.to(player).connection;
 		for (Object packet : packets)
 			connection.sendPacket((Packet<?>) packet);
 	}
@@ -336,11 +336,11 @@ public class PacketSender {
 	}
 
 	public static void sendWorld(org.bukkit.World world, Packet<?> packet) {
-		sendNMSWorld(NMS.getNMS(world), packet);
+		sendNMSWorld(NMS.to(world), packet);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Object packet) {
-		sendNMSWorld_(NMS.getNMS(world), packet);
+		sendNMSWorld_(NMS.to(world), packet);
 	}
 
 	public static void sendNMSWorld(ServerLevel world, Packet<?> packet) {
@@ -354,11 +354,11 @@ public class PacketSender {
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Packet<?> packet) {
-		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packet);
+		sendNMSWorld(NMS.to(world), ((CraftPlayer) except).getHandle(), packet);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Object packet) {
-		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packet);
+		sendNMSWorld_(NMS.to(world), ((CraftPlayer) except).getHandle(), packet);
 	}
 
 	public static void sendNMSWorld(ServerLevel world, ServerPlayer except, Packet<?> packet) {
@@ -374,19 +374,19 @@ public class PacketSender {
 	}
 
 	public static void sendWorld(org.bukkit.World world, Packet<?>... packets) {
-		sendNMSWorld(NMS.getNMS(world), packets);
+		sendNMSWorld(NMS.to(world), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Object... packets) {
-		sendNMSWorld_(NMS.getNMS(world), packets);
+		sendNMSWorld_(NMS.to(world), packets);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Iterable<Packet<?>> packets) {
-		sendNMSWorld(NMS.getNMS(world), packets);
+		sendNMSWorld(NMS.to(world), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Iterable<Object> packets) {
-		sendNMSWorld_(NMS.getNMS(world), packets);
+		sendNMSWorld_(NMS.to(world), packets);
 	}
 
 	public static void sendNMSWorld(ServerLevel world, Packet<?>... packets) {
@@ -414,19 +414,19 @@ public class PacketSender {
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Packet<?>... packets) {
-		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld(NMS.to(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Object... packets) {
-		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld_(NMS.to(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld(org.bukkit.World world, Player except, Iterable<Packet<?>> packets) {
-		sendNMSWorld(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld(NMS.to(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendWorld_(org.bukkit.World world, Player except, Iterable<Object> packets) {
-		sendNMSWorld_(NMS.getNMS(world), ((CraftPlayer) except).getHandle(), packets);
+		sendNMSWorld_(NMS.to(world), ((CraftPlayer) except).getHandle(), packets);
 	}
 
 	public static void sendNMSWorld(ServerLevel world, ServerPlayer except, Packet<?>... packets) {
@@ -468,11 +468,11 @@ public class PacketSender {
 	}
 
 	public static void sendNear(org.bukkit.World world, int x, int y, int z, int distance, Packet<?> packet) {
-		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packet);
+		sendNMSNear(NMS.to(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNear_(org.bukkit.World world, int x, int y, int z, int distance, Object packet) {
-		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packet);
+		sendNMSNear_(NMS.to(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNMSNear(ServerLevel world, int x, int y, int z, int distance, Packet<?> packet) {
@@ -500,11 +500,11 @@ public class PacketSender {
 	}
 
 	public static void sendNear(org.bukkit.World world, int x, int y, int z, int distance, Packet<?>... packets) {
-		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packets);
+		sendNMSNear(NMS.to(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNear_(org.bukkit.World world, int x, int y, int z, int distance, Object... packets) {
-		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packets);
+		sendNMSNear_(NMS.to(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNMSNear(ServerLevel world, int x, int y, int z, int distance, Packet<?>... packets) {
@@ -535,11 +535,11 @@ public class PacketSender {
 
 	public static void sendNear(org.bukkit.World world, double x, double y, double z, double distance,
 			Packet<?> packet) {
-		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packet);
+		sendNMSNear(NMS.to(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNear_(org.bukkit.World world, double x, double y, double z, double distance, Object packet) {
-		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packet);
+		sendNMSNear_(NMS.to(world), x, y, z, distance, packet);
 	}
 
 	public static void sendNMSNear(ServerLevel world, double x, double y, double z, double distance, Packet<?> packet) {
@@ -568,12 +568,12 @@ public class PacketSender {
 
 	public static void sendNear(org.bukkit.World world, double x, double y, double z, double distance,
 			Packet<?>... packets) {
-		sendNMSNear(NMS.getNMS(world), x, y, z, distance, packets);
+		sendNMSNear(NMS.to(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNear_(org.bukkit.World world, double x, double y, double z, double distance,
 			Object... packets) {
-		sendNMSNear_(NMS.getNMS(world), x, y, z, distance, packets);
+		sendNMSNear_(NMS.to(world), x, y, z, distance, packets);
 	}
 
 	public static void sendNMSNear(ServerLevel world, double x, double y, double z, double distance,
@@ -605,11 +605,11 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, int x, int y, int z, Packet<?> packet) {
-		sendNMSNearby(NMS.getNMS(world), x, y, z, packet);
+		sendNMSNearby(NMS.to(world), x, y, z, packet);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, int x, int y, int z, Object packet) {
-		sendNMSNearby_(NMS.getNMS(world), x, y, z, packet);
+		sendNMSNearby_(NMS.to(world), x, y, z, packet);
 	}
 
 	public static void sendNMSNearby(ServerLevel world, int x, int y, int z, Packet<?> packet) {
@@ -627,11 +627,11 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, int x, int y, int z, Packet<?>... packets) {
-		sendNMSNearby(NMS.getNMS(world), x, y, z, packets);
+		sendNMSNearby(NMS.to(world), x, y, z, packets);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, int x, int y, int z, Object... packets) {
-		sendNMSNearby_(NMS.getNMS(world), x, y, z, packets);
+		sendNMSNearby_(NMS.to(world), x, y, z, packets);
 	}
 
 	public static void sendNMSNearby(ServerLevel world, int x, int y, int z, Packet<?>... packets) {
@@ -651,11 +651,11 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, double x, double y, double z, Packet<?> packet) {
-		sendNMSNearby(NMS.getNMS(world), x, y, z, packet);
+		sendNMSNearby(NMS.to(world), x, y, z, packet);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, double x, double y, double z, Object packet) {
-		sendNMSNearby_(NMS.getNMS(world), x, y, z, packet);
+		sendNMSNearby_(NMS.to(world), x, y, z, packet);
 	}
 
 	public static void sendNMSNearby(ServerLevel world, double x, double y, double z, Packet<?> packet) {
@@ -683,11 +683,11 @@ public class PacketSender {
 	}
 
 	public static void sendNearby(org.bukkit.World world, double x, double y, double z, Packet<?>... packets) {
-		sendNMSNearby(NMS.getNMS(world), x, y, z, packets);
+		sendNMSNearby(NMS.to(world), x, y, z, packets);
 	}
 
 	public static void sendNearby_(org.bukkit.World world, double x, double y, double z, Object... packets) {
-		sendNMSNearby_(NMS.getNMS(world), x, y, z, packets);
+		sendNMSNearby_(NMS.to(world), x, y, z, packets);
 	}
 
 	public static void sendNMSNearby(ServerLevel world, double x, double y, double z, Packet<?>... packets) {

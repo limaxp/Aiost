@@ -86,7 +86,7 @@ public abstract class PacketEntity extends PacketThing {
 	// TODO: Implements this in PacketEntityfurniture
 	public void setEquipment(EquipmentSlot slot, ItemStack is) {
 		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
-				PacketFactory.packetEntityEquipment(id, NMS.getNMS(slot), NMS.getNMS(is)));
+				PacketFactory.packetEntityEquipment(id, NMS.to(slot), NMS.to(is)));
 	}
 
 	@Override

@@ -51,7 +51,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	}
 
 	public static <T extends Entity> T spawnEntity(EntityType<T> entityTypes, Location loc) {
-		return spawnEntity(entityTypes, NMS.getNMS(loc.getWorld()),
+		return spawnEntity(entityTypes, NMS.to(loc.getWorld()),
 				new BlockPos(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ()));
 	}
 
@@ -85,7 +85,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	}
 
 	public static EntityType<?> fromEntityType(org.bukkit.entity.EntityType type) {
-		return BuiltInRegistries.ENTITY_TYPE.get(NMS.getNMS(type.getKey()));
+		return BuiltInRegistries.ENTITY_TYPE.get(NMS.to(type.getKey()));
 	}
 
 	public static Iterator<EntityType<?>> iterator() {

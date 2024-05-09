@@ -172,7 +172,7 @@ public class ItemLoader {
 			return loadNMSItem(itemSection.getConfigurationSection(itemSection.getKeys(false).iterator().next()),
 					false);
 		}
-		return NMS.getNMS(new ItemStack(defaultMaterial));
+		return NMS.to(new ItemStack(defaultMaterial));
 	}
 
 	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject, Item defaultMaterial) {
@@ -204,7 +204,7 @@ public class ItemLoader {
 			return loadNMSItem(itemSection.getConfigurationSection(itemSection.getKeys(false).iterator().next()),
 					false);
 		}
-		return NMS.getNMS(defaultItem.clone());
+		return NMS.to(defaultItem.clone());
 	}
 
 	public static net.minecraft.world.item.ItemStack loadNMSItemOrDefault(Object itemObject,
@@ -249,7 +249,7 @@ public class ItemLoader {
 	}
 
 	public static net.minecraft.world.item.ItemStack loadNMSItem(String itemName) {
-		return NMS.getNMS(loadItem(itemName));
+		return NMS.to(loadItem(itemName));
 	}
 
 	public static ItemStack loadItem(ConfigurationSection itemSection) {
@@ -257,7 +257,7 @@ public class ItemLoader {
 	}
 
 	private static ItemStack loadItem(ConfigurationSection itemSection, boolean canRegister) {
-		return NMS.getBukkit(loadNMSItem(itemSection, canRegister));
+		return NMS.from(loadNMSItem(itemSection, canRegister));
 	}
 
 	public static net.minecraft.world.item.ItemStack loadNMSItem(ConfigurationSection itemSection) {
@@ -271,7 +271,7 @@ public class ItemLoader {
 //		if (itemSection.contains("item") && canRegister)
 //			nmsIs = loadNMSItem(itemSection, material);
 //		else
-		nmsIs = NMS.getNMS(new ItemStack(material));
+		nmsIs = NMS.to(new ItemStack(material));
 
 		CompoundTag nbtTag;
 		if (itemSection.contains("nbt"))

@@ -46,7 +46,7 @@ public class EffectData extends EffectList {
 	}
 
 	public void setEffect(PlayerEquipItemEvent event) {
-		ItemStack is = NMS.getNMS(event.getItemStack());
+		ItemStack is = NMS.to(event.getItemStack());
 		if (NBTHelper.hasTag(is)) {
 			CompoundTag nbtTag = NBTHelper.getNBT(is);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
@@ -65,7 +65,7 @@ public class EffectData extends EffectList {
 	}
 
 	public void setHandEffect(PlayerEquipHandItemEvent event) {
-		ItemStack is = NMS.getNMS(event.getItemStack());
+		ItemStack is = NMS.to(event.getItemStack());
 		if (NBTHelper.hasTag(is)) {
 			CompoundTag nbtTag = NBTHelper.getNBT(is);
 			int effectID = NBTHelper.getItemEffect(nbtTag);

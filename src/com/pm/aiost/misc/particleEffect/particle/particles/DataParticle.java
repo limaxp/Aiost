@@ -61,7 +61,7 @@ public class DataParticle<T> extends Particle {
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		PacketSender.send(player, PacketFactory.packetParticles(NMS.getNMS(particle, data), longDistance, x, y, z,
+		PacketSender.send(player, PacketFactory.packetParticles(NMS.to(particle, data), longDistance, x, y, z,
 				offsetX, offsetY, offsetZ, extra, count));
 	}
 

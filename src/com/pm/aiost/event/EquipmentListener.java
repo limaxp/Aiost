@@ -120,7 +120,7 @@ public class EquipmentListener {
 							EquipmentAction.INVENTORY_CLICK).isCancelled())
 						event.setCancelled(true);
 				} else {
-					Object item = NMS.getNMS(event.getCursor()).getItem();
+					Object item = NMS.to(event.getCursor()).getItem();
 					if (NMS.isArmor(item) && NMS.getArmorSlot(item) == clickedSlot) {
 						if (AiostEventFactory.callPlayerEquipItemEvent(serverPlayer, event.getCursor(), clickedSlot,
 								EquipmentAction.INVENTORY_CLICK).isCancelled())
@@ -154,7 +154,7 @@ public class EquipmentListener {
 		int firstInventorySlot = inventorySlots.iterator().next();
 		if (firstInventorySlot >= BOOTS_SLOT && firstInventorySlot < OFF_HAND_SLOT) {
 			EquipmentSlot firstSlot = ARMOR_SLOTS[firstInventorySlot - BOOTS_SLOT];
-			Object item = NMS.getNMS(event.getOldCursor()).getItem();
+			Object item = NMS.to(event.getOldCursor()).getItem();
 			if (NMS.isArmor(item) && NMS.getArmorSlot(item) == firstSlot) {
 				if (AiostEventFactory.callPlayerEquipItemEvent(serverPlayer, event.getOldCursor(), firstSlot,
 						EquipmentAction.INVENTORY_DRAG).isCancelled())
@@ -225,7 +225,7 @@ public class EquipmentListener {
 	}
 
 	public static void itemBreakCheck(ServerPlayer serverPlayer, PlayerItemBreakEvent event) {
-		Object item = NMS.getNMS(event.getBrokenItem()).getItem();
+		Object item = NMS.to(event.getBrokenItem()).getItem();
 		if (NMS.isArmor(item))
 			AiostEventFactory.callPlayerEquipItemEvent(serverPlayer, null, NMS.getArmorSlot(item),
 					EquipmentAction.BREAK);
@@ -244,7 +244,7 @@ public class EquipmentListener {
 	}
 
 	public static void playerInteractCheck(ServerPlayer serverPlayer, PlayerInteractEvent event) {
-		Object item = NMS.getNMS(event.getItem()).getItem();
+		Object item = NMS.to(event.getItem()).getItem();
 		if (NMS.isArmor(item)) {
 			EquipmentSlot slot = NMS.getArmorSlot(item);
 			if (event.getPlayer().getInventory().getArmorContents()[slot.ordinal() - 2] == null) {
@@ -281,7 +281,7 @@ public class EquipmentListener {
 	}
 
 	public static void blockDispenseArmorCheck(ServerPlayer serverPlayer, BlockDispenseArmorEvent event) {
-		Object item = NMS.getNMS(event.getItem()).getItem();
+		Object item = NMS.to(event.getItem()).getItem();
 		if (NMS.isArmor(item)) {
 			if (AiostEventFactory.callPlayerEquipItemEvent(serverPlayer, event.getItem(), NMS.getArmorSlot(item),
 					EquipmentAction.DISPENSE).isCancelled())
@@ -314,7 +314,7 @@ public class EquipmentListener {
 							.isCancelled())
 						return false;
 				} else {
-					Object item = NMS.getNMS(is).getItem();
+					Object item = NMS.to(is).getItem();
 					if (NMS.isArmor(item) && NMS.getArmorSlot(item) == clickedSlot) {
 						if (AiostEventFactory
 								.callPlayerEquipItemEvent(serverPlayer, is, clickedSlot, EquipmentAction.GIVE)

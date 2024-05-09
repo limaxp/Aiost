@@ -16,7 +16,7 @@ public class PacketWatcher {
 	public static void inject(ServerPlayer serverPlayer) {
 		try {
 			Connection connection = (Connection) NMS.SERVERCOMMONPACKETLISTENERIMPL_GET_CONNECTION
-					.invoke(NMS.getNMS(serverPlayer.player).connection);
+					.invoke(NMS.to(serverPlayer.player).connection);
 			Channel channel = connection.channel;
 			if (channel != null) {
 				channel.pipeline().addBefore(PACKET_HANDLER_CHANNEL, DECODER_CHANNEL,
@@ -32,7 +32,7 @@ public class PacketWatcher {
 	public static void eject(ServerPlayer serverPlayer) {
 		try {
 			Connection connection = (Connection) NMS.SERVERCOMMONPACKETLISTENERIMPL_GET_CONNECTION
-					.invoke(NMS.getNMS(serverPlayer.player).connection);
+					.invoke(NMS.to(serverPlayer.player).connection);
 			Channel channel = connection.channel;
 			if (channel != null) {
 				if (channel.pipeline().get(DECODER_CHANNEL) != null)

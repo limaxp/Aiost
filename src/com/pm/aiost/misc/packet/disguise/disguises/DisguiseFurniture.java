@@ -47,10 +47,10 @@ public class DisguiseFurniture implements Disguise {
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.ARMOR_STAND));
 		packets.add(PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER));
 		if (is != null)
-			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(is)));
+			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is)));
 		else
 			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot,
-					NMS.getNMS(Furniture.FURNITURES.get(furnitureID))));
+					NMS.to(Furniture.FURNITURES.get(furnitureID))));
 	}
 
 	@Override

@@ -94,7 +94,7 @@ public class NBTHelper {
 	}
 
 	public static CompoundTag getNBT(ItemStack is) {
-		return getNBT(NMS.getNMS(is));
+		return getNBT(NMS.to(is));
 	}
 
 	public static CompoundTag getNBT(net.minecraft.world.item.ItemStack is) {
@@ -105,12 +105,12 @@ public class NBTHelper {
 		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
 				.parse(CraftRegistry.getMinecraftRegistry(), nbtTag);
 		if (optResult.isEmpty())
-			return NMS.getBukkit(is);
-		return NMS.getBukkit(optResult.get());
+			return NMS.from(is);
+		return NMS.from(optResult.get());
 	}
 
 	public static boolean hasTag(ItemStack is) {
-		return hasTag(NMS.getNMS(is));
+		return hasTag(NMS.to(is));
 	}
 
 	public static boolean hasTag(net.minecraft.world.item.ItemStack is) {
@@ -122,14 +122,14 @@ public class NBTHelper {
 	}
 
 	public static ItemStack modifyNBT(ItemStack is, Consumer<CompoundTag> consumer) {
-		return modifyNBT(NMS.getNMS(is), consumer);
+		return modifyNBT(NMS.to(is), consumer);
 	}
 
 	public static ItemStack modifyNBT(net.minecraft.world.item.ItemStack is, Consumer<CompoundTag> consumer) {
 		CompoundTag nbtTag = getNBT(is);
 		consumer.accept(nbtTag);
 		setNBT(is, nbtTag);
-		return NMS.getBukkit(is);
+		return NMS.from(is);
 	}
 
 	public static CompoundTag getNBT(net.minecraft.world.entity.Entity entity) {
@@ -143,7 +143,7 @@ public class NBTHelper {
 	}
 
 	public static void modifyNBT(Entity entity, Consumer<CompoundTag> consumer) {
-		modifyNBT(NMS.getNMS(entity), consumer);
+		modifyNBT(NMS.to(entity), consumer);
 	}
 
 	public static void modifyNBT(net.minecraft.world.entity.Entity entity, Consumer<CompoundTag> consumer) {
@@ -901,7 +901,7 @@ public class NBTHelper {
 	}
 
 	public static void addItem(ListTag items, ItemStack is) {
-		addItem(items, NMS.getNMS(is));
+		addItem(items, NMS.to(is));
 	}
 
 	public static void addItem(ListTag items, net.minecraft.world.item.ItemStack is) {
@@ -948,7 +948,7 @@ public class NBTHelper {
 	}
 
 	public static void setItem(CompoundTag item, ItemStack is) {
-		setItem(item, NMS.getNMS(is));
+		setItem(item, NMS.to(is));
 	}
 
 	public static void setItem(CompoundTag item, net.minecraft.world.item.ItemStack is) {
@@ -968,7 +968,7 @@ public class NBTHelper {
 	}
 
 	public static CompoundTag saveItem(CompoundTag item, ItemStack is) {
-		return saveItem(item, NMS.getNMS(is));
+		return saveItem(item, NMS.to(is));
 	}
 
 	public static CompoundTag saveItem(CompoundTag item, net.minecraft.world.item.ItemStack is) {
@@ -1396,7 +1396,7 @@ public class NBTHelper {
 	}
 
 	public static ItemStack setItemEffect(ItemStack is, int id) {
-		net.minecraft.world.item.ItemStack nmsItem = NMS.getNMS(is);
+		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
 		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
 		NBTHelper.setItemEffect(nbtTag, id);
 		return NBTHelper.setNBT(nmsItem, nbtTag);
@@ -1419,7 +1419,7 @@ public class NBTHelper {
 	}
 
 	public static ItemStack setWorldEffect(ItemStack is, int id) {
-		net.minecraft.world.item.ItemStack nmsItem = NMS.getNMS(is);
+		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
 		CompoundTag nbtTag = NBTHelper.getNBT(nmsItem);
 		NBTHelper.setWorldEffect(nbtTag, id);
 		return NBTHelper.setNBT(nmsItem, nbtTag);

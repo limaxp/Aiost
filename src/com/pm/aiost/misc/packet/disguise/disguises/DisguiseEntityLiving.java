@@ -33,7 +33,7 @@ public class DisguiseEntityLiving implements Disguise {
 		Location loc = player.getLocation();
 		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), player.getUniqueId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.getById(entityId)));
-		Disguise.addPlayerStatePackets(NMS.getNMS(player), packets);
+		Disguise.addPlayerStatePackets(NMS.to(player), packets);
 	}
 
 	@Override

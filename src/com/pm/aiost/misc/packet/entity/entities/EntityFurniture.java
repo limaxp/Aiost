@@ -70,10 +70,10 @@ public class EntityFurniture extends PacketEntity {
 
 	protected Object createEquipmentPacket() {
 		if (is != null)
-			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(is));
+			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is));
 		else
 			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot,
-					NMS.getNMS(Furniture.FURNITURES.get(furnitureID)));
+					NMS.to(Furniture.FURNITURES.get(furnitureID)));
 	}
 
 	@Override
@@ -81,7 +81,7 @@ public class EntityFurniture extends PacketEntity {
 		super.load(nbt);
 		if (NBTHelper.hasKey(nbt, "mat")) {
 			ItemStack is = new ItemStack(Material.valueOf(nbt.getString("mat")));
-			setItemStack(NBTHelper.setNBT(NMS.getNMS(is), nbt.getCompound("itemNBT")));
+			setItemStack(NBTHelper.setNBT(NMS.to(is), nbt.getCompound("itemNBT")));
 		} else
 			setType(nbt.getInt("fur"));
 	}
@@ -91,7 +91,7 @@ public class EntityFurniture extends PacketEntity {
 		super.save(nbt);
 		if (is != null) {
 			nbt.putString("mat", is.getType().name());
-			nbt.put("itemNBT", NBTHelper.getNBT(NMS.getNMS(is)));
+			nbt.put("itemNBT", NBTHelper.getNBT(NMS.to(is)));
 		} else
 			nbt.putInt("fur", furnitureID);
 		return nbt;

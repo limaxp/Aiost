@@ -143,79 +143,71 @@ public class NMS {
 		}
 	}
 
-	public static ItemStack getNMS(org.bukkit.inventory.ItemStack is) {
+	public static ItemStack to(org.bukkit.inventory.ItemStack is) {
 		return CraftItemStack.asNMSCopy(is);
 	}
 
-	public static org.bukkit.inventory.ItemStack getBukkit(ItemStack is) {
+	public static org.bukkit.inventory.ItemStack from(ItemStack is) {
 		return CraftItemStack.asCraftMirror(is);
 	}
 
-	public static Entity getNMS(org.bukkit.entity.Entity entity) {
+	public static Entity to(org.bukkit.entity.Entity entity) {
 		return ((CraftEntity) entity).getHandle();
 	}
 
-	public static org.bukkit.entity.Entity getBukkit(Entity entity) {
+	public static org.bukkit.entity.Entity from(Entity entity) {
 		return entity.getBukkitEntity();
 	}
 
-	public static LivingEntity getNMS(org.bukkit.entity.LivingEntity entity) {
+	public static LivingEntity to(org.bukkit.entity.LivingEntity entity) {
 		return ((CraftLivingEntity) entity).getHandle();
 	}
 
-	public static org.bukkit.entity.LivingEntity getBukkit(LivingEntity entity) {
+	public static org.bukkit.entity.LivingEntity from(LivingEntity entity) {
 		return (org.bukkit.entity.LivingEntity) entity.getBukkitEntity();
 	}
 
-	public static net.minecraft.server.level.ServerPlayer getNMS(org.bukkit.entity.Player player) {
+	public static net.minecraft.server.level.ServerPlayer to(org.bukkit.entity.Player player) {
 		return ((CraftPlayer) player).getHandle();
 	}
 
-	public static org.bukkit.entity.Player getBukkit(Player player) {
+	public static org.bukkit.entity.Player from(Player player) {
 		return (org.bukkit.entity.Player) player.getBukkitEntity();
 	}
 
-	public static ServerLevel getNMS(org.bukkit.World world) {
+	public static ServerLevel to(org.bukkit.World world) {
 		return ((CraftWorld) world).getHandle();
 	}
 
-	public static org.bukkit.World getBukkit(ServerLevel world) {
+	public static org.bukkit.World from(ServerLevel world) {
 		return world.getWorld();
 	}
 
-	public static MinecraftServer getMinecraftServer() {
-		return ((CraftServer) Bukkit.getServer()).getServer();
-	}
-
-	public static int getMinecraftServerTick() {
-		return MinecraftServer.currentTick;
-	}
-
-	public static GameProfile getNMS(PlayerProfile profile) {
+	public static GameProfile to(PlayerProfile profile) {
 		return ((CraftPlayerProfile) profile).buildGameProfile();
 	}
 
-	public static PlayerProfile getBukkit(GameProfile profile) {
+	public static PlayerProfile from(GameProfile profile) {
 		return new CraftPlayerProfile(profile);
 	}
 
-	public static ParticleType<?> getNMS(org.bukkit.Particle particle) {
+	public static ParticleType<?> to(org.bukkit.Particle particle) {
 		return CraftParticle.bukkitToMinecraft(particle);
 	}
 
-	public static <T> ParticleOptions getNMS(org.bukkit.Particle particle, T obj) {
-		return CraftParticle.createParticleParam(particle, obj);
-	}
-
-	public static org.bukkit.Particle getBukkit(ParticleType<?> particle) {
+	public static org.bukkit.Particle from(ParticleType<?> particle) {
 		return CraftParticle.minecraftToBukkit(particle);
 	}
 
-	public static org.bukkit.Particle getBukkit(ParticleOptions particle) {
+	public static <T> ParticleOptions to(org.bukkit.Particle particle, T obj) {
+		return CraftParticle.createParticleParam(particle, obj);
+	}
+
+	public static org.bukkit.Particle from(ParticleOptions particle) {
 		return CraftParticle.minecraftToBukkit(particle.getType());
 	}
 
-	public static BlockState getNMS(org.bukkit.block.Block block) {
+	public static BlockState to(org.bukkit.block.Block block) {
 		return ((CraftBlock) block).getNMS();
 	}
 
@@ -225,11 +217,11 @@ public class NMS {
 //		return ((BlockData) CraftBlockData.fromData(block.getBlockData())).;
 //	}
 
-	public static BlockState getNMS(BlockData block) {
+	public static BlockState to(BlockData block) {
 		return ((CraftBlockData) block).getState();
 	}
 
-	public static BlockData getBukkit(BlockState block) {
+	public static BlockData from(BlockState block) {
 		return CraftBlockData.fromData(block);
 	}
 
@@ -253,11 +245,11 @@ public class NMS {
 		return CraftMagicNumbers.getBlock(material, data);
 	}
 
-	public static EquipmentSlot getNMS(org.bukkit.inventory.EquipmentSlot slot) {
+	public static EquipmentSlot to(org.bukkit.inventory.EquipmentSlot slot) {
 		return CraftEquipmentSlot.getNMS(slot);
 	}
 
-	public static org.bukkit.inventory.EquipmentSlot getBukkit(EquipmentSlot slot) {
+	public static org.bukkit.inventory.EquipmentSlot from(EquipmentSlot slot) {
 		return CraftEquipmentSlot.getSlot(slot);
 	}
 
@@ -265,31 +257,31 @@ public class NMS {
 		return new ResourceLocation(key);
 	}
 
-	public static ResourceLocation getNMS(NamespacedKey key) {
+	public static ResourceLocation to(NamespacedKey key) {
 		return CraftNamespacedKey.toMinecraft(key);
 	}
 
-	public static NamespacedKey getBukkit(ResourceLocation key) {
+	public static NamespacedKey from(ResourceLocation key) {
 		return CraftNamespacedKey.fromMinecraft(key);
 	}
 
-	public static EntityType<?> getNMS(org.bukkit.entity.EntityType type) {
+	public static EntityType<?> to(org.bukkit.entity.EntityType type) {
 		return AiostEntityTypes.fromEntityType(type);
 	}
 
-	public static org.bukkit.entity.EntityType getBukkit(EntityType<?> type) {
+	public static org.bukkit.entity.EntityType from(EntityType<?> type) {
 		return AiostEntityTypes.toEntityType(type);
 	}
 
-	public static Recipe getBukkit(net.minecraft.world.item.crafting.Recipe<?> recipe, NamespacedKey key) {
+	public static Recipe from(net.minecraft.world.item.crafting.Recipe<?> recipe, NamespacedKey key) {
 		return recipe.toBukkitRecipe(key);
 	}
 
-	public static RecipeChoice getBukkit(Ingredient recipeItem) {
+	public static RecipeChoice from(Ingredient recipeItem) {
 		return CraftRecipe.toBukkit(recipeItem);
 	}
 
-	public static Ingredient toNMS(RecipeChoice bukkit, boolean requireNotEmpty) {
+	public static Ingredient to(RecipeChoice bukkit, boolean requireNotEmpty) {
 		Ingredient stack;
 		if (bukkit == null) {
 			stack = Ingredient.EMPTY;
@@ -311,6 +303,14 @@ public class NMS {
 			Preconditions.checkArgument(stack.itemStacks.length != 0, "Recipe requires at least one non-air choice");
 		}
 		return stack;
+	}
+
+	public static MinecraftServer getMinecraftServer() {
+		return ((CraftServer) Bukkit.getServer()).getServer();
+	}
+
+	public static int getMinecraftServerTick() {
+		return MinecraftServer.currentTick;
 	}
 
 	public static void setBukkitEntity(Entity entity, CraftEntity value) {

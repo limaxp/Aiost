@@ -166,7 +166,7 @@ public class PlayerHead {
 
 	public static void set(SkullMeta skullMeta, GameProfile profile) {
 		try {
-			skullMeta.setOwnerProfile(NMS.getBukkit(profile));
+			skullMeta.setOwnerProfile(NMS.from(profile));
 		} catch (Throwable e) {
 			Logger.err("PlayerHead: Error on setting CraftMetaSkull profile field!", e);
 		}

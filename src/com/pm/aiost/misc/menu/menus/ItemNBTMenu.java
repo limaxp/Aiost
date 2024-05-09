@@ -130,7 +130,7 @@ public class ItemNBTMenu {
 
 	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<CompoundTag> consumer) {
 		CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class);
-		createItemMenu.setItem(NBTHelper.modifyNBT(NMS.getNMS(createItemMenu.getItem()), consumer));
+		createItemMenu.setItem(NBTHelper.modifyNBT(NMS.to(createItemMenu.getItem()), consumer));
 	}
 
 	public static ItemStack getItem(ServerPlayer serverPlayer) {

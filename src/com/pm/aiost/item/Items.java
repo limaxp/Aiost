@@ -64,7 +64,7 @@ public class Items {
 	}
 
 	public static int getEffectID(ItemStack is) {
-		return getEffectID(NMS.getNMS(is));
+		return getEffectID(NMS.to(is));
 	}
 
 	public static int getEffectID(net.minecraft.world.item.ItemStack nmsIs) {

@@ -52,7 +52,7 @@ public class RegionFileCache implements AutoCloseable {
 			cache.removeLast().close();
 
 		Path path = new File(regionFile, "r." + regionX + "." + regionZ + ".aia").toPath();
-		ServerLevel level = NMS.getNMS(serverWorld.world);
+		ServerLevel level = NMS.to(serverWorld.world);
 		RegionStorageInfo info = new RegionStorageInfo(serverWorld.getName(), level.dimension(),
 				level.getTypeKey().registry().getNamespace());
 		RegionFile regionfile1 = new RegionFile(info, path, regionFile.toPath(), true);

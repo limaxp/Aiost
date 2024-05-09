@@ -395,7 +395,7 @@ public class ServerPlayer implements AutoCloseable {
 			return;
 
 		List packets = new ArrayList();
-		net.minecraft.world.entity.player.Player entityPlayer = NMS.getNMS(player);
+		net.minecraft.world.entity.player.Player entityPlayer = NMS.to(player);
 		packets.add(PacketFactory.packetEntityDestroy(entityPlayer.getId()));
 		disguise.removePackets(player, packets);
 		if (defaultDisguise != null)

@@ -319,7 +319,7 @@ public class RecipeLoader {
 
 	public static Ingredient createRecipeItemStack(List<Material> materials, boolean requireNotEmpty) {
 		return new Ingredient(materials.stream()
-				.map(mat -> new Ingredient.ItemValue(NMS.getNMS(new org.bukkit.inventory.ItemStack(mat)))));
+				.map(mat -> new Ingredient.ItemValue(NMS.to(new org.bukkit.inventory.ItemStack(mat)))));
 	}
 
 	public static Ingredient createExactRecipeItemStack(List<ItemStack> items, boolean requireNotEmpty) {

@@ -222,7 +222,7 @@ public class EffectHandler {
 
 	public static <T extends Event> void runItem(ItemStack is, ServerWorld world, byte action, T event,
 			EventFunction<T> func) {
-		net.minecraft.world.item.ItemStack nmsIs = NMS.getNMS(is);
+		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
 		if (NBTHelper.hasTag(nmsIs)) {
 			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
 			int effectID = NBTHelper.getItemEffect(nbtTag);
@@ -235,7 +235,7 @@ public class EffectHandler {
 
 	public static <T extends Event> void runItem(ItemStack is, ServerPlayer serverPlayer, byte action, T event,
 			ServerPlayerEventFunction<T> func) {
-		net.minecraft.world.item.ItemStack nmsIs = NMS.getNMS(is);
+		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
 		if (NBTHelper.hasTag(nmsIs)) {
 			CompoundTag nbtTag = NBTHelper.getNBT(nmsIs);
 			int effectID = NBTHelper.getItemEffect(nbtTag);

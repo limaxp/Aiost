@@ -93,9 +93,9 @@ public class Furniture extends PacketObject {
 
 	public Object createEquipmentPacket() {
 		if (is != null)
-			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(is));
+			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is));
 		else
-			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.getNMS(FURNITURES.get(furnitureID)));
+			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(FURNITURES.get(furnitureID)));
 	}
 
 	@Override
@@ -103,7 +103,7 @@ public class Furniture extends PacketObject {
 		super.load(nbt);
 		if (NBTHelper.hasKey(nbt, "mat")) {
 			ItemStack is = new ItemStack(Material.valueOf(nbt.getString("mat")));
-			setItemStack(NBTHelper.setNBT(NMS.getNMS(is), nbt.getCompound("itemNBT")));
+			setItemStack(NBTHelper.setNBT(NMS.to(is), nbt.getCompound("itemNBT")));
 		} else
 			setType(nbt.getInt("fur"));
 		yaw = nbt.getFloat("yaw");
@@ -114,7 +114,7 @@ public class Furniture extends PacketObject {
 		super.save(nbt);
 		if (is != null) {
 			nbt.putString("mat", is.getType().name());
-			nbt.put("itemNBT", NBTHelper.getNBT(NMS.getNMS(is)));
+			nbt.put("itemNBT", NBTHelper.getNBT(NMS.to(is)));
 		} else
 			nbt.putInt("fur", furnitureID);
 		if (yaw != 0)

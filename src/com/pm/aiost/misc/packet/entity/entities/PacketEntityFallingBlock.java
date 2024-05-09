@@ -70,11 +70,11 @@ public class PacketEntityFallingBlock extends PacketEntity {
 	}
 
 	public void setBlockData(BlockData block) {
-		this.blockId = NMS.getCombinedId(NMS.getNMS(block));
+		this.blockId = NMS.getCombinedId(NMS.to(block));
 	}
 
 	public BlockData getBlockData() {
-		return NMS.getBukkit(NMS.getByCombinedId(blockId));
+		return NMS.from(NMS.getByCombinedId(blockId));
 	}
 
 	public void setMaterial(Material material) {

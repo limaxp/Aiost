@@ -253,7 +253,7 @@ public class UnlockableTypes {
 		@Override
 		public void set(ServerPlayer serverPlayer, short id) {
 			ItemStack is = getObject(id);
-			Object item = NMS.getNMS(is).getItem();
+			Object item = NMS.to(is).getItem();
 			if (NMS.isArmor(item)) {
 				System.out.println(NMS.getArmorSlot(item));
 				serverPlayer.setItem(NMS.getArmorSlot(item), is);

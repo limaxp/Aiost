@@ -33,16 +33,16 @@ public class CustomBlock {
 
 	public static void place(Location loc, net.minecraft.world.item.ItemStack is) {
 		loc.getBlock().setType(Material.SPAWNER);
-		place(NMS.getNMS(loc.getWorld()), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), is);
+		place(NMS.to(loc.getWorld()), loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), is);
 	}
 
 	public static void place(Block block, net.minecraft.world.item.ItemStack is) {
 		block.setType(Material.SPAWNER);
-		place(NMS.getNMS(block.getWorld()), block.getX(), block.getY(), block.getZ(), is);
+		place(NMS.to(block.getWorld()), block.getX(), block.getY(), block.getZ(), is);
 	}
 
 	public static void place(World world, int x, int y, int z, ItemStack is) {
-		place(NMS.getNMS(world), x, y, z, NMS.getNMS(is));
+		place(NMS.to(world), x, y, z, NMS.to(is));
 	}
 
 	public static void place(ServerLevel world, int x, int y, int z, net.minecraft.world.item.ItemStack is) {
@@ -73,7 +73,7 @@ public class CustomBlock {
 		// TODO: fix this!
 		if (event.getBlock().getType() == Material.SPAWNER) {
 			Block block = event.getBlock();
-			ServerLevel world = NMS.getNMS(block.getWorld());
+			ServerLevel world = NMS.to(block.getWorld());
 			BlockPos pos = new BlockPos(block.getX(), block.getY(), block.getZ());
 			SpawnerBlockEntity spawner = (SpawnerBlockEntity) world.getBlockEntity(pos);
 			CompoundTag nbt = world.getChunk(pos).getBlockEntityNbt(pos);
