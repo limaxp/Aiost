@@ -3,7 +3,6 @@ package com.pm.aiost.misc.utils.meta;
 import java.util.List;
 
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -17,13 +16,13 @@ import net.minecraft.nbt.CompoundTag;
 public class MetaHelper {
 
 	public static ItemStack set(ItemStack is, String name) {
-		return CraftItemStack.asCraftMirror(set(CraftItemStack.asNMSCopy(is), name));
+		return NMS.from(set(NMS.to(is), name));
 	}
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, String name) {
 		CompoundTag nbt = NBT.getNBT(is);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setDisplayName(display, name);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setDisplayName(components, name);
 		return NBT.loadNMSItem(nbt);
 	}
 
@@ -34,9 +33,9 @@ public class MetaHelper {
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			String name) {
 		CompoundTag nbt = NBT.getNBT(is);
-		NBT.setDurability(nbt, (short) durability);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setDisplayName(display, name);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setDurability(components, (short) durability);
+		NBT.setDisplayName(components, name);
 		return NBT.loadNMSItem(nbt);
 	}
 
@@ -46,8 +45,8 @@ public class MetaHelper {
 
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, List<String> lore) {
 		CompoundTag nbt = NBT.getNBT(is);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setLore(display, lore);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setLore(components, lore);
 		return NBT.loadNMSItem(nbt);
 	}
 
@@ -58,9 +57,9 @@ public class MetaHelper {
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			List<String> lore) {
 		CompoundTag nbt = NBT.getNBT(is);
-		NBT.setDurability(nbt, (short) durability);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setLore(display, lore);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setDurability(components, (short) durability);
+		NBT.setLore(components, lore);
 		return NBT.loadNMSItem(nbt);
 	}
 
@@ -71,9 +70,9 @@ public class MetaHelper {
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, String name,
 			List<String> lore) {
 		CompoundTag nbt = NBT.getNBT(is);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setDisplayName(display, name);
-		NBT.setLore(display, lore);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setDisplayName(components, name);
+		NBT.setLore(components, lore);
 		return NBT.loadNMSItem(nbt);
 	}
 
@@ -84,10 +83,10 @@ public class MetaHelper {
 	public static net.minecraft.world.item.ItemStack set(net.minecraft.world.item.ItemStack is, int durability,
 			String name, List<String> lore) {
 		CompoundTag nbt = NBT.getNBT(is);
-		NBT.setDurability(nbt, (short) durability);
-		CompoundTag display = NBT.getOrAddDisplay(nbt);
-		NBT.setDisplayName(display, name);
-		NBT.setLore(display, lore);
+		CompoundTag components = NBT.getOrAddComponents(nbt);
+		NBT.setDurability(components, (short) durability);
+		NBT.setDisplayName(components, name);
+		NBT.setLore(components, lore);
 		return NBT.loadNMSItem(nbt);
 	}
 

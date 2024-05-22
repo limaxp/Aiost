@@ -273,25 +273,27 @@ public class ItemLoader {
 //		else
 		nmsIs = NMS.to(new ItemStack(material));
 
-		CompoundTag nbtTag;
+		CompoundTag tag;
 		if (itemSection.contains("nbt"))
-			nbtTag = loadNBT(itemSection);
+			tag = loadNBT(itemSection);
 		else
-			nbtTag = new CompoundTag();
+			tag = new CompoundTag();
 
-		nbtTag.putString("id", NMSItems.getKey(nmsIs.getItem()).getPath());
-		CompoundTag display = NBT.addDisplay(nbtTag);
-		NBT.setDisplayName(display, itemSection.getName());
+		tag.putString("id", NMSItems.getKey(nmsIs.getItem()).getPath());
+		CompoundTag components = new CompoundTag();
+		tag.put("components", components);
+
+		NBT.setDisplayName(components, itemSection.getName());
 		if (itemSection.contains("lore"))
-			NBT.setLore(display, itemSection.getStringList("lore"));
+			NBT.setLore(components, itemSection.getStringList("lore"));
 
 		if (itemSection.contains("predicate"))
-			loadPredicates(itemSection, material, nbtTag);
+			loadPredicates(itemSection, material, components);
 
 		if (itemSection.contains("effects"))
-			loadEffects(itemSection, nbtTag);
+			loadEffects(itemSection, components);
 
-		return NBT.loadNMSItem(nbtTag, nmsIs);
+		return NBT.loadNMSItem(tag, nmsIs);
 	}
 
 	public static Material loadMaterial(ConfigurationSection itemSection) {
@@ -316,19 +318,19 @@ public class ItemLoader {
 		return new CompoundTag();
 	}
 
-	public static void loadPredicates(ConfigurationSection itemSection, Material material, CompoundTag nbtTag) {
+	public static void loadPredicates(ConfigurationSection itemSection, Material material, CompoundTag tag) {
 		ConfigurationSection predicateSection = itemSection.getConfigurationSection("predicate");
 		if (predicateSection.contains("durability")) {
 			int durability = predicateSection.getInt("durability");
 			if (durability != 0)
-				NBT.setDurability(nbtTag, (short) (material.getMaxDurability() - durability + 1));
+				NBT.setDurability(tag, (short) (material.getMaxDurability() - durability + 1));
 		}
 		if (predicateSection.contains("custom_model_data"))
-			NBT.setCustomModelData(nbtTag, predicateSection.getInt("custom_model_data"));
+			NBT.setCustomModelData(tag, predicateSection.getInt("custom_model_data"));
 	}
 
-	public static void loadEffects(ConfigurationSection itemSection, CompoundTag nbtTag) {
-		NBT.setItemEffect(nbtTag, EffectBuilder.loadEffects(itemSection.getConfigurationSection("effects"))
+	public static void loadEffects(ConfigurationSection itemSection, CompoundTag tag) {
+		NBT.setItemEffect(tag, EffectBuilder.loadEffects(itemSection.getConfigurationSection("effects"))
 				.createItemEntry(itemSection.getName()));
 	}
 

@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_20_R4.CraftRegistry;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -26,6 +27,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.numbers.NumberFormat;
 import net.minecraft.network.protocol.game.ClientboundAddEntityPacket;
@@ -155,7 +157,7 @@ public class PacketFactory {
 			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList) {
 		try {
 			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) NMS.PLAYERINFO_CONSTRUCTOR
-					.invoke(Unpooled.buffer(0));
+					.invoke(new RegistryFriendlyByteBuf(Unpooled.buffer(0), CraftRegistry.getMinecraftRegistry()));
 			NMS.PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
 			NMS.PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
 			return packet;

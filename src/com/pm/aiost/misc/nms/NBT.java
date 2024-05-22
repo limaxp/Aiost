@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.InflaterInputStream;
 
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_20_R4.CraftRegistry;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftItemStack;
@@ -29,6 +30,7 @@ import com.pm.aiost.misc.log.Logger;
 
 import net.minecraft.core.component.DataComponentMap;
 import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.NbtAccounter;
@@ -39,52 +41,53 @@ import net.minecraft.world.item.Item;
 
 public class NBT {
 
-	public static final String DISPLAY_KEY = "display";
-	public static final String NAME_KEY = "Name";
-	public static final String LORE_KEY = "Lore";
+	public static final String COMPONENTS_KEY = "components";
+	public static final String CUSTOM_DATA_KEY = getName(DataComponents.CUSTOM_DATA);
+	public static final String CUSTOM_NAME_KEY = getName(DataComponents.CUSTOM_NAME);
+	public static final String LORE_KEY = getName(DataComponents.LORE);
+	public static final String DAMAGE_KEY = getName(DataComponents.DAMAGE);
+	public static final String CUSTOM_MODEL_DATA_KEY = getName(DataComponents.CUSTOM_MODEL_DATA);
+	public static final String BLOCK_ENTITY_KEY = getName(DataComponents.BLOCK_ENTITY_DATA);
+	public static final String ENCHANTMENTS_KEY = getName(DataComponents.ENCHANTMENTS);
+	public static final String PATTERNS_KEY = getName(DataComponents.BANNER_PATTERNS);
+	public static final String NAME_KEY = "name";
 	public static final String COLOR_KEY = "color";
-	public static final String ENCHANTMENTS_KEY = "Enchantments";
 	public static final String ID_KEY = "id";
 	public static final String LEVEL_KEY = "lvl";
-	public static final String BLOCK_ENTITY_KEY = "BlockEntityTag";
-	public static final String PATTERNS_KEY = "Patterns";
-	public static final String PATTERN_KEY = "Pattern";
-	public static final String SKULL_OWNER_KEY = "SkullOwner";
-	public static final String PROPERTIES_KEY = "Properties";
+	public static final String PATTERN_KEY = "pattern";
+	public static final String PROFILE_KEY = getName(DataComponents.PROFILE);
+	public static final String PROPERTIES_KEY = "properties";
 	public static final String TEXTURES_KEY = "textures";
-	public static final String SIGNATURE_KEY = "Signature";
-	public static final String VALUE_KEY = "Value";
-	public static final String HIDE_FLAGS_KEY = "HideFlags";
-	public static final String CAN_DESTROY_KEY = "CanDestroy";
-	public static final String CAN_PLACE_ON_KEY = "CanPlaceOn";
-	public static final String ITEMS_KEY = "Items";
-	public static final String ARMOR_ITEMS_KEY = "ArmorItems";
-	public static final String UNBREAKABLE_KEY = "Unbreakable";
-	public static final String COUNT_KEY = "Count";
-	public static final String SLOT_KEY = "Slot";
+	public static final String SIGNATURE_KEY = "signature";
+	public static final String VALUE_KEY = "value";
+	public static final String HIDE_ADDITIONAL_TOOLTIP_KEY = getName(DataComponents.HIDE_ADDITIONAL_TOOLTIP);
+	public static final String HIDE_TOOLTIP_KEY = getName(DataComponents.HIDE_TOOLTIP);
+	public static final String CAN_DESTROY_KEY = getName(DataComponents.CAN_BREAK);
+	public static final String CAN_PLACE_ON_KEY = getName(DataComponents.CAN_PLACE_ON);
+	public static final String ITEMS_KEY = "items";
+	public static final String ARMOR_ITEMS_KEY = "armorItems";
+	public static final String UNBREAKABLE_KEY = getName(DataComponents.UNBREAKABLE);
+	public static final String COUNT_KEY = "count";
+	public static final String SLOT_KEY = "slot";
 	public static final String TAG_KEY = "tag";
-	public static final String DAMAGE_KEY = "Damage";
-	public static final String CUSTOM_MODEL_DATA_KEY = "CustomModelData";
-	public static final String ENTITY_TAG_KEY = "EntityTag";
-	public static final String SPAWN_DATA_KEY = "SpawnData";
-	public static final String CUSTOM_NAME_KEY = "CustomName";
-	public static final String CUSTOM_NAME_VISIBLE_KEY = "CustomNameVisible";
+	public static final String ENTITY_TAG_KEY = getName(DataComponents.ENTITY_DATA);
+	public static final String SPAWN_DATA_KEY = "spawnData";
 	public static final String NO_AI_KEY = "NoAI";
 	public static final String INVISIBLE_KEY = "Invisible";
 	public static final String SILENT_KEY = "Silent";
 	public static final String MARKER_KEY = "Marker";
-	public static final String ATTRIBUTE_MODIFIERS_KEY = "AttributeModifiers";
-	public static final String ATTRIBUTE_NAME_KEY = "AttributeName";
-	public static final String AMOUNT_KEY = "Amount";
-	public static final String OPERATION_KEY = "Operation";
+	public static final String ATTRIBUTE_MODIFIERS_KEY = getName(DataComponents.ATTRIBUTE_MODIFIERS);
+	public static final String ATTRIBUTE_NAME_KEY = "type";
+	public static final String AMOUNT_KEY = "amount";
+	public static final String OPERATION_KEY = "operation";
 	public static final String UUID_LEAST_KEY = "UUIDLeast";
 	public static final String UUID_MOST_KEY = "UUIDMost";
 	public static final String SPAWN_RANGE_KEY = "SpawnRange";
 	public static final String SPAWN_COUNT_KEY = "SpawnCount";
 	public static final String REQUIRED_PLAYER_RANGE_KEY = "RequiredPlayerRange";
 	public static final String MAX_NEARBY_ENTITIES_KEY = "MaxNearbyEntities";
-	public static final String ITEM_EFFECT_KEY = "ITEM_EFFECT";
-	public static final String WORLD_EFFECT_KEY = "WORLD_EFFECT";
+	public static final String ITEM_EFFECT_KEY = "item_effect";
+	public static final String WORLD_EFFECT_KEY = "world_effect";
 
 	public static class NBTType {
 
@@ -112,6 +115,10 @@ public class NBT {
 		public static final byte HIDE_OTHERS = 32;
 	}
 
+	private static String getName(DataComponentType<?> type) {
+		return type.toString();
+	}
+
 	public static CompoundTag fromString(String s) {
 		try {
 			return TagParser.parseTag(s);
@@ -121,10 +128,10 @@ public class NBT {
 		}
 	}
 
-	public static byte[] toBytes(CompoundTag nbtTag) {
+	public static byte[] toBytes(CompoundTag tag) {
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
 				DataOutputStream dos = new DataOutputStream(baos)) {
-			nbtTag.write(dos);
+			tag.write(dos);
 			dos.flush();
 			return baos.toByteArray();
 		} catch (IOException e) {
@@ -142,10 +149,10 @@ public class NBT {
 		}
 	}
 
-	public static boolean toFile(File effectFile, CompoundTag nbt) {
+	public static boolean toFile(File effectFile, CompoundTag tag) {
 		try (DataOutputStream dau = new DataOutputStream(
 				new BufferedOutputStream(new DeflaterOutputStream(new FileOutputStream(effectFile))))) {
-			nbt.write(dau);
+			tag.write(dau);
 			return true;
 		} catch (FileNotFoundException e) {
 			Logger.err("NBTHelper: Error! No file found for name: " + effectFile.getName(), e);
@@ -176,13 +183,13 @@ public class NBT {
 	}
 
 	public static CompoundTag getNBT(net.minecraft.world.entity.Entity entity) {
-		CompoundTag nbtTag = new CompoundTag();
-		entity.saveWithoutId(nbtTag);
-		return nbtTag;
+		CompoundTag tag = new CompoundTag();
+		entity.saveWithoutId(tag);
+		return tag;
 	}
 
-	public static void setNBT(net.minecraft.world.entity.Entity entity, CompoundTag nbtTag) {
-		entity.load(nbtTag);
+	public static void setNBT(net.minecraft.world.entity.Entity entity, CompoundTag tag) {
+		entity.load(tag);
 	}
 
 	public static CompoundTag getNBT(ItemStack is) {
@@ -201,130 +208,152 @@ public class NBT {
 		return is.getComponents() != null; // TODO NOT NEEDED!
 	}
 
-	public static CompoundTag saveItem(CompoundTag item, ItemStack is) {
-		return saveItem(item, NMS.to(is));
+	public static CompoundTag saveItem(CompoundTag tag, ItemStack is) {
+		return saveItem(tag, NMS.to(is));
 	}
 
-	public static CompoundTag saveItem(CompoundTag item, net.minecraft.world.item.ItemStack is) {
-		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry(), item);
+	public static CompoundTag saveItem(CompoundTag tag, net.minecraft.world.item.ItemStack is) {
+		return (CompoundTag) is.save(CraftRegistry.getMinecraftRegistry(), tag);
 	}
 
-	public static ItemStack loadItem(CompoundTag item) {
-		return CraftItemStack.asBukkitCopy(loadNMSItem(item));
+	public static ItemStack loadItem(CompoundTag tag) {
+		return CraftItemStack.asBukkitCopy(loadNMSItem(tag));
 	}
 
-	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item) {
-		return loadNMSItem(item, net.minecraft.world.item.ItemStack.EMPTY);
+	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag tag) {
+		return loadNMSItem(tag, net.minecraft.world.item.ItemStack.EMPTY);
 	}
 
-	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag item,
+	public static net.minecraft.world.item.ItemStack loadNMSItem(CompoundTag tag,
 			net.minecraft.world.item.ItemStack defaultValue) {
 		Optional<net.minecraft.world.item.ItemStack> optResult = net.minecraft.world.item.ItemStack
-				.parse(CraftRegistry.getMinecraftRegistry(), item);
+				.parse(CraftRegistry.getMinecraftRegistry(), tag);
 		if (optResult.isEmpty())
 			return defaultValue;
 		return optResult.get();
 	}
 
-	public static CompoundTag getOrAddDisplay(CompoundTag nbtTag) {
-		if (hasKey(nbtTag, DISPLAY_KEY))
-			return nbtTag.getCompound(DISPLAY_KEY);
-		else
-			return addDisplay(nbtTag);
+	public static StringTag asJsonText(String text) {
+		return asJsonText(text, ChatColor.WHITE, false);
 	}
 
-	public static CompoundTag addDisplay(CompoundTag nbtTag) {
+	public static StringTag asJsonText(String text, ChatColor color, boolean italic) {
+		return asJsonText(text, color.asBungee().getName(), italic);
+	}
+
+	public static StringTag asJsonText(String text, String color, boolean italic) {
+		return StringTag.valueOf("{\"text\":\"" + text + "\",\"color\":\"" + color + "\",\"italic\":"
+				+ (italic ? "true" : "false") + "}");
+	}
+
+	public static CompoundTag getOrAddCompound(CompoundTag tag, String key) {
+		if (hasKey(tag, key))
+			return tag.getCompound(key);
+		CompoundTag result = new CompoundTag();
+		tag.put(key, result);
+		return result;
+	}
+
+	public static CompoundTag getOrAddComponents(CompoundTag tag) {
+		return getOrAddCompound(tag, COMPONENTS_KEY);
+	}
+
+	public static CompoundTag addComponents(CompoundTag tag) {
 		CompoundTag display = new CompoundTag();
-		nbtTag.put(DISPLAY_KEY, display);
+		tag.put(COMPONENTS_KEY, display);
 		return display;
 	}
 
-	public static void removeDisplay(CompoundTag nbtTag) {
-		nbtTag.remove(DISPLAY_KEY);
+	public static void removeComponents(CompoundTag tag) {
+		tag.remove(COMPONENTS_KEY);
 	}
 
-	public static CompoundTag getDisplay(CompoundTag nbtTag) {
-		return nbtTag.getCompound(DISPLAY_KEY);
+	public static CompoundTag getComponents(CompoundTag tag) {
+		return tag.getCompound(COMPONENTS_KEY);
 	}
 
-	public static boolean hasDisplay(CompoundTag nbtTag) {
-		return hasKey(nbtTag, DISPLAY_KEY);
+	public static boolean hasComponents(CompoundTag tag) {
+		return hasKey(tag, COMPONENTS_KEY);
 	}
 
-	public static void setDisplayName(CompoundTag display, String name) {
-		display.put(NAME_KEY, StringTag.valueOf(name));
+	public static void setDisplayName(CompoundTag tag, String name) {
+		tag.put(CUSTOM_NAME_KEY, asJsonText(name));
 	}
 
-	public static void removeDisplayName(CompoundTag display) {
-		display.remove(NAME_KEY);
+	public static void setDisplayName(CompoundTag tag, String name, ChatColor color, boolean italic) {
+		tag.put(CUSTOM_NAME_KEY, asJsonText(name, color, italic));
 	}
 
-	public static String getDisplayName(CompoundTag display) {
-		return ((StringTag) display.get(NAME_KEY)).getAsString();
+	public static void removeDisplayName(CompoundTag tag) {
+		tag.remove(CUSTOM_NAME_KEY);
 	}
 
-	public static boolean hasDisplayName(CompoundTag display) {
-		return hasKey(display, NAME_KEY);
+	public static String getDisplayName(CompoundTag tag) {
+		return ((StringTag) tag.get(CUSTOM_NAME_KEY)).getAsString();
 	}
 
-	public static void setLore(CompoundTag display, List<String> lore) {
+	public static boolean hasDisplayName(CompoundTag tag) {
+		return hasKey(tag, CUSTOM_NAME_KEY);
+	}
+
+	public static void setLore(CompoundTag tag, List<String> lore) {
 		ListTag nbtList = new ListTag();
 		int size = lore.size();
 		for (int i = 0; i < size; i++)
-			nbtList.add(StringTag.valueOf(lore.get(i)));
-		display.put(LORE_KEY, nbtList);
+			nbtList.add(asJsonText(lore.get(i)));
+		tag.put(LORE_KEY, nbtList);
 	}
 
-	public static void removeLore(CompoundTag display) {
-		display.remove(LORE_KEY);
+	public static void removeLore(CompoundTag tag) {
+		tag.remove(LORE_KEY);
 	}
 
-	public static ListTag getLore(CompoundTag display) {
-		return display.getList(LORE_KEY, NBTType.STRING);
+	public static ListTag getLore(CompoundTag tag) {
+		return tag.getList(LORE_KEY, NBTType.STRING);
 	}
 
-	public static String getLore(CompoundTag display, int index) {
-		return display.getList(LORE_KEY, NBTType.STRING).get(index).getAsString();
+	public static String getLore(CompoundTag tag, int index) {
+		return tag.getList(LORE_KEY, NBTType.STRING).get(index).getAsString();
 	}
 
-	public static boolean hasLore(CompoundTag display) {
-		return hasKey(display, LORE_KEY);
+	public static boolean hasLore(CompoundTag tag) {
+		return hasKey(tag, LORE_KEY);
 	}
 
-	public static void setColor(CompoundTag display, int color) {
-		display.putInt(COLOR_KEY, color);
+	public static void setDurability(CompoundTag tag, short durability) {
+		tag.putShort(DAMAGE_KEY, durability);
 	}
 
-	public static void removeColor(CompoundTag display) {
-		display.remove(COLOR_KEY);
+	public static void removeDurability(CompoundTag tag) {
+		tag.remove(DAMAGE_KEY);
 	}
 
-	public static int getColor(CompoundTag display) {
-		return display.getInt(COLOR_KEY);
+	public static short getDurability(CompoundTag tag) {
+		return tag.getShort(DAMAGE_KEY);
 	}
 
-	public static boolean hasColor(CompoundTag display) {
-		return hasKey(display, COLOR_KEY);
+	public static boolean hasDurability(CompoundTag tag) {
+		return hasKey(tag, DAMAGE_KEY);
 	}
 
-	public static ListTag addEnchantmentList(CompoundTag nbtTag) {
+	public static ListTag addEnchantmentList(CompoundTag tag) {
 		ListTag ench = new ListTag();
-		nbtTag.put(ENCHANTMENTS_KEY, ench);
+		tag.put(ENCHANTMENTS_KEY, ench);
 		return ench;
 	}
 
-	public static void removeEnchantmentList(CompoundTag nbtTag) {
-		nbtTag.remove(ENCHANTMENTS_KEY);
+	public static void removeEnchantmentList(CompoundTag tag) {
+		tag.remove(ENCHANTMENTS_KEY);
 	}
 
-	public static ListTag getEnchantmentList(CompoundTag nbtTag) {
-		if (hasKey(nbtTag, ENCHANTMENTS_KEY))
-			return nbtTag.getList(ENCHANTMENTS_KEY, NBTType.COMPOUND);
-		return addEnchantmentList(nbtTag);
+	public static ListTag getEnchantmentList(CompoundTag tag) {
+		if (hasKey(tag, ENCHANTMENTS_KEY))
+			return tag.getList(ENCHANTMENTS_KEY, NBTType.COMPOUND);
+		return addEnchantmentList(tag);
 	}
 
-	public static boolean hasEnchantmentList(CompoundTag nbtTag) {
-		return hasKey(nbtTag, ENCHANTMENTS_KEY);
+	public static boolean hasEnchantmentList(CompoundTag tag) {
+		return hasKey(tag, ENCHANTMENTS_KEY);
 	}
 
 	public static void addEnchantment(ListTag ench, String id, short level) {
@@ -387,22 +416,22 @@ public class NBT {
 		return enchantment.getShort(LEVEL_KEY);
 	}
 
-	public static CompoundTag addBlockEntity(CompoundTag nbtTag) {
+	public static CompoundTag addBlockEntity(CompoundTag tag) {
 		CompoundTag blockEntityTag = new CompoundTag();
-		nbtTag.put(BLOCK_ENTITY_KEY, blockEntityTag);
+		tag.put(BLOCK_ENTITY_KEY, blockEntityTag);
 		return blockEntityTag;
 	}
 
-	public static void removeBlockEntity(CompoundTag nbtTag) {
-		nbtTag.remove(BLOCK_ENTITY_KEY);
+	public static void removeBlockEntity(CompoundTag tag) {
+		tag.remove(BLOCK_ENTITY_KEY);
 	}
 
-	public static CompoundTag getBlockEntity(CompoundTag nbtTag) {
-		return nbtTag.getCompound(BLOCK_ENTITY_KEY);
+	public static CompoundTag getBlockEntity(CompoundTag tag) {
+		return tag.getCompound(BLOCK_ENTITY_KEY);
 	}
 
-	public static boolean hasBlockEntity(CompoundTag nbtTag) {
-		return hasKey(nbtTag, BLOCK_ENTITY_KEY);
+	public static boolean hasBlockEntity(CompoundTag tag) {
+		return hasKey(tag, BLOCK_ENTITY_KEY);
 	}
 
 	public static ListTag addPatternList(CompoundTag blockEntityTag) {
@@ -483,22 +512,22 @@ public class NBT {
 		return pattern.getInt(COLOR_KEY);
 	}
 
-	public static CompoundTag addSkullOwner(CompoundTag nbtTag) {
+	public static CompoundTag addSkullOwner(CompoundTag tag) {
 		CompoundTag skullOwner = new CompoundTag();
-		nbtTag.put(SKULL_OWNER_KEY, skullOwner);
+		tag.put(PROFILE_KEY, skullOwner);
 		return skullOwner;
 	}
 
-	public static void removeSkullOwner(CompoundTag nbtTag) {
-		nbtTag.remove(SKULL_OWNER_KEY);
+	public static void removeSkullOwner(CompoundTag tag) {
+		tag.remove(PROFILE_KEY);
 	}
 
-	public static CompoundTag getSkullOwner(CompoundTag nbtTag) {
-		return nbtTag.getCompound(SKULL_OWNER_KEY);
+	public static CompoundTag getSkullOwner(CompoundTag tag) {
+		return tag.getCompound(PROFILE_KEY);
 	}
 
-	public static boolean hasSkullOwner(CompoundTag nbtTag) {
-		return hasKey(nbtTag, SKULL_OWNER_KEY);
+	public static boolean hasSkullOwner(CompoundTag tag) {
+		return hasKey(tag, PROFILE_KEY);
 	}
 
 	public static void setSkullOwnerId(CompoundTag skullOwner, String id) {
@@ -579,106 +608,106 @@ public class NBT {
 		return false;
 	}
 
-	public static void setHideFlags(CompoundTag nbtTag, int hideFlags) {
-		nbtTag.putInt(HIDE_FLAGS_KEY, hideFlags);
+	public static void setHideFlags(CompoundTag tag, int hideFlags) {
+		tag.putInt(HIDE_ADDITIONAL_TOOLTIP_KEY, hideFlags);
 	}
 
-	public static void removeHideFlags(CompoundTag nbtTag) {
-		nbtTag.remove(HIDE_FLAGS_KEY);
+	public static void removeHideFlags(CompoundTag tag) {
+		tag.remove(HIDE_ADDITIONAL_TOOLTIP_KEY);
 	}
 
-	public static int getHideFlags(CompoundTag nbtTag) {
-		return nbtTag.getInt(HIDE_FLAGS_KEY);
+	public static int getHideFlags(CompoundTag tag) {
+		return tag.getInt(HIDE_ADDITIONAL_TOOLTIP_KEY);
 	}
 
-	public static boolean hasHideFlags(CompoundTag nbtTag) {
-		return hasKey(nbtTag, HIDE_FLAGS_KEY);
+	public static boolean hasHideFlags(CompoundTag tag) {
+		return hasKey(tag, HIDE_ADDITIONAL_TOOLTIP_KEY);
 	}
 
-	public static void addHideFlag(CompoundTag nbtTag, int hideFlag) {
-		nbtTag.putInt(HIDE_FLAGS_KEY, nbtTag.getInt(HIDE_FLAGS_KEY) + hideFlag);
+	public static void addHideFlag(CompoundTag tag, int hideFlag) {
+		tag.putInt(HIDE_ADDITIONAL_TOOLTIP_KEY, tag.getInt(HIDE_ADDITIONAL_TOOLTIP_KEY) + hideFlag);
 	}
 
-	public static void removeHideFlag(CompoundTag nbtTag, int hideFlag) {
-		nbtTag.putInt(HIDE_FLAGS_KEY, nbtTag.getInt(HIDE_FLAGS_KEY) - hideFlag);
+	public static void removeHideFlag(CompoundTag tag, int hideFlag) {
+		tag.putInt(HIDE_ADDITIONAL_TOOLTIP_KEY, tag.getInt(HIDE_ADDITIONAL_TOOLTIP_KEY) - hideFlag);
 	}
 
-	public static boolean hasHideFlag(CompoundTag nbtTag, int hideFlag) {
-		return (nbtTag.getInt(HIDE_FLAGS_KEY) & hideFlag) > 0;
+	public static boolean hasHideFlag(CompoundTag tag, int hideFlag) {
+		return (tag.getInt(HIDE_ADDITIONAL_TOOLTIP_KEY) & hideFlag) > 0;
 	}
 
-	public static boolean switchHideFlag(CompoundTag nbtTag, int hideFlag) {
-		if (hasHideFlag(nbtTag, hideFlag)) {
-			removeHideFlag(nbtTag, hideFlag);
+	public static boolean switchHideFlag(CompoundTag tag, int hideFlag) {
+		if (hasHideFlag(tag, hideFlag)) {
+			removeHideFlag(tag, hideFlag);
 			return false;
 		} else {
-			addHideFlag(nbtTag, hideFlag);
+			addHideFlag(tag, hideFlag);
 			return true;
 		}
 	}
 
-	public static ListTag addCanDestroyList(CompoundTag nbtTag) {
+	public static ListTag addCanDestroyList(CompoundTag tag) {
 		ListTag canDestroy = new ListTag();
-		nbtTag.put(CAN_DESTROY_KEY, canDestroy);
+		tag.put(CAN_DESTROY_KEY, canDestroy);
 		return canDestroy;
 	}
 
-	public static void removeCanDestroyList(CompoundTag nbtTag) {
-		nbtTag.remove(CAN_DESTROY_KEY);
+	public static void removeCanDestroyList(CompoundTag tag) {
+		tag.remove(CAN_DESTROY_KEY);
 	}
 
-	public static ListTag getCanDestroyList(CompoundTag nbtTag) {
-		if (hasKey(nbtTag, CAN_DESTROY_KEY))
-			return nbtTag.getList(CAN_DESTROY_KEY, NBTType.STRING);
+	public static ListTag getCanDestroyList(CompoundTag tag) {
+		if (hasKey(tag, CAN_DESTROY_KEY))
+			return tag.getList(CAN_DESTROY_KEY, NBTType.STRING);
 		else
-			return addCanDestroyList(nbtTag);
+			return addCanDestroyList(tag);
 	}
 
-	public static boolean hasCanDestroyList(CompoundTag nbtTag) {
-		return hasKey(nbtTag, CAN_DESTROY_KEY);
+	public static boolean hasCanDestroyList(CompoundTag tag) {
+		return hasKey(tag, CAN_DESTROY_KEY);
 	}
 
-	public static void setCanDestroy(CompoundTag nbtTag, Material... materials) {
-		ListTag canDestroy = addCanDestroyList(nbtTag);
+	public static void setCanDestroy(CompoundTag tag, Material... materials) {
+		ListTag canDestroy = addCanDestroyList(tag);
 		for (Material mat : materials)
 			canDestroy.add(StringTag.valueOf(materialToString(mat)));
 	}
 
-	public static void setCanDestroy(CompoundTag nbtTag, String... materials) {
-		ListTag canDestroy = addCanDestroyList(nbtTag);
+	public static void setCanDestroy(CompoundTag tag, String... materials) {
+		ListTag canDestroy = addCanDestroyList(tag);
 		for (String mat : materials)
 			canDestroy.add(StringTag.valueOf(mat));
 	}
 
-	public static ListTag addCanPlaceOnList(CompoundTag nbtTag) {
+	public static ListTag addCanPlaceOnList(CompoundTag tag) {
 		ListTag list = new ListTag();
-		nbtTag.put(CAN_PLACE_ON_KEY, list);
+		tag.put(CAN_PLACE_ON_KEY, list);
 		return list;
 	}
 
-	public static void removeCanPlaceOnList(CompoundTag nbtTag) {
-		nbtTag.remove(CAN_PLACE_ON_KEY);
+	public static void removeCanPlaceOnList(CompoundTag tag) {
+		tag.remove(CAN_PLACE_ON_KEY);
 	}
 
-	public static ListTag getCanPlaceOnList(CompoundTag nbtTag) {
-		if (hasKey(nbtTag, CAN_PLACE_ON_KEY))
-			return nbtTag.getList(CAN_PLACE_ON_KEY, NBTType.STRING);
+	public static ListTag getCanPlaceOnList(CompoundTag tag) {
+		if (hasKey(tag, CAN_PLACE_ON_KEY))
+			return tag.getList(CAN_PLACE_ON_KEY, NBTType.STRING);
 		else
-			return addCanPlaceOnList(nbtTag);
+			return addCanPlaceOnList(tag);
 	}
 
-	public static boolean hasCanPlaceOnList(CompoundTag nbtTag) {
-		return hasKey(nbtTag, CAN_PLACE_ON_KEY);
+	public static boolean hasCanPlaceOnList(CompoundTag tag) {
+		return hasKey(tag, CAN_PLACE_ON_KEY);
 	}
 
-	public static void setCanPlaceOn(CompoundTag nbtTag, Material... materials) {
-		ListTag canPlaceOn = addCanPlaceOnList(nbtTag);
+	public static void setCanPlaceOn(CompoundTag tag, Material... materials) {
+		ListTag canPlaceOn = addCanPlaceOnList(tag);
 		for (Material mat : materials)
 			canPlaceOn.add(StringTag.valueOf(materialToString(mat)));
 	}
 
-	public static void setCanPlaceOn(CompoundTag nbtTag, String... materials) {
-		ListTag canPlaceOn = addCanPlaceOnList(nbtTag);
+	public static void setCanPlaceOn(CompoundTag tag, String... materials) {
+		ListTag canPlaceOn = addCanPlaceOnList(tag);
 		for (String mat : materials)
 			canPlaceOn.add(StringTag.valueOf(mat));
 	}
@@ -986,62 +1015,62 @@ public class NBT {
 		return items.size() > index;
 	}
 
-	public static void setUnbreakable(CompoundTag nbtTag, boolean unbreakable) {
-		nbtTag.putBoolean(UNBREAKABLE_KEY, unbreakable);
+	public static void setUnbreakable(CompoundTag tag, boolean unbreakable) {
+		tag.putBoolean(UNBREAKABLE_KEY, unbreakable);
 	}
 
-	public static void getUnbreakable(CompoundTag nbtTag) {
-		nbtTag.getBoolean(UNBREAKABLE_KEY);
+	public static void getUnbreakable(CompoundTag tag) {
+		tag.getBoolean(UNBREAKABLE_KEY);
 	}
 
-	public static void hasUnbreakable(CompoundTag nbtTag) {
-		hasKey(nbtTag, UNBREAKABLE_KEY);
+	public static void hasUnbreakable(CompoundTag tag) {
+		hasKey(tag, UNBREAKABLE_KEY);
 	}
 
-	public static boolean switchUnbreakable(CompoundTag nbtTag) {
-		if (nbtTag.getBoolean(UNBREAKABLE_KEY)) {
-			nbtTag.putBoolean(UNBREAKABLE_KEY, false);
+	public static boolean switchUnbreakable(CompoundTag tag) {
+		if (tag.getBoolean(UNBREAKABLE_KEY)) {
+			tag.putBoolean(UNBREAKABLE_KEY, false);
 			return false;
 		} else {
-			nbtTag.putBoolean(UNBREAKABLE_KEY, true);
+			tag.putBoolean(UNBREAKABLE_KEY, true);
 			return true;
 		}
 	}
 
-	public static CompoundTag addEntityTag(CompoundTag nbtTag) {
+	public static CompoundTag addEntityTag(CompoundTag tag) {
 		CompoundTag entityTag = new CompoundTag();
-		nbtTag.put(ENTITY_TAG_KEY, entityTag);
+		tag.put(ENTITY_TAG_KEY, entityTag);
 		return entityTag;
 	}
 
-	public static void removeEntityTag(CompoundTag nbtTag) {
-		nbtTag.remove(ENTITY_TAG_KEY);
+	public static void removeEntityTag(CompoundTag tag) {
+		tag.remove(ENTITY_TAG_KEY);
 	}
 
-	public static CompoundTag getEntityTag(CompoundTag nbtTag) {
-		return nbtTag.getCompound(ENTITY_TAG_KEY);
+	public static CompoundTag getEntityTag(CompoundTag tag) {
+		return tag.getCompound(ENTITY_TAG_KEY);
 	}
 
-	public static boolean hasEntityTag(CompoundTag nbtTag) {
-		return hasKey(nbtTag, ENTITY_TAG_KEY);
+	public static boolean hasEntityTag(CompoundTag tag) {
+		return hasKey(tag, ENTITY_TAG_KEY);
 	}
 
-	public static CompoundTag addSpawnData(CompoundTag nbtTag) {
+	public static CompoundTag addSpawnData(CompoundTag tag) {
 		CompoundTag entityTag = new CompoundTag();
-		nbtTag.put(SPAWN_DATA_KEY, entityTag);
+		tag.put(SPAWN_DATA_KEY, entityTag);
 		return entityTag;
 	}
 
-	public static void removeSpawnData(CompoundTag nbtTag) {
-		nbtTag.remove(SPAWN_DATA_KEY);
+	public static void removeSpawnData(CompoundTag tag) {
+		tag.remove(SPAWN_DATA_KEY);
 	}
 
-	public static CompoundTag getSpawnData(CompoundTag nbtTag) {
-		return nbtTag.getCompound(SPAWN_DATA_KEY);
+	public static CompoundTag getSpawnData(CompoundTag tag) {
+		return tag.getCompound(SPAWN_DATA_KEY);
 	}
 
-	public static boolean hasSpawnData(CompoundTag nbtTag) {
-		return hasKey(nbtTag, SPAWN_DATA_KEY);
+	public static boolean hasSpawnData(CompoundTag tag) {
+		return hasKey(tag, SPAWN_DATA_KEY);
 	}
 
 	public static void setEntityId(CompoundTag entityTag, EntityType entityType) {
@@ -1084,18 +1113,6 @@ public class NBT {
 
 	public static boolean hasEntityName(CompoundTag entityTag, String name) {
 		return hasKey(entityTag, CUSTOM_NAME_KEY);
-	}
-
-	public static void setNameVisible(CompoundTag entityTag, boolean isVisible) {
-		entityTag.putBoolean(CUSTOM_NAME_VISIBLE_KEY, isVisible);
-	}
-
-	public static void removeNameVisible(CompoundTag entityTag) {
-		entityTag.remove(CUSTOM_NAME_VISIBLE_KEY);
-	}
-
-	public static boolean hasNameVisible(CompoundTag entityTag) {
-		return entityTag.getBoolean(CUSTOM_NAME_VISIBLE_KEY);
 	}
 
 	public static void setNoAi(CompoundTag entityTag, boolean hasNoAi) {
@@ -1146,24 +1163,24 @@ public class NBT {
 		return entityTag.getBoolean(MARKER_KEY);
 	}
 
-	public static ListTag addAttributeModifiersList(CompoundTag nbtTag) {
+	public static ListTag addAttributeModifiersList(CompoundTag tag) {
 		ListTag attributeModifiers = new ListTag();
-		nbtTag.put(ATTRIBUTE_MODIFIERS_KEY, attributeModifiers);
+		tag.put(ATTRIBUTE_MODIFIERS_KEY, attributeModifiers);
 		return attributeModifiers;
 	}
 
-	public static void removeAttributeModifiersList(CompoundTag nbtTag) {
-		nbtTag.remove(ATTRIBUTE_MODIFIERS_KEY);
+	public static void removeAttributeModifiersList(CompoundTag tag) {
+		tag.remove(ATTRIBUTE_MODIFIERS_KEY);
 	}
 
-	public static ListTag getAttributeModifiersList(CompoundTag nbtTag) {
-		if (hasKey(nbtTag, ATTRIBUTE_MODIFIERS_KEY))
-			return nbtTag.getList(ATTRIBUTE_MODIFIERS_KEY, NBTType.COMPOUND);
-		return addAttributeModifiersList(nbtTag);
+	public static ListTag getAttributeModifiersList(CompoundTag tag) {
+		if (hasKey(tag, ATTRIBUTE_MODIFIERS_KEY))
+			return tag.getList(ATTRIBUTE_MODIFIERS_KEY, NBTType.COMPOUND);
+		return addAttributeModifiersList(tag);
 	}
 
-	public static boolean hasAttributeModifiersList(CompoundTag nbtTag) {
-		return hasKey(nbtTag, ATTRIBUTE_MODIFIERS_KEY);
+	public static boolean hasAttributeModifiersList(CompoundTag tag) {
+		return hasKey(tag, ATTRIBUTE_MODIFIERS_KEY);
 	}
 
 	public static void addAttributeModifier(ListTag attributeModifiers, String attribute, double value, String slot) {
@@ -1237,110 +1254,110 @@ public class NBT {
 		return false;
 	}
 
-	public static void setCustomModelData(CompoundTag nbtTag, int id) {
-		nbtTag.putInt(CUSTOM_MODEL_DATA_KEY, id);
+	public static void setCustomModelData(CompoundTag tag, int id) {
+		tag.putInt(CUSTOM_MODEL_DATA_KEY, id);
 	}
 
-	public static void removeCustomModelData(CompoundTag nbtTag) {
-		nbtTag.remove(CUSTOM_MODEL_DATA_KEY);
+	public static void removeCustomModelData(CompoundTag tag) {
+		tag.remove(CUSTOM_MODEL_DATA_KEY);
 	}
 
-	public static int getCustomModelData(CompoundTag nbtTag) {
-		return nbtTag.getInt(CUSTOM_MODEL_DATA_KEY);
+	public static int getCustomModelData(CompoundTag tag) {
+		return tag.getInt(CUSTOM_MODEL_DATA_KEY);
 	}
 
-	public static boolean hasCustomModelData(CompoundTag nbtTag) {
-		return hasKey(nbtTag, CUSTOM_MODEL_DATA_KEY);
+	public static boolean hasCustomModelData(CompoundTag tag) {
+		return hasKey(tag, CUSTOM_MODEL_DATA_KEY);
 	}
 
-	public static void setSpawnRange(CompoundTag nbtTag, short range) {
-		nbtTag.putShort(SPAWN_RANGE_KEY, range);
+	public static void setSpawnRange(CompoundTag tag, short range) {
+		tag.putShort(SPAWN_RANGE_KEY, range);
 	}
 
-	public static void removeSpawnRange(CompoundTag nbtTag) {
-		nbtTag.remove(SPAWN_RANGE_KEY);
+	public static void removeSpawnRange(CompoundTag tag) {
+		tag.remove(SPAWN_RANGE_KEY);
 	}
 
-	public static short getSpawnRange(CompoundTag nbtTag) {
-		return nbtTag.getShort(SPAWN_RANGE_KEY);
+	public static short getSpawnRange(CompoundTag tag) {
+		return tag.getShort(SPAWN_RANGE_KEY);
 	}
 
-	public static boolean hasSpawnRange(CompoundTag nbtTag) {
-		return hasKey(nbtTag, SPAWN_RANGE_KEY);
+	public static boolean hasSpawnRange(CompoundTag tag) {
+		return hasKey(tag, SPAWN_RANGE_KEY);
 	}
 
-	public static void setSpawnCount(CompoundTag nbtTag, short count) {
-		nbtTag.putShort(SPAWN_COUNT_KEY, count);
+	public static void setSpawnCount(CompoundTag tag, short count) {
+		tag.putShort(SPAWN_COUNT_KEY, count);
 	}
 
-	public static void removeSpawnCount(CompoundTag nbtTag) {
-		nbtTag.remove(SPAWN_COUNT_KEY);
+	public static void removeSpawnCount(CompoundTag tag) {
+		tag.remove(SPAWN_COUNT_KEY);
 	}
 
-	public static short getSpawnCount(CompoundTag nbtTag) {
-		return nbtTag.getShort(SPAWN_COUNT_KEY);
+	public static short getSpawnCount(CompoundTag tag) {
+		return tag.getShort(SPAWN_COUNT_KEY);
 	}
 
-	public static boolean hasSpawnCount(CompoundTag nbtTag) {
-		return hasKey(nbtTag, SPAWN_COUNT_KEY);
+	public static boolean hasSpawnCount(CompoundTag tag) {
+		return hasKey(tag, SPAWN_COUNT_KEY);
 	}
 
-	public static void setRequiredPlayerRange(CompoundTag nbtTag, short playerRange) {
-		nbtTag.putShort(REQUIRED_PLAYER_RANGE_KEY, playerRange);
+	public static void setRequiredPlayerRange(CompoundTag tag, short playerRange) {
+		tag.putShort(REQUIRED_PLAYER_RANGE_KEY, playerRange);
 	}
 
-	public static void removeRequiredPlayerRange(CompoundTag nbtTag) {
-		nbtTag.remove(REQUIRED_PLAYER_RANGE_KEY);
+	public static void removeRequiredPlayerRange(CompoundTag tag) {
+		tag.remove(REQUIRED_PLAYER_RANGE_KEY);
 	}
 
-	public static short getRequiredPlayerRange(CompoundTag nbtTag) {
-		return nbtTag.getShort(REQUIRED_PLAYER_RANGE_KEY);
+	public static short getRequiredPlayerRange(CompoundTag tag) {
+		return tag.getShort(REQUIRED_PLAYER_RANGE_KEY);
 	}
 
-	public static boolean hasRequiredPlayerRange(CompoundTag nbtTag) {
-		return hasKey(nbtTag, REQUIRED_PLAYER_RANGE_KEY);
+	public static boolean hasRequiredPlayerRange(CompoundTag tag) {
+		return hasKey(tag, REQUIRED_PLAYER_RANGE_KEY);
 	}
 
-	public static void setMaxNearbyEntities(CompoundTag nbtTag, short maxNearbyEntities) {
-		nbtTag.putShort(MAX_NEARBY_ENTITIES_KEY, maxNearbyEntities);
+	public static void setMaxNearbyEntities(CompoundTag tag, short maxNearbyEntities) {
+		tag.putShort(MAX_NEARBY_ENTITIES_KEY, maxNearbyEntities);
 	}
 
-	public static void removeMaxNearbyEntities(CompoundTag nbtTag) {
-		nbtTag.remove(MAX_NEARBY_ENTITIES_KEY);
+	public static void removeMaxNearbyEntities(CompoundTag tag) {
+		tag.remove(MAX_NEARBY_ENTITIES_KEY);
 	}
 
-	public static short getMaxNearbyEntities(CompoundTag nbtTag) {
-		return nbtTag.getShort(MAX_NEARBY_ENTITIES_KEY);
+	public static short getMaxNearbyEntities(CompoundTag tag) {
+		return tag.getShort(MAX_NEARBY_ENTITIES_KEY);
 	}
 
-	public static boolean hasMaxNearbyEntities(CompoundTag nbtTag) {
-		return hasKey(nbtTag, MAX_NEARBY_ENTITIES_KEY);
+	public static boolean hasMaxNearbyEntities(CompoundTag tag) {
+		return hasKey(tag, MAX_NEARBY_ENTITIES_KEY);
 	}
 
-	public static void setSpawnerStats(CompoundTag nbtTag, short range, short count, short playerRange,
+	public static void setSpawnerStats(CompoundTag tag, short range, short count, short playerRange,
 			short maxNearbyEntities) {
-		nbtTag.putShort(SPAWN_RANGE_KEY, range);
-		nbtTag.putShort(SPAWN_COUNT_KEY, count);
-		nbtTag.putShort(REQUIRED_PLAYER_RANGE_KEY, playerRange);
-		nbtTag.putShort(MAX_NEARBY_ENTITIES_KEY, maxNearbyEntities);
+		tag.putShort(SPAWN_RANGE_KEY, range);
+		tag.putShort(SPAWN_COUNT_KEY, count);
+		tag.putShort(REQUIRED_PLAYER_RANGE_KEY, playerRange);
+		tag.putShort(MAX_NEARBY_ENTITIES_KEY, maxNearbyEntities);
 	}
 
-	public static void setX(CompoundTag nbtTag, int x) {
-		nbtTag.putInt("x", x);
+	public static void setX(CompoundTag tag, int x) {
+		tag.putInt("x", x);
 	}
 
-	public static void setY(CompoundTag nbtTag, int y) {
-		nbtTag.putInt("y", y);
+	public static void setY(CompoundTag tag, int y) {
+		tag.putInt("y", y);
 	}
 
-	public static void setZ(CompoundTag nbtTag, int z) {
-		nbtTag.putInt("z", z);
+	public static void setZ(CompoundTag tag, int z) {
+		tag.putInt("z", z);
 	}
 
-	public static void setPos(CompoundTag nbtTag, int x, int y, int z) {
-		nbtTag.putInt("x", x);
-		nbtTag.putInt("y", y);
-		nbtTag.putInt("z", z);
+	public static void setPos(CompoundTag tag, int x, int y, int z) {
+		tag.putInt("x", x);
+		tag.putInt("y", y);
+		tag.putInt("z", z);
 	}
 
 	public static String convetToNBTName(String entityName) {
@@ -1373,68 +1390,6 @@ public class NBT {
 		}
 	}
 
-	public static void setItemEffect(CompoundTag nbtTag, int effectId) {
-		nbtTag.putInt(ITEM_EFFECT_KEY, effectId);
-	}
-
-	public static void removeItemEffect(CompoundTag nbtTag) {
-		nbtTag.remove(ITEM_EFFECT_KEY);
-	}
-
-	public static int getItemEffect(CompoundTag nbtTag) {
-		return nbtTag.getInt(ITEM_EFFECT_KEY);
-	}
-
-	public static boolean hasItemEffect(CompoundTag nbtTag) {
-		return hasKey(nbtTag, ITEM_EFFECT_KEY);
-	}
-
-	public static ItemStack setItemEffect(ItemStack is, int id) {
-		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
-		CompoundTag nbtTag = NBT.getNBT(nmsItem);
-		NBT.setItemEffect(nbtTag, id);
-		return NMS.from(loadNMSItem(nbtTag));
-	}
-
-	public static void setWorldEffect(CompoundTag nbtTag, int effectId) {
-		nbtTag.putInt(WORLD_EFFECT_KEY, effectId);
-	}
-
-	public static void removeWorldEffect(CompoundTag nbtTag) {
-		nbtTag.remove(WORLD_EFFECT_KEY);
-	}
-
-	public static int getWorldEffect(CompoundTag nbtTag) {
-		return nbtTag.getInt(WORLD_EFFECT_KEY);
-	}
-
-	public static boolean hasWorldEffect(CompoundTag nbtTag) {
-		return hasKey(nbtTag, WORLD_EFFECT_KEY);
-	}
-
-	public static ItemStack setWorldEffect(ItemStack is, int id) {
-		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
-		CompoundTag nbtTag = NBT.getNBT(nmsItem);
-		NBT.setWorldEffect(nbtTag, id);
-		return NMS.from(loadNMSItem(nbtTag));
-	}
-
-	public static void setDurability(CompoundTag nbtTag, short durability) {
-		nbtTag.putShort(DAMAGE_KEY, durability);
-	}
-
-	public static void removeDurability(CompoundTag nbtTag) {
-		nbtTag.remove(DAMAGE_KEY);
-	}
-
-	public static short getDurability(CompoundTag nbtTag) {
-		return nbtTag.getShort(DAMAGE_KEY);
-	}
-
-	public static boolean hasDurability(CompoundTag nbtTag) {
-		return hasKey(nbtTag, DAMAGE_KEY);
-	}
-
 	public static String materialToString(Material mat) {
 		return "minecraft:".concat(mat.name().toLowerCase());
 	}
@@ -1445,5 +1400,53 @@ public class NBT {
 
 	public static StringTag createNBTTagString(String text) {
 		return StringTag.valueOf(text);
+	}
+
+	public static void setItemEffect(CompoundTag tag, int effectId) {
+		getOrAddCompound(tag, CUSTOM_DATA_KEY).putInt(ITEM_EFFECT_KEY, effectId);
+	}
+
+	public static void removeItemEffect(CompoundTag tag) {
+		getOrAddCompound(tag, CUSTOM_DATA_KEY).remove(ITEM_EFFECT_KEY);
+	}
+
+	public static int getItemEffect(CompoundTag tag) {
+		return getOrAddCompound(tag, CUSTOM_DATA_KEY).getInt(ITEM_EFFECT_KEY);
+	}
+
+	public static boolean hasItemEffect(CompoundTag tag) {
+		return hasKey(getOrAddCompound(tag, CUSTOM_DATA_KEY), ITEM_EFFECT_KEY);
+	}
+
+	public static ItemStack setItemEffect(ItemStack is, int id) {
+		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
+		CompoundTag tag = getNBT(nmsItem);
+		CompoundTag components = getOrAddComponents(tag);
+		setItemEffect(components, id);
+		return NMS.from(loadNMSItem(tag));
+	}
+
+	public static void setWorldEffect(CompoundTag tag, int effectId) {
+		getOrAddCompound(tag, CUSTOM_DATA_KEY).putInt(WORLD_EFFECT_KEY, effectId);
+	}
+
+	public static void removeWorldEffect(CompoundTag tag) {
+		getOrAddCompound(tag, CUSTOM_DATA_KEY).remove(WORLD_EFFECT_KEY);
+	}
+
+	public static int getWorldEffect(CompoundTag tag) {
+		return getOrAddCompound(tag, CUSTOM_DATA_KEY).getInt(WORLD_EFFECT_KEY);
+	}
+
+	public static boolean hasWorldEffect(CompoundTag tag) {
+		return hasKey(getOrAddCompound(tag, CUSTOM_DATA_KEY), WORLD_EFFECT_KEY);
+	}
+
+	public static ItemStack setWorldEffect(ItemStack is, int id) {
+		net.minecraft.world.item.ItemStack nmsItem = NMS.to(is);
+		CompoundTag tag = NBT.getNBT(nmsItem);
+		CompoundTag components = getOrAddComponents(tag);
+		NBT.setWorldEffect(components, id);
+		return NMS.from(loadNMSItem(tag));
 	}
 }

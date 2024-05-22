@@ -17,6 +17,8 @@ import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.resourcePack.ResourcePackBuilder;
 
+import net.minecraft.nbt.CompoundTag;
+
 public class Items {
 
 	public static final ItemStack AIR = new ItemStack(Material.AIR);
@@ -69,7 +71,7 @@ public class Items {
 
 	public static int getEffectID(net.minecraft.world.item.ItemStack nmsIs) {
 		if (NBT.hasTag(nmsIs))
-			return NBT.getItemEffect(NBT.getNBT(nmsIs));
+			return NBT.getItemEffect(NBT.getOrAddComponents(NBT.getNBT(nmsIs)));
 		return 0;
 	}
 

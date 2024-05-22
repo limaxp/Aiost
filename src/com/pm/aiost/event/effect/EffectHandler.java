@@ -225,10 +225,11 @@ public class EffectHandler {
 		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
 		if (NBT.hasTag(nmsIs)) {
 			CompoundTag nbtTag = NBT.getNBT(nmsIs);
-			int effectID = NBT.getItemEffect(nbtTag);
+			CompoundTag components = NBT.getOrAddComponents(nbtTag);
+			int effectID = NBT.getItemEffect(components);
 			if (effectID != 0)
 				runItemSelf(effectID, action, event, func);
-			else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0)
+			else if ((effectID = NBT.getWorldEffect(components)) != 0)
 				runSelf(effectID, world, action, event, func);
 		}
 	}
@@ -238,10 +239,11 @@ public class EffectHandler {
 		net.minecraft.world.item.ItemStack nmsIs = NMS.to(is);
 		if (NBT.hasTag(nmsIs)) {
 			CompoundTag nbtTag = NBT.getNBT(nmsIs);
-			int effectID = NBT.getItemEffect(nbtTag);
+			CompoundTag components = NBT.getOrAddComponents(nbtTag);
+			int effectID = NBT.getItemEffect(components);
 			if (effectID != 0)
 				runItemSelf(effectID, serverPlayer, action, event, func);
-			else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0)
+			else if ((effectID = NBT.getWorldEffect(components)) != 0)
 				runSelf(effectID, serverPlayer, action, event, func);
 		}
 	}

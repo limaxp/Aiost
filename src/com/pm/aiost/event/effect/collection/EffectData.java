@@ -49,12 +49,13 @@ public class EffectData extends EffectList {
 		ItemStack is = NMS.to(event.getItemStack());
 		if (NBT.hasTag(is)) {
 			CompoundTag nbtTag = NBT.getNBT(is);
-			int effectID = NBT.getItemEffect(nbtTag);
+			CompoundTag components = NBT.getOrAddComponents(nbtTag);
+			int effectID = NBT.getItemEffect(components);
 			if (effectID != 0) {
 				slotIds[event.getSlot().ordinal()] = effectID;
 				add(ItemEffects.get(effectID));
 				EffectHandler.itemEquipRunEffects(effectID, event);
-			} else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0) {
+			} else if ((effectID = NBT.getWorldEffect(components)) != 0) {
 				int slot = event.getSlot().ordinal();
 				worldIds[slot] = effectID;
 				Effect effect[] = worldEffects[slot] = event.getServerPlayer().getServerWorld().getEffect(effectID);
@@ -68,13 +69,14 @@ public class EffectData extends EffectList {
 		ItemStack is = NMS.to(event.getItemStack());
 		if (NBT.hasTag(is)) {
 			CompoundTag nbtTag = NBT.getNBT(is);
-			int effectID = NBT.getItemEffect(nbtTag);
+			CompoundTag components = NBT.getOrAddComponents(nbtTag);
+			int effectID = NBT.getItemEffect(components);
 			if (effectID != 0) {
 				EquipmentSlot slot = event.getSlot();
 				slotIds[slot.ordinal()] = effectID;
 				addHand(slot, ItemEffects.get(effectID));
 				EffectHandler.itemEquipRunEffects(effectID, event);
-			} else if ((effectID = NBT.getWorldEffect(nbtTag)) != 0) {
+			} else if ((effectID = NBT.getWorldEffect(components)) != 0) {
 				EquipmentSlot slot = event.getSlot();
 				int slotIndex = slot.ordinal();
 				worldIds[slotIndex] = effectID;
