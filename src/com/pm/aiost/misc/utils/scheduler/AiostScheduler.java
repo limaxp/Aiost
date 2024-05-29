@@ -12,7 +12,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuHandler;
 import com.pm.aiost.misc.menu.menus.GameJoinMenu;
 import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.misc.particleEffect.EntityParticleManager;
+import com.pm.aiost.misc.particle.EntityParticleManager;
 import com.pm.aiost.misc.scoreboard.scoreboards.LobbyScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.TPSOptimizer;

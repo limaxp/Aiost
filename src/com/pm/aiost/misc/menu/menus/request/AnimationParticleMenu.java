@@ -16,8 +16,8 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.creation.CreationMenus;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.particleEffect.particle.particles.AnimationParticle;
+import com.pm.aiost.misc.particle.IParticle;
+import com.pm.aiost.misc.particle.particles.AnimationParticle;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

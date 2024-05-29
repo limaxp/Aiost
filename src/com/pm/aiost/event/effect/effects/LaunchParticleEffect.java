@@ -21,8 +21,8 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
+import com.pm.aiost.misc.particle.IParticle;
+import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;

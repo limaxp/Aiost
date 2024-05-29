@@ -13,7 +13,7 @@ import com.pm.aiost.misc.menu.menus.PlayerSkillMenu;
 import com.pm.aiost.misc.menu.menus.UnlockableMenu;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
+import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.settings.PlayerSettings;

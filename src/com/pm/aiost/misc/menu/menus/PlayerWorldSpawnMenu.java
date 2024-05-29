@@ -26,7 +26,7 @@ import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
+import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

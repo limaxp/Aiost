@@ -15,7 +15,7 @@ import com.pm.aiost.misc.dataAccess.SpigotDatabaseAccess;
 import com.pm.aiost.misc.dataAccess.SpigotFileAccess;
 import com.pm.aiost.misc.database.DatabaseManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
+import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.scheduler.AiostScheduler;
 import com.pm.aiost.player.PlayerManager;

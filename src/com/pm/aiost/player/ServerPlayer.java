@@ -56,7 +56,7 @@ import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.entity.entities.ChatHologram;
 import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
+import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.player.handler.ItemBarHandler;
 import com.pm.aiost.player.handler.VisibilityManager;

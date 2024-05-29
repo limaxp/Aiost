@@ -3,8 +3,8 @@ package com.pm.aiost.misc.packet.entity.entities;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.TrackedPacketEntity;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
+import com.pm.aiost.misc.particle.IParticle;
+import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.object.TickingObject;
 

@@ -19,9 +19,9 @@ import com.pm.aiost.item.spell.spells.EffectSpell;
 import com.pm.aiost.item.spell.spells.HealSpell;
 import com.pm.aiost.item.spell.spells.ProjectileSpell;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.particleEffect.particle.particles.DataParticle;
-import com.pm.aiost.misc.particleEffect.particle.particles.Particle;
+import com.pm.aiost.misc.particle.IParticle;
+import com.pm.aiost.misc.particle.particles.DataParticle;
+import com.pm.aiost.misc.particle.particles.Particle;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
 public class Spells {

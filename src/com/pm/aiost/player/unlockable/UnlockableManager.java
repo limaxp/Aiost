@@ -16,8 +16,8 @@ import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
-import com.pm.aiost.misc.particleEffect.particle.IParticle;
-import com.pm.aiost.misc.particleEffect.particle.ParticleBuilder;
+import com.pm.aiost.misc.particle.IParticle;
+import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
 import net.minecraft.world.entity.EntityType;
