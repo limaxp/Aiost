@@ -42,41 +42,41 @@ import net.minecraft.world.item.Item;
 public class NBT {
 
 	public static final String COMPONENTS_KEY = "components";
-	public static final String CUSTOM_DATA_KEY = getName(DataComponents.CUSTOM_DATA);
-	public static final String CUSTOM_NAME_KEY = getName(DataComponents.CUSTOM_NAME);
-	public static final String LORE_KEY = getName(DataComponents.LORE);
-	public static final String DAMAGE_KEY = getName(DataComponents.DAMAGE);
-	public static final String CUSTOM_MODEL_DATA_KEY = getName(DataComponents.CUSTOM_MODEL_DATA);
-	public static final String BLOCK_ENTITY_KEY = getName(DataComponents.BLOCK_ENTITY_DATA);
-	public static final String ENCHANTMENTS_KEY = getName(DataComponents.ENCHANTMENTS);
-	public static final String PATTERNS_KEY = getName(DataComponents.BANNER_PATTERNS);
+	public static final String CUSTOM_DATA_KEY = DataComponents.CUSTOM_DATA.toString();
+	public static final String CUSTOM_NAME_KEY = DataComponents.CUSTOM_NAME.toString();
+	public static final String LORE_KEY = DataComponents.LORE.toString();
+	public static final String DAMAGE_KEY = DataComponents.DAMAGE.toString();
+	public static final String CUSTOM_MODEL_DATA_KEY = DataComponents.CUSTOM_MODEL_DATA.toString();
+	public static final String BLOCK_ENTITY_KEY = DataComponents.BLOCK_ENTITY_DATA.toString();
+	public static final String ENCHANTMENTS_KEY = DataComponents.ENCHANTMENTS.toString();
+	public static final String PATTERNS_KEY = DataComponents.BANNER_PATTERNS.toString();
 	public static final String NAME_KEY = "name";
 	public static final String COLOR_KEY = "color";
 	public static final String ID_KEY = "id";
 	public static final String LEVEL_KEY = "lvl";
 	public static final String PATTERN_KEY = "pattern";
-	public static final String PROFILE_KEY = getName(DataComponents.PROFILE);
+	public static final String PROFILE_KEY = DataComponents.PROFILE.toString();
 	public static final String PROPERTIES_KEY = "properties";
 	public static final String TEXTURES_KEY = "textures";
 	public static final String SIGNATURE_KEY = "signature";
 	public static final String VALUE_KEY = "value";
-	public static final String HIDE_ADDITIONAL_TOOLTIP_KEY = getName(DataComponents.HIDE_ADDITIONAL_TOOLTIP);
-	public static final String HIDE_TOOLTIP_KEY = getName(DataComponents.HIDE_TOOLTIP);
-	public static final String CAN_DESTROY_KEY = getName(DataComponents.CAN_BREAK);
-	public static final String CAN_PLACE_ON_KEY = getName(DataComponents.CAN_PLACE_ON);
+	public static final String HIDE_ADDITIONAL_TOOLTIP_KEY = DataComponents.HIDE_ADDITIONAL_TOOLTIP.toString();
+	public static final String HIDE_TOOLTIP_KEY = DataComponents.HIDE_TOOLTIP.toString();
+	public static final String CAN_DESTROY_KEY = DataComponents.CAN_BREAK.toString();
+	public static final String CAN_PLACE_ON_KEY = DataComponents.CAN_PLACE_ON.toString();
 	public static final String ITEMS_KEY = "items";
 	public static final String ARMOR_ITEMS_KEY = "armorItems";
-	public static final String UNBREAKABLE_KEY = getName(DataComponents.UNBREAKABLE);
+	public static final String UNBREAKABLE_KEY = DataComponents.UNBREAKABLE.toString();
 	public static final String COUNT_KEY = "count";
 	public static final String SLOT_KEY = "slot";
 	public static final String TAG_KEY = "tag";
-	public static final String ENTITY_TAG_KEY = getName(DataComponents.ENTITY_DATA);
+	public static final String ENTITY_TAG_KEY = DataComponents.ENTITY_DATA.toString();
 	public static final String SPAWN_DATA_KEY = "spawnData";
 	public static final String NO_AI_KEY = "NoAI";
 	public static final String INVISIBLE_KEY = "Invisible";
 	public static final String SILENT_KEY = "Silent";
 	public static final String MARKER_KEY = "Marker";
-	public static final String ATTRIBUTE_MODIFIERS_KEY = getName(DataComponents.ATTRIBUTE_MODIFIERS);
+	public static final String ATTRIBUTE_MODIFIERS_KEY = DataComponents.ATTRIBUTE_MODIFIERS.toString();
 	public static final String ATTRIBUTE_NAME_KEY = "type";
 	public static final String AMOUNT_KEY = "amount";
 	public static final String OPERATION_KEY = "operation";
@@ -113,10 +113,6 @@ public class NBT {
 		public static final byte HIDE_CAN_DESTROY = 8;
 		public static final byte HIDE_CAN_PLACE_ON = 16;
 		public static final byte HIDE_OTHERS = 32;
-	}
-
-	private static String getName(DataComponentType<?> type) {
-		return type.toString();
 	}
 
 	public static CompoundTag fromString(String s) {
