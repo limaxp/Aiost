@@ -8,6 +8,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandlerManager;
+import com.pm.aiost.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
@@ -15,17 +17,19 @@ import com.pm.aiost.server.world.creation.WorldBuilder;
 
 public class ServerManager {
 
-	public static final ServerType DEFAULT_SERVER_TYPE = ServerType.SURVIVAL;
-
-	private static Server server;
+	private static Server server = new Server(Bukkit.getServer());
 
 	public static void init() {
-		ServerManager.server = new Server(Bukkit.getServer());
-		initServerType(DEFAULT_SERVER_TYPE);
+		ServerType.NONE.setEventHandler(SurvivalEventHandler.INSTANCE);
+		ServerType.LOBBY.setEventHandler(LobbyEventHandler.INSTANCE);
+		ServerType.SURVIVAL.setEventHandler(SurvivalEventHandler.INSTANCE);
+		ServerType.GAME.setEventHandler(LobbyEventHandler.INSTANCE);
+
+		initServerType(ServerType.SURVIVAL);
 	}
 
 	private static EventHandler initServerType(ServerType type) {
-		EventHandler eventHandler = ServerTypeEventHandler.get(type);
+		EventHandler eventHandler = (EventHandler) type.getEventHandler();
 		server.setType(type);
 		EventHandlerManager.init(eventHandler);
 		return eventHandler;
@@ -34,17 +38,16 @@ public class ServerManager {
 	public static void setServerType(ServerType type) {
 		EventHandler eventHandler = initServerType(type);
 		for (ServerWorld serverWorld : ServerWorld.getWorlds()) {
-			if (serverWorld.hasDefaultEventHandler()) {
-				serverWorld.setEventHandler(eventHandler, true);
-
-				for (ServerPlayer serverPlayer : serverWorld.getServerPlayer()) {
-					EventHandler playerEventHandler = serverPlayer.getEventHandler();
-					if (playerEventHandler != eventHandler) {
-						EventHandler regionEventHandler = serverPlayer.getRegion().getEventHandler();
-						if (playerEventHandler != regionEventHandler)
-							serverPlayer.setEventHandler(regionEventHandler);
-					}
-				}
+			if (!serverWorld.hasDefaultEventHandler())
+				continue;
+			serverWorld.setEventHandler(eventHandler, true);
+			for (ServerPlayer serverPlayer : serverWorld.getServerPlayer()) {
+				EventHandler playerEventHandler = serverPlayer.getEventHandler();
+				if (playerEventHandler == eventHandler)
+					continue;
+				EventHandler regionEventHandler = serverPlayer.getRegion().getEventHandler();
+				if (playerEventHandler != regionEventHandler)
+					serverPlayer.setEventHandler(regionEventHandler);
 			}
 		}
 	}
