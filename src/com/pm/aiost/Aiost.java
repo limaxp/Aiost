@@ -1,6 +1,5 @@
 package com.pm.aiost;
 
-import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import com.pm.aiost.event.AiostListener;
@@ -47,7 +46,7 @@ public class Aiost extends JavaPlugin {
 	public void onEnable() {
 		Logger.log("Initialize Aiost...");
 
-		linkListener();
+		getServer().getPluginManager().registerEvents(new AiostListener(), this);
 		Commands.init();
 		SpigotConfigManager.init();
 		intDatabase();
@@ -80,11 +79,6 @@ public class Aiost extends JavaPlugin {
 		AiostRegistry.terminate();
 
 		Logger.log("Aiost disabled!");
-	}
-
-	private void linkListener() {
-		PluginManager pm = getServer().getPluginManager();
-		pm.registerEvents(new AiostListener(), this);
 	}
 
 	private static void intDatabase() {
