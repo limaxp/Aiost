@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.menu.bookMenu;
+package com.pm.aiost.misc.menu;
 
 import java.util.List;
 
@@ -10,7 +10,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.BookMeta;
 
-import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.player.ServerPlayer;

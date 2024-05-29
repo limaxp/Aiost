@@ -17,7 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.pm.aiost.collection.list.FastArrayList;
 import com.pm.aiost.item.custom.Slot;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ArrayInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;

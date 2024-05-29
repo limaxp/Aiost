@@ -24,7 +24,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.WordFilter;

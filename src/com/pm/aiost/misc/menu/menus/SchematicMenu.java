@@ -14,8 +14,8 @@ import org.bukkit.block.Block;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.Menu;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.misc.utils.worldEdit.Schematic;

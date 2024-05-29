@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.entity.npc.profile.ProfileFetcher;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;

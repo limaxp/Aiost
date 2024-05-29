@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.menu.merchantMenu;
+package com.pm.aiost.misc.menu;
 
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +13,6 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
 
-import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.player.ServerPlayer;
 
 public class MerchantMenu implements Menu {

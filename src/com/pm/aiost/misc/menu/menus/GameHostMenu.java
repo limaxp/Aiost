@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ViewInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;

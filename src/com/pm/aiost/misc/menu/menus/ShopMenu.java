@@ -17,9 +17,9 @@ import org.bukkit.potion.PotionType;
 
 import com.pm.aiost.item.ItemHelper;
 import com.pm.aiost.item.Items;
+import com.pm.aiost.misc.menu.MerchantMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.menu.merchantMenu.MerchantMenu;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;

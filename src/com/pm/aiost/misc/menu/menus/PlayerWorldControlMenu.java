@@ -15,7 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.event.eventHandler.handler.PlayerWorldEventHandler;
 import com.pm.aiost.event.eventHandler.handler.ReleasedWorldEventHandler;
 import com.pm.aiost.game.GameType;
-import com.pm.aiost.misc.menu.anvilMenu.AnvilMenu;
+import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;

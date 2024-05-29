@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.menu.anvilMenu;
+package com.pm.aiost.misc.menu;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
@@ -21,8 +21,6 @@ import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.item.Items;
-import com.pm.aiost.misc.menu.InventoryEventHandler;
-import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
