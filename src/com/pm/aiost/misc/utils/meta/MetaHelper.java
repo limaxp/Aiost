@@ -7,6 +7,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.PotionMeta;
+import org.bukkit.potion.PotionType;
 
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
@@ -284,5 +286,14 @@ public class MetaHelper {
 		im.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
 		is.setItemMeta(im);
 		return is;
+	}
+	
+	public static ItemStack createWaterBottle() {
+		ItemStack bottle = new ItemStack(Material.POTION, 1);
+		ItemMeta meta = bottle.getItemMeta();
+		PotionMeta pmeta = (PotionMeta) meta;
+		pmeta.setBasePotionType(PotionType.WATER);
+		bottle.setItemMeta(meta);
+		return bottle;
 	}
 }

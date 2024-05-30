@@ -6,10 +6,8 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.item.ItemHelper;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ArrayInventoryMenu;
-import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 public class ItemMenu {
@@ -36,14 +34,14 @@ public class ItemMenu {
 		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
 	}
 
-	private static ItemStack[] getTabIcons() {
-		return new ItemStack[] { new ItemStack(Material.BRICKS), new ItemStack(Material.PEONY),
-				new ItemStack(Material.REDSTONE), new ItemStack(Material.POWERED_RAIL), new ItemStack(Material.COMPASS),
-				new ItemStack(Material.LAVA_BUCKET), new ItemStack(Material.APPLE),
-				MetaHelper.hideAttributes(new ItemStack(Material.IRON_AXE)),
-				MetaHelper.hideAttributes(new ItemStack(Material.GOLDEN_SWORD)),
-				MetaHelper.hidePotionEffects(ItemHelper.createWaterBottle()) };
-	}
+//	private static ItemStack[] getTabIcons() {
+//		return new ItemStack[] { new ItemStack(Material.BRICKS), new ItemStack(Material.PEONY),
+//				new ItemStack(Material.REDSTONE), new ItemStack(Material.POWERED_RAIL), new ItemStack(Material.COMPASS),
+//				new ItemStack(Material.LAVA_BUCKET), new ItemStack(Material.APPLE),
+//				MetaHelper.hideAttributes(new ItemStack(Material.IRON_AXE)),
+//				MetaHelper.hideAttributes(new ItemStack(Material.GOLDEN_SWORD)),
+//				MetaHelper.hidePotionEffects(MetaHelper.createWaterBottle()) };
+//	}
 
 	private static void mainMenuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		event.setCancelled(true);

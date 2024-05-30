@@ -13,9 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.Merchant;
 import org.bukkit.inventory.MerchantRecipe;
-import org.bukkit.potion.PotionType;
 
-import com.pm.aiost.item.ItemHelper;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.menu.MerchantMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
@@ -24,9 +22,6 @@ import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-import net.minecraft.world.item.alchemy.Potion;
-
-@SuppressWarnings("deprecation")
 public class ShopMenu extends SingleInventoryMenu {
 
 	private static final ItemStack BUY_LIVE_ITEM = MetaHelper.setMeta(Material.PLAYER_HEAD, BOLD + "Buy Live",
@@ -385,7 +380,7 @@ public class ShopMenu extends SingleInventoryMenu {
 
 	private static Merchant createFoodMenu() {
 		List<MerchantRecipe> recipes = new ArrayList<MerchantRecipe>();
-		recipes.add(MerchantMenu.createRecipe(ItemHelper.createWaterBottle(), new ItemStack(Material.GOLD_NUGGET, 2)));
+		recipes.add(MerchantMenu.createRecipe(MetaHelper.createWaterBottle(), new ItemStack(Material.GOLD_NUGGET, 2)));
 		recipes.add(MerchantMenu.createRecipe(Items.get("mana_potion"), new ItemStack(Material.GOLD_NUGGET, 5)));
 		recipes.add(MerchantMenu.createRecipe(Material.COOKIE, new ItemStack(Material.GOLD_NUGGET, 1)));
 		recipes.add(MerchantMenu.createRecipe(Material.CARROT, new ItemStack(Material.GOLD_NUGGET, 1)));

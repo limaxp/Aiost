@@ -12,7 +12,7 @@ import com.pm.aiost.player.unlockable.UnlockableType;
 
 public class PlayerSkillMenu extends UnlockableMenu {
 
-	public PlayerSkillMenu(ServerPlayer serverPlayer, UnlockableType unlockableType) {
+	public PlayerSkillMenu(ServerPlayer serverPlayer, UnlockableType<?> unlockableType) {
 		super(serverPlayer, unlockableType);
 	}
 
