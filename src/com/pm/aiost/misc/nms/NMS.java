@@ -1,7 +1,6 @@
 package com.pm.aiost.misc.nms;
 
 import java.lang.invoke.MethodHandle;
-import java.util.Collections;
 import java.util.IdentityHashMap;
 import java.util.Random;
 import java.util.Set;
@@ -58,8 +57,10 @@ import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.server.level.ChunkMap.TrackedEntity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.network.ServerCommonPacketListenerImpl;
+import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -86,17 +87,6 @@ public class NMS {
 			"l"); // RegistryMaterials.frozen
 	public static final MethodHandle REGISTRYMATERIALS_SET_UNREGISTERED_INTRUSIVE_HOLDERS = Reflection
 			.unreflectSetter(MappedRegistry.class, "m"); // RegistryMaterials.unregisteredIntrusiveHolders
-
-//	private static final MethodHandle WORLDSERVER_CHUNK_PROVIDER_GET = Reflection.unreflectMethod(WORLD_SERVER_CLASS,
-//			"getChunkProvider");
-//	private static final MethodHandle CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET = Reflection
-//			.unreflectGetter(CHUNK_PROVIDER_SERVER_CLASS, "playerChunkMap");
-//	private static final MethodHandle PLAYERCHUNKMAP_TRACKED_ENTITIES_GET = Reflection
-//			.unreflectGetter(PLAYER_CHUNK_MAP_CLASS, "trackedEntities");
-//	private static final MethodHandle ENTITYTRACKER_TRACKER_ENTRY_GET = Reflection.unreflectGetter(ENTITY_TRACKER_CLASS,
-//			"trackerEntry");
-//	private static final MethodHandle ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET = Reflection
-//			.unreflectGetter(ENTITY_TRACKER_ENTRY_CLASS, "trackedPlayers");
 
 	public static final MethodHandle ENTITYTELEPORT_CONSTRUCTOR = Reflection
 			.unreflectConstructor(ClientboundTeleportEntityPacket.class, new Class[] { FriendlyByteBuf.class });
@@ -358,38 +348,16 @@ public class NMS {
 		}
 	}
 
-	public static Object getEntityTrackerEntry(org.bukkit.entity.Entity entity) {
-//		try {
-//			Object chunkProvider = WORLDSERVER_CHUNK_PROVIDER_GET.invoke(NMS.getNMS(entity.getLocation().getWorld()));
-//			Object chunkMap = CHUNKPROVIDERSERVER_PLAYER_CHUNK_MAP_GET.invoke(chunkProvider);
-//			Map<Object, Object> trackedEntities = (Map<Object, Object>) PLAYERCHUNKMAP_TRACKED_ENTITIES_GET
-//					.invoke(chunkMap);
-//
-//			Object entityTracker = trackedEntities.get(entity.getEntityId());
-//			return ENTITYTRACKER_TRACKER_ENTRY_GET.invoke(entityTracker);
-//		} catch (Throwable e) {
-//			Logger.err("NMS: Error! Could not get EntityTrackerEntry", e);
-//			return null;
-//		}
-		return Collections.emptySet();
+	public static TrackedEntity getEntityTracker(org.bukkit.entity.Entity entity) {
+		return NMS.to(entity.getWorld()).getChunkSource().chunkMap.entityMap.get(entity.getEntityId());
 	}
 
-	public static Set<ServerPlayer> getTrackedPlayers(org.bukkit.entity.Entity entity) {
-		return getTrackedPlayers(getEntityTrackerEntry(entity));
+	public static Set<ServerPlayerConnection> getTrackedPlayers(org.bukkit.entity.Entity entity) {
+		return getEntityTracker(entity).seenBy;
 	}
 
-	public static Set<ServerPlayer> getTrackedPlayers(Entity entity) {
-		return getTrackedPlayers(getEntityTrackerEntry(entity.getBukkitEntity()));
-	}
-
-	public static Set<ServerPlayer> getTrackedPlayers(Object entityTrackerEntry) {
-		try {
-//			return (Set<ServerPlayer>) ENTITYTRACKERENTRY_TRACKED_PLAYERS_GET.invoke(entityTrackerEntry);
-			return Collections.emptySet();
-		} catch (Throwable e) {
-			Logger.err("NMS: Error! Could not get tracked players", e);
-			return null;
-		}
+	public static Set<ServerPlayerConnection> getTrackedPlayers(Entity entity) {
+		return getEntityTracker(entity.getBukkitEntity()).seenBy;
 	}
 
 	public static org.bukkit.inventory.EquipmentSlot getArmorSlot(Item item) {
