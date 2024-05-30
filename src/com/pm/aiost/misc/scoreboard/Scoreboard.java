@@ -95,19 +95,19 @@ public class Scoreboard {
 	}
 
 	// TODO
-	public void createPlayerSidebar(Player player, String name, String displayName) {
+//	public void createPlayerSidebar(Player player, String name, String displayName) {
 //		PacketSender.send(player,
 //				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
 //						EnumScoreboardHealthDisplay.INTEGER, ObjectiveMethod.CREATE));
 //
 //		PacketSender.send(player, PacketFactory.packetScoreboardSetDisplayObjective(DisplaySlot.SIDEBAR, name));
-	}
-
-	public void removePlayerSidebar(Player player, String name, String displayName) {
+//	}
+//
+//	public void removePlayerSidebar(Player player, String name, String displayName) {
 //		PacketSender.send(player,
 //				PacketFactory.packetScoreboardObjective(name, ChatSerializer.a("{\"text\": \"" + displayName + "\"}"),
 //						EnumScoreboardHealthDisplay.INTEGER, ObjectiveMethod.REMOVE));
-	}
+//	}
 
 	public PlayerScore addPlayerScore(Player player, String objectiveName, String scoreName, int score) {
 		return new PlayerScore(player, objectiveName, scoreName, score);
