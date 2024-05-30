@@ -34,7 +34,7 @@ public class Hologram extends PacketObject {
 			EntityDataSerializers.BYTE);
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static final EntityDataAccessor<Optional<Component>> NAME_WATCHER = new EntityDataAccessor(2,
-			EntityDataSerializers.COMPONENT);
+			EntityDataSerializers.OPTIONAL_COMPONENT);
 	public static final EntityDataAccessor<Boolean> NAME_VISIBLE_WATCHER = new EntityDataAccessor<>(3,
 			EntityDataSerializers.BOOLEAN);
 
@@ -71,7 +71,8 @@ public class Hologram extends PacketObject {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, spawnPackets = createSpawnPackets());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
+				spawnPackets = createSpawnPackets());
 	}
 
 	@Override
