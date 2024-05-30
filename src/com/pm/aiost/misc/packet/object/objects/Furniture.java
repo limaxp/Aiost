@@ -32,6 +32,7 @@ import com.pm.aiost.server.world.ServerWorld;
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
@@ -71,26 +72,26 @@ public class Furniture extends PacketObject {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
 				createMetadataPacket(), createEquipmentPacket());
 	}
 
 	@Override
 	public void spawn(Player player) {
-		PacketSender.send_(player, createSpawnPacket(), createMetadataPacket(), createEquipmentPacket());
+		PacketSender.send(player, createSpawnPacket(), createMetadataPacket(), createEquipmentPacket());
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, UUID.randomUUID(), x + 0.5, y - 1.188, z + 0.5, yaw, 0,
 				AiostEntityTypes.ARMOR_STAND);
 	}
 
-	public Object createMetadataPacket() {
+	public Packet<?> createMetadataPacket() {
 		return PacketFactory.packetEntityMetadata(id, DATA_WATCHER);
 	}
 
-	public Object createEquipmentPacket() {
+	public Packet<?> createEquipmentPacket() {
 		if (is != null)
 			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is));
 		else
@@ -173,7 +174,7 @@ public class Furniture extends PacketObject {
 	}
 
 	public void updateItemStack() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createEquipmentPacket());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createEquipmentPacket());
 	}
 
 	@Override

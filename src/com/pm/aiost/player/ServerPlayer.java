@@ -22,7 +22,6 @@ import javax.annotation.Nullable;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -74,8 +73,10 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
-import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.network.ServerPlayerConnection;
+import net.minecraft.world.entity.LivingEntity;
 
 public class ServerPlayer implements AutoCloseable {
 
@@ -126,8 +127,7 @@ public class ServerPlayer implements AutoCloseable {
 	private final List<ChatHologram> chatHolograms;
 	private final Object2IntMap<Object> cooldowns;
 	final List<IParticle> particles;
-//	private OwnableEntity petEntity;
-	private Entity petEntity;
+	private LivingEntity petEntity;
 	private PlayerDataCache dataCache;
 
 	ServerPlayer(Player player) {
@@ -371,14 +371,14 @@ public class ServerPlayer implements AutoCloseable {
 		ItemBarHandler.clearCreative(this, event);
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void setDisguise(Disguise disguise) {
-		List packets = new ArrayList();
+		List<Packet<?>> packets = new ArrayList<Packet<?>>();
 		packets.add(PacketFactory.packetEntityDestroy(player.getEntityId()));
 		if (this.disguise != null)
 			this.disguise.removePackets(player, packets);
 		disguise.addPackets(player, packets);
-//		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
+		for (ServerPlayerConnection con : NMS.getTrackedPlayers(player))
+			PacketSender.send(con, packets);
 		setSelfDisguise();
 		this.disguise = disguise;
 	}
@@ -389,12 +389,11 @@ public class ServerPlayer implements AutoCloseable {
 		defaultDisguise = disguise;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public void removeDisguise() {
 		if (this.disguise == null)
 			return;
 
-		List packets = new ArrayList();
+		List<Packet<?>> packets = new ArrayList<Packet<?>>();
 		net.minecraft.world.entity.player.Player entityPlayer = NMS.to(player);
 		packets.add(PacketFactory.packetEntityDestroy(entityPlayer.getId()));
 		disguise.removePackets(player, packets);
@@ -404,7 +403,8 @@ public class ServerPlayer implements AutoCloseable {
 			packets.add(PacketFactory.packetEntitySpawn(entityPlayer));
 			Disguise.addPlayerStatePackets(entityPlayer, packets);
 		}
-//		PacketSender.sendNMS_(NMS.getTrackedPlayers(player), packets);
+		for (ServerPlayerConnection con : NMS.getTrackedPlayers(player))
+			PacketSender.send(con, packets);
 		removeSelfDisguise();
 		this.disguise = null;
 	}
@@ -421,11 +421,11 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	private void setSelfDisguise() {
-//		EntityTrackerHelper.getTrackedPlayers(player).add(NMS.getNMS(player));
+//		EntityTrackerHelper.getTrackedPlayers(player).add(NMS.to(player));
 	}
 
 	private void removeSelfDisguise() {
-//		EntityTrackerHelper.getTrackedPlayers(player).remove(NMS.getNMS(player));
+//		EntityTrackerHelper.getTrackedPlayers(player).remove(NMS.to(player));
 	}
 
 	public @Nullable Disguise getDisguise() {
@@ -1029,6 +1029,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void spawnPet(int id) {
+		// TODO
 //		petEntity = (OwnableEntity) AiostEntityTypes.spawnEntity((EntityType<?>) UnlockableTypes.PETS.getObject(id),
 //				player.getLocation());
 //		if (petEntity != null)
@@ -1036,13 +1037,13 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void despawnPet() {
+		// TODO
 //		petEntity.die();
-//		petEntity = null;
+		petEntity = null;
 	}
 
 	public boolean hasPet() {
-//		return petEntity != null;
-		return false;
+		return petEntity != null;
 	}
 
 	public boolean hidesChat() {
@@ -1165,6 +1166,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public static void sendActionBar(Player player, String msg) {
+		// TODO
 //		PacketSender.send(player, PacketFactory.packetChat(msg, ChatMessageType.GAME_INFO));
 	}
 }

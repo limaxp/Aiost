@@ -18,11 +18,12 @@ import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
+import net.minecraft.network.protocol.Packet;
 
 public class EntityHologram extends PacketEntity {
 
 	protected String[] text;
-	protected Object[] spawnPackets;
+	protected Packet<?>[] spawnPackets;
 
 	public EntityHologram(ServerWorld world) {
 		super(world);
@@ -54,17 +55,17 @@ public class EntityHologram extends PacketEntity {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, spawnPackets = createSpawnPackets());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, spawnPackets = createSpawnPackets());
 	}
 
 	@Override
 	public void show(Player player) {
-		PacketSender.send_(player, spawnPackets);
+		PacketSender.send(player, spawnPackets);
 	}
 
 	@Override
 	public void spawn(Player player) {
-		PacketSender.send_(player, createSpawnPackets());
+		PacketSender.send(player, createSpawnPackets());
 	}
 
 	@Override
@@ -89,12 +90,12 @@ public class EntityHologram extends PacketEntity {
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public Object createRemovePacket() {
+	public Packet<?> createRemovePacket() {
 		int length = text.length;
 		int[] ids = new int[length];
 		ids[0] = id;
@@ -103,9 +104,9 @@ public class EntityHologram extends PacketEntity {
 		return PacketFactory.packetEntityDestroy(ids);
 	}
 
-	public Object[] createSpawnPackets() {
+	public Packet<?>[] createSpawnPackets() {
 		int length = text.length;
-		Object[] spawnPackets = new Object[length * 2];
+		Packet<?>[] spawnPackets = new Packet[length * 2];
 		spawnPackets[0] = createSpawnPacket(0);
 		spawnPackets[1] = createMetaDataPacket(0, text[0]);
 		int index = 2;
@@ -116,12 +117,12 @@ public class EntityHologram extends PacketEntity {
 		return spawnPackets;
 	}
 
-	public Object createSpawnPacket(int index) {
+	public Packet<?> createSpawnPacket(int index) {
 		return PacketFactory.packetEntitySpawn(id + index, UUID.randomUUID(), x, y - (Hologram.ABS * index), z, 0, 0,
 				AiostEntityTypes.ARMOR_STAND);
 	}
 
-	public Object createMetaDataPacket(int index, String text) {
+	public Packet<?> createMetaDataPacket(int index, String text) {
 		return PacketFactory.packetEntityMetadata(id + index, Hologram.createDataWatcher(text));
 	}
 

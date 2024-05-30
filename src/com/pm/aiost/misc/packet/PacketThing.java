@@ -10,6 +10,7 @@ import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.chunk.ChunkWatcher;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 
 public abstract class PacketThing {
 
@@ -31,7 +32,7 @@ public abstract class PacketThing {
 		return NMS.getEntityCount().getAndAdd(amount) + 1;
 	}
 
-	public abstract Object createSpawnPacket();
+	public abstract Packet<?> createSpawnPacket();
 
 	public abstract void spawn();
 
@@ -40,16 +41,16 @@ public abstract class PacketThing {
 	}
 
 	public void spawn(Player player) {
-		PacketSender.send_(player, createSpawnPacket());
+		PacketSender.send(player, createSpawnPacket());
 	}
 
 	public abstract void remove();
 
 	public void hide(Player player) {
-		PacketSender.send_(player, createRemovePacket());
+		PacketSender.send(player, createRemovePacket());
 	}
 
-	public Object createRemovePacket() {
+	public Packet<?> createRemovePacket() {
 		return PacketFactory.packetEntityDestroy(id);
 	}
 

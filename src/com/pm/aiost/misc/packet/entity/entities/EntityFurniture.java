@@ -26,12 +26,13 @@ import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 
 public class EntityFurniture extends PacketEntity {
 
 	protected int furnitureID;
 	protected @Nullable ItemStack is;
-	protected Object equipmentPacket;
+	protected Packet<?> equipmentPacket;
 
 	public EntityFurniture(ServerWorld world) {
 		super(world);
@@ -49,25 +50,25 @@ public class EntityFurniture extends PacketEntity {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
 				createMetadataPacket(), createEquipmentPacket());
 	}
 
 	@Override
 	public void spawn(Player player) {
-		PacketSender.send_(player, createSpawnPacket(), createMetadataPacket(), createEquipmentPacket());
+		PacketSender.send(player, createSpawnPacket(), createMetadataPacket(), createEquipmentPacket());
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, uuid, x, y - 1.188, z, yaw, pitch, AiostEntityTypes.ARMOR_STAND);
 	}
 
-	protected Object createMetadataPacket() {
+	protected Packet<?> createMetadataPacket() {
 		return PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER);
 	}
 
-	protected Object createEquipmentPacket() {
+	protected Packet<?> createEquipmentPacket() {
 		if (is != null)
 			return PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is));
 		else
@@ -128,7 +129,7 @@ public class EntityFurniture extends PacketEntity {
 	}
 
 	public void updateItemStack() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, equipmentPacket);
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, equipmentPacket);
 	}
 
 	public @Nonnull ItemStack getItemStack() {

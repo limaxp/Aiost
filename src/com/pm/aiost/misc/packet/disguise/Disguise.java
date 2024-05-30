@@ -7,21 +7,22 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.packet.PacketFactory;
 
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
 public interface Disguise {
 
-	public void addPackets(Player player, List<Object> packets);
+	public void addPackets(Player player, List<Packet<?>> packets);
 
-	public default void removePackets(Player player, List<Object> packets) {
+	public default void removePackets(Player player, List<Packet<?>> packets) {
 	}
 
 	public void load(ConfigurationSection section);
 
 	public static void addPlayerStatePackets(net.minecraft.world.entity.player.Player entityPlayer,
-			List<Object> packets) {
+			List<Packet<?>> packets) {
 		int id = entityPlayer.getId();
 		packets.add(PacketFactory.packetEntityMetadata(id, entityPlayer.getEntityData().getNonDefaultValues()));
 		for (EquipmentSlot slot : EquipmentSlot.values()) {

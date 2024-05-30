@@ -19,6 +19,8 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
 
+import net.minecraft.network.protocol.Packet;
+
 public class DisguiseFurniture implements Disguise {
 
 	// TODO: DisguiseFurnitures can surely be made better! Also change
@@ -39,7 +41,7 @@ public class DisguiseFurniture implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
+	public void addPackets(Player player, List<Packet<?>> packets) {
 		Location loc = player.getLocation();
 		int id = player.getEntityId();
 

@@ -13,6 +13,7 @@ import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 
 public class Marker extends SimpleText {
@@ -55,7 +56,7 @@ public class Marker extends SimpleText {
 	}
 
 	@Override
-	public Object createMetaDataPacket() {
+	public Packet<?> createMetaDataPacket() {
 		return PacketFactory.packetEntityMetadata(id, createDataWatcher(text));
 	}
 

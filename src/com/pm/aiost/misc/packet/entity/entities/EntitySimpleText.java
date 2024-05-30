@@ -14,6 +14,7 @@ import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 
 public class EntitySimpleText extends PacketEntity {
 
@@ -30,13 +31,13 @@ public class EntitySimpleText extends PacketEntity {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket(),
 				createMetaDataPacket());
 	}
 
 	@Override
 	public void spawn(Player player) {
-		PacketSender.send_(player, createSpawnPacket(), createMetaDataPacket());
+		PacketSender.send(player, createSpawnPacket(), createMetaDataPacket());
 	}
 
 	@Override
@@ -53,12 +54,12 @@ public class EntitySimpleText extends PacketEntity {
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, UUID.randomUUID(), x + 0.5, y, z + 0.5, 0, 0,
 				AiostEntityTypes.ARMOR_STAND);
 	}
 
-	public Object createMetaDataPacket() {
+	public Packet<?> createMetaDataPacket() {
 		return PacketFactory.packetEntityMetadata(id, Hologram.createDataWatcher(text));
 	}
 

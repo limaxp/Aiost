@@ -23,13 +23,13 @@ public abstract class PacketObject extends PacketThing {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
 	}
 
 	@Override
 	public void remove() {
 		world.removePacketObject(x, y, z);
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
 	}
 
 	@Override

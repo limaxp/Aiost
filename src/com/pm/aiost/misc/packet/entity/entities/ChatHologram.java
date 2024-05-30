@@ -11,6 +11,8 @@ import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.server.world.ServerWorld;
 
+import net.minecraft.network.protocol.Packet;
+
 public class ChatHologram extends EntityHologram {
 
 	protected final List<Player> player;
@@ -37,12 +39,12 @@ public class ChatHologram extends EntityHologram {
 
 	@Override
 	public void spawn() {
-		PacketSender.send_(player, spawnPackets = createSpawnPackets());
+		PacketSender.send(player, spawnPackets = createSpawnPackets());
 	}
 
 	@Override
 	public void remove() {
-		PacketSender.send_(player, createRemovePacket());
+		PacketSender.send(player, createRemovePacket());
 	}
 
 	public void teleport(Location loc, boolean onGround) {
@@ -52,10 +54,10 @@ public class ChatHologram extends EntityHologram {
 	public void teleport(double x, double y, double z, float yaw, float pitch, boolean onGround) {
 		setPositionRotation(x, y, z, yaw, pitch);
 		int length = text.length;
-		Object[] teleportPackets = new Object[length];
+		Packet<?>[] teleportPackets = new Packet[length];
 		for (int i = 0; i < length; i++)
 			teleportPackets[i] = PacketFactory.packetEntityTeleport(id + i, x, y - (Hologram.ABS * i), z, yaw, pitch,
 					onGround);
-		PacketSender.send_(player, teleportPackets);
+		PacketSender.send(player, teleportPackets);
 	}
 }

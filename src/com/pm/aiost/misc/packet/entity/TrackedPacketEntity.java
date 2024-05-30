@@ -9,6 +9,8 @@ import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.server.world.ServerWorld;
 
+import net.minecraft.network.protocol.Packet;
+
 public abstract class TrackedPacketEntity extends PacketEntity {
 
 	private final List<Player> trackedPlayer;
@@ -43,7 +45,7 @@ public abstract class TrackedPacketEntity extends PacketEntity {
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		throw new UnsupportedOperationException();
 	}
 

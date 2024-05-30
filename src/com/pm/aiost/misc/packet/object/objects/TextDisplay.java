@@ -17,6 +17,7 @@ import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 
 public class TextDisplay extends Hologram {
@@ -50,7 +51,7 @@ public class TextDisplay extends Hologram {
 			if (LocationHelper.distance(x, z, loc.getBlockX(), loc.getBlockZ()) <= PACKET_OBJECT_VISIBILE_RANGE)
 				playerList.add(player);
 		}
-		PacketSender.send_(playerList, spawnPackets = createSpawnPackets());
+		PacketSender.send(playerList, spawnPackets = createSpawnPackets());
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class TextDisplay extends Hologram {
 	@Override
 	public void remove() {
 		world.removePacketObject(x, y, z);
-		PacketSender.send_(playerList, createRemovePacket());
+		PacketSender.send(playerList, createRemovePacket());
 		playerList.clear();
 	}
 
@@ -85,7 +86,7 @@ public class TextDisplay extends Hologram {
 	}
 
 	@Override
-	public Object createMetaDataPacket(int index, String text) {
+	public Packet<?> createMetaDataPacket(int index, String text) {
 		List<DataValue<?>> dataWatcher = createDataWatcher(text);
 		dataWatchers[index] = dataWatcher;
 		return super.createMetaDataPacket(index, text);
@@ -116,10 +117,10 @@ public class TextDisplay extends Hologram {
 
 	public void updateFrom(int index) {
 		int length = dataWatchers.length;
-		Object[] packets = new Object[length];
+		Packet<?>[] packets = new Packet[length];
 		for (int i = index; i < length; i++)
 			packets[i] = PacketFactory.packetEntityMetadata(id + i, dataWatchers[i]);
-		PacketSender.send_(playerList, packets);
+		PacketSender.send(playerList, packets);
 	}
 
 	public void updateText() {

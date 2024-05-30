@@ -33,13 +33,13 @@ public abstract class PacketEntity extends PacketThing {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
 	}
 
 	@Override
 	public void remove() {
 		world.removePacketEntity(this);
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public abstract class PacketEntity extends PacketThing {
 
 	// TODO: Implements this in PacketEntityfurniture
 	public void setEquipment(EquipmentSlot slot, ItemStack is) {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
 				PacketFactory.packetEntityEquipment(id, NMS.to(slot), NMS.to(is)));
 	}
 

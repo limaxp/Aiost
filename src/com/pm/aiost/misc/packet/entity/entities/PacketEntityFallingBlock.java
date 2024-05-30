@@ -13,6 +13,7 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 
 public class PacketEntityFallingBlock extends PacketEntity {
 
@@ -56,7 +57,7 @@ public class PacketEntityFallingBlock extends PacketEntity {
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.FALLING_BLOCK, blockId);
 	}
 

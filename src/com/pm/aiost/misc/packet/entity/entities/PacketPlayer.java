@@ -17,6 +17,7 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
@@ -50,33 +51,33 @@ public class PacketPlayer extends PacketEntity {
 
 	@Override
 	public void spawn() {
-		PacketSender.sendNear_(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
 				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
 		Bukkit.getScheduler()
 				.runTaskLater(
-						Aiost.getPlugin(), () -> PacketSender.sendNear_(world.world, x, y, z,
+						Aiost.getPlugin(), () -> PacketSender.sendNearby(world.world, x, y, z,
 								PACKET_OBJECT_VISIBILE_RANGE, PacketFactory.packetPlayerInfoRemove(profile.getId())),
 						10);
 	}
 
 	@Override
 	public void spawn(Player player) {
-		PacketSender.send_(player,
+		PacketSender.send(player,
 				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
 		Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(),
-				() -> PacketSender.send_(player, PacketFactory.packetPlayerInfoRemove(profile.getId())), 10);
+				() -> PacketSender.send(player, PacketFactory.packetPlayerInfoRemove(profile.getId())), 10);
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, profile.getId(), x, y, z, yaw, pitch, EntityType.PLAYER);
 	}
 
-	protected Object createMetadataPacket() {
+	protected Packet<?> createMetadataPacket() {
 		return PacketFactory.packetEntityMetadata(id, dataWatcher);
 	}
 

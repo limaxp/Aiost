@@ -15,6 +15,7 @@ import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
@@ -50,7 +51,7 @@ public class DisguiseBlock implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
+	public void addPackets(Player player, List<Packet<?>> packets) {
 		Location loc = player.getLocation();
 		int id = player.getEntityId();
 		packets.add(PacketFactory.packetEntitySpawn(id, player.getUniqueId(), loc.getX(), loc.getY(), loc.getZ(),

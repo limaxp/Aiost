@@ -11,6 +11,7 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 import net.minecraft.world.entity.EntityType;
 
@@ -53,7 +54,7 @@ public class PacketEntityLiving extends PacketEntity {
 	}
 
 	@Override
-	public Object createSpawnPacket() {
+	public Packet<?> createSpawnPacket() {
 		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.getById(entityId));
 	}
 
