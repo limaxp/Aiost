@@ -9,7 +9,7 @@ import net.minecraft.world.item.Tiers;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 
-public class AiostToolMaterial implements Tier {
+public class AiostTier implements Tier {
 
 	private static final Map<String, Tier> NAME_MAP = new HashMap<String, Tier>();
 
@@ -60,10 +60,10 @@ public class AiostToolMaterial implements Tier {
 	public static Tier register(String name, int uses, float speed, float damage, TagKey<Block> incorrectBlocksForDrops,
 			int enchantmentValue, Ingredient repairItem) {
 		return register(name,
-				new AiostToolMaterial(uses, speed, damage, incorrectBlocksForDrops, enchantmentValue, repairItem));
+				new AiostTier(uses, speed, damage, incorrectBlocksForDrops, enchantmentValue, repairItem));
 	}
 
-	public static Tier register(String name, AiostToolMaterial toolMaterial) {
+	public static Tier register(String name, AiostTier toolMaterial) {
 		NAME_MAP.put(name.toLowerCase(), toolMaterial);
 		return toolMaterial;
 	}
@@ -92,7 +92,7 @@ public class AiostToolMaterial implements Tier {
 	private final int enchantmentValue;
 	private final Ingredient repairItem;
 
-	public AiostToolMaterial(int uses, float speed, float damage, TagKey<Block> incorrectBlocksForDrops,
+	public AiostTier(int uses, float speed, float damage, TagKey<Block> incorrectBlocksForDrops,
 			int enchantmentValue, Ingredient repairItem) {
 		this.uses = uses;
 		this.speed = speed;

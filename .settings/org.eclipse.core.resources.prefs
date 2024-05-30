@@ -1,7 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/com/pm/aiost/entity/EntityHelper.java=UTF-8
 encoding//src/com/pm/aiost/game/games/castleDefend/CastleDefendScoreboard.java=UTF-8
-encoding//src/com/pm/aiost/item/AiostToolMaterial.java=UTF-8
+encoding//src/com/pm/aiost/item/AiostTier.java=UTF-8
 encoding//src/com/pm/aiost/item/spell/Spell.java=UTF-8
 encoding//src/com/pm/aiost/misc/scoreboard/scoreboards/LobbyScoreboard.java=UTF-8
 encoding//src/com/pm/aiost/misc/scoreboard/scoreboards/PlayerWorldScoreboard.java=UTF-8

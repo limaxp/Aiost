@@ -9,7 +9,7 @@ import org.bukkit.craftbukkit.v1_20_R4.util.CraftMagicNumbers;
 
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectBuilder;
-import com.pm.aiost.item.AiostToolMaterial;
+import com.pm.aiost.item.AiostTier;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
 
@@ -197,7 +197,7 @@ public class NMSItemLoader {
 
 	public static Tier readToolMaterial(ConfigurationSection section) {
 		if (section.contains("toolMaterial")) {
-			Tier toolmaterial = AiostToolMaterial.getIgnoreCase(section.getString("toolMaterial"));
+			Tier toolmaterial = AiostTier.getIgnoreCase(section.getString("toolMaterial"));
 			if (toolmaterial != null)
 				return toolmaterial;
 			Logger.warn(
