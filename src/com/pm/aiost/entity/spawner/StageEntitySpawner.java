@@ -1,46 +1,17 @@
 package com.pm.aiost.entity.spawner;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
-
 import org.bukkit.configuration.ConfigurationSection;
 
-import net.minecraft.world.entity.EntityType;
-
 public class StageEntitySpawner extends MultiLocEntitySpawner {
-
-	private static final int DEFAULT_MAX_SPAWN_SIZE = 40;
-	private static final int DEFAULT_MIN_SPAWN_SIZE = 3;
 
 	private int toSpawn;
 	private int currentlySpawned;
 	private int maxSpawnSize;
 	private int minSpawnSize;
 
-	public StageEntitySpawner(Random random) {
-		super(random);
-		maxSpawnSize = DEFAULT_MAX_SPAWN_SIZE;
-		minSpawnSize = DEFAULT_MIN_SPAWN_SIZE;
-	}
-
-	public StageEntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
-	}
-
-	public StageEntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
-	}
-
-	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
-		this(intervallTime, spawnSize, entityTypes, new Random());
-	}
-
-	public StageEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
-		super(intervallTime, spawnSize, entityTypes, random);
-		toSpawn = spawnSize;
-		maxSpawnSize = DEFAULT_MAX_SPAWN_SIZE;
-		minSpawnSize = DEFAULT_MIN_SPAWN_SIZE;
+	public StageEntitySpawner() {
+		maxSpawnSize = 40;
+		minSpawnSize = 4;
 	}
 
 	@Override

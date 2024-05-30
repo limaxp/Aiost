@@ -76,7 +76,7 @@ public class CastleDefend extends Game {
 
 	public CastleDefend() {
 		random = new Random();
-		spawner = new StageEntitySpawner(random);
+		spawner = new StageEntitySpawner();
 		shopMenu = new ShopMenu(true);
 	}
 

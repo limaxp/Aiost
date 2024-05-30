@@ -2,38 +2,18 @@ package com.pm.aiost.entity.spawner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.pm.aiost.misc.utils.LocationHelper;
 
-import net.minecraft.world.entity.EntityType;
-
 public class MultiLocEntitySpawner extends EntitySpawner {
 
 	private Location[] locations;
 	private int locationVaraety;
 
-	public MultiLocEntitySpawner(Random random) {
-		super(random);
-	}
-
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
-	}
-
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
-	}
-
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
-		this(intervallTime, spawnSize, entityTypes, new Random());
-	}
-
-	public MultiLocEntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
-		super(intervallTime, spawnSize, entityTypes, random);
+	public MultiLocEntitySpawner() {
 		locationVaraety = 1;
 	}
 

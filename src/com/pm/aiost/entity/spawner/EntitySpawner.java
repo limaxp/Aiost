@@ -23,36 +23,20 @@ public abstract class EntitySpawner {
 		}
 	};
 
+	public final Random random;
+	private List<EntityType<?>> entityTypes;
+	private Consumer<Entity> spawnCallback;
+	private BukkitRunnable scheduler;
 	private int intervallTime;
 	private int time;
 	private int spawnSize;
-	private List<EntityType<?>> entityTypes;
-	public final Random random;
-	private Consumer<Entity> spawnCallback;
-	private BukkitRunnable scheduler;
 
-	public EntitySpawner(Random random) {
-		this.random = random;
-		spawnCallback = NULL_CALLBACK;
-	}
-
-	public EntitySpawner(int intervallTime, int spawnSize) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), new Random());
-	}
-
-	public EntitySpawner(int intervallTime, int spawnSize, Random random) {
-		this(intervallTime, spawnSize, new ArrayList<EntityType<?>>(), random);
-	}
-
-	public EntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes) {
-		this(intervallTime, spawnSize, entityTypes, new Random());
-	}
-
-	public EntitySpawner(int intervallTime, int spawnSize, List<EntityType<?>> entityTypes, Random random) {
-		this(random);
-		this.intervallTime = intervallTime;
-		this.spawnSize = spawnSize;
-		this.entityTypes = entityTypes;
+	public EntitySpawner() {
+		this.random = new Random();
+		this.entityTypes = new ArrayList<EntityType<?>>();
+		this.spawnCallback = NULL_CALLBACK;
+		this.intervallTime = 20;
+		this.spawnSize = 4;
 	}
 
 	public abstract Location getLocation();
