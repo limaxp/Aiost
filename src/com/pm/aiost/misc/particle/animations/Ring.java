@@ -35,10 +35,6 @@ public class Ring extends AnimationParticle {
 	public Ring() {
 	}
 
-	public Ring(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_SIZE);
-	}
-
 	public Ring(IParticle particle, double radius, int size) {
 		super(particle);
 		this.radius = radius;

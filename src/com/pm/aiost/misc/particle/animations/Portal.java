@@ -23,14 +23,6 @@ public class Portal extends VerticalRing {
 	public Portal() {
 	}
 
-	public Portal(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
-	public Portal(IParticle particle, double radius, int size) {
-		super(particle, radius, size);
-	}
-
 	public Portal(IParticle particle, double radius, int size, float yaw) {
 		super(particle, radius, size, yaw);
 	}

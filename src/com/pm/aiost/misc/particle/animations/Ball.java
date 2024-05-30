@@ -37,18 +37,6 @@ public class Ball extends AnimationParticle {
 	public Ball() {
 	}
 
-	public Ball(IParticle particle) {
-		this(particle, DEFAULT_RADIUS, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Ball(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Ball(IParticle particle, double radius, int size) {
-		this(particle, radius, size, size);
-	}
-
 	public Ball(IParticle particle, double radius, int upSize, int sideSize) {
 		super(particle);
 		this.radius = radius;

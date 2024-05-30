@@ -29,14 +29,6 @@ public class VerticalRing extends Ring {
 	public VerticalRing() {
 	}
 
-	public VerticalRing(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_SIZE, 0);
-	}
-
-	public VerticalRing(IParticle particle, double radius, int size) {
-		this(particle, radius, size, 0);
-	}
-
 	public VerticalRing(IParticle particle, double radius, int size, float yaw) {
 		super(particle, radius, size);
 		this.yaw = yaw;

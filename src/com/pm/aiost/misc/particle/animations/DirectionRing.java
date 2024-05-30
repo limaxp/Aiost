@@ -13,10 +13,6 @@ public class DirectionRing extends Ring {
 	public DirectionRing() {
 	}
 
-	public DirectionRing(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
 	public DirectionRing(IParticle particle, double radius, int size) {
 		super(particle, radius, size);
 	}

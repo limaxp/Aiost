@@ -15,10 +15,6 @@ public class AnimatedDoubleRing extends DoubleRing {
 	public AnimatedDoubleRing() {
 	}
 
-	public AnimatedDoubleRing(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
 	public AnimatedDoubleRing(IParticle particle, double radius, int size) {
 		super(particle, radius, size);
 	}

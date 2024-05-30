@@ -37,26 +37,6 @@ public class Helix extends AnimationParticle {
 	public Helix() {
 	}
 
-	public Helix(IParticle particle, double radius) {
-		this(particle, radius, radius, DEFAULT_STEP_AMOUNT, DEFAULT_PHI);
-	}
-
-	public Helix(IParticle particle, double radius, double height) {
-		this(particle, radius, height, DEFAULT_STEP_AMOUNT, DEFAULT_PHI);
-	}
-
-	public Helix(IParticle particle, double radius, int size) {
-		this(particle, radius, radius, size, DEFAULT_PHI);
-	}
-
-	public Helix(IParticle particle, double radius, double height, int size) {
-		this(particle, radius, height, size, DEFAULT_PHI);
-	}
-
-	public Helix(IParticle particle, double radius, int size, double phi) {
-		this(particle, radius, radius, size, phi);
-	}
-
 	public Helix(IParticle particle, double radius, double height, int size, double phi) {
 		this.radius = radius;
 		this.height = height;

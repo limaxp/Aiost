@@ -255,7 +255,7 @@ public class WorldCommands {
 		Location playerLocation = player.getLocation().clone().add(0, 1, 0);
 		ParticleSpawner paticleSpawner = PacketEntityTypes.spawn(PacketEntityTypes.PARTICLE_SPAWNER, playerLocation);
 		paticleSpawner.setParticle(
-				new Portal(new DataParticle<DustOptions>(org.bukkit.Particle.DUST, 5, 0.05F, 0, false, data), 1)
+				new Portal(new DataParticle<DustOptions>(org.bukkit.Particle.DUST, 5, 0.05F, 0, false, data), 1, 18, 0)
 						.init());
 		ServerWorld serverWorld = ServerPlayer.getByPlayer(player).getServerWorld();
 		Effect effect;

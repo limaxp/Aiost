@@ -35,10 +35,6 @@ public class Wing extends AnimationParticle {
 	public Wing() {
 	}
 
-	public Wing(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_SIZE);
-	}
-
 	public Wing(IParticle particle, double radius, int size) {
 		super(particle);
 		this.radius = radius;

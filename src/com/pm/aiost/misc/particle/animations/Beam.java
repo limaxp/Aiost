@@ -35,14 +35,6 @@ public class Beam extends AnimationParticle {
 	public Beam() {
 	}
 
-	public Beam(IParticle particle) {
-		this(particle, DEFAULT_RANGE, 0, 0);
-	}
-
-	public Beam(IParticle particle, double range) {
-		this(particle, range, 0, 0);
-	}
-
 	public Beam(IParticle particle, double range, float yaw, float pitch) {
 		super(particle);
 		this.range = range;

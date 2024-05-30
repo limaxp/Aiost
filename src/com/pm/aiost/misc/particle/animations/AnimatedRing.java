@@ -15,10 +15,6 @@ public class AnimatedRing extends Ring {
 	public AnimatedRing() {
 	}
 
-	public AnimatedRing(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
 	public AnimatedRing(IParticle particle, double radius, int stepAmount) {
 		super(particle, radius, stepAmount);
 	}

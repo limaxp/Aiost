@@ -13,10 +13,6 @@ public class DoubleRing extends Ring {
 	public DoubleRing() {
 	}
 
-	public DoubleRing(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
 	public DoubleRing(IParticle particle, double radius, int size) {
 		super(particle, radius, size);
 	}

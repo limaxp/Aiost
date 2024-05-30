@@ -27,18 +27,6 @@ public class Sphere extends Ball {
 	public Sphere() {
 	}
 
-	public Sphere(IParticle particle, double radius) {
-		this(particle, radius, radius, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Sphere(IParticle particle, double radius, double height) {
-		this(particle, radius, height, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Sphere(IParticle particle, double radius, double height, int size) {
-		this(particle, radius, height, size, size);
-	}
-
 	public Sphere(IParticle particle, double radius, double height, int upSize, int sideSize) {
 		super(particle, radius, upSize, sideSize);
 		this.height = height;

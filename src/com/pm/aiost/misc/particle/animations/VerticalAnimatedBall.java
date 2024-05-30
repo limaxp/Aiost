@@ -15,14 +15,6 @@ public class VerticalAnimatedBall extends Ball {
 	public VerticalAnimatedBall() {
 	}
 
-	public VerticalAnimatedBall(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
-	public VerticalAnimatedBall(IParticle particle, double radius, int size) {
-		super(particle, radius, size);
-	}
-
 	public VerticalAnimatedBall(IParticle particle, double radius, int upSize, int sideSize) {
 		super(particle, radius, upSize, sideSize);
 	}

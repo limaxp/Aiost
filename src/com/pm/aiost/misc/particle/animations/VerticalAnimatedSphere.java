@@ -15,18 +15,6 @@ public class VerticalAnimatedSphere extends Sphere {
 	public VerticalAnimatedSphere() {
 	}
 
-	public VerticalAnimatedSphere(IParticle particle, double radius) {
-		super(particle, radius);
-	}
-
-	public VerticalAnimatedSphere(IParticle particle, double radius, double height) {
-		super(particle, radius, height);
-	}
-
-	public VerticalAnimatedSphere(IParticle particle, double radius, double height, int size) {
-		super(particle, radius, height, size);
-	}
-
 	public VerticalAnimatedSphere(IParticle particle, double radius, double height, int upSize, int sideSize) {
 		super(particle, radius, height, upSize, sideSize);
 	}

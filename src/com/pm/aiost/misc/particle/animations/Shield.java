@@ -13,18 +13,6 @@ public class Shield extends Sphere {
 	public Shield() {
 	}
 
-	public Shield(IParticle particle, double radius) {
-		super(particle, radius, radius, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Shield(IParticle particle, double radius, double height) {
-		super(particle, radius, height, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Shield(IParticle particle, double radius, double height, int size) {
-		super(particle, radius, height, size, size);
-	}
-
 	public Shield(IParticle particle, double radius, double height, int upSize, int sideSize) {
 		super(particle, radius, height, upSize, sideSize);
 	}
