@@ -51,7 +51,6 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.PlayerChatMessage;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
@@ -417,14 +416,6 @@ public class NMS {
 	public static BlockFace notchToBlockFace(Direction direction) {
 		return CraftBlock.notchToBlockFace(direction);
 	}
-
-	public static PlayerChatMessage createChatMessage(String text) {
-		return PlayerChatMessage.system(text);
-	}
-
-//	public static PlayerChatMessage createChatMessage(String text, Object... args) {
-//		return new PlayerChatMessage(text, args);
-//	}
 
 	public static Component createChatComponent(String text) {
 		return ComponentUtils.fromMessage(new LiteralMessage(text));
