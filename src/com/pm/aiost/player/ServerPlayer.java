@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffect;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.EquipmentListener;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectHandler;
@@ -61,6 +62,7 @@ import com.pm.aiost.player.handler.ItemBarHandler;
 import com.pm.aiost.player.handler.VisibilityManager;
 import com.pm.aiost.player.settings.PlayerSettings;
 import com.pm.aiost.player.unlockable.UnlockableType;
+import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.region.IRegion;
 
@@ -1030,8 +1032,8 @@ public class ServerPlayer implements AutoCloseable {
 
 	public void spawnPet(int id) {
 		// TODO
-//		petEntity = (OwnableEntity) AiostEntityTypes.spawnEntity((EntityType<?>) UnlockableTypes.PETS.getObject(id),
-//				player.getLocation());
+		petEntity = (LivingEntity) AiostEntityTypes.spawnEntity(UnlockableTypes.PETS.getObject(id),
+				player.getLocation());
 //		if (petEntity != null)
 //			petEntity.setOwner(player);
 	}
@@ -1131,12 +1133,10 @@ public class ServerPlayer implements AutoCloseable {
 		player.closeInventory();
 	}
 
-	@SuppressWarnings("deprecation")
 	public boolean collidesWithEntities() {
 		return player.isCollidable();
 	}
 
-	@SuppressWarnings("deprecation")
 	public void setCollidesWithEntities(boolean collides) {
 		player.setCollidable(collides);
 	}
