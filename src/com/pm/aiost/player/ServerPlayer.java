@@ -75,7 +75,9 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.LivingEntity;
@@ -1166,7 +1168,10 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public static void sendActionBar(Player player, String msg) {
-		// TODO
-//		PacketSender.send(player, PacketFactory.packetChat(msg, ChatMessageType.GAME_INFO));
+		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, new TextComponent(msg));
+	}
+
+	public static void sendActionBar(Player player, BaseComponent component) {
+		player.spigot().sendMessage(ChatMessageType.ACTION_BAR, component);
 	}
 }
