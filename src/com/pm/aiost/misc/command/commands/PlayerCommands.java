@@ -11,8 +11,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.entity.npc.profile.ProfileFetcher;
-import com.pm.aiost.entity.npc.profile.Profiles;
 import com.pm.aiost.event.eventHandler.EventHandler.QuitReason;
 import com.pm.aiost.event.eventHandler.handler.DuelEventHandler;
 import com.pm.aiost.misc.command.CommandUtil;
@@ -20,6 +18,8 @@ import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
+import com.pm.aiost.misc.profile.ProfileFetcher;
+import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.misc.rank.Rank.Level;
 import com.pm.aiost.misc.rank.Ranks;

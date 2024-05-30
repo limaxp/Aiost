@@ -1,10 +1,11 @@
-package com.pm.aiost.entity;
+package com.pm.aiost.entity.entities;
 
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftVillager;
 
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;

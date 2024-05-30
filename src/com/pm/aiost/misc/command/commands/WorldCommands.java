@@ -17,8 +17,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.entity.npc.profile.ProfileFetcher;
-import com.pm.aiost.entity.npc.profile.Profiles;
 import com.pm.aiost.event.effect.Effect;
 import com.pm.aiost.event.effect.EffectAction;
 import com.pm.aiost.event.effect.EffectCondition;
@@ -42,6 +40,8 @@ import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.misc.particle.animations.Portal;
 import com.pm.aiost.misc.particle.particles.DataParticle;
+import com.pm.aiost.misc.profile.ProfileFetcher;
+import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.StringUtils;
 import com.pm.aiost.misc.utils.WordFilter;

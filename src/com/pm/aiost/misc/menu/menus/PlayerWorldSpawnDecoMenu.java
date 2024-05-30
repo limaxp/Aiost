@@ -14,7 +14,6 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.entity.npc.profile.ProfileFetcher;
 import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
@@ -26,6 +25,7 @@ import com.pm.aiost.misc.packet.entity.entities.EntityFurniture;
 import com.pm.aiost.misc.packet.entity.entities.PacketEntityFallingBlock;
 import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
+import com.pm.aiost.misc.profile.ProfileFetcher;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

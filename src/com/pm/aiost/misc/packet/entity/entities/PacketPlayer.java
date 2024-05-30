@@ -8,12 +8,12 @@ import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.Aiost;
-import com.pm.aiost.entity.npc.profile.Profiles;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
+import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.server.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;

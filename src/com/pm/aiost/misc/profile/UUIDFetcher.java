@@ -1,4 +1,4 @@
-package com.pm.aiost.entity.npc.profile;
+package com.pm.aiost.misc.profile;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;

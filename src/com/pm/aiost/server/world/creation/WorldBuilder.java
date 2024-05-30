@@ -17,7 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.entity.npc.NpcBase;
+import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.utils.FileUtils;
 import com.pm.aiost.server.request.ServerRequest;

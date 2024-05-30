@@ -1,4 +1,6 @@
-package com.pm.aiost.entity;
+package com.pm.aiost.entity.entities;
+
+import com.pm.aiost.entity.AiostEntityTypes;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;

@@ -8,7 +8,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.google.common.collect.ImmutableSet;
-import com.pm.aiost.entity.npc.NpcBase;
+import com.pm.aiost.entity.entities.Ball;
+import com.pm.aiost.entity.entities.EntityTrader;
+import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.core.BlockPos;

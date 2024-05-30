@@ -1,4 +1,4 @@
-package com.pm.aiost.entity.npc.profile;
+package com.pm.aiost.misc.profile;
 
 import java.lang.reflect.Type;
 import java.util.Map.Entry;

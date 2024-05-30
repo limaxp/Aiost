@@ -1,10 +1,10 @@
-package com.pm.aiost.entity.npc;
+package com.pm.aiost.entity.entities;
 
 import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.npc.profile.Profiles;
+import com.pm.aiost.misc.profile.Profiles;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

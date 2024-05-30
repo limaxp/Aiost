@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.EntityTrader;
+import com.pm.aiost.entity.entities.EntityTrader;
 import com.pm.aiost.entity.goal.PathfinderGoalWalkToLocation;
 import com.pm.aiost.entity.spawner.StageEntitySpawner;
 import com.pm.aiost.event.eventHandler.EventHandler;

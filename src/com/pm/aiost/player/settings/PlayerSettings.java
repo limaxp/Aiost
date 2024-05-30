@@ -6,9 +6,9 @@ import java.util.List;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.pm.aiost.entity.npc.profile.Profiles;
 import com.pm.aiost.misc.command.commands.PlayerCommands;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
+import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.VisibilityManager;
 
