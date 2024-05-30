@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.particle.particles.animations;
+package com.pm.aiost.misc.particle.animations;
 
 import org.bukkit.World;
 import org.bukkit.entity.Player;

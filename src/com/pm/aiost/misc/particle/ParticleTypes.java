@@ -1,27 +1,27 @@
 package com.pm.aiost.misc.particle;
 
 import com.google.common.base.Supplier;
+import com.pm.aiost.misc.particle.animations.AnimatedDoubleRing;
+import com.pm.aiost.misc.particle.animations.AnimatedRing;
+import com.pm.aiost.misc.particle.animations.Ball;
+import com.pm.aiost.misc.particle.animations.Beam;
+import com.pm.aiost.misc.particle.animations.Body;
+import com.pm.aiost.misc.particle.animations.DirectionRing;
+import com.pm.aiost.misc.particle.animations.DoubleRing;
+import com.pm.aiost.misc.particle.animations.Helix;
+import com.pm.aiost.misc.particle.animations.Portal;
+import com.pm.aiost.misc.particle.animations.Ring;
+import com.pm.aiost.misc.particle.animations.Shield;
+import com.pm.aiost.misc.particle.animations.Sphere;
+import com.pm.aiost.misc.particle.animations.VerticalAnimatedBall;
+import com.pm.aiost.misc.particle.animations.VerticalAnimatedSphere;
+import com.pm.aiost.misc.particle.animations.VerticalRing;
+import com.pm.aiost.misc.particle.animations.Wing;
 import com.pm.aiost.misc.particle.particles.DataParticle;
 import com.pm.aiost.misc.particle.particles.DoubleParticle;
 import com.pm.aiost.misc.particle.particles.LocationParticle;
 import com.pm.aiost.misc.particle.particles.MultiParticle;
 import com.pm.aiost.misc.particle.particles.Particle;
-import com.pm.aiost.misc.particle.particles.animations.AnimatedDoubleRing;
-import com.pm.aiost.misc.particle.particles.animations.AnimatedRing;
-import com.pm.aiost.misc.particle.particles.animations.Ball;
-import com.pm.aiost.misc.particle.particles.animations.Beam;
-import com.pm.aiost.misc.particle.particles.animations.Body;
-import com.pm.aiost.misc.particle.particles.animations.DirectionRing;
-import com.pm.aiost.misc.particle.particles.animations.DoubleRing;
-import com.pm.aiost.misc.particle.particles.animations.Helix;
-import com.pm.aiost.misc.particle.particles.animations.Portal;
-import com.pm.aiost.misc.particle.particles.animations.Ring;
-import com.pm.aiost.misc.particle.particles.animations.Shield;
-import com.pm.aiost.misc.particle.particles.animations.Sphere;
-import com.pm.aiost.misc.particle.particles.animations.VerticalAnimatedBall;
-import com.pm.aiost.misc.particle.particles.animations.VerticalAnimatedSphere;
-import com.pm.aiost.misc.particle.particles.animations.VerticalRing;
-import com.pm.aiost.misc.particle.particles.animations.Wing;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
 public class ParticleTypes {

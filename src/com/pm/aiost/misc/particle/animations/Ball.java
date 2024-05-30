@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.particle.particles.animations;
+package com.pm.aiost.misc.particle.animations;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 
@@ -23,74 +23,84 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class Wing extends AnimationParticle {
+public class Ball extends AnimationParticle {
 
 	protected static final int DEFAULT_RADIUS = 1;
-	protected static final int DEFAULT_SIZE = 24;
+	protected static final int DEFAULT_UP_SIZE = 14;
+	protected static final int DEFAULT_SIDE_SIZE = 20;
 
 	protected double radius;
-	protected int size;
+	protected int upSize;
+	protected int sideSize;
 	protected double[] coordinates;
 
-	public Wing() {
+	public Ball() {
 	}
 
-	public Wing(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_SIZE);
+	public Ball(IParticle particle) {
+		this(particle, DEFAULT_RADIUS, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
 	}
 
-	public Wing(IParticle particle, double radius, int size) {
+	public Ball(IParticle particle, double radius) {
+		this(particle, radius, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
+	}
+
+	public Ball(IParticle particle, double radius, int size) {
+		this(particle, radius, size, size);
+	}
+
+	public Ball(IParticle particle, double radius, int upSize, int sideSize) {
 		super(particle);
 		this.radius = radius;
-		this.size = size;
+		this.upSize = upSize;
+		this.sideSize = sideSize;
 	}
 
 	@Override
-	public Wing init() {
-		coordinates = Geometric.wings(radius, size);
+	public Ball init() {
+		coordinates = Geometric.sphere(radius, upSize, sideSize);
 		return this;
 	}
 
 	@Override
 	public void spawn(World world, double x, double y, double z, float yaw, float pitch) {
-		double yawRad = Math.toRadians(yaw);
 		for (int i = 0; i < coordinates.length; i += 3)
-			particle.spawn(world, x + (coordinates[i] * Math.cos(yawRad)), y + coordinates[i + 1] + 1,
-					z + (coordinates[i + 2] * Math.sin(yawRad)));
+			particle.spawn(world, x + coordinates[i], y + coordinates[i + 1], z + coordinates[i + 2]);
 	}
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		double yawRad = Math.toRadians(yaw);
 		for (int i = 0; i < coordinates.length; i += 3)
-			particle.spawn(x + (coordinates[i] * Math.cos(yawRad)), y + coordinates[i + 1] + 1,
-					z + (coordinates[i + 2] * Math.sin(yawRad)), player);
+			particle.spawn(x + coordinates[i], y + coordinates[i + 1], z + coordinates[i + 2], player);
 	}
 
 	@Override
-	public void load(ConfigurationSection particleSection) {
-		super.load(particleSection);
-		radius = particleSection.getDouble("radius", DEFAULT_RADIUS);
-		size = particleSection.getInt("size", DEFAULT_SIZE);
+	public void load(ConfigurationSection section) {
+		super.load(section);
+		radius = section.getDouble("radius", DEFAULT_RADIUS);
+		upSize = section.getInt("upSize", DEFAULT_UP_SIZE);
+		sideSize = section.getInt("sideSize", DEFAULT_SIDE_SIZE);
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		radius = nbt.getDouble("radius");
-		size = nbt.getInt("size");
+		upSize = nbt.getInt("upSize");
+		sideSize = nbt.getInt("sideSize");
 	}
 
 	@Override
 	public void save(CompoundTag nbt) {
 		super.save(nbt);
 		nbt.putDouble("radius", radius);
-		nbt.putInt("size", size);
+		nbt.putInt("upSize", upSize);
+		nbt.putInt("sideSize", sideSize);
 	}
 
 	@Override
-	public ParticleType<? extends Wing> getType() {
-		return ParticleTypes.WING;
+	public ParticleType<? extends Ball> getType() {
+		return ParticleTypes.BALL;
 	}
 
 	public void setRadius(double radius) {
@@ -101,22 +111,32 @@ public class Wing extends AnimationParticle {
 		return radius;
 	}
 
-	public void setSize(int size) {
-		this.size = size;
+	public void setUpSize(int upSize) {
+		this.upSize = upSize;
 	}
 
-	public int getSize() {
-		return size;
+	public int getUpSize() {
+		return upSize;
+	}
+
+	public void setSideSize(int sideSize) {
+		this.sideSize = sideSize;
+	}
+
+	public int getSideSize() {
+		return sideSize;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Wing))
+		if (!(obj instanceof Ball))
 			return false;
-		Wing other = (Wing) obj;
+		Ball other = (Ball) obj;
 		if (radius != other.radius)
 			return false;
-		if (size != other.size)
+		if (upSize != other.upSize)
+			return false;
+		if (sideSize != other.sideSize)
 			return false;
 		return super.equals(obj);
 	}
@@ -127,23 +147,27 @@ public class Wing extends AnimationParticle {
 			Consumer<ServerPlayer> targetConsumer) {
 		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
-						() -> new NumberMenu(BOLD + "Choose size") },
+						() -> new NumberMenu(BOLD + "Choose up size"),
+						() -> new NumberMenu(BOLD + "Choose side size") },
 
-				new Consumer[] { (radius) -> setRadius((Double) radius),
-						(additor) -> size = ((Double) additor).intValue() });
+				new Consumer[] { (radius) -> this.radius = (Double) radius,
+						(upSize) -> this.upSize = ((Double) upSize).intValue(),
+						(sideSize) -> this.sideSize = ((Double) sideSize).intValue() });
 	}
 
 	@Override
 	public void setDefault() {
 		super.setDefault();
 		radius = DEFAULT_RADIUS;
-		size = DEFAULT_SIZE;
+		upSize = DEFAULT_UP_SIZE;
+		sideSize = DEFAULT_SIDE_SIZE;
 	}
 
 	@Override
 	public void createDescription(List<String> list) {
 		super.createDescription(list);
 		list.add(ChatColor.GRAY + "radius: " + ChatColor.DARK_GRAY + radius);
-		list.add(ChatColor.GRAY + "size: " + ChatColor.DARK_GRAY + size);
+		list.add(ChatColor.GRAY + "up size: " + ChatColor.DARK_GRAY + upSize);
+		list.add(ChatColor.GRAY + "side size: " + ChatColor.DARK_GRAY + sideSize);
 	}
 }

@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.particle.particles.animations;
+package com.pm.aiost.misc.particle.animations;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 
@@ -23,84 +23,70 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class Ball extends AnimationParticle {
+public class Ring extends AnimationParticle {
 
-	protected static final int DEFAULT_RADIUS = 1;
-	protected static final int DEFAULT_UP_SIZE = 14;
-	protected static final int DEFAULT_SIDE_SIZE = 20;
+	protected static final double DEFAULT_RADIUS = 0.5;
+	protected static final int DEFAULT_SIZE = 18;
 
 	protected double radius;
-	protected int upSize;
-	protected int sideSize;
+	protected int size;
 	protected double[] coordinates;
 
-	public Ball() {
+	public Ring() {
 	}
 
-	public Ball(IParticle particle) {
-		this(particle, DEFAULT_RADIUS, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
+	public Ring(IParticle particle, double radius) {
+		this(particle, radius, DEFAULT_SIZE);
 	}
 
-	public Ball(IParticle particle, double radius) {
-		this(particle, radius, DEFAULT_UP_SIZE, DEFAULT_SIDE_SIZE);
-	}
-
-	public Ball(IParticle particle, double radius, int size) {
-		this(particle, radius, size, size);
-	}
-
-	public Ball(IParticle particle, double radius, int upSize, int sideSize) {
+	public Ring(IParticle particle, double radius, int size) {
 		super(particle);
 		this.radius = radius;
-		this.upSize = upSize;
-		this.sideSize = sideSize;
+		this.size = size;
 	}
 
 	@Override
-	public Ball init() {
-		coordinates = Geometric.sphere(radius, upSize, sideSize);
+	public Ring init() {
+		coordinates = Geometric.horizontalRing(radius, size);
 		return this;
 	}
 
 	@Override
 	public void spawn(World world, double x, double y, double z, float yaw, float pitch) {
-		for (int i = 0; i < coordinates.length; i += 3)
-			particle.spawn(world, x + coordinates[i], y + coordinates[i + 1], z + coordinates[i + 2]);
+		for (int i = 0; i < coordinates.length; i += 2)
+			particle.spawn(world, x + coordinates[i], y, z + coordinates[i + 1]);
 	}
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		for (int i = 0; i < coordinates.length; i += 3)
-			particle.spawn(x + coordinates[i], y + coordinates[i + 1], z + coordinates[i + 2], player);
+		for (int i = 0; i < coordinates.length; i += 2)
+			particle.spawn(x + coordinates[i], y, z + coordinates[i + 1], player);
 	}
 
 	@Override
 	public void load(ConfigurationSection section) {
 		super.load(section);
 		radius = section.getDouble("radius", DEFAULT_RADIUS);
-		upSize = section.getInt("upSize", DEFAULT_UP_SIZE);
-		sideSize = section.getInt("sideSize", DEFAULT_SIDE_SIZE);
+		size = section.getInt("size", DEFAULT_SIZE);
 	}
 
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
 		radius = nbt.getDouble("radius");
-		upSize = nbt.getInt("upSize");
-		sideSize = nbt.getInt("sideSize");
+		size = nbt.getInt("size");
 	}
 
 	@Override
 	public void save(CompoundTag nbt) {
 		super.save(nbt);
 		nbt.putDouble("radius", radius);
-		nbt.putInt("upSize", upSize);
-		nbt.putInt("sideSize", sideSize);
+		nbt.putInt("size", size);
 	}
 
 	@Override
-	public ParticleType<? extends Ball> getType() {
-		return ParticleTypes.BALL;
+	public ParticleType<? extends Ring> getType() {
+		return ParticleTypes.RING;
 	}
 
 	public void setRadius(double radius) {
@@ -111,32 +97,22 @@ public class Ball extends AnimationParticle {
 		return radius;
 	}
 
-	public void setUpSize(int upSize) {
-		this.upSize = upSize;
+	public void setSize(int size) {
+		this.size = size;
 	}
 
-	public int getUpSize() {
-		return upSize;
-	}
-
-	public void setSideSize(int sideSize) {
-		this.sideSize = sideSize;
-	}
-
-	public int getSideSize() {
-		return sideSize;
+	public int getSize() {
+		return size;
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Ball))
+		if (!(obj instanceof Ring))
 			return false;
-		Ball other = (Ball) obj;
+		Ring other = (Ring) obj;
 		if (radius != other.radius)
 			return false;
-		if (upSize != other.upSize)
-			return false;
-		if (sideSize != other.sideSize)
+		if (size != other.size)
 			return false;
 		return super.equals(obj);
 	}
@@ -147,27 +123,23 @@ public class Ball extends AnimationParticle {
 			Consumer<ServerPlayer> targetConsumer) {
 		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
-						() -> new NumberMenu(BOLD + "Choose up size"),
-						() -> new NumberMenu(BOLD + "Choose side size") },
+						() -> new NumberMenu(BOLD + "Choose size") },
 
 				new Consumer[] { (radius) -> this.radius = (Double) radius,
-						(upSize) -> this.upSize = ((Double) upSize).intValue(),
-						(sideSize) -> this.sideSize = ((Double) sideSize).intValue() });
+						(size) -> this.size = ((Double) size).intValue() });
 	}
 
 	@Override
 	public void setDefault() {
 		super.setDefault();
 		radius = DEFAULT_RADIUS;
-		upSize = DEFAULT_UP_SIZE;
-		sideSize = DEFAULT_SIDE_SIZE;
+		size = DEFAULT_SIZE;
 	}
 
 	@Override
 	public void createDescription(List<String> list) {
 		super.createDescription(list);
 		list.add(ChatColor.GRAY + "radius: " + ChatColor.DARK_GRAY + radius);
-		list.add(ChatColor.GRAY + "up size: " + ChatColor.DARK_GRAY + upSize);
-		list.add(ChatColor.GRAY + "side size: " + ChatColor.DARK_GRAY + sideSize);
+		list.add(ChatColor.GRAY + "size: " + ChatColor.DARK_GRAY + size);
 	}
 }

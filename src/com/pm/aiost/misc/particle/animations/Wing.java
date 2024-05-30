@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.particle.particles.animations;
+package com.pm.aiost.misc.particle.animations;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 
@@ -23,51 +23,55 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class Ring extends AnimationParticle {
+public class Wing extends AnimationParticle {
 
-	protected static final double DEFAULT_RADIUS = 0.5;
-	protected static final int DEFAULT_SIZE = 18;
+	protected static final int DEFAULT_RADIUS = 1;
+	protected static final int DEFAULT_SIZE = 24;
 
 	protected double radius;
 	protected int size;
 	protected double[] coordinates;
 
-	public Ring() {
+	public Wing() {
 	}
 
-	public Ring(IParticle particle, double radius) {
+	public Wing(IParticle particle, double radius) {
 		this(particle, radius, DEFAULT_SIZE);
 	}
 
-	public Ring(IParticle particle, double radius, int size) {
+	public Wing(IParticle particle, double radius, int size) {
 		super(particle);
 		this.radius = radius;
 		this.size = size;
 	}
 
 	@Override
-	public Ring init() {
-		coordinates = Geometric.horizontalRing(radius, size);
+	public Wing init() {
+		coordinates = Geometric.wings(radius, size);
 		return this;
 	}
 
 	@Override
 	public void spawn(World world, double x, double y, double z, float yaw, float pitch) {
-		for (int i = 0; i < coordinates.length; i += 2)
-			particle.spawn(world, x + coordinates[i], y, z + coordinates[i + 1]);
+		double yawRad = Math.toRadians(yaw);
+		for (int i = 0; i < coordinates.length; i += 3)
+			particle.spawn(world, x + (coordinates[i] * Math.cos(yawRad)), y + coordinates[i + 1] + 1,
+					z + (coordinates[i + 2] * Math.sin(yawRad)));
 	}
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		for (int i = 0; i < coordinates.length; i += 2)
-			particle.spawn(x + coordinates[i], y, z + coordinates[i + 1], player);
+		double yawRad = Math.toRadians(yaw);
+		for (int i = 0; i < coordinates.length; i += 3)
+			particle.spawn(x + (coordinates[i] * Math.cos(yawRad)), y + coordinates[i + 1] + 1,
+					z + (coordinates[i + 2] * Math.sin(yawRad)), player);
 	}
 
 	@Override
-	public void load(ConfigurationSection section) {
-		super.load(section);
-		radius = section.getDouble("radius", DEFAULT_RADIUS);
-		size = section.getInt("size", DEFAULT_SIZE);
+	public void load(ConfigurationSection particleSection) {
+		super.load(particleSection);
+		radius = particleSection.getDouble("radius", DEFAULT_RADIUS);
+		size = particleSection.getInt("size", DEFAULT_SIZE);
 	}
 
 	@Override
@@ -85,8 +89,8 @@ public class Ring extends AnimationParticle {
 	}
 
 	@Override
-	public ParticleType<? extends Ring> getType() {
-		return ParticleTypes.RING;
+	public ParticleType<? extends Wing> getType() {
+		return ParticleTypes.WING;
 	}
 
 	public void setRadius(double radius) {
@@ -107,9 +111,9 @@ public class Ring extends AnimationParticle {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (!(obj instanceof Ring))
+		if (!(obj instanceof Wing))
 			return false;
-		Ring other = (Ring) obj;
+		Wing other = (Wing) obj;
 		if (radius != other.radius)
 			return false;
 		if (size != other.size)
@@ -125,8 +129,8 @@ public class Ring extends AnimationParticle {
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
 						() -> new NumberMenu(BOLD + "Choose size") },
 
-				new Consumer[] { (radius) -> this.radius = (Double) radius,
-						(size) -> this.size = ((Double) size).intValue() });
+				new Consumer[] { (radius) -> setRadius((Double) radius),
+						(additor) -> size = ((Double) additor).intValue() });
 	}
 
 	@Override
