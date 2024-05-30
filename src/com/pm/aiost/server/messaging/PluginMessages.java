@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 
 import com.google.common.io.ByteArrayDataInput;
 import com.pm.aiost.game.GameManager;
-import com.pm.aiost.misc.command.commands.PlayerCommands.InvitePlayerCommand;
+import com.pm.aiost.misc.command.commands.PlayerCommands;
 import com.pm.aiost.player.Party;
 import com.pm.aiost.player.PartyManager;
 import com.pm.aiost.player.PlayerDataLoader;
@@ -63,8 +63,8 @@ public class PluginMessages {
 				PartyManager.recievePartyRequest(serverPlayer, in);
 		});
 
-		register("invitePlayer", (player, in) -> InvitePlayerCommand
-				.sendPlayerInviteMessage(ServerPlayer.getByPlayer(player), in.readUTF()));
+		register("invitePlayer",
+				(player, in) -> PlayerCommands.sendPlayerInviteMessage(ServerPlayer.getByPlayer(player), in.readUTF()));
 	}
 
 	public static void register(String cmd, BiConsumer<Player, ByteArrayDataInput> callback) {

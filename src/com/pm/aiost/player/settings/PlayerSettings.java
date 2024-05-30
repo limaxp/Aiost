@@ -7,8 +7,7 @@ import java.util.List;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.pm.aiost.entity.npc.profile.Profiles;
-import com.pm.aiost.misc.command.commands.PlayerCommands.DisguisePlayerCommand;
-import com.pm.aiost.misc.command.commands.PlayerCommands.DisguiseRemoveCommand;
+import com.pm.aiost.misc.command.commands.PlayerCommands;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.VisibilityManager;
@@ -61,9 +60,9 @@ public class PlayerSettings {
 			new SettingInfo("Disguised", Arrays.asList("Disguises you as some other player")), 0,
 			(serverPlayer, value) -> {
 				if (value < 1)
-					DisguiseRemoveCommand.removeDisguise(serverPlayer);
+					PlayerCommands.removeDisguise(serverPlayer);
 				else
-					DisguisePlayerCommand.setDisguise(serverPlayer, new DisguisePlayer(Profiles.getRandom()));
+					PlayerCommands.setDisguise(serverPlayer, new DisguisePlayer(Profiles.getRandom()));
 			});
 
 	public static int a(SettingInfo info, int defaultValue) {

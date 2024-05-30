@@ -17,7 +17,7 @@ import com.pm.aiost.game.GameLobby;
 import com.pm.aiost.game.GameManager;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.data.IGameData;
-import com.pm.aiost.misc.command.commands.PlayerCommands.InvitePlayerCommand;
+import com.pm.aiost.misc.command.commands.PlayerCommands;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
 import com.pm.aiost.player.Party;
 import com.pm.aiost.player.PartyManager;
@@ -130,7 +130,7 @@ public class StandaloneServerRequestHandler implements ServerRequestHandler {
 			serverPlayer.player.sendMessage(RED + "No player found for name '" + playerName + "'");
 			return;
 		}
-		InvitePlayerCommand.sendPlayerInviteMessage(targetServerPlayer, serverPlayer.name);
+		PlayerCommands.sendPlayerInviteMessage(targetServerPlayer, serverPlayer.name);
 	}
 
 	@Override
