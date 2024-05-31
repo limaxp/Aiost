@@ -85,7 +85,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 				if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
 						&& senderServerPlayer.getDisguise() instanceof DisguiseFurniture) {
 					try {
-						NMS.ENTITYTELEPORT_Y_SET.invoke(packet, teleportPacket.getY() - 1.188);
+						NMS.ENTITYTELEPORT_SET_Y.invoke(packet, teleportPacket.getY() - 1.188);
 					} catch (Throwable e) {
 						Logger.err("AiostPacketEncoder: Error on setting y in ClientboundTeleportEntityPacket", e);
 					}

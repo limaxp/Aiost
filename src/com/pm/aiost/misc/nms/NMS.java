@@ -76,12 +76,12 @@ import net.minecraft.world.level.block.state.BlockState;
 
 public class NMS {
 
-	public static final MethodHandle ENTITYLIVING_JUMPING_GET = Reflection.unreflectGetter(LivingEntity.class, "bn"); // EntityLiving.jumping
+	public static final MethodHandle LIVINGENTITY_GET_JUMPING = Reflection.unreflectGetter(LivingEntity.class, "bn"); // EntityLiving.jumping
 
-	public static final MethodHandle ENTITY_BUKKITENTITY_GET = Reflection.unreflectGetter(Entity.class, "bukkitEntity");
-	public static final MethodHandle ENTITY_BUKKITENTITY_SET = Reflection.unreflectSetter(Entity.class, "bukkitEntity");
-	public static final MethodHandle ENTITY_RANDOM_GET = Reflection.unreflectGetter(Entity.class, "ah"); // Entity.random
-	public static final MethodHandle ENTITY_ENTITY_COUNT_GET = Reflection.unreflectGetter(Entity.class, "c"); // Entity.ENTITY_COUNTER
+	public static final MethodHandle ENTITY_GET_BUKKITENTITY = Reflection.unreflectGetter(Entity.class, "bukkitEntity");
+	public static final MethodHandle ENTITY_SET_BUKKITENTITY = Reflection.unreflectSetter(Entity.class, "bukkitEntity");
+	public static final MethodHandle ENTITY_GET_RANDOM = Reflection.unreflectGetter(Entity.class, "ah"); // Entity.random
+	public static final MethodHandle ENTITY_GET_ENTITYCOUNT = Reflection.unreflectGetter(Entity.class, "c"); // Entity.ENTITY_COUNTER
 
 	public static final MethodHandle REGISTRYMATERIALS_SET_FROZEN = Reflection.unreflectSetter(MappedRegistry.class,
 			"l"); // RegistryMaterials.frozen
@@ -90,27 +90,15 @@ public class NMS {
 
 	public static final MethodHandle ENTITYTELEPORT_CONSTRUCTOR = Reflection
 			.unreflectConstructor(ClientboundTeleportEntityPacket.class, new Class[] { FriendlyByteBuf.class });
-	public static final MethodHandle ENTITYTELEPORT_ID_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "b"); // PacketPlayOutEntityTeleport.id
-	public static final MethodHandle ENTITYTELEPORT_X_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "c");// PacketPlayOutEntityTeleport.x
-	public static final MethodHandle ENTITYTELEPORT_Y_SET = Reflection
+	public static final MethodHandle ENTITYTELEPORT_SET_Y = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport
-	public static final MethodHandle ENTITYTELEPORT_Z_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "e");// PacketPlayOutEntityTeleport.z
-	public static final MethodHandle ENTITYTELEPORT_YAW_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "f");// PacketPlayOutEntityTeleport.xRot
-	public static final MethodHandle ENTITYTELEPORT_PITCH_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "g"); // PacketPlayOutEntityTeleport.yRot
-	public static final MethodHandle ENTITYTELEPORT_ONGROUND_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "h"); // PacketPlayOutEntityTeleport.onGround
 
 	public static final MethodHandle ENTITYMOVE_SET_YA = Reflection.unreflectGetter(ClientboundMoveEntityPacket.class,
 			"c"); // PacketPlayOutEntity.ya
 
 	public static final MethodHandle PLAYERINFO_CONSTRUCTOR = Reflection.unreflectConstructor(
 			ClientboundPlayerInfoUpdatePacket.class, new Class[] { RegistryFriendlyByteBuf.class });
-	public static final MethodHandle PLAYERINFO_ACTION_WRTIER_GET = Reflection
+	public static final MethodHandle PLAYERINFO_ACTION_GET_WRTIER = Reflection
 			.unreflectGetter(ClientboundPlayerInfoUpdatePacket.Action.class, "h"); // ClientboundPlayerInfoUpdatePacket.Action.writer
 
 	public static final MethodHandle SERVERCOMMONPACKETLISTENERIMPL_GET_CONNECTION = Reflection
@@ -303,7 +291,7 @@ public class NMS {
 
 	public static void setBukkitEntity(Entity entity, CraftEntity value) {
 		try {
-			ENTITY_BUKKITENTITY_SET.invoke(entity, value);
+			ENTITY_SET_BUKKITENTITY.invoke(entity, value);
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not set bukkit entity!", e);
 		}
@@ -311,7 +299,7 @@ public class NMS {
 
 	public static CraftEntity getBukkitEntity(Entity entity) {
 		try {
-			return (CraftEntity) ENTITY_BUKKITENTITY_GET.invoke(entity);
+			return (CraftEntity) ENTITY_GET_BUKKITENTITY.invoke(entity);
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get bukkit entity!", e);
 			return null;
@@ -320,7 +308,7 @@ public class NMS {
 
 	public static Random getRandom(Entity entity) {
 		try {
-			return (Random) NMS.ENTITY_RANDOM_GET.invoke(entity);
+			return (Random) NMS.ENTITY_GET_RANDOM.invoke(entity);
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get entity random!", e);
 			return null;
@@ -329,7 +317,7 @@ public class NMS {
 
 	public static boolean isJumping(LivingEntity entityLiving) {
 		try {
-			return (boolean) NMS.ENTITYLIVING_JUMPING_GET.invoke(entityLiving);
+			return (boolean) NMS.LIVINGENTITY_GET_JUMPING.invoke(entityLiving);
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get entity jumping!", e);
 			return false;
@@ -338,13 +326,14 @@ public class NMS {
 
 	public static AtomicInteger getEntityCount() {
 		try {
-			return (AtomicInteger) NMS.ENTITY_ENTITY_COUNT_GET.invoke();
+			return (AtomicInteger) NMS.ENTITY_GET_ENTITYCOUNT.invoke();
 		} catch (Throwable e) {
 			Logger.err("NMS: Error! Could not get entity count", e);
 			return null;
 		}
 	}
 
+	@SuppressWarnings({ "resource" })
 	public static TrackedEntity getEntityTracker(org.bukkit.entity.Entity entity) {
 		return NMS.to(entity.getWorld()).getChunkSource().chunkMap.entityMap.get(entity.getEntityId());
 	}

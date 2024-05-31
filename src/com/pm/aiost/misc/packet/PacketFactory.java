@@ -160,7 +160,7 @@ public class PacketFactory {
 				ClientboundPlayerInfoUpdatePacket.Action var3x = (ClientboundPlayerInfoUpdatePacket.Action) var3.next();
 				ClientboundPlayerInfoUpdatePacket.Action.Writer writer;
 				try {
-					writer = ((ClientboundPlayerInfoUpdatePacket.Action.Writer) NMS.PLAYERINFO_ACTION_WRTIER_GET
+					writer = ((ClientboundPlayerInfoUpdatePacket.Action.Writer) NMS.PLAYERINFO_ACTION_GET_WRTIER
 							.invoke(var3x));
 				} catch (Throwable e) {
 					continue;
