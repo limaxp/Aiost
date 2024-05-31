@@ -26,9 +26,9 @@ import net.minecraft.world.entity.EntityType;
 
 public class PacketPlayer extends PacketEntity {
 
-	public static final byte SKIN_OVERLAY_VIEWABLE_MASK = 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x20 + 0x40;
+	public static final byte PLAYER_MODE_CUSTOMISATION_VIEWABLE_MASK = 0x01 + 0x02 + 0x04 + 0x08 + 0x10 + 0x20 + 0x40;
 
-	public static final EntityDataAccessor<Byte> SNIN_OVERLAY_VIEWABLE_WATCHER = new EntityDataAccessor<Byte>(16,
+	public static final EntityDataAccessor<Byte> DATA_PLAYER_MODE_CUSTOMISATION = new EntityDataAccessor<Byte>(17,
 			EntityDataSerializers.BYTE);
 
 	protected GameProfile profile;
@@ -46,7 +46,7 @@ public class PacketPlayer extends PacketEntity {
 
 	protected void initDatawatcher() {
 		dataWatcher = new ArrayList<DataValue<?>>();
-		dataWatcher.add(DataValue.create(SNIN_OVERLAY_VIEWABLE_WATCHER, SKIN_OVERLAY_VIEWABLE_MASK));
+		dataWatcher.add(DataValue.create(DATA_PLAYER_MODE_CUSTOMISATION, PLAYER_MODE_CUSTOMISATION_VIEWABLE_MASK));
 	}
 
 	@Override

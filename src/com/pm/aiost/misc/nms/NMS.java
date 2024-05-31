@@ -51,6 +51,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.protocol.game.ClientboundMoveEntityPacket;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.network.protocol.game.ClientboundTeleportEntityPacket;
 import net.minecraft.network.protocol.game.ServerboundInteractPacket;
@@ -91,29 +92,26 @@ public class NMS {
 			.unreflectConstructor(ClientboundTeleportEntityPacket.class, new Class[] { FriendlyByteBuf.class });
 	public static final MethodHandle ENTITYTELEPORT_ID_SET = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "b"); // PacketPlayOutEntityTeleport.id
-	public static final MethodHandle ENTITYTELEPORT_ID_GET = Reflection
-			.unreflectGetter(ClientboundTeleportEntityPacket.class, "b"); // PacketPlayOutEntityTeleport.id
 	public static final MethodHandle ENTITYTELEPORT_X_SET = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "c");// PacketPlayOutEntityTeleport.x
 	public static final MethodHandle ENTITYTELEPORT_Y_SET = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport
-	public static final MethodHandle ENTITYTELEPORT_Y_GET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport.y
 	public static final MethodHandle ENTITYTELEPORT_Z_SET = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "e");// PacketPlayOutEntityTeleport.z
 	public static final MethodHandle ENTITYTELEPORT_YAW_SET = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "f");// PacketPlayOutEntityTeleport.xRot
 	public static final MethodHandle ENTITYTELEPORT_PITCH_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "g");// PacketPlayOutEntityTeleport.yRot
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "g"); // PacketPlayOutEntityTeleport.yRot
 	public static final MethodHandle ENTITYTELEPORT_ONGROUND_SET = Reflection
-			.unreflectSetter(ClientboundTeleportEntityPacket.class, "h");// PacketPlayOutEntityTeleport.onGround
+			.unreflectSetter(ClientboundTeleportEntityPacket.class, "h"); // PacketPlayOutEntityTeleport.onGround
+
+	public static final MethodHandle ENTITYMOVE_SET_YA = Reflection.unreflectGetter(ClientboundMoveEntityPacket.class,
+			"c"); // PacketPlayOutEntity.ya
 
 	public static final MethodHandle PLAYERINFO_CONSTRUCTOR = Reflection.unreflectConstructor(
 			ClientboundPlayerInfoUpdatePacket.class, new Class[] { RegistryFriendlyByteBuf.class });
-	public static final MethodHandle PLAYERINFO_ACTIONSET_SET = Reflection
-			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "b"); // ClientboundPlayerInfoUpdatePacket.actions
-	public static final MethodHandle PLAYERINFO_PLAYERLIST_SET = Reflection
-			.unreflectSetter(ClientboundPlayerInfoUpdatePacket.class, "c"); // ClientboundPlayerInfoUpdatePacket.entries
+	public static final MethodHandle PLAYERINFO_ACTION_WRTIER_GET = Reflection
+			.unreflectGetter(ClientboundPlayerInfoUpdatePacket.Action.class, "h"); // ClientboundPlayerInfoUpdatePacket.Action.writer
 
 	public static final MethodHandle SERVERCOMMONPACKETLISTENERIMPL_GET_CONNECTION = Reflection
 			.unreflectGetter(ServerCommonPacketListenerImpl.class, "e"); // ServerCommonPacketListenerImpl.connection

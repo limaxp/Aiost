@@ -11,7 +11,6 @@ import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.world.entity.EntityType;
 
 public class DisguiseEntityLiving implements Disguise {
@@ -30,7 +29,7 @@ public class DisguiseEntityLiving implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Packet<?>> packets) {
+	public void addPackets(Player player, List<Object> packets) {
 		Location loc = player.getLocation();
 		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), player.getUniqueId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.getById(entityId)));

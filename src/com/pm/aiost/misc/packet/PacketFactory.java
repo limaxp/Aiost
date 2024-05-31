@@ -4,10 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.EnumSet;
-import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.UUID;
 
 import org.bukkit.Location;
@@ -134,33 +133,44 @@ public class PacketFactory {
 
 	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action action,
 			UUID uuid, GameProfile profile, int paramInt, GameType gamemode, Component chatComponent) {
-		Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
 		List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
-		actionSet.add(action);
 		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(uuid, profile, false, paramInt, gamemode,
 				chatComponent, null));
-		return packetPlayerInfo(actionSet, entryList);
+		return packetPlayerInfo(EnumSet.of(action), entryList);
 	}
 
 	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action action,
 			GameProfile profile) {
-		Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet = new HashSet<ClientboundPlayerInfoUpdatePacket.Action>();
 		List<ClientboundPlayerInfoUpdatePacket.Entry> entryList = new ArrayList<ClientboundPlayerInfoUpdatePacket.Entry>();
-		actionSet.add(action);
-		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(profile.getId(), profile, false, 0, GameType.SURVIVAL,
-				NMS.createChatComponent(""), null));
-		return packetPlayerInfo(actionSet, entryList);
+		entryList.add(new ClientboundPlayerInfoUpdatePacket.Entry(profile.getId(), profile, true, 0, GameType.SURVIVAL,
+				NMS.createChatComponent("test"), null));
+		return packetPlayerInfo(EnumSet.of(action), entryList);
 	}
 
 	public static ClientboundPlayerInfoUpdatePacket packetPlayerInfo(
-			Set<ClientboundPlayerInfoUpdatePacket.Action> actionSet,
+			EnumSet<ClientboundPlayerInfoUpdatePacket.Action> actionSet,
 			List<ClientboundPlayerInfoUpdatePacket.Entry> entryList) {
+		RegistryFriendlyByteBuf buf = new RegistryFriendlyByteBuf(Unpooled.buffer(),
+				CraftRegistry.getMinecraftRegistry());
+		buf.writeEnumSet(actionSet, ClientboundPlayerInfoUpdatePacket.Action.class);
+		buf.writeCollection(entryList, (var0x, var1) -> {
+			var0x.writeUUID(var1.profileId());
+			Iterator<ClientboundPlayerInfoUpdatePacket.Action> var3 = actionSet.iterator();
+			while (var3.hasNext()) {
+				ClientboundPlayerInfoUpdatePacket.Action var3x = (ClientboundPlayerInfoUpdatePacket.Action) var3.next();
+				ClientboundPlayerInfoUpdatePacket.Action.Writer writer;
+				try {
+					writer = ((ClientboundPlayerInfoUpdatePacket.Action.Writer) NMS.PLAYERINFO_ACTION_WRTIER_GET
+							.invoke(var3x));
+				} catch (Throwable e) {
+					continue;
+				}
+				writer.write((RegistryFriendlyByteBuf) var0x, var1);
+			}
+		});
+		buf.readerIndex(0);
 		try {
-			ClientboundPlayerInfoUpdatePacket packet = (ClientboundPlayerInfoUpdatePacket) NMS.PLAYERINFO_CONSTRUCTOR
-					.invoke(new RegistryFriendlyByteBuf(Unpooled.buffer(0), CraftRegistry.getMinecraftRegistry()));
-			NMS.PLAYERINFO_ACTIONSET_SET.invoke(packet, actionSet);
-			NMS.PLAYERINFO_PLAYERLIST_SET.invoke(packet, entryList);
-			return packet;
+			return (ClientboundPlayerInfoUpdatePacket) NMS.PLAYERINFO_CONSTRUCTOR.invoke(buf);
 		} catch (Throwable e) {
 			Logger.err("PacketFactory: Error on creating PacketPlayOutPlayerInfo!", e);
 			return null;

@@ -12,7 +12,6 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.profile.Profiles;
 
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
 import net.minecraft.world.entity.EntityType;
 
@@ -28,7 +27,7 @@ public class DisguisePlayer implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Packet<?>> packets) {
+	public void addPackets(Player player, List<Object> packets) {
 		Location loc = player.getLocation();
 		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile));
 		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
@@ -37,7 +36,7 @@ public class DisguisePlayer implements Disguise {
 	}
 
 	@Override
-	public void removePackets(Player player, List<Packet<?>> packets) {
+	public void removePackets(Player player, List<Object> packets) {
 		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
 		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
 				NMS.to(player).getGameProfile()));

@@ -78,7 +78,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.LivingEntity;
 
@@ -376,7 +375,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		List<Packet<?>> packets = new ArrayList<Packet<?>>();
+		List<Object> packets = new ArrayList<Object>();
 		packets.add(PacketFactory.packetEntityDestroy(player.getEntityId()));
 		if (this.disguise != null)
 			this.disguise.removePackets(player, packets);
@@ -397,7 +396,7 @@ public class ServerPlayer implements AutoCloseable {
 		if (this.disguise == null)
 			return;
 
-		List<Packet<?>> packets = new ArrayList<Packet<?>>();
+		List<Object> packets = new ArrayList<Object>();
 		net.minecraft.world.entity.player.Player entityPlayer = NMS.to(player);
 		packets.add(PacketFactory.packetEntityDestroy(entityPlayer.getId()));
 		disguise.removePackets(player, packets);
