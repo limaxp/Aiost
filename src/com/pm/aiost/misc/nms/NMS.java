@@ -93,7 +93,9 @@ public class NMS {
 	public static final MethodHandle ENTITYTELEPORT_SET_Y = Reflection
 			.unreflectSetter(ClientboundTeleportEntityPacket.class, "d");// PacketPlayOutEntityTeleport
 
-	public static final MethodHandle ENTITYMOVE_SET_YA = Reflection.unreflectGetter(ClientboundMoveEntityPacket.class,
+	public static final MethodHandle ENTITYMOVE_GET_ENTITY_ID = Reflection
+			.unreflectGetter(ClientboundMoveEntityPacket.class, "a"); // PacketPlayOutEntity.entityId
+	public static final MethodHandle ENTITYMOVE_SET_YA = Reflection.unreflectSetter(ClientboundMoveEntityPacket.class,
 			"c"); // PacketPlayOutEntity.ya
 
 	public static final MethodHandle PLAYERINFO_CONSTRUCTOR = Reflection.unreflectConstructor(

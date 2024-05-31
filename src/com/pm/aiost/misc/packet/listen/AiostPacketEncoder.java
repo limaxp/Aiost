@@ -3,6 +3,7 @@ package com.pm.aiost.misc.packet.listen;
 import java.util.List;
 
 import org.bukkit.Bukkit;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.log.Logger;
@@ -46,8 +47,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 
 		else if (packet instanceof ClientboundSetEntityDataPacket) {
 			int senderId = ((ClientboundSetEntityDataPacket) packet).id();
-			@SuppressWarnings({ "resource" })
-			Entity entity = NMS.to(player.getWorld()).entityManager.getEntityGetter().get(senderId);
+			Entity entity = getEntity(player.getWorld(), senderId);
 			if (entity instanceof net.minecraft.world.entity.player.Player) {
 				ServerPlayer senderServerPlayer = ServerPlayer.getByPlayer((Player) NMS.from(entity));
 				if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
@@ -61,25 +61,24 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 		}
 
 		else if (packet instanceof ClientboundMoveEntityPacket) {
-			ClientboundMoveEntityPacket movePacket = (ClientboundMoveEntityPacket) packet;
-			Entity entity = ((ClientboundMoveEntityPacket) packet).getEntity(NMS.to(player.getWorld()));
-			if (entity instanceof net.minecraft.world.entity.player.Player) {
-				ServerPlayer senderServerPlayer = ServerPlayer.getByPlayer((Player) NMS.from(entity));
-				if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
-						&& senderServerPlayer.getDisguise() instanceof DisguiseFurniture) {
-					try {
+			try {
+				int senderId = (int) NMS.ENTITYMOVE_GET_ENTITY_ID.invoke(packet);
+				ClientboundMoveEntityPacket movePacket = (ClientboundMoveEntityPacket) packet;
+				Entity entity = getEntity(player.getWorld(), senderId);
+				if (entity instanceof net.minecraft.world.entity.player.Player) {
+					ServerPlayer senderServerPlayer = ServerPlayer.getByPlayer((Player) NMS.from(entity));
+					if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
+							&& senderServerPlayer.getDisguise() instanceof DisguiseFurniture)
 						NMS.ENTITYMOVE_SET_YA.invoke(packet, movePacket.getYa() - 1.188);
-					} catch (Throwable e) {
-						Logger.err("AiostPacketEncoder: Error on setting ya in ClientboundMoveEntityPacket", e);
-					}
 				}
+			} catch (Throwable e) {
+				Logger.err("AiostPacketEncoder: Error on setting ya in ClientboundMoveEntityPacket", e);
 			}
 		}
 
 		else if (packet instanceof ClientboundTeleportEntityPacket) {
 			ClientboundTeleportEntityPacket teleportPacket = (ClientboundTeleportEntityPacket) packet;
-			@SuppressWarnings({ "resource" })
-			Entity entity = NMS.to(player.getWorld()).entityManager.getEntityGetter().get(teleportPacket.getId());
+			Entity entity = getEntity(player.getWorld(), teleportPacket.getId());
 			if (entity instanceof net.minecraft.world.entity.player.Player) {
 				ServerPlayer senderServerPlayer = ServerPlayer.getByPlayer((Player) NMS.from(entity));
 				if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
@@ -95,8 +94,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 
 		else if (packet instanceof ClientboundSetEquipmentPacket) {
 			int senderId = ((ClientboundSetEquipmentPacket) packet).getEntity();
-			@SuppressWarnings({ "resource" })
-			Entity entity = NMS.to(player.getWorld()).entityManager.getEntityGetter().get(senderId);
+			Entity entity = getEntity(player.getWorld(), senderId);
 			if (entity instanceof net.minecraft.world.entity.player.Player) {
 				ServerPlayer senderServerPlayer = ServerPlayer.getByPlayer((Player) NMS.from(entity));
 				if (senderServerPlayer != null && senderServerPlayer.hasDisguise()
@@ -109,5 +107,10 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 		}
 
 		out.add(packet);
+	}
+
+	@SuppressWarnings({ "resource" })
+	private static Entity getEntity(World world, int id) {
+		return NMS.to(world).entityManager.getEntityGetter().get(id);
 	}
 }
