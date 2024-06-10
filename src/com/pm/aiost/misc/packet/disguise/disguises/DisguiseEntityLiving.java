@@ -32,7 +32,7 @@ public class DisguiseEntityLiving implements Disguise {
 	public void addPackets(Player player, List<Object> packets) {
 		Location loc = player.getLocation();
 		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), player.getUniqueId(), loc.getX(), loc.getY(),
-				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.getById(entityId)));
+				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.get(entityId)));
 		Disguise.addPlayerStatePackets(NMS.to(player), packets);
 	}
 
@@ -40,8 +40,7 @@ public class DisguiseEntityLiving implements Disguise {
 	public void load(ConfigurationSection section) {
 		String entityType = section.getString("entityType");
 		if (entityType != null)
-			entityId = AiostEntityTypes
-					.getId(AiostEntityTypes.getByKey(NMS.createMinecraftKey(entityType.toLowerCase())));
+			entityId = AiostEntityTypes.getId(AiostEntityTypes.get(NMS.createMinecraftKey(entityType.toLowerCase())));
 		else
 			entityId = section.getInt("entityId");
 	}

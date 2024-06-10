@@ -111,7 +111,7 @@ public class UnlockableManager {
 		int i = 1;
 		for (String name : names) {
 			ConfigurationSection section = petsSection.getConfigurationSection(name);
-			entityTypes[i] = AiostEntityTypes.getByKey(NMS.createMinecraftKey(section.getString("type").toLowerCase()));
+			entityTypes[i] = AiostEntityTypes.get(NMS.createMinecraftKey(section.getString("type").toLowerCase())); // TODO check if working!
 			prices[i] = section.getInt("price");
 			descriptions[i] = section.getStringList("description");
 			i++;

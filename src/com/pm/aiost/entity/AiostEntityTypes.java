@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 
 import com.google.common.collect.ImmutableSet;
@@ -73,16 +74,24 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		return BuiltInRegistries.ENTITY_TYPE.getKey(entityType);
 	}
 
-	public static EntityType<?> getByKey(ResourceLocation key) {
-		return BuiltInRegistries.ENTITY_TYPE.get(key);
-	}
-
 	public static int getId(EntityType<?> entityType) {
 		return BuiltInRegistries.ENTITY_TYPE.getId(entityType);
 	}
 
-	public static EntityType<?> getById(int id) {
+	public static EntityType<?> get(ResourceLocation key) {
+		return BuiltInRegistries.ENTITY_TYPE.get(key);
+	}
+
+	public static EntityType<?> get(int id) {
 		return BuiltInRegistries.ENTITY_TYPE.byId(id);
+	}
+
+	public static EntityType<?> get(String key) {
+		return get(NamespacedKey.fromString(key));
+	}
+
+	public static EntityType<?> get(NamespacedKey key) {
+		return get(NMS.to(key));
 	}
 
 	public static org.bukkit.entity.EntityType toEntityType(EntityType<?> type) {
@@ -110,7 +119,8 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		List<EntityType<?>> entityTypes = new ArrayList<EntityType<?>>();
 		int size = typeNames.size();
 		for (int i = 0; i < size; i++)
-			entityTypes.add(getByKey(new ResourceLocation(typeNames.get(i))));
+			entityTypes.add(get(new ResourceLocation(typeNames.get(i)))); // TODO probably doesn't work! search for
+																			// ResourceLocation maybe!
 		return entityTypes;
 	}
 

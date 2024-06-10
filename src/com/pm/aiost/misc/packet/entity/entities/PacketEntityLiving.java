@@ -50,12 +50,12 @@ public class PacketEntityLiving extends PacketEntity {
 
 	@Override
 	public String getName() {
-		return AiostEntityTypes.getKey(AiostEntityTypes.getById(entityId)).getNamespace();
+		return AiostEntityTypes.getKey(AiostEntityTypes.get(entityId)).getNamespace();
 	}
 
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.getById(entityId));
+		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.get(entityId));
 	}
 
 	public void setId(int entityId) {
