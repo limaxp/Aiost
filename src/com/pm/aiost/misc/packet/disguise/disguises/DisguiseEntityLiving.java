@@ -40,7 +40,7 @@ public class DisguiseEntityLiving implements Disguise {
 	public void load(ConfigurationSection section) {
 		String entityType = section.getString("entityType");
 		if (entityType != null)
-			entityId = AiostEntityTypes.getId(AiostEntityTypes.get(NMS.createMinecraftKey(entityType.toLowerCase())));
+			entityId = AiostEntityTypes.getId(AiostEntityTypes.get(entityType.toLowerCase()));
 		else
 			entityId = section.getInt("entityId");
 	}

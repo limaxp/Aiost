@@ -32,7 +32,7 @@ public class EntityTrader extends Villager {
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
 		super.addAdditionalSaveData(nbttagcompound);
-		AiostEntityTypes.saveNBT(nbttagcompound, AiostEntityTypes.BALL);
+		AiostEntityTypes.saveId(nbttagcompound, AiostEntityTypes.BALL);
 	}
 
 	@Override

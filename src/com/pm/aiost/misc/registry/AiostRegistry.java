@@ -76,7 +76,6 @@ public abstract class AiostRegistry<T> {
 	}
 
 	public static void terminate() {
-		AiostEntityTypes.terminate();
 	}
 
 	public final String name;

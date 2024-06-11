@@ -36,6 +36,6 @@ public class NpcBase extends Player {
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
 		super.addAdditionalSaveData(nbttagcompound);
-		AiostEntityTypes.saveNBT(nbttagcompound, AiostEntityTypes.NPC_BASE);
+		AiostEntityTypes.saveId(nbttagcompound, AiostEntityTypes.NPC_BASE);
 	}
 }

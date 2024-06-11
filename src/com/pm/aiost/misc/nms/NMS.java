@@ -18,6 +18,7 @@ import org.bukkit.craftbukkit.v1_20_R4.CraftWorld;
 import org.bukkit.craftbukkit.v1_20_R4.block.CraftBlock;
 import org.bukkit.craftbukkit.v1_20_R4.block.data.CraftBlockData;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntityType;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftLivingEntity;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_20_R4.inventory.CraftInventoryAnvil;
@@ -34,7 +35,6 @@ import org.bukkit.profile.PlayerProfile;
 import com.google.common.base.Preconditions;
 import com.mojang.authlib.GameProfile;
 import com.mojang.brigadier.LiteralMessage;
-import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.reflection.Reflection;
@@ -231,10 +231,6 @@ public class NMS {
 		return CraftEquipmentSlot.getSlot(slot);
 	}
 
-	public static ResourceLocation createMinecraftKey(String key) {
-		return new ResourceLocation(key);
-	}
-
 	public static ResourceLocation to(NamespacedKey key) {
 		return CraftNamespacedKey.toMinecraft(key);
 	}
@@ -244,11 +240,11 @@ public class NMS {
 	}
 
 	public static EntityType<?> to(org.bukkit.entity.EntityType type) {
-		return AiostEntityTypes.fromEntityType(type);
+		return CraftEntityType.bukkitToMinecraft(type);
 	}
 
 	public static org.bukkit.entity.EntityType from(EntityType<?> type) {
-		return AiostEntityTypes.toEntityType(type);
+		return CraftEntityType.minecraftToBukkit(type);
 	}
 
 	public static Recipe from(net.minecraft.world.item.crafting.Recipe<?> recipe, NamespacedKey key) {

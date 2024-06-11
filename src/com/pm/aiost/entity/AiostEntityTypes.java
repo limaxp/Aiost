@@ -35,9 +35,6 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	public static void init() {
 	}
 
-	public static void terminate() {
-	}
-
 	public static final EntityType<EntityTrader> TRADER = register("trader", "villager", MobCategory.CREATURE,
 			EntityTrader::new);
 
@@ -94,14 +91,6 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		return get(NMS.to(key));
 	}
 
-	public static org.bukkit.entity.EntityType toEntityType(EntityType<?> type) {
-		return org.bukkit.entity.EntityType.fromName(BuiltInRegistries.ENTITY_TYPE.getKey(type).getPath());
-	}
-
-	public static EntityType<?> fromEntityType(org.bukkit.entity.EntityType type) {
-		return BuiltInRegistries.ENTITY_TYPE.get(NMS.to(type.getKey()));
-	}
-
 	public static Iterator<EntityType<?>> iterator() {
 		return BuiltInRegistries.ENTITY_TYPE.iterator();
 	}
@@ -119,12 +108,11 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		List<EntityType<?>> entityTypes = new ArrayList<EntityType<?>>();
 		int size = typeNames.size();
 		for (int i = 0; i < size; i++)
-			entityTypes.add(get(new ResourceLocation(typeNames.get(i)))); // TODO probably doesn't work! search for
-																			// ResourceLocation maybe!
+			entityTypes.add(get(typeNames.get(i)));
 		return entityTypes;
 	}
 
-	public static void saveNBT(CompoundTag nbttagcompound, EntityType<?> type) {
+	public static void saveId(CompoundTag nbttagcompound, EntityType<?> type) {
 		nbttagcompound.putString("id", EntityType.getKey(type).getPath());
 	}
 

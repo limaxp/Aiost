@@ -16,7 +16,6 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.StringUtils;
@@ -294,7 +293,7 @@ public class CommandUtil {
 	}
 
 	public static net.minecraft.world.entity.EntityType<?> parseEntityTypes(CommandSender sender, String string) {
-		net.minecraft.world.entity.EntityType<?> type = AiostEntityTypes.getByKey(NMS.createMinecraftKey(string));
+		net.minecraft.world.entity.EntityType<?> type = AiostEntityTypes.get(string);
 		if (type == null)
 			sendError(sender, "No entity type found for name '" + string + "'!");
 		return type;

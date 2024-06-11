@@ -13,7 +13,6 @@ import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 import com.pm.aiost.misc.particle.IParticle;
@@ -111,7 +110,7 @@ public class UnlockableManager {
 		int i = 1;
 		for (String name : names) {
 			ConfigurationSection section = petsSection.getConfigurationSection(name);
-			entityTypes[i] = AiostEntityTypes.get(NMS.createMinecraftKey(section.getString("type").toLowerCase())); // TODO check if working!
+			entityTypes[i] = AiostEntityTypes.get(section.getString("type").toLowerCase());
 			prices[i] = section.getInt("price");
 			descriptions[i] = section.getStringList("description");
 			i++;

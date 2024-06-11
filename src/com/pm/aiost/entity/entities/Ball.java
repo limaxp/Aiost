@@ -34,6 +34,6 @@ public class Ball extends Slime {
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
 		super.addAdditionalSaveData(nbttagcompound);
-		AiostEntityTypes.saveNBT(nbttagcompound, AiostEntityTypes.BALL);
+		AiostEntityTypes.saveId(nbttagcompound, AiostEntityTypes.BALL);
 	}
 }
