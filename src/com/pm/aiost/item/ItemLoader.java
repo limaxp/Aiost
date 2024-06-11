@@ -8,8 +8,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.event.effect.EffectBuilder;
-import com.pm.aiost.item.custom.NMSItemLoader;
-import com.pm.aiost.item.custom.NMSItems;
+import com.pm.aiost.item.custom.AiostItemLoader;
+import com.pm.aiost.item.custom.AiostItems;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NBT;
@@ -279,7 +279,7 @@ public class ItemLoader {
 		else
 			tag = new CompoundTag();
 
-		tag.putString("id", NMSItems.getKey(nmsIs.getItem()).getPath());
+		tag.putString("id", AiostItems.getKey(nmsIs.getItem()).getPath());
 		CompoundTag components = new CompoundTag();
 		tag.put("components", components);
 
@@ -336,6 +336,6 @@ public class ItemLoader {
 
 	public static net.minecraft.world.item.ItemStack loadNMSItem(ConfigurationSection itemSection, Material mat) {
 		return new net.minecraft.world.item.ItemStack(
-				NMSItemLoader.registerItem(itemSection.getName(), mat, itemSection.getConfigurationSection("item")));
+				AiostItemLoader.registerItem(itemSection.getName(), mat, itemSection.getConfigurationSection("item")));
 	}
 }

@@ -25,7 +25,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.mojang.brigadier.exceptions.CommandSyntaxException;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.item.custom.NMSItems;
+import com.pm.aiost.item.custom.AiostItems;
 import com.pm.aiost.misc.log.Logger;
 
 import net.minecraft.core.component.DataComponentMap;
@@ -909,7 +909,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count, String nbt) {
-		addItem(items, NMSItems.getKey(nmsItem).getPath(), count, fromString(nbt));
+		addItem(items, AiostItems.getKey(nmsItem).getPath(), count, fromString(nbt));
 	}
 
 	public static void addItem(ListTag items, String mat, byte count, String nbt) {
@@ -921,7 +921,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count, CompoundTag nbt) {
-		addItem(items, NMSItems.getKey(nmsItem).getPath(), count, nbt);
+		addItem(items, AiostItems.getKey(nmsItem).getPath(), count, nbt);
 	}
 
 	public static void addItem(ListTag items, String mat, byte count, CompoundTag nbt) {
@@ -935,7 +935,7 @@ public class NBT {
 	}
 
 	public static void addItem(ListTag items, Item nmsItem, byte count) {
-		addItem(items, NMSItems.getKey(nmsItem).getPath(), count);
+		addItem(items, AiostItems.getKey(nmsItem).getPath(), count);
 	}
 
 	public static void addItem(ListTag items, String mat, byte count) {
@@ -957,7 +957,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count, String nbt) {
-		setItem(item, NMSItems.getKey(nmsItem).getPath(), count, fromString(nbt));
+		setItem(item, AiostItems.getKey(nmsItem).getPath(), count, fromString(nbt));
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count, String nbt) {
@@ -969,7 +969,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count, CompoundTag nbt) {
-		setItem(item, NMSItems.getKey(nmsItem).getPath(), count, nbt);
+		setItem(item, AiostItems.getKey(nmsItem).getPath(), count, nbt);
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count, CompoundTag nbt) {
@@ -983,7 +983,7 @@ public class NBT {
 	}
 
 	public static void setItem(CompoundTag item, Item nmsItem, byte count) {
-		setItem(item, NMSItems.getKey(nmsItem).getPath(), count);
+		setItem(item, AiostItems.getKey(nmsItem).getPath(), count);
 	}
 
 	public static void setItem(CompoundTag item, String mat, byte count) {

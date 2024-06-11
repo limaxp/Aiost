@@ -15,7 +15,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 
-public class NMSItems {
+public class AiostItems {
 
 	private static final Map<Item, Item> BASE_MAP = new IdentityHashMap<Item, Item>();
 

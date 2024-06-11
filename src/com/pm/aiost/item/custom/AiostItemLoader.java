@@ -42,11 +42,11 @@ import net.minecraft.world.item.SwordItem;
 import net.minecraft.world.item.Tier;
 import net.minecraft.world.item.Tiers;
 
-public class NMSItemLoader {
+public class AiostItemLoader {
 
 	public static Item registerItem(String name, Material mat, ConfigurationSection itemSection) {
 		NMS.unfreezeRegistry(BuiltInRegistries.ITEM);
-		Item item = NMSItems.registerItem(name.replace(' ', '_').toLowerCase(), CraftMagicNumbers.getItem(mat),
+		Item item = AiostItems.registerItem(name.replace(' ', '_').toLowerCase(), CraftMagicNumbers.getItem(mat),
 				loadItem(itemSection));
 		BuiltInRegistries.ITEM.freeze();
 		return item;
@@ -62,7 +62,7 @@ public class NMSItemLoader {
 	}
 
 	public static Item loadItem(String name, ConfigurationSection section) {
-		Function<ConfigurationSection, ? extends Item> func = NMSItemLoaderFunctionRegistry.get(name);
+		Function<ConfigurationSection, ? extends Item> func = AiostItemFunctionRegistry.get(name);
 		if (func == null) {
 			Logger.warn("NMSItemLoader: no registry found for name '" + name + "'");
 			return loadBaseItem(section);

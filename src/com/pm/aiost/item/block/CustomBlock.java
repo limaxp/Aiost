@@ -7,7 +7,7 @@ import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.item.custom.NMSItems;
+import com.pm.aiost.item.custom.AiostItems;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 
@@ -61,9 +61,9 @@ public class CustomBlock {
 		armorList.add(new CompoundTag());
 		armorList.add(new CompoundTag());
 		if (NBT.hasTag(is))
-			NBT.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1, NBT.getNBT(is));
+			NBT.addItem(armorList, AiostItems.getBase(is.getItem()), (byte) 1, NBT.getNBT(is));
 		else
-			NBT.addItem(armorList, NMSItems.getBase(is.getItem()), (byte) 1);
+			NBT.addItem(armorList, AiostItems.getBase(is.getItem()), (byte) 1);
 
 		chunk.setBlockEntityNbt(nbt);
 		world.setBlockEntity(spawner);
