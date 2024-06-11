@@ -1,4 +1,4 @@
-package com.pm.aiost.server.request;
+package com.pm.aiost.misc.server.request;
 
 import static com.pm.aiost.misc.utils.ChatColor.RED;
 

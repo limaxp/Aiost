@@ -1,4 +1,4 @@
-package com.pm.aiost.server.request;
+package com.pm.aiost.misc.server.request;
 
 import java.io.File;
 import java.util.List;
@@ -13,10 +13,10 @@ import com.google.common.io.ByteStreams;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.data.IGameData;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
+import com.pm.aiost.misc.server.messaging.PluginMessage;
+import com.pm.aiost.misc.server.messaging.ServerDataCache;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.messaging.PluginMessage;
-import com.pm.aiost.server.messaging.ServerDataCache;
 import com.pm.aiost.server.world.creation.WorldFileLoader;
 
 public class BungeecordServerRequestHandler implements ServerRequestHandler {

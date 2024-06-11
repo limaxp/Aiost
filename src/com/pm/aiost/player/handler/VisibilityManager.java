@@ -6,9 +6,9 @@ import java.util.List;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.Aiost;
+import com.pm.aiost.misc.server.ServerManager;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.settings.PlayerSettings;
-import com.pm.aiost.server.ServerManager;
 
 public class VisibilityManager {
 

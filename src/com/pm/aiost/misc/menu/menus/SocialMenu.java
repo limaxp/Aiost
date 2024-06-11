@@ -16,9 +16,9 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.request.ServerRequest;
 
 public class SocialMenu {
 

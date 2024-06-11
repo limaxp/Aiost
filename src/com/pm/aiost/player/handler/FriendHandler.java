@@ -10,8 +10,8 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.request.ServerRequest;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;

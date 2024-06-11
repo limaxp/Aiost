@@ -17,11 +17,11 @@ import com.pm.aiost.game.data.IGameData;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableListInventoryMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;
+import com.pm.aiost.misc.server.messaging.ServerDataRequester;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.messaging.ServerDataRequester;
-import com.pm.aiost.server.request.ServerRequest;
 
 public class GameJoinMenu extends FillableListInventoryMenu {
 

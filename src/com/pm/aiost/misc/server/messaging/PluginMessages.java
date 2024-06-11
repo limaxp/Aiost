@@ -1,4 +1,4 @@
-package com.pm.aiost.server.messaging;
+package com.pm.aiost.misc.server.messaging;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,12 +10,12 @@ import org.bukkit.entity.Player;
 import com.google.common.io.ByteArrayDataInput;
 import com.pm.aiost.game.GameManager;
 import com.pm.aiost.misc.command.commands.PlayerCommands;
+import com.pm.aiost.misc.server.ServerManager;
 import com.pm.aiost.player.Party;
 import com.pm.aiost.player.PartyManager;
 import com.pm.aiost.player.PlayerDataLoader;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.FriendHandler;
-import com.pm.aiost.server.ServerManager;
 import com.pm.aiost.server.ServerType;
 import com.pm.aiost.server.world.creation.WorldLoader;
 

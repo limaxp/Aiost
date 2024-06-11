@@ -18,9 +18,9 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.misc.rank.Ranks;
 import com.pm.aiost.misc.scoreboard.Scoreboard;
+import com.pm.aiost.misc.server.ServerManager;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.ServerManager;
-import com.pm.aiost.server.request.ServerRequest;
 
 public class LobbyScoreboard {
 

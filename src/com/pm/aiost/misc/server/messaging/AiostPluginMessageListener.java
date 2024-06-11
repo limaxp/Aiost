@@ -1,4 +1,4 @@
-package com.pm.aiost.server.messaging;
+package com.pm.aiost.misc.server.messaging;
 
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;

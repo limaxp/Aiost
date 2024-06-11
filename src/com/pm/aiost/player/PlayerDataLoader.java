@@ -13,9 +13,9 @@ import com.google.common.io.ByteStreams;
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.server.ServerManager;
+import com.pm.aiost.misc.server.ServerManager;
+import com.pm.aiost.misc.server.messaging.PluginMessage;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.messaging.PluginMessage;
 
 public class PlayerDataLoader {
 

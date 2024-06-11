@@ -1,4 +1,7 @@
-package com.pm.aiost.server;
+package com.pm.aiost.misc.server;
+
+import com.pm.aiost.server.ServerState;
+import com.pm.aiost.server.ServerType;
 
 public class Server {
 

@@ -11,9 +11,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableListInventoryMenu;
+import com.pm.aiost.misc.server.Server;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.Server;
 
 public class ServerMenu extends FillableListInventoryMenu {
 

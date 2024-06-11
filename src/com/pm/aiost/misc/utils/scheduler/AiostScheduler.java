@@ -14,9 +14,9 @@ import com.pm.aiost.misc.menu.menus.GameJoinMenu;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.particle.EntityParticleManager;
 import com.pm.aiost.misc.scoreboard.scoreboards.LobbyScoreboard;
+import com.pm.aiost.misc.server.messaging.ServerDataRequester;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.TPSOptimizer;
-import com.pm.aiost.server.messaging.ServerDataRequester;
 import com.pm.aiost.server.world.WorldManager;
 
 public class AiostScheduler {

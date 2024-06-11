@@ -1,4 +1,4 @@
-package com.pm.aiost.server.messaging;
+package com.pm.aiost.misc.server.messaging;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -11,8 +11,8 @@ import com.google.common.collect.Iterables;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.pm.aiost.Aiost;
+import com.pm.aiost.misc.server.Server;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.Server;
 import com.pm.aiost.server.ServerType;
 
 public class PluginMessage {

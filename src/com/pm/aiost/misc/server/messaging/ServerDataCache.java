@@ -1,4 +1,4 @@
-package com.pm.aiost.server.messaging;
+package com.pm.aiost.misc.server.messaging;
 
 import java.util.List;
 
@@ -6,7 +6,7 @@ import com.pm.aiost.collection.list.FastArrayList;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.data.RemoteGameData;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.server.Server;
+import com.pm.aiost.misc.server.Server;
 import com.pm.aiost.server.ServerType;
 
 @SuppressWarnings("unchecked")

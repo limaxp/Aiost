@@ -1,4 +1,4 @@
-package com.pm.aiost.server.messaging;
+package com.pm.aiost.misc.server.messaging;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,7 +12,7 @@ import com.pm.aiost.game.data.RemoteGameData;
 import com.pm.aiost.misc.menu.menus.GameJoinMenu;
 import com.pm.aiost.misc.menu.menus.LobbyMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.server.Server;
+import com.pm.aiost.misc.server.Server;
 import com.pm.aiost.server.ServerState;
 import com.pm.aiost.server.ServerType;
 

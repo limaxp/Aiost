@@ -7,8 +7,8 @@ import org.bukkit.entity.Player;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.command.CommandUtil;
 import com.pm.aiost.misc.resourcePack.ResourcePackBuilder;
+import com.pm.aiost.misc.server.ServerManager;
 import com.pm.aiost.player.PlayerManager;
-import com.pm.aiost.server.ServerManager;
 import com.pm.aiost.server.ServerType;
 
 public class ServerCommands {

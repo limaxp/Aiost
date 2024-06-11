@@ -24,12 +24,12 @@ import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.misc.rank.Rank.Level;
 import com.pm.aiost.misc.rank.Ranks;
 import com.pm.aiost.misc.registry.AiostRegistry;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.FriendHandler;
 import com.pm.aiost.player.settings.PlayerPermissions;
 import com.pm.aiost.player.settings.PlayerSettings;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
-import com.pm.aiost.server.request.ServerRequest;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.ClickEvent;

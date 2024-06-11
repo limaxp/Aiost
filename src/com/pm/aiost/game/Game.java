@@ -41,8 +41,8 @@ import com.pm.aiost.misc.menu.menus.GameSettingMenu;
 import com.pm.aiost.misc.menu.menus.request.TextMenu;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
+import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.request.ServerRequest;
 import com.pm.aiost.server.world.region.IRegion;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;

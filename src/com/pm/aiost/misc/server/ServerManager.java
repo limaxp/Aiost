@@ -1,4 +1,4 @@
-package com.pm.aiost.server;
+package com.pm.aiost.misc.server;
 
 import java.io.IOException;
 
@@ -12,6 +12,7 @@ import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.player.ServerPlayer;
+import com.pm.aiost.server.ServerType;
 import com.pm.aiost.server.world.ServerWorld;
 import com.pm.aiost.server.world.creation.WorldBuilder;
 
