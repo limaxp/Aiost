@@ -13,8 +13,8 @@ import com.pm.aiost.misc.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.creation.WorldBuilder;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.creation.WorldBuilder;
 
 public class ServerManager {
 

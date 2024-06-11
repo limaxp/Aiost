@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.network.protocol.Packet;
 

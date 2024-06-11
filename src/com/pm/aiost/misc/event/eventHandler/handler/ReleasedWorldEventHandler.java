@@ -7,8 +7,8 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.region.IRegion.RegionType;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.region.IRegion.RegionType;
 
 public class ReleasedWorldEventHandler extends PlayerWorldEventHandler {
 

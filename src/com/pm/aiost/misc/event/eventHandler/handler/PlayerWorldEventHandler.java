@@ -9,9 +9,9 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.PlayerWorldControlMenu;
 import com.pm.aiost.misc.scoreboard.scoreboards.PlayerWorldScoreboard;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.creation.WorldLoader;
-import com.pm.aiost.server.world.region.IRegion.RegionType;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.creation.WorldLoader;
+import com.pm.aiost.world.region.IRegion.RegionType;
 
 public class PlayerWorldEventHandler extends PlayerRegionEventHandler {
 

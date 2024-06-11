@@ -26,9 +26,9 @@ import com.pm.aiost.player.handler.TPSOptimizer;
 import com.pm.aiost.player.handler.VisibilityManager;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.server.http.HttpServer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.chunk.ChunkWatcher;
-import com.pm.aiost.server.world.region.IRegion;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.chunk.ChunkWatcher;
+import com.pm.aiost.world.region.IRegion;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

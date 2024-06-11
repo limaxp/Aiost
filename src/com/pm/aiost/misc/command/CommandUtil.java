@@ -21,7 +21,7 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.StringUtils;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.world.type.AiostWorldType;
+import com.pm.aiost.world.type.AiostWorldType;
 
 import net.md_5.bungee.api.ChatColor;
 

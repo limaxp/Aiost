@@ -31,8 +31,8 @@ import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.object.tileObject.TileObject;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.object.tileObject.TileObject;
 
 public class EffectItemMenu extends SingleInventoryMenu {
 

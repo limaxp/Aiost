@@ -3,7 +3,7 @@ package com.pm.aiost.game.data;
 import java.util.UUID;
 
 import com.pm.aiost.game.GameType;
-import com.pm.aiost.server.world.region.IRegion;
+import com.pm.aiost.world.region.IRegion;
 
 public interface IGameData {
 

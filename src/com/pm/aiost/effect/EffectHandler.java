@@ -33,7 +33,7 @@ import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
 

@@ -6,8 +6,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.chunk.ServerChunk;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.chunk.ServerChunk;
 
 public class WorldBB {
 

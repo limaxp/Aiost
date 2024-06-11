@@ -11,8 +11,8 @@ import com.pm.aiost.game.games.soccer.Soccer;
 import com.pm.aiost.game.games.spleef.Spleef;
 import com.pm.aiost.game.games.tntThrow.TntThrow;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.marker.Marker;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.marker.Marker;
 
 public class GameTypes {
 

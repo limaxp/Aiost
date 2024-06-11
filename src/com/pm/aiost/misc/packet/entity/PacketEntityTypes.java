@@ -11,8 +11,8 @@ import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
 import com.pm.aiost.misc.registry.AiostRegistry;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.chunk.ServerChunk;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.chunk.ServerChunk;
 
 import net.minecraft.nbt.CompoundTag;
 

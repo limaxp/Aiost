@@ -63,8 +63,8 @@ import com.pm.aiost.player.handler.VisibilityManager;
 import com.pm.aiost.player.settings.PlayerSettings;
 import com.pm.aiost.player.unlockable.UnlockableType;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.region.IRegion;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.region.IRegion;
 
 import it.unimi.dsi.fastutil.ints.Int2ShortMap;
 import it.unimi.dsi.fastutil.ints.Int2ShortOpenHashMap;

@@ -23,7 +23,7 @@ import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

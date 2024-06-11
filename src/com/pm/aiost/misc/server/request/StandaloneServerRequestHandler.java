@@ -23,8 +23,8 @@ import com.pm.aiost.player.Party;
 import com.pm.aiost.player.PartyManager;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.FriendHandler;
-import com.pm.aiost.server.world.creation.WorldFileLoader;
-import com.pm.aiost.server.world.creation.WorldLoader;
+import com.pm.aiost.world.creation.WorldFileLoader;
+import com.pm.aiost.world.creation.WorldLoader;
 
 public class StandaloneServerRequestHandler implements ServerRequestHandler {
 

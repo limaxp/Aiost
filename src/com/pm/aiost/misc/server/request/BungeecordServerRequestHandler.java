@@ -17,7 +17,7 @@ import com.pm.aiost.misc.server.messaging.PluginMessage;
 import com.pm.aiost.misc.server.messaging.ServerDataCache;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.world.creation.WorldFileLoader;
+import com.pm.aiost.world.creation.WorldFileLoader;
 
 public class BungeecordServerRequestHandler implements ServerRequestHandler {
 

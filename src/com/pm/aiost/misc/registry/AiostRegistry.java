@@ -23,10 +23,10 @@ import com.pm.aiost.misc.particle.ParticleType;
 import com.pm.aiost.misc.particle.ParticleTypes;
 import com.pm.aiost.player.unlockable.UnlockableType;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
-import com.pm.aiost.server.world.object.tileObject.TileObjectType;
-import com.pm.aiost.server.world.object.tileObject.TileObjectTypes;
-import com.pm.aiost.server.world.type.AiostWorldType;
-import com.pm.aiost.server.world.type.AiostWorldTypes;
+import com.pm.aiost.world.object.tileObject.TileObjectType;
+import com.pm.aiost.world.object.tileObject.TileObjectTypes;
+import com.pm.aiost.world.type.AiostWorldType;
+import com.pm.aiost.world.type.AiostWorldTypes;
 
 public abstract class AiostRegistry<T> {
 

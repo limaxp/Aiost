@@ -6,8 +6,8 @@ import com.pm.aiost.collection.list.FastArrayList;
 import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectCondition;
 import com.pm.aiost.item.ItemEffects;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.effects.WorldEffects;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.effects.WorldEffects;
 
 public class EffectEntryBuilder extends AbstractEffectCollection implements EffectCollection {
 

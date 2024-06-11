@@ -15,7 +15,7 @@ import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.PlayerRegionScoreboard;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.region.IRegion;
+import com.pm.aiost.world.region.IRegion;
 
 public class PlayerRegionEventHandler implements EventHandler {
 

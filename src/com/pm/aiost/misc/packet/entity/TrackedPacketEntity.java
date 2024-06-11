@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.misc.utils.LocationHelper;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.network.protocol.Packet;
 

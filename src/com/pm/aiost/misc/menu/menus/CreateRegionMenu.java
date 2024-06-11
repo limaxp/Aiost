@@ -26,8 +26,8 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.region.Region;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.region.Region;
 
 public class CreateRegionMenu extends SingleInventoryMenu {
 

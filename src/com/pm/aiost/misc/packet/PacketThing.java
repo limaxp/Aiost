@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.chunk.ChunkWatcher;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.chunk.ChunkWatcher;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;

@@ -1,6 +1,6 @@
 package com.pm.aiost.misc.packet.entity;
 
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 public class PacketEntityType<T extends PacketEntity> {
 

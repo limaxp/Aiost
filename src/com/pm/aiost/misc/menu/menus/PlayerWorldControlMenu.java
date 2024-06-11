@@ -25,9 +25,9 @@ import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.creation.WorldBuilder;
-import com.pm.aiost.server.world.creation.WorldLoader;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.creation.WorldBuilder;
+import com.pm.aiost.world.creation.WorldLoader;
 
 public class PlayerWorldControlMenu extends SingleInventoryMenu {
 

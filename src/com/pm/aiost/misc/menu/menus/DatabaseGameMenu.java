@@ -28,7 +28,7 @@ import com.pm.aiost.misc.menu.menus.PlayerWorldMenu.PlayerWorldData;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.EnvironmentHelper;
+import com.pm.aiost.world.EnvironmentHelper;
 
 public abstract interface DatabaseGameMenu {
 

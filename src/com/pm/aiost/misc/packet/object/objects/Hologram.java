@@ -17,7 +17,7 @@ import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;

@@ -23,7 +23,7 @@ import com.pm.aiost.misc.utils.scheduler.AiostScheduler;
 import com.pm.aiost.player.PlayerManager;
 import com.pm.aiost.player.unlockable.UnlockableManager;
 import com.pm.aiost.server.http.HttpServer;
-import com.pm.aiost.server.world.WorldManager;
+import com.pm.aiost.world.WorldManager;
 
 // All in one server technology
 public class Aiost extends JavaPlugin {

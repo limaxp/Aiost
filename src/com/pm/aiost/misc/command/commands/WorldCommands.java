@@ -46,12 +46,12 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.StringUtils;
 import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.creation.WorldBuilder;
-import com.pm.aiost.server.world.creation.WorldLoader;
-import com.pm.aiost.server.world.region.IRegion;
-import com.pm.aiost.server.world.region.Region;
-import com.pm.aiost.server.world.type.AiostWorldType;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.creation.WorldBuilder;
+import com.pm.aiost.world.creation.WorldLoader;
+import com.pm.aiost.world.region.IRegion;
+import com.pm.aiost.world.region.Region;
+import com.pm.aiost.world.type.AiostWorldType;
 
 import net.minecraft.world.entity.EntityType;
 

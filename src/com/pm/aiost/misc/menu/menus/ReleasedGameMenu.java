@@ -20,7 +20,7 @@ import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.creation.WorldLoader;
+import com.pm.aiost.world.creation.WorldLoader;
 
 public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameMenu {
 

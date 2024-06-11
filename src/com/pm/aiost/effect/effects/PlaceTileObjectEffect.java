@@ -11,7 +11,7 @@ import com.pm.aiost.effect.EffectAction;
 import com.pm.aiost.effect.EffectCondition;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.object.tileObject.TileObject;
+import com.pm.aiost.world.object.tileObject.TileObject;
 
 import net.minecraft.nbt.CompoundTag;
 

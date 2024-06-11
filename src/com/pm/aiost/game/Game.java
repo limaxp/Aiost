@@ -43,7 +43,7 @@ import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.region.IRegion;
+import com.pm.aiost.world.region.IRegion;
 
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 

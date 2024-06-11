@@ -30,9 +30,9 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.WordFilter;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.EnvironmentHelper;
-import com.pm.aiost.server.world.creation.WorldLoader;
-import com.pm.aiost.server.world.type.AiostWorldType;
+import com.pm.aiost.world.EnvironmentHelper;
+import com.pm.aiost.world.creation.WorldLoader;
+import com.pm.aiost.world.type.AiostWorldType;
 
 public class PlayerWorldMenu extends ListInventoryMenu {
 

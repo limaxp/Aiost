@@ -17,7 +17,7 @@ import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.packet.object.objects.Marker;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 public class MarkerPlacerEffect extends SingletonEffect {
 
@@ -27,7 +27,7 @@ public class MarkerPlacerEffect extends SingletonEffect {
 
 	public MarkerPlacerEffect() {
 		super(ACTIONS, EffectCondition.NONE);
-		name = com.pm.aiost.server.world.marker.Marker.SPAWN;
+		name = com.pm.aiost.world.marker.Marker.SPAWN;
 	}
 
 	@Override

@@ -17,7 +17,7 @@ import com.pm.aiost.misc.scoreboard.scoreboards.LobbyScoreboard;
 import com.pm.aiost.misc.server.messaging.ServerDataRequester;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.TPSOptimizer;
-import com.pm.aiost.server.world.WorldManager;
+import com.pm.aiost.world.WorldManager;
 
 public class AiostScheduler {
 

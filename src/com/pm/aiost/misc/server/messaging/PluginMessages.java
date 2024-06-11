@@ -17,7 +17,7 @@ import com.pm.aiost.player.PlayerDataLoader;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.FriendHandler;
 import com.pm.aiost.server.ServerType;
-import com.pm.aiost.server.world.creation.WorldLoader;
+import com.pm.aiost.world.creation.WorldLoader;
 
 public class PluginMessages {
 

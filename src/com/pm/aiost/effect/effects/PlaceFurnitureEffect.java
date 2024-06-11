@@ -20,7 +20,7 @@ import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuR
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 public class PlaceFurnitureEffect extends Effect {
 

@@ -98,10 +98,10 @@ import com.pm.aiost.player.handler.ChatHologramHandler;
 import com.pm.aiost.player.handler.DamageIndicator;
 import com.pm.aiost.player.handler.QualityOfLiveHandler;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.WorldManager;
-import com.pm.aiost.server.world.chunk.ChunkWatcher;
-import com.pm.aiost.server.world.object.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.WorldManager;
+import com.pm.aiost.world.chunk.ChunkWatcher;
+import com.pm.aiost.world.object.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
 
 public class AiostListener implements Listener {
 

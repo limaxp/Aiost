@@ -5,8 +5,8 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.TrackedPacketEntity;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
-import com.pm.aiost.server.world.ServerWorld;
-import com.pm.aiost.server.world.object.TickingObject;
+import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.object.TickingObject;
 
 import net.minecraft.nbt.CompoundTag;
 

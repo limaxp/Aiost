@@ -1,6 +1,6 @@
 package com.pm.aiost.misc.packet.object;
 
-import com.pm.aiost.server.world.ServerWorld;
+import com.pm.aiost.world.ServerWorld;
 
 public class PacketObjectType<T extends PacketObject> {
 
