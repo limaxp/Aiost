@@ -19,6 +19,7 @@ import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.settings.PlayerSettings;
 
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
 
 public class UnlockableTypes {
 
@@ -253,7 +254,7 @@ public class UnlockableTypes {
 		@Override
 		public void set(ServerPlayer serverPlayer, short id) {
 			ItemStack is = getObject(id);
-			Object item = NMS.to(is).getItem();
+			Item item = NMS.to(is).getItem();
 			if (NMS.isArmor(item)) {
 				System.out.println(NMS.getArmorSlot(item));
 				serverPlayer.setItem(NMS.getArmorSlot(item), is);

@@ -189,7 +189,7 @@ public class NMS {
 		return ((CraftBlock) block).getNMS();
 	}
 
-//	public static org.bukkit.block.Block getBukkit(Block block) {
+//	public static org.bukkit.block.Block from(Block block) {
 //		Block.getCombinedId(block);
 //		CraftBlock.
 //		return ((BlockData) CraftBlockData.fromData(block.getBlockData())).;
@@ -360,15 +360,7 @@ public class NMS {
 		return item instanceof ArmorItem;
 	}
 
-	public static boolean isArmor(Object item) {
-		return item instanceof ArmorItem;
-	}
-
 	public static boolean isElytra(Item item) {
-		return item instanceof ElytraItem;
-	}
-
-	public static boolean isElytra(Object item) {
 		return item instanceof ElytraItem;
 	}
 
