@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
@@ -11,8 +11,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.PlayerRegionScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.region.IRegion;

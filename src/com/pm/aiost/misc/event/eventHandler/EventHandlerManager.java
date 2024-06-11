@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler;
+package com.pm.aiost.misc.event.eventHandler;
 
 import java.util.IdentityHashMap;
 import java.util.Map;

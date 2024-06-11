@@ -5,7 +5,7 @@ import java.util.List;
 import org.bukkit.Bukkit;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.event.AiostEventFactory;
+import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketThing;

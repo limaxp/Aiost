@@ -1,4 +1,4 @@
-package com.pm.aiost.event;
+package com.pm.aiost.misc.event;
 
 import java.util.Set;
 
@@ -76,15 +76,15 @@ import org.bukkit.potion.PotionEffectType;
 import com.pm.aiost.effect.EffectAction;
 import com.pm.aiost.effect.EffectHandler;
 import com.pm.aiost.effect.collection.EffectData;
-import com.pm.aiost.event.eventHandler.EventHandlerManager;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.event.events.PacketThingInteractEvent;
-import com.pm.aiost.event.events.PlayerEquipHandItemEvent;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
-import com.pm.aiost.event.events.PlayerJumpEvent;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.block.CustomBlock;
 import com.pm.aiost.misc.command.Commands;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipHandItemEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.menu.InventoryEventHandler;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.nms.NMS;
@@ -666,7 +666,7 @@ public class AiostListener implements Listener {
 		if (event.isCancelled())
 			return;
 
-		com.pm.aiost.event.eventHandler.EventHandler eventHandler = EventHandlerManager.get(event.getLocation());
+		com.pm.aiost.misc.event.eventHandler.EventHandler eventHandler = EventHandlerManager.get(event.getLocation());
 		eventHandler.onEntitySpawn(event);
 		if (event.isCancelled())
 			return;

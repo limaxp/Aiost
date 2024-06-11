@@ -1,4 +1,4 @@
-package com.pm.aiost.event.events;
+package com.pm.aiost.misc.event.events;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

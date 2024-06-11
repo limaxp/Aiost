@@ -9,8 +9,8 @@ import com.pm.aiost.effect.EffectCondition;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.blueprints.SingletonEffect;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.item.Items;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.player.ServerPlayer;
 
 public class BlockOffhandEffect extends SingletonEffect {

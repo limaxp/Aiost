@@ -22,8 +22,8 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.GameLobbyMenu;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;

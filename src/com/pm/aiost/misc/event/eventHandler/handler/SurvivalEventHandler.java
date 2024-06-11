@@ -1,7 +1,7 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.SurvivalScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 

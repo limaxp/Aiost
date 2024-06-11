@@ -11,7 +11,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;
 

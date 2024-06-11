@@ -15,7 +15,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.StringUtils;

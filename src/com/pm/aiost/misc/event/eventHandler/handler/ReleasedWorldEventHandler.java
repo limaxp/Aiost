@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import java.util.UUID;
 

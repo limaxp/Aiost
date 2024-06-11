@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
@@ -24,9 +24,9 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
 import com.pm.aiost.player.ServerPlayer;
 
 public interface CancelEventHandler extends EventHandler {

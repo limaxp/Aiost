@@ -1,4 +1,4 @@
-package com.pm.aiost.event;
+package com.pm.aiost.misc.event;
 
 import java.util.List;
 
@@ -22,12 +22,12 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
-import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.event.events.PacketThingInteractEvent;
-import com.pm.aiost.event.events.PlayerEquipHandItemEvent;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
-import com.pm.aiost.event.events.PlayerEquipItemEvent.EquipmentAction;
-import com.pm.aiost.event.events.PlayerJumpEvent;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipHandItemEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.events.PlayerJumpEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent.EquipmentAction;
 import com.pm.aiost.misc.packet.PacketThing;
 import com.pm.aiost.player.ServerPlayer;
 

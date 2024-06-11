@@ -3,7 +3,7 @@ package com.pm.aiost.misc.packet;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 
-import com.pm.aiost.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;

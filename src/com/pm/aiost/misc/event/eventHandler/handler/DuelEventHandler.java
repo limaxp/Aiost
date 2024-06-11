@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import java.util.UUID;
 
@@ -16,7 +16,7 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.player.ServerPlayer;

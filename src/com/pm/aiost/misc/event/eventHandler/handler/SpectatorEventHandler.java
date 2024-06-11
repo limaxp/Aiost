@@ -1,12 +1,12 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.game.Game;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.player.ServerPlayer;
 
 public interface SpectatorEventHandler extends LobbyEventHandler {

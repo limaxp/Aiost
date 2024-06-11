@@ -21,12 +21,12 @@ import org.bukkit.event.player.PlayerDropItemEvent;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.entity.entities.Ball;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameTeam;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.game.WinCondition;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
 import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.player.ServerPlayer;

@@ -27,9 +27,9 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.effect.collection.EffectData.EventFunction;
 import com.pm.aiost.effect.collection.EffectData.ServerPlayerEventFunction;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
-import com.pm.aiost.event.events.PlayerJumpEvent;
 import com.pm.aiost.item.ItemEffects;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;

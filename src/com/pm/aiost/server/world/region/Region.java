@@ -11,8 +11,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.eventHandler.EventHandlerLoader;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerLoader;
 import com.pm.aiost.misc.utils.boundingBox.WorldBB;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;

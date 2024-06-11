@@ -11,7 +11,7 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
-import com.pm.aiost.event.eventHandler.EventHandlerManager;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.server.world.creation.WorldList;
 

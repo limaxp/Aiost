@@ -16,7 +16,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
 import com.pm.aiost.effect.effects.PotionEffect;
-import com.pm.aiost.event.AiostEventFactory;
+import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.player.ServerPlayer;

@@ -14,10 +14,10 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.event.EquipmentListener;
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.eventHandler.EventHandler.QuitReason;
 import com.pm.aiost.misc.SpigotConfig;
+import com.pm.aiost.misc.event.EquipmentListener;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler.QuitReason;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.packet.listen.PacketWatcher;
 import com.pm.aiost.player.handler.TPSOptimizer;

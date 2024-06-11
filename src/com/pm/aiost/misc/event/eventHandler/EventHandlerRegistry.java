@@ -1,17 +1,17 @@
-package com.pm.aiost.event.eventHandler;
+package com.pm.aiost.misc.event.eventHandler;
 
 import java.util.function.Supplier;
 
-import com.pm.aiost.event.eventHandler.handler.CancelEventHandler;
-import com.pm.aiost.event.eventHandler.handler.DuelEventHandler;
-import com.pm.aiost.event.eventHandler.handler.DuelRegionEventHandler;
-import com.pm.aiost.event.eventHandler.handler.LobbyEventHandler;
-import com.pm.aiost.event.eventHandler.handler.PlayerRegionEventHandler;
-import com.pm.aiost.event.eventHandler.handler.PlayerWorldEventHandler;
-import com.pm.aiost.event.eventHandler.handler.ReleasedWorldEventHandler;
-import com.pm.aiost.event.eventHandler.handler.SpectatorEventHandler;
-import com.pm.aiost.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.game.GameLobby;
+import com.pm.aiost.misc.event.eventHandler.handler.CancelEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.DuelEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.DuelRegionEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.PlayerRegionEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.PlayerWorldEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.ReleasedWorldEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.SpectatorEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
 public class EventHandlerRegistry {

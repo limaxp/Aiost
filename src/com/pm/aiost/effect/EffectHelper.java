@@ -9,8 +9,8 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.pm.aiost.event.AiostEventFactory;
-import com.pm.aiost.event.events.PlayerEquipItemEvent.EquipmentAction;
+import com.pm.aiost.misc.event.AiostEventFactory;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent.EquipmentAction;
 import com.pm.aiost.player.ServerPlayer;
 
 public class EffectHelper {

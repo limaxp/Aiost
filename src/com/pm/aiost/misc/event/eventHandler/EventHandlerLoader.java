@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler;
+package com.pm.aiost.misc.event.eventHandler;
 
 import java.io.File;
 import java.io.IOException;

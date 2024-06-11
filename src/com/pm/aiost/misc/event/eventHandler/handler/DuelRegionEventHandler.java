@@ -1,6 +1,6 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.player.ServerPlayer;
 
 public class DuelRegionEventHandler extends DuelEventHandler {

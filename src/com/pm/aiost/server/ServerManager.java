@@ -6,10 +6,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.eventHandler.EventHandlerManager;
-import com.pm.aiost.event.eventHandler.handler.LobbyEventHandler;
-import com.pm.aiost.event.eventHandler.handler.SurvivalEventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
+import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.SurvivalEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.server.world.ServerWorld;

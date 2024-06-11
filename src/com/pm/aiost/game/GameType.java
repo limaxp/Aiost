@@ -7,7 +7,7 @@ import java.util.function.Supplier;
 
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.server.world.ServerWorld;
 
 public class GameType<T extends Game> implements Supplier<EventHandler> {

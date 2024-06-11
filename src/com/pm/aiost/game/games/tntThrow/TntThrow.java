@@ -24,13 +24,13 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameKit;
 import com.pm.aiost.game.GameTeam;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.game.WinCondition;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 

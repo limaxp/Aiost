@@ -32,9 +32,9 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import com.pm.aiost.effect.Effect;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.event.events.PacketThingInteractEvent;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.player.ServerPlayer;
 
 public abstract class SimpleLocationEffect extends Effect {

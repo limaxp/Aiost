@@ -4,7 +4,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.group.EffectGroupBuilder;
-import com.pm.aiost.event.AiostListener;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.SpigotConfig;
 import com.pm.aiost.misc.SpigotConfigManager;
@@ -14,6 +13,7 @@ import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.dataAccess.SpigotDatabaseAccess;
 import com.pm.aiost.misc.dataAccess.SpigotFileAccess;
 import com.pm.aiost.misc.database.DatabaseManager;
+import com.pm.aiost.misc.event.AiostListener;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;

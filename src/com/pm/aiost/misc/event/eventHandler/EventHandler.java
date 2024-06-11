@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler;
+package com.pm.aiost.misc.event.eventHandler;
 
 import java.util.function.Supplier;
 
@@ -33,10 +33,10 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
-import com.pm.aiost.event.events.PacketThingAttackEvent;
-import com.pm.aiost.event.events.PacketThingInteractEvent;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
-import com.pm.aiost.event.events.PlayerJumpEvent;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.MainMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;

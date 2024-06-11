@@ -11,8 +11,8 @@ import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 
 import com.pm.aiost.effect.effects.EmptyEffect;
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.events.PlayerEquipItemEvent;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;

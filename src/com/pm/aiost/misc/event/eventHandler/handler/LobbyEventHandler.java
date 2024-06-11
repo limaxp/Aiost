@@ -1,4 +1,4 @@
-package com.pm.aiost.event.eventHandler.handler;
+package com.pm.aiost.misc.event.eventHandler.handler;
 
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
@@ -8,8 +8,8 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
-import com.pm.aiost.event.eventHandler.EventHandler;
-import com.pm.aiost.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.LobbyScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 
