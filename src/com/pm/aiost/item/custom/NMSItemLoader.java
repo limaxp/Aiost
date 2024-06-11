@@ -1,6 +1,7 @@
 package com.pm.aiost.item.custom;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.function.Function;
 
 import org.bukkit.Material;
@@ -13,23 +14,25 @@ import com.pm.aiost.item.AiostTier;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.food.FoodData;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
+import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.ArmorMaterials;
 import net.minecraft.world.item.ArrowItem;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.BowItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CrossbowItem;
 import net.minecraft.world.item.EggItem;
 import net.minecraft.world.item.EnderpearlItem;
 import net.minecraft.world.item.FlintAndSteelItem;
 import net.minecraft.world.item.HoeItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Item.Properties;
 import net.minecraft.world.item.PickaxeItem;
 import net.minecraft.world.item.Rarity;
 import net.minecraft.world.item.ShieldItem;
@@ -68,124 +71,101 @@ public class NMSItemLoader {
 	}
 
 	public static Item loadBaseItem(ConfigurationSection section) {
-		return new Item(readInfo(section));
+		return new Item(readProperties(section));
 	}
 
 	public static SwordItem loadSword(ConfigurationSection section) {
-		return new SwordItem(readToolMaterial(section), readInfo(section));
+		return new SwordItem(readTier(section), readProperties(section));
 	}
 
 	public static PickaxeItem loadPickaxe(ConfigurationSection section) {
-		return new PickaxeItem(readToolMaterial(section), readInfo(section));
+		return new PickaxeItem(readTier(section), readProperties(section));
 	}
 
 	public static AxeItem loadAxe(ConfigurationSection section) {
-		return new AxeItem(readToolMaterial(section), readInfo(section));
+		return new AxeItem(readTier(section), readProperties(section));
 	}
 
 	public static ShovelItem loadShovel(ConfigurationSection section) {
-		return new ShovelItem(readToolMaterial(section), readInfo(section));
+		return new ShovelItem(readTier(section), readProperties(section));
 	}
 
 	public static HoeItem loadHoe(ConfigurationSection section) {
-		return new HoeItem(readToolMaterial(section), readInfo(section));
+		return new HoeItem(readTier(section), readProperties(section));
 	}
 
 	public static ShieldItem loadShield(ConfigurationSection section) {
-		return new ShieldItem(readInfo(section));
+		return new ShieldItem(readProperties(section));
 	}
 
 	public static BowItem loadBow(ConfigurationSection section) {
-		return new BowItem(readInfo(section));
+		return new BowItem(readProperties(section));
 	}
 
 	public static CrossbowItem loadCrossbow(ConfigurationSection section) {
-		return new CrossbowItem(readInfo(section));
+		return new CrossbowItem(readProperties(section));
 	}
 
 	public static ArrowItem loadArrow(ConfigurationSection section) {
-		return new ArrowItem(readInfo(section));
+		return new ArrowItem(readProperties(section));
 	}
 
 	public static FlintAndSteelItem loadFlintAndSteel(ConfigurationSection section) {
-		return new FlintAndSteelItem(readInfo(section));
+		return new FlintAndSteelItem(readProperties(section));
 	}
 
 	public static ArmorItem loadArmor(ConfigurationSection section) {
-//		return new ArmorItem(readArmorMaterial(section), readEnumItemSlot(section), readInfo(section));
-		return null;
+		return new ArmorItem(readArmorMaterial(section), readArmorType(section), readProperties(section));
 	}
 
 	public static SnowballItem loadSnowball(ConfigurationSection section) {
-		return new SnowballItem(readInfo(section));
+		return new SnowballItem(readProperties(section));
 	}
 
 	public static EggItem loadEgg(ConfigurationSection section) {
-		return new EggItem(readInfo(section));
+		return new EggItem(readProperties(section));
 	}
 
 	public static EnderpearlItem loadEnderPearl(ConfigurationSection section) {
-		return new EnderpearlItem(readInfo(section));
+		return new EnderpearlItem(readProperties(section));
 	}
 
-	public static Properties readInfo(ConfigurationSection section) {
-//		Info info = new Info();
-//		if (section.contains("creativeModeTab"))
-//			info.a(readCreativeModeTab(section));
-//		if (section.contains("rarity"))
-//			info.a(readEnumItemRarity(section));
-//		if (section.contains("foodInfo"))
-//			info.a(readFoodInfo(section.getConfigurationSection("foodInfo")));
-//		if (section.contains("size"))
-//			info.a(section.getInt("size"));
-//		if (section.contains("durability"))
-//			info.c(section.getInt("durability"));
-		return new Properties();
+	public static Item.Properties readProperties(ConfigurationSection section) {
+		Item.Properties info = new Item.Properties();
+		if (section.contains("rarity"))
+			info.rarity(readRarity(section));
+		if (section.contains("foodInfo"))
+			info.food(readFoodProperties(section.getConfigurationSection("foodInfo")));
+		if (section.contains("size"))
+			info.stacksTo(section.getInt("size"));
+		if (section.contains("durability"))
+			info.durability(section.getInt("durability"));
+		if (section.contains("fireResistant"))
+			info.fireResistant();
+		return info;
 	}
 
-	public static CreativeModeTab readCreativeModeTab(ConfigurationSection section) {
-//		List<CreativeModeTab> tabs = CreativeModeTabs.allTabs();
-//		int size = tabs.size();
-//		String name = section.getString("creativeModeTab");
-//		for (int i = 0; i < size; i++) {
-//			CreativeModeTab tab = tabs.get(i);
-//			if (tab.c().equals(name))
-//				return tab;
-//		}
-//		Logger.warn("NMSItemLoader: Could not find creative mode tab for name '" + name + "'");
-//		return CreativeModeTab.f; // misc
-		return null;
+	public static FoodProperties readFoodProperties(ConfigurationSection section) {
+		FoodProperties.Builder foodInfo = new FoodProperties.Builder();
+		if (section.contains("nutrition"))
+			foodInfo.nutrition(section.getInt("nutrition"));
+		if (section.contains("saturation"))
+			foodInfo.saturationModifier((float) section.getDouble("saturation"));
+		if (section.contains("alwaysEdible"))
+			foodInfo.alwaysEdible();
+		if (section.contains("fast"))
+			foodInfo.fast();
+		if (section.contains("effects")) {
+			ConfigurationSection effectsSection = section.getConfigurationSection("effects");
+			for (String key : effectsSection.getKeys(false)) {
+				ConfigurationSection effectSection = effectsSection.getConfigurationSection(key);
+				foodInfo.effect(readMobEffect(effectSection), (float) effectSection.getDouble("value", 1.0));
+			}
+		}
+		return foodInfo.build();
 	}
 
-	public static FoodData readFoodInfo(ConfigurationSection section) {
-//		// TODO: boolean fields c,d,e are unknown and not used!
-//		FoodInfo.a foodInfo = new FoodInfo.a();
-//		if (section.contains("nutrition"))
-//			foodInfo.a(section.getInt("nutrition"));
-//		if (section.contains("saturation"))
-//			foodInfo.a((float) section.getDouble("saturation"));
-//		if (section.contains("effects")) {
-//			ConfigurationSection effectsSection = section.getConfigurationSection("effects");
-//			for (String key : effectsSection.getKeys(false)) {
-//				ConfigurationSection effectSection = effectsSection.getConfigurationSection(key);
-////				foodInfo.a(readMobEffect(effectSection), (float) effectSection.getDouble("value", 1.0));
-//				// TODO: Do not know what value actually does!
-//			}
-//		}
-//		return foodInfo.d();
-		return null;
-	}
-
-//	public static MobEffect readMobEffect(ConfigurationSection section) {
-//		MobEffect mobEffect = AiostMobEffects.get(section.getName());
-//		if (mobEffect == null) {
-//			Logger.warn("NMSItemLoader: Could not find mob effect for name '" + section.getName() + "'");
-//			mobEffect = AiostMobEffects.ABSORPTION;
-//		}
-//		return new MobEffect(mobEffect, section.getInt("duration"), section.getInt("amplifier"));
-//	}
-
-	public static Rarity readEnumItemRarity(ConfigurationSection section) {
+	public static Rarity readRarity(ConfigurationSection section) {
 		if (section.contains("rarity")) {
 			Rarity rarity = Rarity.valueOf(section.getString("rarity").toUpperCase());
 			if (rarity != null)
@@ -195,7 +175,7 @@ public class NMSItemLoader {
 		return Rarity.COMMON;
 	}
 
-	public static Tier readToolMaterial(ConfigurationSection section) {
+	public static Tier readTier(ConfigurationSection section) {
 		if (section.contains("toolMaterial")) {
 			Tier toolmaterial = AiostTier.getIgnoreCase(section.getString("toolMaterial"));
 			if (toolmaterial != null)
@@ -206,25 +186,38 @@ public class NMSItemLoader {
 		return Tiers.WOOD;
 	}
 
-	public static ArmorMaterial readArmorMaterial(ConfigurationSection section) {
+	public static Holder<ArmorMaterial> readArmorMaterial(ConfigurationSection section) {
 		if (section.contains("armorMaterial")) {
-//			ArmorMaterial armorMaterial = ArmorMaterials.valueOf(section.getString("armorMaterial").toUpperCase());
-//			if (armorMaterial != null)
-//				return armorMaterial;
-//			Logger.warn("NMSItemLoader: Could not find armor material for name '" + section.getString("armorMaterial")
-//					+ "'");
+			Optional<Holder.Reference<ArmorMaterial>> armorMaterial = BuiltInRegistries.ARMOR_MATERIAL
+					.getHolder(new ResourceLocation(section.getString("armorMaterial").toUpperCase()));
+			if (armorMaterial.isPresent())
+				return armorMaterial.get();
+			Logger.warn("NMSItemLoader: Could not find armor material for name '" + section.getString("armorMaterial")
+					+ "'");
 		}
-		return ArmorMaterials.LEATHER.value();
+		return ArmorMaterials.LEATHER;
 	}
 
-	public static EquipmentSlot readEnumItemSlot(ConfigurationSection section) {
+	public static MobEffectInstance readMobEffect(ConfigurationSection section) {
+		Optional<Holder.Reference<MobEffect>> optional = BuiltInRegistries.MOB_EFFECT
+				.getHolder(new ResourceLocation(section.getName()));
+		Holder<MobEffect> effect;
+		if (optional.isEmpty()) {
+			Logger.warn("NMSItemLoader: Could not find mob effect for name '" + section.getName() + "'");
+			effect = MobEffects.ABSORPTION;
+		} else
+			effect = optional.get();
+		return new MobEffectInstance(effect, section.getInt("duration"), section.getInt("amplifier"));
+	}
+
+	public static ArmorItem.Type readArmorType(ConfigurationSection section) {
 		if (section.contains("slot")) {
-			EquipmentSlot slot = EquipmentSlot.valueOf(section.getString("slot").toUpperCase());
+			ArmorItem.Type slot = ArmorItem.Type.valueOf(section.getString("slot").toUpperCase());
 			if (slot != null)
 				return slot;
 			Logger.warn("NMSItemLoader: Could not find slot for name '" + section.getString("slot") + "'");
 		}
-		return EquipmentSlot.HEAD;
+		return ArmorItem.Type.HELMET;
 	}
 
 	public static String[] readStringArray(ConfigurationSection section, String entry) {

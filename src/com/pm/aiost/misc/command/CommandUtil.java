@@ -293,7 +293,7 @@ public class CommandUtil {
 	}
 
 	public static net.minecraft.world.entity.EntityType<?> parseEntityTypes(CommandSender sender, String string) {
-		net.minecraft.world.entity.EntityType<?> type = AiostEntityTypes.get(string);
+		net.minecraft.world.entity.EntityType<?> type = AiostEntityTypes.get(string.toLowerCase());
 		if (type == null)
 			sendError(sender, "No entity type found for name '" + string + "'!");
 		return type;

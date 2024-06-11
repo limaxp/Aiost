@@ -84,7 +84,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	}
 
 	public static EntityType<?> get(String key) {
-		return get(NamespacedKey.fromString(key));
+		return get(new ResourceLocation(key));
 	}
 
 	public static EntityType<?> get(NamespacedKey key) {

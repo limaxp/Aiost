@@ -50,7 +50,7 @@ public class PacketEntityLiving extends PacketEntity {
 
 	@Override
 	public String getName() {
-		return AiostEntityTypes.getKey(AiostEntityTypes.get(entityId)).getNamespace();
+		return AiostEntityTypes.getKey(AiostEntityTypes.get(entityId)).getPath();
 	}
 
 	@Override

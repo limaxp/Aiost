@@ -6,26 +6,20 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.bukkit.NamespacedKey;
+
+import com.pm.aiost.misc.nms.NMS;
+
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.state.BlockState;
 
 public class NMSItems {
 
 	private static final Map<Item, Item> BASE_MAP = new IdentityHashMap<Item, Item>();
 
 	private static final List<Item> CHANGED_ITEMS = new ArrayList<Item>();
-
-	protected static Item a(String name, Block base, Item item) {
-		return registerItem(name, base.asItem(), item);
-	}
-
-	protected static Item a(String name, Item base, Item item) {
-		return registerItem(name, base, item);
-	}
 
 	public static Item registerItem(String name, Item base, Item item) {
 		registerItem(base, item);
@@ -62,24 +56,24 @@ public class NMSItems {
 		return BuiltInRegistries.ITEM.getKey(item);
 	}
 
-	public static Item fromKey(ResourceLocation key) {
+	public static int getId(Item item) {
+		return BuiltInRegistries.ITEM.getId(item);
+	}
+
+	public static Item get(ResourceLocation key) {
 		return BuiltInRegistries.ITEM.get(key);
 	}
 
-	public static int getId(Item item) {
-		return Item.getId(item);
-	}
-
-//	public static int getId(Block block) {
-//		return Block.getCombinedId(block.getBlockData());
-//	}
-
-	public static int getId(BlockState block) {
-		return Block.getId(block);
-	}
-
-	public static Item fromId(int id) {
+	public static Item get(int id) {
 		return BuiltInRegistries.ITEM.byId(id);
+	}
+
+	public static Item get(String key) {
+		return get(new ResourceLocation(key));
+	}
+
+	public static Item get(NamespacedKey key) {
+		return get(NMS.to(key));
 	}
 
 	public static Iterator<Item> iterator() {

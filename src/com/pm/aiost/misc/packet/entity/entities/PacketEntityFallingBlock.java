@@ -63,7 +63,7 @@ public class PacketEntityFallingBlock extends PacketEntity {
 
 	@Override
 	public String getName() {
-		return NMS.getByCombinedId(blockId).getBlock().getName().getString();
+		return NMS.getByBlockId(blockId).getBlock().getName().getString();
 	}
 
 	public void setBlock(Block block) {
@@ -71,15 +71,15 @@ public class PacketEntityFallingBlock extends PacketEntity {
 	}
 
 	public void setBlockData(BlockData block) {
-		this.blockId = NMS.getCombinedId(NMS.to(block));
+		this.blockId = NMS.getBlockId(NMS.to(block));
 	}
 
 	public BlockData getBlockData() {
-		return NMS.from(NMS.getByCombinedId(blockId));
+		return NMS.from(NMS.getByBlockId(blockId));
 	}
 
 	public void setMaterial(Material material) {
-		this.blockId = NMS.getCombinedId(NMS.getBlock(material).defaultBlockState());
+		this.blockId = NMS.getBlockId(NMS.getBlock(material).defaultBlockState());
 	}
 
 	public Material getMaterial() {

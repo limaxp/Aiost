@@ -72,15 +72,15 @@ public class DisguiseBlock implements Disguise {
 	}
 
 	public void setBlockData(BlockData block) {
-		this.blockId = NMS.getCombinedId(NMS.to(block));
+		this.blockId = NMS.getBlockId(NMS.to(block));
 	}
 
 	public BlockData getBlockData() {
-		return NMS.from(NMS.getByCombinedId(blockId));
+		return NMS.from(NMS.getByBlockId(blockId));
 	}
 
 	public void setMaterial(Material material) {
-		this.blockId = NMS.getCombinedId(NMS.getBlock(material).defaultBlockState());
+		this.blockId = NMS.getBlockId(NMS.getBlock(material).defaultBlockState());
 	}
 
 	public Material getMaterial() {

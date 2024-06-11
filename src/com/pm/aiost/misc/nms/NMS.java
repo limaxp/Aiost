@@ -189,12 +189,6 @@ public class NMS {
 		return ((CraftBlock) block).getNMS();
 	}
 
-//	public static org.bukkit.block.Block from(Block block) {
-//		Block.getCombinedId(block);
-//		CraftBlock.
-//		return ((BlockData) CraftBlockData.fromData(block.getBlockData())).;
-//	}
-
 	public static BlockState to(BlockData block) {
 		return ((CraftBlockData) block).getState();
 	}
@@ -203,15 +197,15 @@ public class NMS {
 		return CraftBlockData.fromData(block);
 	}
 
-	public static int getCombinedId(BlockState block) {
+	public static int getBlockId(Block block) {
+		return getBlockId(block.defaultBlockState());
+	}
+
+	public static int getBlockId(BlockState block) {
 		return Block.getId(block);
 	}
 
-//	public static int getCombinedId(Block block) {
-//		return Block.getCombinedId(block.getBlockData());
-//	}
-
-	public static BlockState getByCombinedId(int id) {
+	public static BlockState getByBlockId(int id) {
 		return Block.stateById(id);
 	}
 
