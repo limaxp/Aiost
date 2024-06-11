@@ -27,8 +27,8 @@ import org.bukkit.event.inventory.InventoryCreativeEvent;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectType;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandlerLoader;
 import com.pm.aiost.misc.menu.Menu;

@@ -2,9 +2,9 @@ package com.pm.aiost;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
+import com.pm.aiost.effect.EffectTypes;
+import com.pm.aiost.effect.group.EffectGroupBuilder;
 import com.pm.aiost.event.AiostListener;
-import com.pm.aiost.event.effect.EffectTypes;
-import com.pm.aiost.event.effect.group.EffectGroupBuilder;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.SpigotConfig;
 import com.pm.aiost.misc.SpigotConfigManager;

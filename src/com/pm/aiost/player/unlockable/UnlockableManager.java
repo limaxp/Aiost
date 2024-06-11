@@ -7,9 +7,9 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.inventory.ItemStack;
 
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectBuilder;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectBuilder;
 import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;

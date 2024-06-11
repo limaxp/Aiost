@@ -17,11 +17,11 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectAction;
-import com.pm.aiost.event.effect.EffectCondition;
-import com.pm.aiost.event.effect.EffectTypes;
-import com.pm.aiost.event.effect.effects.TeleportToWorldEffect;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectAction;
+import com.pm.aiost.effect.EffectCondition;
+import com.pm.aiost.effect.EffectTypes;
+import com.pm.aiost.effect.effects.TeleportToWorldEffect;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.handler.PlayerRegionEventHandler;
 import com.pm.aiost.event.eventHandler.handler.PlayerWorldEventHandler;

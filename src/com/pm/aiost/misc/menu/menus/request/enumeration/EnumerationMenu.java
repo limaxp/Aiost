@@ -21,7 +21,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffectType;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.event.effect.EffectType;
+import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.item.custom.Slot;

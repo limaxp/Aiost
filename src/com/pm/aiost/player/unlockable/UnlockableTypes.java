@@ -7,7 +7,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.event.effect.Effect;
+import com.pm.aiost.effect.Effect;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.menus.PlayerSkillMenu;
 import com.pm.aiost.misc.menu.menus.UnlockableMenu;

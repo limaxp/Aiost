@@ -2,7 +2,7 @@ package com.pm.aiost.item.spell.spells;
 
 import org.bukkit.entity.LivingEntity;
 
-import com.pm.aiost.event.effect.Effect;
+import com.pm.aiost.effect.Effect;
 import com.pm.aiost.item.spell.Spell;
 import com.pm.aiost.player.ServerPlayer;
 

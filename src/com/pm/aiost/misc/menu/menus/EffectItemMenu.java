@@ -17,10 +17,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.collection.EffectEntryBuilder;
-import com.pm.aiost.event.effect.effects.PlaceEffectBlockEffect;
-import com.pm.aiost.event.effect.effects.PlaceTileObjectEffect;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.collection.EffectEntryBuilder;
+import com.pm.aiost.effect.effects.PlaceEffectBlockEffect;
+import com.pm.aiost.effect.effects.PlaceTileObjectEffect;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;

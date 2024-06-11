@@ -10,7 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.EffectCondition;
+import com.pm.aiost.effect.EffectCondition;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;

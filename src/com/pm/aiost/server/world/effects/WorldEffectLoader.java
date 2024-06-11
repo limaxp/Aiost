@@ -2,7 +2,7 @@ package com.pm.aiost.server.world.effects;
 
 import java.io.File;
 
-import com.pm.aiost.event.effect.Effect;
+import com.pm.aiost.effect.Effect;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NBT.NBTType;
 

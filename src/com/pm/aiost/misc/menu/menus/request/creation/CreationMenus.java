@@ -11,8 +11,8 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectType;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;

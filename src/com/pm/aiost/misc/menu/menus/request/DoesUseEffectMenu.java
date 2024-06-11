@@ -2,7 +2,7 @@ package com.pm.aiost.misc.menu.menus.request;
 
 import java.util.Arrays;
 
-import com.pm.aiost.event.effect.Effect;
+import com.pm.aiost.effect.Effect;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.menus.YesNoMenu;
 import com.pm.aiost.misc.menu.menus.request.creation.CreationMenus;

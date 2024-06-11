@@ -5,9 +5,9 @@ import java.util.Iterator;
 import java.util.function.Supplier;
 
 import com.mojang.authlib.GameProfile;
+import com.pm.aiost.effect.EffectType;
+import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.event.effect.EffectType;
-import com.pm.aiost.event.effect.EffectTypes;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandlerRegistry;
 import com.pm.aiost.game.GameType;

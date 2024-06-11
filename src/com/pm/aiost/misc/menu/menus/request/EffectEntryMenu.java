@@ -14,8 +14,8 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectType;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;

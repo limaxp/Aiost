@@ -8,8 +8,8 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.craftbukkit.v1_20_R4.util.CraftMagicNumbers;
 
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectBuilder;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectBuilder;
 import com.pm.aiost.item.AiostTier;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;

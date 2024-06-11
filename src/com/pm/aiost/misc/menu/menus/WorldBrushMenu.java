@@ -10,7 +10,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.effects.WorldBrushEffect;
+import com.pm.aiost.effect.effects.WorldBrushEffect;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.SearchBlockMenu;
 import com.pm.aiost.misc.menu.menus.request.TextMenu;

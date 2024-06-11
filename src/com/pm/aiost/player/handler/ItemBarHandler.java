@@ -5,7 +5,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import com.pm.aiost.event.effect.effects.ItemBarEffect;
+import com.pm.aiost.effect.effects.ItemBarEffect;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;

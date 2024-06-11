@@ -12,12 +12,12 @@ import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.effects.BuildStaffEffect;
-import com.pm.aiost.event.effect.effects.MarkerPlacerEffect;
-import com.pm.aiost.event.effect.effects.RegionCreatorEffect;
-import com.pm.aiost.event.effect.effects.WorldBrushEffect;
-import com.pm.aiost.event.effect.effects.WorldEditorEffect;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.effects.BuildStaffEffect;
+import com.pm.aiost.effect.effects.MarkerPlacerEffect;
+import com.pm.aiost.effect.effects.RegionCreatorEffect;
+import com.pm.aiost.effect.effects.WorldBrushEffect;
+import com.pm.aiost.effect.effects.WorldEditorEffect;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.nms.NBT;

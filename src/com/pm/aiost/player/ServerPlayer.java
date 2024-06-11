@@ -33,12 +33,12 @@ import org.bukkit.potion.PotionEffect;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.EffectHandler;
+import com.pm.aiost.effect.collection.EffectData;
+import com.pm.aiost.effect.effects.ChatHologramEffect;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.event.EquipmentListener;
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.EffectHandler;
-import com.pm.aiost.event.effect.collection.EffectData;
-import com.pm.aiost.event.effect.effects.ChatHologramEffect;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandler.QuitReason;
 import com.pm.aiost.event.eventHandler.handler.CancelEventHandler;

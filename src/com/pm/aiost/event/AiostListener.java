@@ -73,9 +73,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
-import com.pm.aiost.event.effect.EffectAction;
-import com.pm.aiost.event.effect.EffectHandler;
-import com.pm.aiost.event.effect.collection.EffectData;
+import com.pm.aiost.effect.EffectAction;
+import com.pm.aiost.effect.EffectHandler;
+import com.pm.aiost.effect.collection.EffectData;
 import com.pm.aiost.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.event.events.PacketThingAttackEvent;
 import com.pm.aiost.event.events.PacketThingInteractEvent;

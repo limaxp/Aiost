@@ -13,7 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import com.pm.aiost.event.effect.EffectAction;
+import com.pm.aiost.effect.EffectAction;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.LazyInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;

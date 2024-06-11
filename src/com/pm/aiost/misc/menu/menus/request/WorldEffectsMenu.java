@@ -13,8 +13,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.collection.list.FastArrayList;
-import com.pm.aiost.event.effect.Effect;
-import com.pm.aiost.event.effect.collection.EffectEntryBuilder;
+import com.pm.aiost.effect.Effect;
+import com.pm.aiost.effect.collection.EffectEntryBuilder;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.LazyInventoryMenu;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;

@@ -14,8 +14,8 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.potion.PotionEffectType;
 
 import com.mojang.authlib.GameProfile;
+import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.event.effect.EffectType;
 import com.pm.aiost.event.eventHandler.EventHandler;
 import com.pm.aiost.event.eventHandler.EventHandlerRegistry;
 import com.pm.aiost.game.GameType;
