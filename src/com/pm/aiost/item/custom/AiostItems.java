@@ -13,6 +13,7 @@ import com.pm.aiost.misc.nms.NMS;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 
 public class AiostItems {
@@ -22,22 +23,17 @@ public class AiostItems {
 	private static final List<Item> CHANGED_ITEMS = new ArrayList<Item>();
 
 	public static Item registerItem(String name, Item base, Item item) {
-		registerItem(base, item);
-//		if (item instanceof BlockItem) {
-//			((BlockItem) item).a(Item.f, item);
-//		}
-		return Registry.register(BuiltInRegistries.ITEM, name, item);
+		return registerItem(new ResourceLocation(name), base, item);
 	}
 
 	public static Item registerItem(ResourceLocation name, Item base, Item item) {
-		registerItem(base, item);
-//		if (item instanceof BlockItem) {
-//			((BlockItem) item).a(Item.f, item);
-//		}
-		return Registry.register(BuiltInRegistries.ITEM, name, item);
+		mapItem(base, item);
+		if (item instanceof BlockItem)
+			((BlockItem) item).registerBlocks(Item.BY_BLOCK, item);
+		return Registry.register(BuiltInRegistries.ITEM, getKey(base), item);
 	}
 
-	private static void registerItem(Item base, Item item) {
+	private static void mapItem(Item base, Item item) {
 		BASE_MAP.put(item, base);
 		if (!CHANGED_ITEMS.contains(base))
 			CHANGED_ITEMS.add(base);
@@ -46,8 +42,8 @@ public class AiostItems {
 	public static void cleanupItems() {
 		int size = CHANGED_ITEMS.size();
 		for (int i = 0; i < size; i++) {
-			Item item = CHANGED_ITEMS.get(i);
-			Registry.registerForHolder(BuiltInRegistries.ITEM, getKey(item), item);
+			Item base = CHANGED_ITEMS.get(i);
+			Registry.register(BuiltInRegistries.ITEM, getKey(base), base);
 		}
 		CHANGED_ITEMS.clear();
 	}
