@@ -35,19 +35,19 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	public static void init() {
 	}
 
-	public static final EntityType<EntityTrader> TRADER = register("trader", "villager", MobCategory.CREATURE,
-			EntityTrader::new);
+	public static final EntityType<EntityTrader> TRADER = register("trader",
+			EntityType.Builder.<EntityTrader>of(EntityTrader::new, MobCategory.CREATURE).sized(0.6F, 1.95F)
+					.eyeHeight(1.62F).clientTrackingRange(10));
 
-	public static final EntityType<Ball> BALL = register("ball", "slime", MobCategory.MONSTER, Ball::new);
+	public static final EntityType<Ball> BALL = register("ball", EntityType.Builder
+			.<Ball>of(Ball::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
 
-	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", "player", MobCategory.MISC, NpcBase::new);
+	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", EntityType.Builder
+			.<NpcBase>of(NpcBase::new, MobCategory.MISC).sized(0.6F, 1.8F).eyeHeight(1.62F).clientTrackingRange(32));
 
-	public static <T extends Entity> EntityType<T> register(String name, String extend_from, MobCategory category,
-			EntityFactory<T> factory) {
+	public static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
 		NMS.unfreezeRegistry(BuiltInRegistries.ENTITY_TYPE);
-		Builder<T> builder = EntityType.Builder.<T>of(factory, category);
-		EntityType<T> type = builder.build(extend_from);
-		Registry.register(BuiltInRegistries.ENTITY_TYPE, name, type);
+		EntityType<T> type = Registry.register(BuiltInRegistries.ENTITY_TYPE, name, builder.build(name));
 		BuiltInRegistries.ENTITY_TYPE.freeze();
 		VALUES.add(type);
 		return type;
