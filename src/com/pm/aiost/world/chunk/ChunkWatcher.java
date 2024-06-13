@@ -13,9 +13,12 @@ import com.pm.aiost.world.ServerWorld;
 public class ChunkWatcher {
 
 	public static final int VIEW_DISTANCE = 5;
+	public static final int LOAD_DELAY = 10;
+	public static final int JOIN_DELAY = 60;
 
 	public static void join(ServerPlayer serverPlayer) {
-		new ShowChunkTask(serverPlayer.player, serverPlayer.getServerWorld(), serverPlayer.player.getLocation()).run();
+		AiostScheduler.runTaskLater(JOIN_DELAY, () -> new ShowChunkTask(serverPlayer.player,
+				serverPlayer.getServerWorld(), serverPlayer.player.getLocation()).run());
 	}
 
 	public static void disable(ServerPlayer serverPlayer) {
@@ -36,7 +39,8 @@ public class ChunkWatcher {
 	}
 
 	public static void changeWorld(Player player, ServerWorld serverWorld) {
-		AiostScheduler.runTaskLater(1, () -> new ShowChunkTask(player, serverWorld, player.getLocation()).run());
+		AiostScheduler.runTaskLater(JOIN_DELAY,
+				() -> new ShowChunkTask(player, serverWorld, player.getLocation()).run());
 	}
 
 	public static void teleport(ServerPlayer serverPlayer, Location fromLocation, Location toLocation) {
@@ -56,7 +60,24 @@ public class ChunkWatcher {
 	}
 
 	public static void move(Player player, ServerWorld serverWorld, Location fromLoc, Location toLoc) {
-		MoveChunkTask.doTask(player, serverWorld, fromLoc, toLoc);
+		Chunk fromChunk = fromLoc.getChunk();
+		int fromChunkX = fromChunk.getX();
+		int fromChunkZ = fromChunk.getZ();
+		Chunk toChunk = toLoc.getChunk();
+		int toChunkX = toChunk.getX();
+		int toChunkZ = toChunk.getZ();
+		if (fromChunkX != toChunkX) {
+			if (fromChunkX < toChunkX) // East (positive x)
+				new MoveEastChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
+			else // West (negative x)
+				new MoveWestChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
+		}
+		if (fromChunkZ != toChunkZ) {
+			if (fromChunkZ < toChunkZ) // South (positive z)
+				new MoveSouthChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
+			else // North (negative z)
+				new MoveNorthChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
+		}
 	}
 
 	private static void show(Player player, ServerChunk chunk) {
@@ -102,7 +123,7 @@ public class ChunkWatcher {
 					if (serverChunk != null)
 						show(player, serverChunk);
 					else {
-						AiostScheduler.runTaskLater(10, this);
+						AiostScheduler.runTaskLater(LOAD_DELAY, this);
 						return;
 					}
 				}
@@ -112,27 +133,6 @@ public class ChunkWatcher {
 	}
 
 	private static abstract class MoveChunkTask implements Runnable {
-
-		private static void doTask(Player player, ServerWorld serverWorld, Location fromLoc, Location toLoc) {
-			Chunk fromChunk = fromLoc.getChunk();
-			int fromChunkX = fromChunk.getX();
-			int fromChunkZ = fromChunk.getZ();
-			Chunk toChunk = toLoc.getChunk();
-			int toChunkX = toChunk.getX();
-			int toChunkZ = toChunk.getZ();
-			if (fromChunkX != toChunkX) {
-				if (fromChunkX < toChunkX) // East (positive x)
-					new MoveEastChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
-				else // West (negative x)
-					new MoveWestChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
-			}
-			if (fromChunkZ != toChunkZ) {
-				if (fromChunkZ < toChunkZ) // South (positive z)
-					new MoveSouthChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
-				else // North (negative z)
-					new MoveNorthChunkTask(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ).run();
-			}
-		}
 
 		protected final Player player;
 		protected final ServerWorld serverWorld;
@@ -152,150 +152,86 @@ public class ChunkWatcher {
 			this.toChunkZ = toChunkZ;
 		}
 
-		private static class MoveEastChunkTask extends MoveChunkTask {
-
-			private MoveEastChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ,
-					int toChunkX, int toChunkZ) {
-				super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
-				i = toChunkZ - VIEW_DISTANCE;
+		protected static void move(Player player, ServerWorld serverWorld, int x1, int y1, int x2, int y2,
+				Runnable task) {
+			ServerChunk showChunk = serverWorld.getChunk(x1, y1);
+			if (showChunk != null)
+				show(player, showChunk);
+			else {
+				AiostScheduler.runTaskLater(LOAD_DELAY, task);
+				return;
 			}
-
-			@Override
-			public void run() {
-				if (!player.isOnline())
-					return;
-				for (; i <= toChunkZ + VIEW_DISTANCE; i++) {
-					ServerChunk showChunk = serverWorld.getChunk(toChunkX + VIEW_DISTANCE, i);
-					if (showChunk != null)
-						show(player, showChunk);
-					else {
-						AiostScheduler.runTaskLater(10, this);
-						return;
-					}
-					ServerChunk hideChunk = serverWorld.getChunk(fromChunkX - VIEW_DISTANCE, i);
-					if (hideChunk != null)
-						hide(player, hideChunk);
-				}
-			}
-		}
-
-		private static class MoveWestChunkTask extends MoveChunkTask {
-
-			private MoveWestChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ,
-					int toChunkX, int toChunkZ) {
-				super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
-				i = toChunkZ - VIEW_DISTANCE;
-			}
-
-			@Override
-			public void run() {
-				if (!player.isOnline())
-					return;
-				for (; i <= toChunkZ + VIEW_DISTANCE; i++) {
-					ServerChunk showChunk = serverWorld.getChunk(toChunkX - VIEW_DISTANCE, i);
-					if (showChunk != null)
-						show(player, showChunk);
-					else {
-						AiostScheduler.runTaskLater(10, this);
-						return;
-					}
-					ServerChunk hideChunk = serverWorld.getChunk(fromChunkX + VIEW_DISTANCE, i);
-					if (hideChunk != null)
-						hide(player, hideChunk);
-				}
-			}
-		}
-
-		private static class MoveSouthChunkTask extends MoveChunkTask {
-
-			private MoveSouthChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ,
-					int toChunkX, int toChunkZ) {
-				super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
-				i = toChunkX - VIEW_DISTANCE;
-			}
-
-			@Override
-			public void run() {
-				if (!player.isOnline())
-					return;
-				for (; i <= toChunkX + VIEW_DISTANCE; i++) {
-					ServerChunk showChunk = serverWorld.getChunk(i, toChunkZ + VIEW_DISTANCE);
-					if (showChunk != null)
-						show(player, showChunk);
-					else {
-						AiostScheduler.runTaskLater(10, this);
-						return;
-					}
-					ServerChunk hideChunk = serverWorld.getChunk(i, fromChunkZ - VIEW_DISTANCE);
-					if (hideChunk != null)
-						hide(player, hideChunk);
-				}
-			}
-		}
-
-		private static class MoveNorthChunkTask extends MoveChunkTask {
-
-			private MoveNorthChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ,
-					int toChunkX, int toChunkZ) {
-				super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
-				i = toChunkX - VIEW_DISTANCE;
-			}
-
-			@Override
-			public void run() {
-				if (!player.isOnline())
-					return;
-				for (; i <= toChunkX + VIEW_DISTANCE; i++) {
-					ServerChunk showChunk = serverWorld.getChunk(i, toChunkZ - VIEW_DISTANCE);
-					if (showChunk != null)
-						show(player, showChunk);
-					else {
-						AiostScheduler.runTaskLater(10, this);
-						return;
-					}
-					ServerChunk hideChunk = serverWorld.getChunk(i, fromChunkZ + VIEW_DISTANCE);
-					if (hideChunk != null)
-						hide(player, hideChunk);
-				}
-			}
+			ServerChunk hideChunk = serverWorld.getChunk(x2, y2);
+			if (hideChunk != null)
+				hide(player, hideChunk);
 		}
 	}
 
-//	OLD CODE FOR SAFETY!
-//	
-//	public static void move(Player player, ServerWorld serverWorld, Location fromLoc, Location toLoc) {
-//		Chunk fromChunk = fromLoc.getChunk();
-//		int fromX = fromChunk.getX();
-//		int fromZ = fromChunk.getZ();
-//		Chunk toChunk = toLoc.getChunk();
-//		int toX = toChunk.getX();
-//		int toZ = toChunk.getZ();
-//
-//		if (fromX != toX) {
-//			if (fromX < toX) { // East (positive x)
-//				for (int z = toZ - VIEW_DISTANCE; z <= toZ + VIEW_DISTANCE; z++) {
-//					hide(player, serverWorld.getChunk(fromX - VIEW_DISTANCE, z));
-//					show(player, serverWorld.getChunk(toX + VIEW_DISTANCE, z));
-//				}
-//			} else { // West (negative x)
-//				for (int z = toZ - VIEW_DISTANCE; z <= toZ + VIEW_DISTANCE; z++) {
-//					hide(player, serverWorld.getChunk(fromX + VIEW_DISTANCE, z));
-//					show(player, serverWorld.getChunk(toX - VIEW_DISTANCE, z));
-//				}
-//			}
-//		}
-//		if (fromZ != toZ) {
-//			if (fromZ < toZ) { // South (positive z)
-//				for (int x = toX - VIEW_DISTANCE; x <= toX + VIEW_DISTANCE; x++) {
-//					hide(player, serverWorld.getChunk(x, fromZ - VIEW_DISTANCE));
-//					show(player, serverWorld.getChunk(x, toZ + VIEW_DISTANCE));
-//				}
-//			} else { // North (negative z)
-//				for (int x = toX - VIEW_DISTANCE; x <= toX + VIEW_DISTANCE; x++) {
-//					hide(player, serverWorld.getChunk(x, fromZ + VIEW_DISTANCE));
-//					show(player, serverWorld.getChunk(x, toZ - VIEW_DISTANCE));
-//				}
-//			}
-//		}
-//	}
+	private static class MoveEastChunkTask extends MoveChunkTask {
+
+		private MoveEastChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ, int toChunkX,
+				int toChunkZ) {
+			super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
+			i = toChunkZ - VIEW_DISTANCE;
+		}
+
+		@Override
+		public void run() {
+			if (!player.isOnline())
+				return;
+			for (; i <= toChunkZ + VIEW_DISTANCE; i++)
+				move(player, serverWorld, toChunkX + VIEW_DISTANCE, i, fromChunkX - VIEW_DISTANCE, i, this);
+		}
+	}
+
+	private static class MoveWestChunkTask extends MoveChunkTask {
+
+		private MoveWestChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ, int toChunkX,
+				int toChunkZ) {
+			super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
+			i = toChunkZ - VIEW_DISTANCE;
+		}
+
+		@Override
+		public void run() {
+			if (!player.isOnline())
+				return;
+			for (; i <= toChunkZ + VIEW_DISTANCE; i++)
+				move(player, serverWorld, toChunkX - VIEW_DISTANCE, i, fromChunkX + VIEW_DISTANCE, i, this);
+		}
+	}
+
+	private static class MoveSouthChunkTask extends MoveChunkTask {
+
+		private MoveSouthChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ, int toChunkX,
+				int toChunkZ) {
+			super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
+			i = toChunkX - VIEW_DISTANCE;
+		}
+
+		@Override
+		public void run() {
+			if (!player.isOnline())
+				return;
+			for (; i <= toChunkX + VIEW_DISTANCE; i++)
+				move(player, serverWorld, i, toChunkZ + VIEW_DISTANCE, i, fromChunkZ - VIEW_DISTANCE, this);
+		}
+	}
+
+	private static class MoveNorthChunkTask extends MoveChunkTask {
+
+		private MoveNorthChunkTask(Player player, ServerWorld serverWorld, int fromChunkX, int fromChunkZ, int toChunkX,
+				int toChunkZ) {
+			super(player, serverWorld, fromChunkX, fromChunkZ, toChunkX, toChunkZ);
+			i = toChunkX - VIEW_DISTANCE;
+		}
+
+		@Override
+		public void run() {
+			if (!player.isOnline())
+				return;
+			for (; i <= toChunkX + VIEW_DISTANCE; i++)
+				move(player, serverWorld, i, toChunkZ - VIEW_DISTANCE, i, fromChunkZ + VIEW_DISTANCE, this);
+		}
+	}
 }
