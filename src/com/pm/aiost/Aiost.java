@@ -71,10 +71,7 @@ public class Aiost extends JavaPlugin {
 		PlayerManager.registerOnlinePlayer();
 		WorldManager.init();
 		PlayerManager.enableOnlinePlayer();
-		scheduler5Tick();
-		scheduler10Tick();
-		scheduler20Tick();
-		scheduler100Tick();
+		startScheduler();
 
 		Logger.log("Aiost initialized!");
 	}
@@ -104,7 +101,8 @@ public class Aiost extends JavaPlugin {
 		Logger.log("Database initialized!");
 	}
 
-	private static void scheduler5Tick() { // 0.25 sec
+	private static void startScheduler() {
+		// 0.25 sec
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -114,9 +112,8 @@ public class Aiost extends JavaPlugin {
 				WorldManager.updateWorlds();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 5);
-	}
 
-	private static void scheduler10Tick() { // 0.5 sec
+		// 0.5 sec
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -124,9 +121,8 @@ public class Aiost extends JavaPlugin {
 				InventoryMenuCustomAnimationHandler.animateMenusSchedulerTick();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 10);
-	}
 
-	private static void scheduler20Tick() { // 1 sec
+		// 1 sec
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -136,9 +132,8 @@ public class Aiost extends JavaPlugin {
 				TPSOptimizer.update();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 20);
-	}
 
-	private static void scheduler100Tick() { // 5 sec
+		// 5 sec
 		new BukkitRunnable() {
 			@Override
 			public void run() {
