@@ -52,6 +52,7 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 					}
 
 					public void onInteraction(InteractionHand var1, Vec3 var2) {
+						Logger.log("AiostPacketDecoder: interact2");
 					}
 
 					public void onAttack() {

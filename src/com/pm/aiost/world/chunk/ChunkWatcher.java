@@ -17,8 +17,8 @@ public class ChunkWatcher {
 	public static final int JOIN_DELAY = 60;
 
 	public static void join(ServerPlayer serverPlayer) {
-		AiostScheduler.runTaskLater(JOIN_DELAY, () -> new ShowChunkTask(serverPlayer.player,
-				serverPlayer.getServerWorld(), serverPlayer.player.getLocation()).run());
+		AiostScheduler.runTaskLater(JOIN_DELAY, new ShowChunkTask(serverPlayer.player, serverPlayer.getServerWorld(),
+				serverPlayer.player.getLocation()));
 	}
 
 	public static void disable(ServerPlayer serverPlayer) {
@@ -39,8 +39,7 @@ public class ChunkWatcher {
 	}
 
 	public static void changeWorld(Player player, ServerWorld serverWorld) {
-		AiostScheduler.runTaskLater(JOIN_DELAY,
-				() -> new ShowChunkTask(player, serverWorld, player.getLocation()).run());
+		AiostScheduler.runTaskLater(JOIN_DELAY, new ShowChunkTask(player, serverWorld, player.getLocation()));
 	}
 
 	public static void teleport(ServerPlayer serverPlayer, Location fromLocation, Location toLocation) {
