@@ -1,9 +1,13 @@
 package com.pm.aiost.item.spell.spells;
 
 import org.bukkit.Sound;
+import org.bukkit.SoundCategory;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
+import com.pm.aiost.entity.EntityHelper;
 import com.pm.aiost.item.spell.Spell;
+import com.pm.aiost.misc.nms.NMS;
 
 public abstract class ProjectileSpell extends Spell {
 
@@ -22,14 +26,14 @@ public abstract class ProjectileSpell extends Spell {
 
 	@Override
 	public void cast(LivingEntity entity, int i) {
-//		CustomProjectile projectile = createProjectile(entity);
-//		projectile.setNoGravity(true);
-//		if (ProjectileHelper.launchProjectile(entity, projectile, power))
+//		Entity projectile = createProjectile(entity);
+//		projectile.setGravity(false);
+//		if (EntityHelper.launch(NMS.to(entity), NMS.to(projectile), 0.5F, power, 0.95F))
 //			entity.getWorld().playSound(entity.getLocation(), sound, SoundCategory.NEUTRAL, 0.5F,
 //					0.4F / (0.5F * 0.4F + 0.8F));
 	}
 
-//	public abstract CustomProjectile createProjectile(LivingEntity entity);
+//	public abstract Entity createProjectile(LivingEntity entity);
 
 	public float getPower() {
 		return power;

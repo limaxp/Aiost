@@ -3,6 +3,14 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
+import org.bukkit.World;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import com.pm.aiost.Aiost;
+import com.pm.aiost.misc.event.AiostEventFactory;
+import com.pm.aiost.misc.nms.NMS;
+import com.pm.aiost.misc.particle.IParticle;
+
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -108,18 +116,26 @@ public class EntityHelper {
 		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 
-	public static void launch(Entity shooter, Entity entity, float pitch, float yaw, float heigth, float power,
+	public static boolean launch(LivingEntity shooter, Entity entity, float heigth, float power, float accuracy) {
+		return launch(shooter, entity, shooter.getXRot(), shooter.getYHeadRot(), heigth, power, accuracy);
+	}
+
+	public static boolean launch(LivingEntity shooter, Entity entity, float pitch, float yaw, float heigth, float power,
 			float accuracy) {
+		if (AiostEventFactory.callProjectileLaunchEvent(entity.getBukkitEntity()).isCancelled())
+			return false;
+
 		float f5 = -Mth.sin(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
 		float f6 = -Mth.sin((pitch + heigth) * 0.017453292F);
 		float f7 = Mth.cos(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
-		shoot(entity, (double) f5, (double) f6, (double) f7, power, accuracy);
+		shoot(entity, f5, f6, f7, power, accuracy);
 		Vec3 vec3d = shooter.getDeltaMovement();
 		entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.x, shooter.onGround() ? 0.0 : vec3d.y, vec3d.z));
+		return true;
 	}
 
-	public static void shoot(Entity entity, double motX, double motY, double motZ, float power, float accuracy) {
-		Vec3 vec3d = getMovementToShoot(entity, motX, motY, motZ, power, accuracy);
+	public static void shoot(Entity entity, float motX, float motY, float motZ, float power, float accuracy) {
+		Vec3 vec3d = movementToShoot(entity, motX, motY, motZ, power, accuracy);
 		entity.setDeltaMovement(vec3d);
 		double d3 = vec3d.horizontalDistance();
 		entity.setYRot((float) (Mth.atan2(vec3d.x, vec3d.z) * 57.2957763671875));
@@ -128,24 +144,33 @@ public class EntityHelper {
 		entity.xRotO = entity.getXRot();
 	}
 
-	public static Vec3 getMovementToShoot(Entity entity, double motX, double motY, double motZ, float power,
-			float accuracy) {
-		return (new Vec3(motX, motY, motZ)).normalize()
-				.add(entity.random.triangle(0.0, 0.0172275 * (double) accuracy),
-						entity.random.triangle(0.0, 0.0172275 * (double) accuracy),
-						entity.random.triangle(0.0, 0.0172275 * (double) accuracy))
-				.scale((double) power);
+	public static Vec3 movementToShoot(Entity entity, float motX, float motY, float motZ, float power, float accuracy) {
+		return (new Vec3(motX, motY, motZ)).normalize().add(entity.random.triangle(0.0, 0.0172275F * accuracy),
+				entity.random.triangle(0.0, 0.0172275F * accuracy), entity.random.triangle(0.0, 0.0172275F * accuracy))
+				.scale(power);
 	}
 
-	public <T extends LivingEntity> void applyNearestAttackableTargetGoal(Mob mob, Class<T> clazz) {
-		mob.targetSelector.addGoal(1, new NearestAttackableTargetGoal<T>(mob, clazz, true));
+	public <T extends LivingEntity> void nearestAttackableTargetGoal(Mob entity, Class<T> clazz) {
+		entity.targetSelector.addGoal(1, new NearestAttackableTargetGoal<T>(entity, clazz, true));
 	}
 
-	public void applyMeleeAttackGoal(PathfinderMob mob, Class<? extends LivingEntity> clazz) {
-		mob.goalSelector.addGoal(1, new MeleeAttackGoal(mob, 1.0D, true));
+	public void meleeAttackGoal(PathfinderMob entity, Class<? extends LivingEntity> clazz) {
+		entity.goalSelector.addGoal(1, new MeleeAttackGoal(entity, 1.0D, true));
 	}
 
-	public void applyCantBurnInSun(Mob mob) {
-		mob.equipItemIfPossible(new ItemStack(Items.IRON_HELMET));
+	public void cantBurnInSun(Mob entity) {
+		entity.equipItemIfPossible(new ItemStack(Items.IRON_HELMET));
+	}
+
+	public void particle(Entity entity, IParticle particle) {
+		World world = NMS.from(entity.level());
+		new BukkitRunnable() {
+			@Override
+			public void run() {
+				if (!entity.isAlive())
+					cancel();
+				particle.spawn(world, entity.getX(), entity.getY(), entity.getZ());
+			}
+		}.runTaskTimer(Aiost.getPlugin(), 0, 5);
 	}
 }

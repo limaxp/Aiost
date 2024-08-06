@@ -4,6 +4,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectAction;
@@ -42,7 +44,7 @@ public class Spells {
 			new ProjectileSpell("Flame", 10, 2.0, 2.0F, Sound.ITEM_FIRECHARGE_USE) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, FLAME_PARTICLE);
 //					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
 //					projectile.setDamage(3.0F);
@@ -54,7 +56,7 @@ public class Spells {
 			new ProjectileSpell("Fireball", 20, 6.0, 1.0F, Sound.ITEM_FIRECHARGE_USE) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, FIRE_BALL_PARTICLE);
 //					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
 //					projectile.setDamage(8.0F);
@@ -71,7 +73,7 @@ public class Spells {
 			new ProjectileSpell("WaterBeam", "Water beam", 10, 2.0, 2.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, WATER_BEAM_PARTICLE);
 //					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
 //					projectile.setDamage(3.0F);
@@ -83,7 +85,7 @@ public class Spells {
 			new ProjectileSpell("Fountain", 20, 6.0, 1.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, FOUNTAIN_PARTICLE);
 //					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
 //					projectile.setDamage(8.0F);
@@ -101,7 +103,7 @@ public class Spells {
 			new ProjectileSpell("EarthBeam", "Earth beam", 10, 2.0, 2.0F, Sound.BLOCK_GRASS_BREAK) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, EARTH_BEAM_PARTICLE);
 //					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
 //					projectile.setDamage(3.0F);
@@ -113,7 +115,7 @@ public class Spells {
 			new ProjectileSpell("Earthball", 20, 6.0, 1.0F, Sound.BLOCK_GRASS_BREAK) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, EARTH_BALL_PARTICLE);
 //					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
 //					projectile.setDamage(8.0F);
@@ -131,7 +133,7 @@ public class Spells {
 			new ProjectileSpell("WindBlow", "Wind blow", 10, 2.0, 2.0F, Sound.ENTITY_LLAMA_SPIT) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, WIND_BLOW_PARTICLE);
 //					projectile.setDamage(3.0F);
 //					projectile.setKnockback(3.0F);
@@ -143,7 +145,7 @@ public class Spells {
 			new ProjectileSpell("WindShot", "Wind shot", 20, 6.0, 1.0F, Sound.ENTITY_LLAMA_SPIT) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, WIND_SHOT_PARTICLE);
 //					projectile.setDamage(8.0F);
 //					projectile.setKnockback(4.0F);
@@ -165,7 +167,7 @@ public class Spells {
 			new ProjectileSpell("HealOther", "Heal other", 20, 6.0, 1.0F, Sound.BLOCK_CONDUIT_ACTIVATE) {
 
 //				@Override
-//				public CustomProjectile createProjectile(LivingEntity entity) {
+//				public Entity createProjectile(LivingEntity entity) {
 //					ParticleProjectile projectile = new ParticleProjectile(entity, HEAL_OTHER_PARTICLE);
 //					projectile.setEffect(HEAL_EFFECT);
 //					projectile.setDamage(0.0F);
