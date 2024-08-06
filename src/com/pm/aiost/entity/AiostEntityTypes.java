@@ -7,10 +7,12 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import com.google.common.collect.ImmutableSet;
 import com.pm.aiost.entity.entities.Ball;
 import com.pm.aiost.entity.entities.EntityTrader;
+import com.pm.aiost.entity.entities.Nothing;
 import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.nms.NMS;
 
@@ -34,6 +36,9 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static void init() {
 	}
+
+	public static final EntityType<Nothing> NOTHING = register("nothing",
+			EntityType.Builder.<Nothing>of(Nothing::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
 	public static final EntityType<EntityTrader> TRADER = register("trader",
 			EntityType.Builder.<EntityTrader>of(EntityTrader::new, MobCategory.CREATURE).sized(0.6F, 1.95F)
@@ -65,6 +70,14 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	public static <T extends Entity> T spawnEntity(EntityType<T> entityTypes, ServerLevel world,
 			BlockPos blockPosition) {
 		return entityTypes.spawn(world, blockPosition, MobSpawnType.COMMAND);
+	}
+
+	public static <T extends Entity> boolean spawnEntity(T entity) {
+		return entity.level().addFreshEntity(entity);
+	}
+
+	public static <T extends Entity> boolean spawnEntity(T entity, SpawnReason spawnReason) {
+		return entity.level().addFreshEntity(entity, spawnReason);
 	}
 
 	public static ResourceLocation getKey(EntityType<?> entityType) {

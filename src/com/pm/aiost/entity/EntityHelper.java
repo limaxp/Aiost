@@ -3,13 +3,7 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
-import org.bukkit.World;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.event.AiostEventFactory;
-import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.misc.particle.IParticle;
 
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
@@ -160,17 +154,5 @@ public class EntityHelper {
 
 	public void cantBurnInSun(Mob entity) {
 		entity.equipItemIfPossible(new ItemStack(Items.IRON_HELMET));
-	}
-
-	public void particle(Entity entity, IParticle particle) {
-		World world = NMS.from(entity.level());
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				if (!entity.isAlive())
-					cancel();
-				particle.spawn(world, entity.getX(), entity.getY(), entity.getZ());
-			}
-		}.runTaskTimer(Aiost.getPlugin(), 0, 5);
 	}
 }

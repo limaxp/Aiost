@@ -4,8 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.data.BlockData;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectAction;
@@ -20,6 +18,7 @@ import com.pm.aiost.item.spell.spells.DisguiseSpell;
 import com.pm.aiost.item.spell.spells.EffectSpell;
 import com.pm.aiost.item.spell.spells.HealSpell;
 import com.pm.aiost.item.spell.spells.ProjectileSpell;
+import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.particles.DataParticle;
@@ -43,27 +42,25 @@ public class Spells {
 	public static final ProjectileSpell FLAME = a(
 			new ProjectileSpell("Flame", 10, 2.0, 2.0F, Sound.ITEM_FIRECHARGE_USE) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, FLAME_PARTICLE);
-//					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
-//					projectile.setDamage(3.0F);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(FLAME_PARTICLE);
+					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
+					projectile.setDamage(3.0F);
+				}
 			});
 
 	public static final ProjectileSpell FIRE_BALL = a(
 			new ProjectileSpell("Fireball", 20, 6.0, 1.0F, Sound.ITEM_FIRECHARGE_USE) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, FIRE_BALL_PARTICLE);
-//					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
-//					projectile.setDamage(8.0F);
-//					projectile.setKnockback(2.0F);
-//					projectile.setDuration(60);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(FIRE_BALL_PARTICLE);
+					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
+					projectile.setDamage(8.0F);
+					projectile.setKnockback(2.0F);
+					projectile.setDuration(60);
+				}
 			});
 
 	public static final EffectSpell FIRE_AURA = a(new EffectSpell("FireAura", "Fire aura", 800, 12.0, 400,
@@ -72,27 +69,25 @@ public class Spells {
 	public static final ProjectileSpell WATER_BEAM = a(
 			new ProjectileSpell("WaterBeam", "Water beam", 10, 2.0, 2.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, WATER_BEAM_PARTICLE);
-//					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
-//					projectile.setDamage(3.0F);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(WATER_BEAM_PARTICLE);
+					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
+					projectile.setDamage(3.0F);
+				}
 			});
 
 	public static final ProjectileSpell FOUNTAIN = a(
 			new ProjectileSpell("Fountain", 20, 6.0, 1.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, FOUNTAIN_PARTICLE);
-//					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
-//					projectile.setDamage(8.0F);
-//					projectile.setKnockback(2.0F);
-//					projectile.setDuration(60);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(FOUNTAIN_PARTICLE);
+					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
+					projectile.setDamage(8.0F);
+					projectile.setKnockback(2.0F);
+					projectile.setDuration(60);
+				}
 			});
 
 	public static final EffectSpell WATER_AURA = a(
@@ -102,27 +97,25 @@ public class Spells {
 	public static final ProjectileSpell EARTH_BEAM = a(
 			new ProjectileSpell("EarthBeam", "Earth beam", 10, 2.0, 2.0F, Sound.BLOCK_GRASS_BREAK) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, EARTH_BEAM_PARTICLE);
-//					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
-//					projectile.setDamage(3.0F);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(EARTH_BEAM_PARTICLE);
+					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
+					projectile.setDamage(3.0F);
+				}
 			});
 
 	public static final ProjectileSpell EARTH_BALL = a(
 			new ProjectileSpell("Earthball", 20, 6.0, 1.0F, Sound.BLOCK_GRASS_BREAK) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, EARTH_BALL_PARTICLE);
-//					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
-//					projectile.setDamage(8.0F);
-//					projectile.setKnockback(2.0F);
-//					projectile.setDuration(60);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(EARTH_BALL_PARTICLE);
+					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
+					projectile.setDamage(8.0F);
+					projectile.setKnockback(2.0F);
+					projectile.setDuration(60);
+				}
 			});
 
 	public static final EffectSpell EARTH_AURA = a(new EffectSpell("EarthAura", "Earth aura", 800, 12.0, 500,
@@ -132,26 +125,24 @@ public class Spells {
 	public static final ProjectileSpell WIND_BLOW = a(
 			new ProjectileSpell("WindBlow", "Wind blow", 10, 2.0, 2.0F, Sound.ENTITY_LLAMA_SPIT) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, WIND_BLOW_PARTICLE);
-//					projectile.setDamage(3.0F);
-//					projectile.setKnockback(3.0F);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(WIND_BLOW_PARTICLE);
+					projectile.setDamage(3.0F);
+					projectile.setKnockback(3.0F);
+				}
 			});
 
 	public static final ProjectileSpell WIND_SHOT = a(
 			new ProjectileSpell("WindShot", "Wind shot", 20, 6.0, 1.0F, Sound.ENTITY_LLAMA_SPIT) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, WIND_SHOT_PARTICLE);
-//					projectile.setDamage(8.0F);
-//					projectile.setKnockback(4.0F);
-//					projectile.setDuration(60);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(WIND_SHOT_PARTICLE);
+					projectile.setDamage(8.0F);
+					projectile.setKnockback(4.0F);
+					projectile.setDuration(60);
+				}
 			});
 
 	// TODO: make wind aura effect
@@ -166,14 +157,13 @@ public class Spells {
 	public static final ProjectileSpell HEAL_OTHER = a(
 			new ProjectileSpell("HealOther", "Heal other", 20, 6.0, 1.0F, Sound.BLOCK_CONDUIT_ACTIVATE) {
 
-//				@Override
-//				public Entity createProjectile(LivingEntity entity) {
-//					ParticleProjectile projectile = new ParticleProjectile(entity, HEAL_OTHER_PARTICLE);
-//					projectile.setEffect(HEAL_EFFECT);
-//					projectile.setDamage(0.0F);
-//					projectile.setDuration(60);
-//					return projectile;
-//				}
+				@Override
+				public void modifyProjectile(ProjectileEventHandler projectile) {
+					projectile.setParticle(HEAL_OTHER_PARTICLE);
+					projectile.setEffect(HEAL_EFFECT);
+					projectile.setDamage(0.0F);
+					projectile.setDuration(60);
+				}
 			});
 
 	public static final EffectSpell HEAL_AURA = a(new EffectSpell("HealAura", "Heal aura", 800, 20.0, 400,
