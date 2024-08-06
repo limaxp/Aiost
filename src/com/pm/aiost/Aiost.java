@@ -29,7 +29,6 @@ import com.pm.aiost.misc.server.messaging.ServerDataRequester;
 import com.pm.aiost.misc.utils.scheduler.AiostScheduler;
 import com.pm.aiost.player.PlayerManager;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.player.handler.TPSOptimizer;
 import com.pm.aiost.player.unlockable.UnlockableManager;
 import com.pm.aiost.server.http.HttpServer;
 import com.pm.aiost.world.WorldManager;
@@ -106,10 +105,14 @@ public class Aiost extends JavaPlugin {
 		new BukkitRunnable() {
 			@Override
 			public void run() {
-				for (ServerPlayer serverPlayer : ServerPlayer.getOnlinePlayer())
-					serverPlayer.spawnParticles(); // TODO: Check visibility an render only to self!
+				for (ServerPlayer serverPlayer : ServerPlayer.getOnlinePlayer()) {
+					serverPlayer.spawnParticles(); // TODO: Check visibility and render only to self!
+					serverPlayer.getEventHandler().onTick(serverPlayer);
+					serverPlayer.update();
+				}
 				EntityParticleManager.render();
 				WorldManager.updateWorlds();
+				AiostScheduler.update();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 5);
 
@@ -121,17 +124,6 @@ public class Aiost extends JavaPlugin {
 				InventoryMenuCustomAnimationHandler.animateMenusSchedulerTick();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 10);
-
-		// 1 sec
-		new BukkitRunnable() {
-			@Override
-			public void run() {
-				AiostScheduler.update();
-				for (ServerPlayer serverPlayer : ServerPlayer.getOnlinePlayer())
-					serverPlayer.update();
-				TPSOptimizer.update();
-			}
-		}.runTaskTimer(Aiost.getPlugin(), 0, 20);
 
 		// 5 sec
 		new BukkitRunnable() {

@@ -3,6 +3,7 @@ package com.pm.aiost.misc.event.eventHandler;
 import java.util.function.Supplier;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -50,6 +51,13 @@ public interface EventHandler {
 	public enum QuitReason {
 
 		QUIT, CHANGED_WORLD, CHANGED_REGION, CHANGE_HANDLER, DISABLE;
+	}
+
+	public default void onTick(ServerPlayer serverPlayer) {
+		onTick(serverPlayer.player);
+	}
+
+	public default void onTick(Entity entity) {
 	}
 
 	public default void onPlayerJoin(ServerPlayer serverPlayer) {

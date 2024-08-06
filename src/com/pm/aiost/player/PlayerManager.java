@@ -22,7 +22,6 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.packet.listen.PacketWatcher;
 import com.pm.aiost.misc.server.ServerManager;
 import com.pm.aiost.misc.server.request.ServerRequest;
-import com.pm.aiost.player.handler.TPSOptimizer;
 import com.pm.aiost.player.handler.VisibilityManager;
 import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.server.http.HttpServer;
@@ -127,7 +126,6 @@ public class PlayerManager {
 		UnlockableTypes.init(serverPlayer);
 		serverPlayer.setEventHandler(serverPlayer.getRegion().getEventHandler());
 		VisibilityManager.onPlayerJoin(serverPlayer);
-		TPSOptimizer.onPlayerJoin(serverPlayer);
 	}
 
 	private static ServerPlayer closePlayer(ServerPlayer serverPlayer) {

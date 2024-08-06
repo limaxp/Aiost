@@ -24,7 +24,7 @@ public class ProjectileEventHandler implements EventHandler {
 		this.source = source;
 	}
 
-//	@Override
+	@Override
 	public void onTick(Entity entity) {
 		if (duration-- < 0)
 			entity.remove(); // TODO check for death event!

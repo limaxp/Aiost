@@ -6,7 +6,6 @@ import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 
@@ -244,13 +243,6 @@ public abstract class Effect implements EventHandler {
 		list.add(ChatColor.GRAY + "Type: " + ChatColor.DARK_GRAY + getType().displayName);
 		list.add(ChatColor.GRAY + "Actions: " + ChatColor.DARK_GRAY + actionsToString());
 		list.add(ChatColor.GRAY + "Condition: " + ChatColor.DARK_GRAY + EffectCondition.getName(condition));
-	}
-
-	public void onTick(ServerPlayer serverPlayer) {
-		onTick(serverPlayer.player);
-	}
-
-	public void onTick(Entity entity) {
 	}
 
 	public void onPlayerUnequipItem(PlayerEquipItemEvent event) {
