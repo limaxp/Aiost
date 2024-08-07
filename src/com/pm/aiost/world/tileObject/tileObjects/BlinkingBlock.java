@@ -14,16 +14,16 @@ import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
-import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.tileObject.TickableObject;
 import com.pm.aiost.world.tileObject.TileObject;
 import com.pm.aiost.world.tileObject.TileObjectType;
 import com.pm.aiost.world.tileObject.TileObjectTypes;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class BlinkingBlock extends TileObject implements Tickable {
+public class BlinkingBlock extends TileObject implements TickableObject {
 
 	protected Material material;
 	protected int delay;

@@ -16,11 +16,11 @@ import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
-import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.region.IRegion;
 import com.pm.aiost.world.region.Region;
 import com.pm.aiost.world.region.WorldRegions;
+import com.pm.aiost.world.tileObject.TickableObject;
 import com.pm.aiost.world.tileObject.TileObject;
 
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
@@ -172,31 +172,31 @@ public class ServerChunk {
 	public void addTileObject(TileObject tileObject) {
 		TileObject prev = tileObjects.putIfAbsent(ServerChunkSection.getKey(tileObject.x, tileObject.y, tileObject.z),
 				tileObject);
-		if (prev == null && tileObject instanceof Tickable)
-			world.addTickingObject((Tickable) tileObject);
+		if (prev == null && tileObject instanceof TickableObject)
+			world.addTickingObject((TickableObject) tileObject);
 	}
 
 	@Nullable
 	public TileObject removeTileObject(Block block) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(block));
-		if (tileObject instanceof Tickable)
-			world.removeTickingObject((Tickable) tileObject);
+		if (tileObject instanceof TickableObject)
+			world.removeTickingObject((TickableObject) tileObject);
 		return tileObject;
 	}
 
 	@Nullable
 	public TileObject removeTileObject(Location loc) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(loc));
-		if (tileObject instanceof Tickable)
-			world.removeTickingObject((Tickable) tileObject);
+		if (tileObject instanceof TickableObject)
+			world.removeTickingObject((TickableObject) tileObject);
 		return tileObject;
 	}
 
 	@Nullable
 	public TileObject removeTileObject(int x, int y, int z) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(x, y, z));
-		if (tileObject instanceof Tickable)
-			world.removeTickingObject((Tickable) tileObject);
+		if (tileObject instanceof TickableObject)
+			world.removeTickingObject((TickableObject) tileObject);
 		return tileObject;
 	}
 
