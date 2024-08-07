@@ -20,6 +20,9 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 	protected @Nullable IParticle particle;
 	protected int duration = 40;
 
+	public ProjectileEventHandler() {
+	}
+
 	public ProjectileEventHandler(Entity source) {
 		this.source = source;
 	}

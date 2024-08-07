@@ -3,6 +3,7 @@ package com.pm.aiost.misc.event.eventHandler;
 import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,6 +15,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
+import com.pm.aiost.game.GameLobby;
+import com.pm.aiost.misc.event.eventHandler.handler.CancelEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.DuelEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.DuelRegionEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.PlayerRegionEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.PlayerWorldEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.ReleasedWorldEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.SpectatorEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.SurvivalEventHandler;
+import com.pm.aiost.misc.registry.AiostRegistry;
+import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
 
 public class EventHandlerManager {
@@ -23,6 +37,23 @@ public class EventHandlerManager {
 	private static final List<TickableHandler> TICKABLE_ENTITY_HANDLER = new IdentityArrayList<TickableHandler>(100);
 
 	private static EventHandler defaultHandler = EventHandler.NULL;
+
+	static {
+		register(CancelEventHandler::getInstance);
+		register(LobbyEventHandler::getInstance);
+		register(SurvivalEventHandler::getInstance);
+		register(PlayerRegionEventHandler::new);
+		register(PlayerWorldEventHandler::new);
+		register(ReleasedWorldEventHandler::new);
+		register(GameLobby::new);
+		register(SpectatorEventHandler::getInstance);
+		register(DuelEventHandler::new);
+		register(DuelRegionEventHandler::new);
+		register(ProjectileEventHandler::new);
+	}
+
+	public static void init() {
+	}
 
 	public static void init(@Nonnull EventHandler defaultHandler) {
 		if (EventHandlerManager.defaultHandler != EventHandler.NULL)
@@ -81,6 +112,10 @@ public class EventHandlerManager {
 		return serverWorld.getRegion(loc).getEventHandler();
 	}
 
+	public static @Nullable EventHandler get(ServerPlayer serverPlayer) {
+		return serverPlayer.getEventHandler();
+	}
+
 	public static @Nullable EventHandler get(@Nonnull Entity entity) {
 		return ENTITY_MAP.get(entity);
 	}
@@ -95,5 +130,14 @@ public class EventHandlerManager {
 
 	public static @Nonnull EventHandler getDefault() {
 		return defaultHandler;
+	}
+
+	public static void register(Supplier<EventHandler> supplier) {
+		AiostRegistry.EVENT_HANDLER.register(supplier.get().getEventHandlerName(), supplier);
+	}
+
+	@SuppressWarnings("unchecked")
+	public static Supplier<EventHandler>[] getRegionEventHandler() {
+		return new Supplier[] { EventHandler.get("Lobby") };
 	}
 }

@@ -21,7 +21,7 @@ import com.pm.aiost.item.block.BlockMaterial;
 import com.pm.aiost.item.custom.Slot;
 import com.pm.aiost.item.spell.Spell;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.eventHandler.EventHandlerRegistry;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.nms.GenericAttribute;
 import com.pm.aiost.misc.particle.IParticle;
@@ -95,7 +95,7 @@ public class EnumerationMenus {
 			EnumerationMenu::createItem);
 
 	public static final InventoryMenu REGION_EVENT_HANDLER_MENU = new EnumerationMenu<Supplier<EventHandler>>(
-			BOLD + "Choose type", EventHandlerRegistry.getRegionEventHandler(), EnumerationMenu::createItem);
+			BOLD + "Choose type", EventHandlerManager.getRegionEventHandler(), EnumerationMenu::createItem);
 
 	public static final InventoryMenu BRUSH_MENU = new EnumerationMenu<Brush>(BOLD + "Choose brush", Brush.values(),
 			EnumerationMenu::createItem);
