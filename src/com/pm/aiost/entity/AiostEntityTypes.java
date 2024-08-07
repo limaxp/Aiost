@@ -34,7 +34,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	private static final List<EntityType<?>> VALUES = new ArrayList<EntityType<?>>();
 
-	public static final EntityType<EntityProjectile> PROJECTILE = register("nothing",
+	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile",
 			EntityType.Builder.<EntityProjectile>of(EntityProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
 	public static final EntityType<EntityTrader> TRADER = register("trader",

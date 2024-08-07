@@ -12,7 +12,7 @@ import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.SynchedEntityData.Builder;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.Level;
@@ -35,7 +35,8 @@ public class EntityProjectile extends Entity {
 	}
 
 	@Override
-	protected void defineSynchedData(Builder var1) {
+	protected void defineSynchedData(SynchedEntityData.Builder var1) {
+
 	}
 
 	@Override
