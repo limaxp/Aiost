@@ -5,12 +5,12 @@ import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.TrackedPacketEntity;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
+import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.TickingObject;
 
 import net.minecraft.nbt.CompoundTag;
 
-public class ParticleSpawner extends TrackedPacketEntity implements TickingObject {
+public class ParticleSpawner extends TrackedPacketEntity implements Tickable {
 
 	protected IParticle particle;
 

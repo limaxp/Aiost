@@ -19,9 +19,9 @@ import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
 import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.LocationHelper;
+import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.TickingObject;
 import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.object.tileObject.TileObjectType;
 import com.pm.aiost.world.object.tileObject.TileObjectTypes;
@@ -29,7 +29,7 @@ import com.pm.aiost.world.object.tileObject.TileObjectTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 
-public class MovingBlock extends TileObject implements TickingObject {
+public class MovingBlock extends TileObject implements Tickable {
 
 	protected List<Location> locations;
 	protected int delay;

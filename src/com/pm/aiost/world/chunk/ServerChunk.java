@@ -16,8 +16,8 @@ import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
+import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.TickingObject;
 import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.region.IRegion;
 import com.pm.aiost.world.region.Region;
@@ -172,31 +172,31 @@ public class ServerChunk {
 	public void addTileObject(TileObject tileObject) {
 		TileObject prev = tileObjects.putIfAbsent(ServerChunkSection.getKey(tileObject.x, tileObject.y, tileObject.z),
 				tileObject);
-		if (prev == null && tileObject instanceof TickingObject)
-			world.addTickingObject((TickingObject) tileObject);
+		if (prev == null && tileObject instanceof Tickable)
+			world.addTickingObject((Tickable) tileObject);
 	}
 
 	@Nullable
 	public TileObject removeTileObject(Block block) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(block));
-		if (tileObject instanceof TickingObject)
-			world.removeTickingObject((TickingObject) tileObject);
+		if (tileObject instanceof Tickable)
+			world.removeTickingObject((Tickable) tileObject);
 		return tileObject;
 	}
 
 	@Nullable
 	public TileObject removeTileObject(Location loc) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(loc));
-		if (tileObject instanceof TickingObject)
-			world.removeTickingObject((TickingObject) tileObject);
+		if (tileObject instanceof Tickable)
+			world.removeTickingObject((Tickable) tileObject);
 		return tileObject;
 	}
 
 	@Nullable
 	public TileObject removeTileObject(int x, int y, int z) {
 		TileObject tileObject = tileObjects.remove(ServerChunkSection.getKey(x, y, z));
-		if (tileObject instanceof TickingObject)
-			world.removeTickingObject((TickingObject) tileObject);
+		if (tileObject instanceof Tickable)
+			world.removeTickingObject((Tickable) tileObject);
 		return tileObject;
 	}
 

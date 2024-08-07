@@ -19,15 +19,15 @@ import org.bukkit.entity.Player;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.misc.utils.meta.MetaData;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.TickingObject;
 import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.object.tileObject.TileObjectType;
 import com.pm.aiost.world.object.tileObject.TileObjectTypes;
 
-public class ProximityFallingBlock extends TileObject implements TickingObject {
+public class ProximityFallingBlock extends TileObject implements Tickable {
 
 	public static final int MAX_RANGE = 16;
 

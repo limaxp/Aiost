@@ -5,13 +5,13 @@ import org.bukkit.Particle;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
+import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.TickingObject;
 import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.object.tileObject.TileObjectType;
 import com.pm.aiost.world.object.tileObject.TileObjectTypes;
 
-public class SlidingBlock extends TileObject implements TickingObject {
+public class SlidingBlock extends TileObject implements Tickable {
 
 	public SlidingBlock(ServerWorld world) {
 		super(world);
