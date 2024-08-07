@@ -15,6 +15,7 @@ import com.pm.aiost.misc.dataAccess.SpigotDatabaseAccess;
 import com.pm.aiost.misc.dataAccess.SpigotFileAccess;
 import com.pm.aiost.misc.database.DatabaseManager;
 import com.pm.aiost.misc.event.AiostListener;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuHandler;
@@ -107,10 +108,10 @@ public class Aiost extends JavaPlugin {
 			public void run() {
 				for (ServerPlayer serverPlayer : ServerPlayer.getOnlinePlayer()) {
 					serverPlayer.spawnParticles(); // TODO: Check visibility and render only to self!
-//					serverPlayer.getEventHandler().onTick(serverPlayer);
 					serverPlayer.update();
 				}
 				EntityParticleManager.render();
+				EventHandlerManager.update();
 				WorldManager.updateWorlds();
 				AiostScheduler.update();
 			}

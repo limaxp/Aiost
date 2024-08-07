@@ -3,6 +3,7 @@ package com.pm.aiost.misc.event.eventHandler;
 import java.util.function.Supplier;
 
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -196,6 +197,10 @@ public interface EventHandler {
 
 	public default Menu getMenu() {
 		return MainMenu.getMenu();
+	}
+	
+	public default void openMenu(Player player) {
+		getMenu().open(player);
 	}
 
 	public default boolean markerVisible() {

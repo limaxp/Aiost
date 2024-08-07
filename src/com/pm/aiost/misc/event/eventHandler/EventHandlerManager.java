@@ -1,6 +1,7 @@
 package com.pm.aiost.misc.event.eventHandler;
 
 import java.util.IdentityHashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Nonnull;
@@ -12,17 +13,28 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
+import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.world.ServerWorld;
 
 public class EventHandlerManager {
 
-	private static final Map<Entity, EventHandler> ENTITY_MAP = new IdentityHashMap<Entity, EventHandler>();
+	private static final Map<Entity, EventHandler> ENTITY_MAP = new IdentityHashMap<Entity, EventHandler>(100);
+	private static final List<Entity> TICKABLE_ENTITIES = new IdentityArrayList<Entity>(100);
+	private static final List<TickableHandler> TICKABLE_ENTITY_HANDLER = new IdentityArrayList<TickableHandler>(100);
+
 	private static EventHandler defaultHandler = EventHandler.NULL;
 
 	public static void init(@Nonnull EventHandler defaultHandler) {
 		if (EventHandlerManager.defaultHandler != EventHandler.NULL)
 			return;
 		EventHandlerManager.defaultHandler = defaultHandler;
+	}
+
+	public static void update() {
+		int size = TICKABLE_ENTITIES.size();
+		for (int i = 0; i < size; i++)
+			TICKABLE_ENTITY_HANDLER.get(i).onTick(TICKABLE_ENTITIES.get(i));
+
 	}
 
 	public static synchronized void registerEntities(@Nonnull World world) {
@@ -45,10 +57,20 @@ public class EventHandlerManager {
 
 	public static synchronized void setEntityHandler(@Nonnull Entity entity, @Nonnull EventHandler eventHandler) {
 		ENTITY_MAP.put(entity, eventHandler);
+		if (eventHandler instanceof TickableHandler) {
+			TICKABLE_ENTITIES.add(entity);
+			TICKABLE_ENTITY_HANDLER.add((TickableHandler) eventHandler);
+		}
 	}
 
 	public static synchronized @Nullable EventHandler removeEntityHandler(@Nonnull Entity entity) {
-		return ENTITY_MAP.remove(entity);
+		EventHandler eventHandler = ENTITY_MAP.remove(entity);
+		if (eventHandler instanceof TickableHandler) {
+			int index = TICKABLE_ENTITIES.lastIndexOf(entity);
+			TICKABLE_ENTITIES.remove(index);
+			TICKABLE_ENTITY_HANDLER.remove(index);
+		}
+		return eventHandler;
 	}
 
 	public static @Nonnull EventHandler get(@Nonnull Location loc) {

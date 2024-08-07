@@ -18,7 +18,7 @@ public class MenuCommands {
 	public static boolean openMain(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!CommandUtil.requirePlayer(sender))
 			return false;
-		ServerPlayer.getByPlayer((Player) sender).openEventHandlerMenu();
+		ServerPlayer.getByPlayer((Player) sender).getEventHandler().openMenu((Player) sender);
 		return true;
 	}
 

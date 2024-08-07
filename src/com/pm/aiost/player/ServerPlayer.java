@@ -45,6 +45,7 @@ import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.event.EquipmentListener;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandler.QuitReason;
+import com.pm.aiost.misc.event.eventHandler.TickableHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.CancelEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
@@ -119,6 +120,7 @@ public class ServerPlayer implements AutoCloseable {
 	private IntList changedSettings;
 	private EffectData effectData;
 	private EventHandler eventHandler;
+	private @Nullable TickableHandler tickableHandler;
 	private Map<Object, Menu> menus;
 	private Object2ObjectLinkedOpenHashMap<Object, MenuRequest> storedMenuRequests;
 	private Deque<MenuRequest> menuRequestQueue;
@@ -165,6 +167,8 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void update() {
+		if (tickableHandler != null)
+			tickableHandler.onTick(this);
 		EffectHandler.tickRunEffects(this);
 		if (player.getGameMode() == GameMode.SURVIVAL || player.getGameMode() == GameMode.ADVENTURE)
 			regenMana();
@@ -551,12 +555,23 @@ public class ServerPlayer implements AutoCloseable {
 		this.eventHandler.onPlayerQuit(this, reason);
 		this.eventHandler = eventHandler;
 		eventHandler.onPlayerJoin(this);
+		if (eventHandler instanceof TickableHandler)
+			tickableHandler = (TickableHandler) eventHandler;
+		else
+			tickableHandler = null;
 		return true;
 	}
 
+	/**
+	 * Does not call eventHandler.onPlayerQuit() and eventHandler.onPlayerJoin()!
+	 */
 	public boolean setEventHandlerSilent(EventHandler eventHandler) {
 		if (this.eventHandler.allowsChange(eventHandler)) {
 			this.eventHandler = eventHandler;
+			if (eventHandler instanceof TickableHandler)
+				tickableHandler = (TickableHandler) eventHandler;
+			else
+				tickableHandler = null;
 			return true;
 		}
 		return false;
@@ -566,25 +581,33 @@ public class ServerPlayer implements AutoCloseable {
 		removeEventHandler(QuitReason.CHANGE_HANDLER);
 	}
 
-	public void removeEventHandler(QuitReason reason) {
-		eventHandler.onPlayerQuit(this, reason);
-		this.eventHandler = null;
-	}
-
 	public void removeEventHandler(EventHandler eventHandler, QuitReason reason) {
 		if (this.eventHandler == eventHandler)
 			removeEventHandler(reason);
 	}
 
-	public void resetEventHandler() {
-		eventHandler = region.getEventHandler();
-		eventHandler.onPlayerJoin(this);
+	public void removeEventHandler(QuitReason reason) {
+		eventHandler.onPlayerQuit(this, reason);
+		if (eventHandler instanceof TickableHandler)
+			tickableHandler = null;
+		this.eventHandler = null;
 	}
 
 	public void resetEventHandler(QuitReason reason) {
 		eventHandler.onPlayerQuit(this, reason);
+		resetEventHandler();
+	}
+
+	/**
+	 * Does not call eventHandler.onPlayerQuit()!
+	 */
+	public void resetEventHandler() {
 		eventHandler = region.getEventHandler();
 		eventHandler.onPlayerJoin(this);
+		if (eventHandler instanceof TickableHandler)
+			tickableHandler = (TickableHandler) eventHandler;
+		else
+			tickableHandler = null;
 	}
 
 	public EventHandler getEventHandler() {
@@ -592,7 +615,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void openEventHandlerMenu() {
-		eventHandler.getMenu().open(player);
+		eventHandler.openMenu(player);
 	}
 
 	public void addEffect(Effect... effects) {
