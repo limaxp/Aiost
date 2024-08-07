@@ -7,7 +7,7 @@ import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.group.EffectGroupBuilder;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.entities.Nothing;
+import com.pm.aiost.entity.entities.EntityProjectile;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.item.Items;
@@ -67,7 +67,7 @@ public class Aiost extends JavaPlugin {
 		Logger.log("Start loading aisot...");
 
 		EventHandlerManager.init();
-		EntityType<Nothing> entityType = AiostEntityTypes.NOTHING;
+		EntityType<EntityProjectile> entityType = AiostEntityTypes.PROJECTILE;
 		GameType<?> gameType = GameTypes.SPLEEF;
 		UnlockableType<?> unlockableType = UnlockableTypes.HATS;
 		Spell spell = Spells.FLAME;

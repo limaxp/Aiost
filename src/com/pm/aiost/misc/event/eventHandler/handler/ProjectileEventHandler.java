@@ -1,66 +1,82 @@
 package com.pm.aiost.misc.event.eventHandler.handler;
 
+import java.util.Collection;
+
 import javax.annotation.Nullable;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.entity.Projectile;
 
 import com.pm.aiost.effect.Effect;
+import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.TickableHandler;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.particle.IParticle;
+
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.phys.Vec3;
 
 public class ProjectileEventHandler implements EventHandler, TickableHandler {
 
-	protected Entity source;
+	protected @Nullable Entity source;
 	protected float damage = 0F;
 	protected float knockback = 1F;
+	protected int duration = 40;
 	protected Effect effect = Effect.EMPTY;
 	protected @Nullable IParticle particle;
-	protected int duration = 40;
 
 	public ProjectileEventHandler() {
 	}
 
-	public ProjectileEventHandler(Entity source) {
+	public ProjectileEventHandler(@Nullable Entity source) {
 		this.source = source;
 	}
 
 	@Override
 	public void onTick(Entity entity) {
-		if (duration-- < 0)
+		if (duration-- < 0) {
 			entity.remove(); // TODO check for death event!
+			return;
+		}
 		if (particle != null)
 			particle.spawn(entity.getLocation());
+
+		Collection<Entity> hitEntities = entity.getWorld().getNearbyEntities(entity.getLocation(), 0.25F, 0.25F, 0.25F);
+		if (hitEntities.size() > 0) {
+			for (Entity hitEntity : hitEntities)
+				hit(entity, hitEntity);
+			entity.remove(); // TODO check for death event!
+		}
 	}
 
-	@Override
-	public void onProjectileHit(ProjectileHitEvent event) {
-		Entity hitEntity = event.getHitEntity();
+	public void hit(Entity entity, Entity hitEntity) {
+		System.out.println("HIT " + hitEntity);
 		if (hitEntity instanceof LivingEntity)
 			((LivingEntity) hitEntity).damage(damage, source);
-		applyKnockback(hitEntity);
-//		effect.onProjectileHit(AiostEventFactory.callProjectileHitEvent(this, hitEntity));
+		applyKnockback(entity, hitEntity);
+		effect.onProjectileHit(AiostEventFactory.callProjectileHitEvent((Projectile) entity, hitEntity));
 	}
 
-	public static void applyKnockback(Entity entity) {
-//		if (entity instanceof EntityLiving) {
-//			EntityLiving entityliving = (EntityLiving) entity;
-//			float knockback = getKnockback();
-//			if (knockback > 0) {
-//				Vec3D vec3d = getMot().d(1.0D, 0.0D, 1.0D).d().a(knockback * 0.6D);
-//				if (vec3d.g() > 0.0D)
-//					entityliving.h(vec3d.x, 0.1D, vec3d.z);
-//			}
-//		}
+	public void applyKnockback(Entity entity, Entity hitEntity) {
+		if (!(entity instanceof LivingEntity) || knockback <= 0)
+			return;
+
+		net.minecraft.world.entity.Entity entityNMS = NMS.to(entity);
+		net.minecraft.world.entity.LivingEntity hitliving = NMS.to((LivingEntity) hitEntity);
+		double d0 = Math.max(0.0, 1.0 - hitliving.getAttributeValue(Attributes.KNOCKBACK_RESISTANCE));
+		Vec3 vec3d = entityNMS.getDeltaMovement().multiply(1.0, 0.0, 1.0).normalize()
+				.scale((double) this.knockback * 0.6 * d0);
+		if (vec3d.lengthSqr() > 0.0)
+			hitliving.push(vec3d.x, 0.1, vec3d.z);
 	}
 
-	public Entity getSource() {
+	public @Nullable Entity getSource() {
 		return source;
 	}
 
-	public void setSource(Entity source) {
+	public void setSource(@Nullable Entity source) {
 		this.source = source;
 	}
 

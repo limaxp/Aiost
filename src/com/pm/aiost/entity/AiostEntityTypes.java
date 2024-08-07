@@ -12,7 +12,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import com.google.common.collect.ImmutableSet;
 import com.pm.aiost.entity.entities.Ball;
 import com.pm.aiost.entity.entities.EntityTrader;
-import com.pm.aiost.entity.entities.Nothing;
+import com.pm.aiost.entity.entities.EntityProjectile;
 import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.nms.NMS;
 
@@ -34,8 +34,8 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	private static final List<EntityType<?>> VALUES = new ArrayList<EntityType<?>>();
 
-	public static final EntityType<Nothing> NOTHING = register("nothing",
-			EntityType.Builder.<Nothing>of(Nothing::new, MobCategory.MISC).sized(0.25F, 0.25F));
+	public static final EntityType<EntityProjectile> PROJECTILE = register("nothing",
+			EntityType.Builder.<EntityProjectile>of(EntityProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
 	public static final EntityType<EntityTrader> TRADER = register("trader",
 			EntityType.Builder.<EntityTrader>of(EntityTrader::new, MobCategory.CREATURE).sized(0.6F, 1.95F)
