@@ -34,9 +34,6 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	private static final List<EntityType<?>> VALUES = new ArrayList<EntityType<?>>();
 
-	public static void init() {
-	}
-
 	public static final EntityType<Nothing> NOTHING = register("nothing",
 			EntityType.Builder.<Nothing>of(Nothing::new, MobCategory.MISC).sized(0.25F, 0.25F));
 

@@ -6,27 +6,16 @@ import java.util.function.Supplier;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.effect.EffectType;
-import com.pm.aiost.effect.EffectTypes;
-import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.game.GameType;
-import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.item.spell.Spell;
-import com.pm.aiost.item.spell.Spells;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.eventHandler.EventHandlerRegistry;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
-import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
-import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleType;
-import com.pm.aiost.misc.particle.ParticleTypes;
 import com.pm.aiost.player.unlockable.UnlockableType;
-import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.world.tileObject.TileObjectType;
-import com.pm.aiost.world.tileObject.TileObjectTypes;
 import com.pm.aiost.world.type.AiostWorldType;
-import com.pm.aiost.world.type.AiostWorldTypes;
 
 public abstract class AiostRegistry<T> {
 
@@ -59,24 +48,6 @@ public abstract class AiostRegistry<T> {
 	public static final AiostRegistry<GameProfile> PROFILES = new GenIdRegistry<GameProfile>("Profile");
 
 	public static final AiostRegistry<AiostWorldType<?>> WORLD_TYPES = new BaseRegistry<AiostWorldType<?>>("WorldType");
-
-	@SuppressWarnings("unused")
-	public static void init() {
-		AiostEntityTypes.init();
-		EventHandlerRegistry.init();
-		GameType<?> gameType = GameTypes.SPLEEF;
-		UnlockableType<?> unlockableType = UnlockableTypes.HATS;
-		Spell spell = Spells.FLAME;
-		ParticleType<?> particleType = ParticleTypes.BEAM;
-		EffectType<?> effectType = EffectTypes.POTION_EFFECT;
-		PacketObjectType<?> packetObjectType = PacketObjectTypes.FURNITURE;
-		PacketEntityType<?> packetEntityType = PacketEntityTypes.ENTITY_FURNITURE;
-		TileObjectType<?> tileObjectType = TileObjectTypes.BLINKING_BLOCK;
-		AiostWorldType<?> worldType = AiostWorldTypes.DEFAULT;
-	}
-
-	public static void terminate() {
-	}
 
 	public final String name;
 
