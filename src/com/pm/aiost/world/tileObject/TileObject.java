@@ -1,4 +1,4 @@
-package com.pm.aiost.world.object.tileObject;
+package com.pm.aiost.world.tileObject;
 
 import java.util.List;
 import java.util.function.Consumer;

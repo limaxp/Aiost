@@ -21,8 +21,8 @@ import com.pm.aiost.misc.particle.ParticleType;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-import com.pm.aiost.world.object.tileObject.TileObject;
-import com.pm.aiost.world.object.tileObject.TileObjectType;
+import com.pm.aiost.world.tileObject.TileObject;
+import com.pm.aiost.world.tileObject.TileObjectType;
 
 public class CreationMenus {
 

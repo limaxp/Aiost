@@ -101,7 +101,7 @@ import com.pm.aiost.player.unlockable.UnlockableTypes;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.WorldManager;
 import com.pm.aiost.world.chunk.ChunkWatcher;
-import com.pm.aiost.world.object.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
+import com.pm.aiost.world.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
 
 public class AiostListener implements Listener {
 

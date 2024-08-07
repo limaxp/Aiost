@@ -7,8 +7,8 @@ import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
-import com.pm.aiost.world.object.tileObject.TileObject;
-import com.pm.aiost.world.object.tileObject.TileObjectTypes;
+import com.pm.aiost.world.tileObject.TileObject;
+import com.pm.aiost.world.tileObject.TileObjectTypes;
 
 import it.unimi.dsi.fastutil.ints.Int2IntMap.Entry;
 import it.unimi.dsi.fastutil.ints.IntList;

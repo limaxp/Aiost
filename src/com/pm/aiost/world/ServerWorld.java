@@ -45,10 +45,10 @@ import com.pm.aiost.world.chunk.ServerChunk;
 import com.pm.aiost.world.creation.WorldBuilder;
 import com.pm.aiost.world.effects.WorldEffects;
 import com.pm.aiost.world.marker.MarkerLoader;
-import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.region.IRegion;
 import com.pm.aiost.world.region.Region;
 import com.pm.aiost.world.region.WorldRegions;
+import com.pm.aiost.world.tileObject.TileObject;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;

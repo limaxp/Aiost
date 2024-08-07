@@ -18,10 +18,10 @@ import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.tileObject.TileObject;
 import com.pm.aiost.world.region.IRegion;
 import com.pm.aiost.world.region.Region;
 import com.pm.aiost.world.region.WorldRegions;
+import com.pm.aiost.world.tileObject.TileObject;
 
 import it.unimi.dsi.fastutil.ints.Int2IntMap;
 import it.unimi.dsi.fastutil.ints.Int2IntOpenHashMap;

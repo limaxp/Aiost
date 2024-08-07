@@ -30,7 +30,7 @@ import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.worldEdit.Brush;
 import com.pm.aiost.misc.utils.worldEdit.Brush.BrushMode;
 import com.pm.aiost.player.unlockable.UnlockableType;
-import com.pm.aiost.world.object.tileObject.TileObjectType;
+import com.pm.aiost.world.tileObject.TileObjectType;
 import com.pm.aiost.world.type.AiostWorldType;
 
 import net.minecraft.world.entity.EntityType;

@@ -1,4 +1,4 @@
-package com.pm.aiost.world.object.tileObject.tileObjects;
+package com.pm.aiost.world.tileObject.tileObjects;
 
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -7,9 +7,9 @@ import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.tileObject.TileObject;
-import com.pm.aiost.world.object.tileObject.TileObjectType;
-import com.pm.aiost.world.object.tileObject.TileObjectTypes;
+import com.pm.aiost.world.tileObject.TileObject;
+import com.pm.aiost.world.tileObject.TileObjectType;
+import com.pm.aiost.world.tileObject.TileObjectTypes;
 
 public class SlidingBlock extends TileObject implements Tickable {
 

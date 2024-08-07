@@ -1,16 +1,16 @@
-package com.pm.aiost.world.object.tileObject;
+package com.pm.aiost.world.tileObject;
 
 import org.bukkit.Location;
 
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.chunk.ServerChunk;
-import com.pm.aiost.world.object.tileObject.TileObjectType.TileObjectConstructor;
-import com.pm.aiost.world.object.tileObject.tileObjects.BlinkingBlock;
-import com.pm.aiost.world.object.tileObject.tileObjects.MovingBlock;
-import com.pm.aiost.world.object.tileObject.tileObjects.ProximityFallingBlock;
-import com.pm.aiost.world.object.tileObject.tileObjects.SlidingBlock;
-import com.pm.aiost.world.object.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
+import com.pm.aiost.world.tileObject.TileObjectType.TileObjectConstructor;
+import com.pm.aiost.world.tileObject.tileObjects.BlinkingBlock;
+import com.pm.aiost.world.tileObject.tileObjects.MovingBlock;
+import com.pm.aiost.world.tileObject.tileObjects.ProximityFallingBlock;
+import com.pm.aiost.world.tileObject.tileObjects.SlidingBlock;
+import com.pm.aiost.world.tileObject.tileObjects.ProximityFallingBlock.ConstantProximityFallingBlock;
 
 import net.minecraft.nbt.CompoundTag;
 

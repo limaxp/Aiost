@@ -1,4 +1,4 @@
-package com.pm.aiost.world.object.tileObject.tileObjects;
+package com.pm.aiost.world.tileObject.tileObjects;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 
@@ -17,9 +17,9 @@ import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuR
 import com.pm.aiost.misc.utils.Tickable;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
-import com.pm.aiost.world.object.tileObject.TileObject;
-import com.pm.aiost.world.object.tileObject.TileObjectType;
-import com.pm.aiost.world.object.tileObject.TileObjectTypes;
+import com.pm.aiost.world.tileObject.TileObject;
+import com.pm.aiost.world.tileObject.TileObjectType;
+import com.pm.aiost.world.tileObject.TileObjectTypes;
 
 import net.minecraft.nbt.CompoundTag;
 
