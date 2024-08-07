@@ -3,6 +3,7 @@ package com.pm.aiost.entity;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
@@ -10,18 +11,23 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 
 import com.google.common.collect.ImmutableSet;
+import com.mojang.datafixers.DataFixUtils;
+import com.mojang.datafixers.types.Type;
 import com.pm.aiost.entity.entities.Ball;
-import com.pm.aiost.entity.entities.EntityTrader;
 import com.pm.aiost.entity.entities.EntityProjectile;
+import com.pm.aiost.entity.entities.EntityTrader;
 import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.nms.NMS;
 
+import net.minecraft.SharedConstants;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.util.datafix.DataFixers;
+import net.minecraft.util.datafix.fixes.References;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityDimensions;
 import net.minecraft.world.entity.EntityType;
@@ -34,25 +40,50 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	private static final List<EntityType<?>> VALUES = new ArrayList<EntityType<?>>();
 
-	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile",
+	public static void terminate() {
+		for (EntityType<?> entityType : VALUES) {
+			// TODO: Also need to unregister IRegistry.ENTITY_TYPE
+			removeFromEntityTree(EntityType.getKey(entityType));
+		}
+	}
+
+	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile", EntityType.BAT,
 			EntityType.Builder.<EntityProjectile>of(EntityProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
-	public static final EntityType<EntityTrader> TRADER = register("trader",
+	public static final EntityType<EntityTrader> TRADER = register("trader", EntityType.VILLAGER,
 			EntityType.Builder.<EntityTrader>of(EntityTrader::new, MobCategory.CREATURE).sized(0.6F, 1.95F)
 					.eyeHeight(1.62F).clientTrackingRange(10));
 
-	public static final EntityType<Ball> BALL = register("ball", EntityType.Builder
+	public static final EntityType<Ball> BALL = register("ball", EntityType.SLIME, EntityType.Builder
 			.<Ball>of(Ball::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
 
-	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", EntityType.Builder
+	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", EntityType.PLAYER, EntityType.Builder
 			.<NpcBase>of(NpcBase::new, MobCategory.MISC).sized(0.6F, 1.8F).eyeHeight(1.62F).clientTrackingRange(32));
 
-	public static <T extends Entity> EntityType<T> register(String name, EntityType.Builder<T> builder) {
+	public static <T extends Entity> EntityType<T> register(String name, EntityType<?> type,
+			EntityType.Builder<T> builder) {
 		NMS.unfreezeRegistry(BuiltInRegistries.ENTITY_TYPE);
-		EntityType<T> type = Registry.register(BuiltInRegistries.ENTITY_TYPE, name, builder.build(name));
+		addToEntityTree(name, type);
+		EntityType<T> newType = Registry.register(BuiltInRegistries.ENTITY_TYPE, name, builder.build(name));
 		BuiltInRegistries.ENTITY_TYPE.freeze();
 		VALUES.add(type);
-		return type;
+		return newType;
+	}
+
+	@SuppressWarnings("unchecked")
+	protected static void addToEntityTree(String name, EntityType<?> type) {
+		Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer()
+				.getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()))
+				.findChoiceType(References.ENTITY).types();
+		types.put("minecraft:" + name, types.get(EntityType.getKey(type).toString()));
+	}
+
+	@SuppressWarnings("unchecked")
+	protected static void removeFromEntityTree(ResourceLocation key) {
+		Map<String, Type<?>> types = (Map<String, Type<?>>) DataFixers.getDataFixer()
+				.getSchema(DataFixUtils.makeKey(SharedConstants.getCurrentVersion().getDataVersion().getVersion()))
+				.findChoiceType(References.ENTITY).types();
+		types.remove(key.toString());
 	}
 
 	public static <T extends Entity> T spawnEntity(EntityType<T> entityTypes, Location loc) {

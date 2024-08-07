@@ -115,6 +115,7 @@ public class Aiost extends JavaPlugin {
 		PlayerManager.disableOnlinePlayer();
 		WorldManager.terminate();
 		SpigotConfigManager.terminate();
+		AiostEntityTypes.terminate();
 
 		Logger.log("Aiost disabled!");
 	}
