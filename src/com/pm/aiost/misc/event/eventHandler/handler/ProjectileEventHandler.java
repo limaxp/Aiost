@@ -43,7 +43,8 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 		if (particle != null)
 			particle.spawn(entity.getLocation());
 
-		Collection<Entity> hitEntities = entity.getWorld().getNearbyEntities(entity.getLocation(), 0.25F, 0.25F, 0.25F);
+		Collection<Entity> hitEntities = entity.getWorld().getNearbyEntities(entity.getLocation(), 0.25F, 0.25F, 0.25F,
+				(e) -> e != entity);
 		if (hitEntities.size() > 0) {
 			for (Entity hitEntity : hitEntities)
 				hit(entity, hitEntity);

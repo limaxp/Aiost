@@ -31,7 +31,7 @@ public abstract class ProjectileSpell extends Spell {
 	public void cast(LivingEntity entity, int i) {
 		net.minecraft.world.entity.LivingEntity source = NMS.to(entity);
 		EntityProjectile projectile = new EntityProjectile(source.level(), source.getX(),
-				source.getEyeHeight() - 0.10000000149011612D, source.getZ());
+				source.getY() + source.getEyeHeight() - 0.10000000149011612D, source.getZ());
 		projectile.setNoGravity(true);
 		AiostEntityTypes.spawnEntity(projectile);
 		if (EntityHelper.launch(source, projectile, 0.5F, power, 0.95F)) {
