@@ -47,7 +47,7 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 		}
 	}
 
-	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile", EntityType.BAT,
+	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile", EntityType.SLIME,
 			EntityType.Builder.<EntityProjectile>of(EntityProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
 	public static final EntityType<EntityTrader> TRADER = register("trader", EntityType.VILLAGER,

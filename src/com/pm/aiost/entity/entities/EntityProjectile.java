@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftLivingEntity;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftSlime;
 import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
 
@@ -12,35 +13,25 @@ import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.monster.Slime;
 import net.minecraft.world.level.Level;
 
-public class EntityProjectile extends Entity {
+public class EntityProjectile extends Slime {
 
 	protected ProjectileEventHandler projectileHandler;
 
 	public EntityProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
-		super(entitytypes, level);
+		super(EntityType.SLIME, level);
 	}
 
 	public EntityProjectile(Level level) {
-		super(AiostEntityTypes.PROJECTILE, level);
+		super(EntityType.SLIME, level);
 	}
 
 	public EntityProjectile(Level level, double x, double y, double z) {
-		super(AiostEntityTypes.PROJECTILE, level);
+		super(EntityType.SLIME, level);
 		setPos(x, y, z);
-	}
-
-	@Override
-	protected void defineSynchedData(SynchedEntityData.Builder var1) {
-
-	}
-
-	@Override
-	protected void readAdditionalSaveData(CompoundTag var1) {
 	}
 
 	@Override
@@ -64,7 +55,7 @@ public class EntityProjectile extends Entity {
 		return bukkitEntity;
 	}
 
-	public static class ProjectileEntity extends CraftEntity implements Projectile {
+	public static class ProjectileEntity extends CraftSlime implements Projectile {
 
 		public ProjectileEntity(EntityProjectile entity) {
 			super((CraftServer) Bukkit.getServer(), entity);
