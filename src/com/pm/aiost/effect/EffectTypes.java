@@ -57,155 +57,157 @@ public class EffectTypes {
 		BlockOffhandEffect.init();
 	}
 
-	public static final EffectType<PotionEffect> POTION_EFFECT = a("PotionEffect", "Potion effect",
+	public static final EffectType<PotionEffect> POTION_EFFECT = register("PotionEffect", "Potion effect",
 			Arrays.asList("Applies an potion effect"), PotionEffect::new);
 
-	public static final EffectType<BreakBlockEffect> BREAK_BLOCK = a("BreakBlock", "Break block",
+	public static final EffectType<BreakBlockEffect> BREAK_BLOCK = register("BreakBlock", "Break block",
 			Arrays.asList("Breaks a single block"), BreakBlockEffect::new);
 
-	public static final EffectType<BreakBlocksEffect> BREAK_BLOCKS = a("BreakBlocks", "Break blocks",
+	public static final EffectType<BreakBlocksEffect> BREAK_BLOCKS = register("BreakBlocks", "Break blocks",
 			Arrays.asList("Breaks a cube of blocks with given radius"), BreakBlocksEffect::new);
 
-	public static final EffectType<BreakBallEffect> BREAK_BALL = a("BreakBall", "Break ball",
+	public static final EffectType<BreakBallEffect> BREAK_BALL = register("BreakBall", "Break ball",
 			Arrays.asList("Breaks a ball of block with given radius"), BreakBallEffect::new);
 
-	public static final EffectType<BreakPlaneEffect> BREAK_PLANE = a("BreakPlane", "Break plane",
+	public static final EffectType<BreakPlaneEffect> BREAK_PLANE = register("BreakPlane", "Break plane",
 			Arrays.asList("Breaks a plane of block with given radius"), BreakPlaneEffect::new);
 
-	public static final EffectType<HammerEffect> HAMMER_EFFECT = a("HammerEffect", "Hammer effect",
+	public static final EffectType<HammerEffect> HAMMER_EFFECT = register("HammerEffect", "Hammer effect",
 			Arrays.asList("The effect a hammer uses when breaking a block"), HammerEffect::new);
 
-	public static final EffectType<BuildStaffEffect> BUILD_STAFF_EFFECT = a("BuildStaffEffect", "Build staff effect",
-			Arrays.asList("Helps with building"), BuildStaffEffect::new);
+	public static final EffectType<BuildStaffEffect> BUILD_STAFF_EFFECT = register("BuildStaffEffect",
+			"Build staff effect", Arrays.asList("Helps with building"), BuildStaffEffect::new);
 
-	public static final EffectType<SetProjectileStatsEffect> SET_PROJECTILE_STATS = a("SetProjectileStats",
+	public static final EffectType<SetProjectileStatsEffect> SET_PROJECTILE_STATS = register("SetProjectileStats",
 			"Set projectile stats", Arrays.asList("Sets stats of a shoot projectile"), SetProjectileStatsEffect::new);
 
-	public static final EffectType<SetArrowStatsEffect> SET_ARROW_STATS = a("SetArrowStats", "Set arrow stats",
+	public static final EffectType<SetArrowStatsEffect> SET_ARROW_STATS = register("SetArrowStats", "Set arrow stats",
 			Arrays.asList("Sets stats of a shoot arrow"), SetArrowStatsEffect::new);
 
-	public static final EffectType<LaunchProjectileEffect> LAUNCH_PROJECTILE = a("LaunchProjectile",
+	public static final EffectType<LaunchProjectileEffect> LAUNCH_PROJECTILE = register("LaunchProjectile",
 			"Launch projectile", Arrays.asList("Launches choosen projetile"), LaunchProjectileEffect::new);
 
-	public static final EffectType<LaunchItemEffect> LAUNCH_ITEM = a("LaunchItem", "Launch item",
+	public static final EffectType<LaunchItemEffect> LAUNCH_ITEM = register("LaunchItem", "Launch item",
 			Arrays.asList("Launches an given item"), LaunchItemEffect::new);
 
-	public static final EffectType<LaunchArmorStandEffect> LAUNCH_ARMORSTAND = a("LaunchArmorStand",
+	public static final EffectType<LaunchArmorStandEffect> LAUNCH_ARMORSTAND = register("LaunchArmorStand",
 			"Launch armorstand", Arrays.asList("Launches an armorstand with given item"), LaunchArmorStandEffect::new);
 
-	public static final EffectType<LaunchTNTEffect> LAUNCH_TNT = a("LaunchTNT", "Launch tnt",
+	public static final EffectType<LaunchTNTEffect> LAUNCH_TNT = register("LaunchTNT", "Launch tnt",
 			Arrays.asList("Launches a tnt"), LaunchTNTEffect::new);
 
-	public static final EffectType<LaunchParticleEffect> LAUNCH_PARTICLE = a("LaunchParticle", "Launch Particle",
+	public static final EffectType<LaunchParticleEffect> LAUNCH_PARTICLE = register("LaunchParticle", "Launch Particle",
 			Arrays.asList("Launches a particle"), LaunchParticleEffect::new);
 
-	public static final EffectType<LaunchBlockEffect> LAUNCH_BLOCK = a("LaunchBlock", "Launch block",
+	public static final EffectType<LaunchBlockEffect> LAUNCH_BLOCK = register("LaunchBlock", "Launch block",
 			Arrays.asList("Launches a block"), LaunchBlockEffect::new);
 
-	public static final EffectType<ThrowItemEffect> THROW_ITEM = a("ThrowItem", "Throw item",
+	public static final EffectType<ThrowItemEffect> THROW_ITEM = register("ThrowItem", "Throw item",
 			Arrays.asList("Throws the item this effect is used on"), ThrowItemEffect::new);
 
-	public static final EffectType<ThrowArmorStandEffect> THROW_ARMORSTAND = a("ThrowArmorStand", "Throw armorstand",
-			Arrays.asList("Throws the item this effect is used on as an armorstand"), ThrowArmorStandEffect::new);
+	public static final EffectType<ThrowArmorStandEffect> THROW_ARMORSTAND = register("ThrowArmorStand",
+			"Throw armorstand", Arrays.asList("Throws the item this effect is used on as an armorstand"),
+			ThrowArmorStandEffect::new);
 
-	public static final EffectType<ThrowTNTEffect> THROW_TNT = a("ThrowTNT", "Throw tnt",
+	public static final EffectType<ThrowTNTEffect> THROW_TNT = register("ThrowTNT", "Throw tnt",
 			Arrays.asList("Throws the tnt this effect is used on"), ThrowTNTEffect::new);
 
-	public static final EffectType<ThrowBlockEffect> THROW_BLOCK = a("ThrowBlock", "Throw block",
+	public static final EffectType<ThrowBlockEffect> THROW_BLOCK = register("ThrowBlock", "Throw block",
 			Arrays.asList("Throws the block this effect is used on"), ThrowBlockEffect::new);
 
-	public static final EffectType<CancelEventEffect> CANCEL_EVENT = a("CancelEvent", "Cancel event",
+	public static final EffectType<CancelEventEffect> CANCEL_EVENT = register("CancelEvent", "Cancel event",
 			Arrays.asList("Cancels the choosen events"), CancelEventEffect::new);
 
-	public static final EffectType<BlockOffhandEffect> BLOCK_OFF_HAND = a("BlockOffhand", "Block off hand",
+	public static final EffectType<BlockOffhandEffect> BLOCK_OFF_HAND = register("BlockOffhand", "Block off hand",
 			Arrays.asList("The effect bihanders use to block the offhand slot"), BlockOffhandEffect::getInstance);
 
-	public static final EffectType<StackEffect> STACK = a("Stack",
+	public static final EffectType<StackEffect> STACK = register("Stack",
 			Arrays.asList("Makes an unstackable item stackable to given size"), StackEffect::new);
 
-	public static final EffectType<PlaceCustomBlockEffect> PLACE_CUSTOM_BLOCK = a("PlaceCustomBlock",
+	public static final EffectType<PlaceCustomBlockEffect> PLACE_CUSTOM_BLOCK = register("PlaceCustomBlock",
 			"Place custom block", Arrays.asList("Places the item it is used on as a custom block"),
 			PlaceCustomBlockEffect::new);
 
-	public static final EffectType<PlaceFurnitureEffect> PLACE_FURNITURE = a("PlaceFurniture", "Place furniture",
+	public static final EffectType<PlaceFurnitureEffect> PLACE_FURNITURE = register("PlaceFurniture", "Place furniture",
 			Arrays.asList("Places the item it is used on as a furniture"), PlaceFurnitureEffect::new);
 
-	public static final EffectType<TeleportEffect> TELEPORT = a("Teleport",
+	public static final EffectType<TeleportEffect> TELEPORT = register("Teleport",
 			Arrays.asList("Teleports user some coordinates away"), TeleportEffect::new);
 
-	public static final EffectType<TeleportToLocEffect> TELEPORT_TO_LOC = a("TeleportToLoc", "Teleport to location",
-			Arrays.asList("Teleports user to given location"), TeleportToLocEffect::new);
+	public static final EffectType<TeleportToLocEffect> TELEPORT_TO_LOC = register("TeleportToLoc",
+			"Teleport to location", Arrays.asList("Teleports user to given location"), TeleportToLocEffect::new);
 
-	public static final EffectType<TeleportToWorldEffect> TELEPORT_TO_WORLD = a("TeleportToWorld", "Teleport to world",
-			Arrays.asList("Teleports user to given world location"), TeleportToWorldEffect::new);
+	public static final EffectType<TeleportToWorldEffect> TELEPORT_TO_WORLD = register("TeleportToWorld",
+			"Teleport to world", Arrays.asList("Teleports user to given world location"), TeleportToWorldEffect::new);
 
-	public static final EffectType<TeleportToCursorEffect> TELEPORT_TO_CURSOR = a("TeleportToCursor",
+	public static final EffectType<TeleportToCursorEffect> TELEPORT_TO_CURSOR = register("TeleportToCursor",
 			"Teleport to cursor", Arrays.asList("Teleports user to the block they are looking at"),
 			TeleportToCursorEffect::new);
 
-	public static final EffectType<CastSpellEffect> CAST_SPELL = a("CastSpell", "Cast spell",
+	public static final EffectType<CastSpellEffect> CAST_SPELL = register("CastSpell", "Cast spell",
 			Arrays.asList("Casts the given Spell"), CastSpellEffect::new);
 
-	public static final EffectType<AuraEffect> AURA = a("Aura",
+	public static final EffectType<AuraEffect> AURA = register("Aura",
 			Arrays.asList("Does apply given effect to entities nearby"), AuraEffect::new);
 
-	public static final EffectType<DamageAuraEffect> DAMAGE_AURA = a("DamageAura", "Damage aura",
+	public static final EffectType<DamageAuraEffect> DAMAGE_AURA = register("DamageAura", "Damage aura",
 			Arrays.asList("Does apply damage to entities nearby"), DamageAuraEffect::new);
 
-	public static final EffectType<TimedAuraEffect> TIMED_AURA = a("TimedAura", "Timed aura",
+	public static final EffectType<TimedAuraEffect> TIMED_AURA = register("TimedAura", "Timed aura",
 			Arrays.asList("Does apply given effect to entities nearby for the given time"), TimedAuraEffect::new);
 
-	public static final EffectType<ManaRegenEffect> MANA_REGEN = a("ManaRegeneration", "Mana regeneration",
+	public static final EffectType<ManaRegenEffect> MANA_REGEN = register("ManaRegeneration", "Mana regeneration",
 			Arrays.asList("Regenerate users mana by the given anount"), ManaRegenEffect::new);
 
-	public static final EffectType<HealEffect> HEAL = a("Heal", "Heal", Arrays.asList("Heals user by the given amount"),
-			HealEffect::new);
+	public static final EffectType<HealEffect> HEAL = register("Heal", "Heal",
+			Arrays.asList("Heals user by the given amount"), HealEffect::new);
 
-	public static final EffectType<DamageEffect> DAMAGE = a("Damage", "Damage",
+	public static final EffectType<DamageEffect> DAMAGE = register("Damage", "Damage",
 			Arrays.asList("Damages user by the given amount"), DamageEffect::new);
 
-	public static final EffectType<KillEffect> KILL = a("Kill", "Kill", Arrays.asList("Kills user"), KillEffect::new);
+	public static final EffectType<KillEffect> KILL = register("Kill", "Kill", Arrays.asList("Kills user"),
+			KillEffect::new);
 
-	public static final EffectType<SpawnPointEffect> SPAWNPOINT = a("Spawnpoint", "Spawnpoint",
+	public static final EffectType<SpawnPointEffect> SPAWNPOINT = register("Spawnpoint", "Spawnpoint",
 			Arrays.asList("Sets user spawnpoint to current location"), SpawnPointEffect::new);
 
-	public static final EffectType<SetOnFireEffect> SET_ON_FIRE = a("SetOnFire", "Set on fire",
+	public static final EffectType<SetOnFireEffect> SET_ON_FIRE = register("SetOnFire", "Set on fire",
 			Arrays.asList("Sets entity on fire"), SetOnFireEffect::new);
 
-	public static final EffectType<SetBlockOnFireEffect> SET_BLOCK_ON_FIRE = a("SetBlockOnFire", "Set block on fire",
-			Arrays.asList("Sets block on fire"), SetBlockOnFireEffect::new);
+	public static final EffectType<SetBlockOnFireEffect> SET_BLOCK_ON_FIRE = register("SetBlockOnFire",
+			"Set block on fire", Arrays.asList("Sets block on fire"), SetBlockOnFireEffect::new);
 
-	public static final EffectType<ExtinguishFireEffect> EXTINGUISH_FIRE = a("ExtinguishFire", "Extinguish fire",
+	public static final EffectType<ExtinguishFireEffect> EXTINGUISH_FIRE = register("ExtinguishFire", "Extinguish fire",
 			Arrays.asList("Extinguishes fire"), ExtinguishFireEffect::new);
 
-	public static final EffectType<SetOnWaterEffect> SET_ON_WATER = a("SetOnWater", "Set on water",
+	public static final EffectType<SetOnWaterEffect> SET_ON_WATER = register("SetOnWater", "Set on water",
 			Arrays.asList("Sets block on water"), SetOnWaterEffect::new);
 
-	public static final EffectType<ShootBlockUpEffect> SHOOT_BLOCK_UP = a("ShootBlockUp", "Shoot block up",
+	public static final EffectType<ShootBlockUpEffect> SHOOT_BLOCK_UP = register("ShootBlockUp", "Shoot block up",
 			Arrays.asList("Shoots block up"), ShootBlockUpEffect::new);
 
-	public static final EffectType<GraplingHookEffect> GRAPLING_HOOK = a("GraplingHook", "Grapling hook",
+	public static final EffectType<GraplingHookEffect> GRAPLING_HOOK = register("GraplingHook", "Grapling hook",
 			Arrays.asList("It's a grappling hook ok?"), GraplingHookEffect::new);
 
-	public static final EffectType<TreeCapitatorEffect> TREE_CAPITATOR = a("TreeCapitator", "Tree capitator",
+	public static final EffectType<TreeCapitatorEffect> TREE_CAPITATOR = register("TreeCapitator", "Tree capitator",
 			Arrays.asList("Completely breaks a a tree and its leaves"), TreeCapitatorEffect::getInstance);
 
-	public static final EffectType<LuckyBlockEffect> LUCKY_BLOCK = a("LuckyBlock", "Lucky block",
+	public static final EffectType<LuckyBlockEffect> LUCKY_BLOCK = register("LuckyBlock", "Lucky block",
 			Arrays.asList("Triggers a lucky block effect"), LuckyBlockEffect::getInstance);
 
-	public static <T extends Effect> EffectType<T> a(String name, Supplier<T> constructor) {
-		return a(name, name, EffectType.EMPTY_LORE, constructor);
+	public static <T extends Effect> EffectType<T> register(String name, Supplier<T> constructor) {
+		return register(name, name, EffectType.EMPTY_LORE, constructor);
 	}
 
-	public static <T extends Effect> EffectType<T> a(String name, List<String> lore, Supplier<T> constructor) {
-		return a(name, name, lore, constructor);
+	public static <T extends Effect> EffectType<T> register(String name, List<String> lore, Supplier<T> constructor) {
+		return register(name, name, lore, constructor);
 	}
 
-	public static <T extends Effect> EffectType<T> a(String name, String displayName, Supplier<T> constructor) {
-		return a(name, displayName, EffectType.EMPTY_LORE, constructor);
+	public static <T extends Effect> EffectType<T> register(String name, String displayName, Supplier<T> constructor) {
+		return register(name, displayName, EffectType.EMPTY_LORE, constructor);
 	}
 
-	public static <T extends Effect> EffectType<T> a(String name, String displayName, List<String> lore,
+	public static <T extends Effect> EffectType<T> register(String name, String displayName, List<String> lore,
 			Supplier<T> constructor) {
 		EffectType<T> type = new EffectType<T>(name, displayName, lore, constructor);
 		AiostRegistry.EFFECTS.register(type.name, type);

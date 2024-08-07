@@ -16,19 +16,20 @@ import net.minecraft.nbt.CompoundTag;
 
 public class TileObjectTypes {
 
-	public static final TileObjectType<BlinkingBlock> BLINKING_BLOCK = a(0, "blinking_block", BlinkingBlock::new);
+	public static final TileObjectType<BlinkingBlock> BLINKING_BLOCK = register(0, "blinking_block",
+			BlinkingBlock::new);
 
-	public static final TileObjectType<MovingBlock> MOVING_BLOCK = a(1, "moving_block", MovingBlock::new);
+	public static final TileObjectType<MovingBlock> MOVING_BLOCK = register(1, "moving_block", MovingBlock::new);
 
-	public static final TileObjectType<SlidingBlock> SLIDING_BLOCK = a(2, "sliding_block", SlidingBlock::new);
+	public static final TileObjectType<SlidingBlock> SLIDING_BLOCK = register(2, "sliding_block", SlidingBlock::new);
 
-	public static final TileObjectType<ProximityFallingBlock> PROXIMITY_FALLING_BLOCK = a(3, "proximity_falling_block",
-			ProximityFallingBlock::new);
+	public static final TileObjectType<ProximityFallingBlock> PROXIMITY_FALLING_BLOCK = register(3,
+			"proximity_falling_block", ProximityFallingBlock::new);
 
-	public static final TileObjectType<ConstantProximityFallingBlock> CONSTANT_PROXIMITY_FALLING_BLOCK = a(4,
+	public static final TileObjectType<ConstantProximityFallingBlock> CONSTANT_PROXIMITY_FALLING_BLOCK = register(4,
 			"constant_proximity_falling_block", ConstantProximityFallingBlock::new);
 
-	public static <T extends TileObject> TileObjectType<T> a(int id, String name,
+	public static <T extends TileObject> TileObjectType<T> register(int id, String name,
 			TileObjectConstructor<T> constructor) {
 		TileObjectType<T> type = new TileObjectType<T>(id, name, constructor);
 		AiostRegistry.TILE_OBJECTS.register(id, name, type);

@@ -18,26 +18,27 @@ import net.minecraft.nbt.CompoundTag;
 
 public class PacketEntityTypes {
 
-	public static final PacketEntityType<PacketEntityLiving> ENTITY_LIVING = a(0, "entity_living",
+	public static final PacketEntityType<PacketEntityLiving> ENTITY_LIVING = register(0, "entity_living",
 			PacketEntityLiving::new);
 
-	public static final PacketEntityType<PacketPlayer> ENTITY_PLAYER = a(1, "entity_player", PacketPlayer::new);
+	public static final PacketEntityType<PacketPlayer> ENTITY_PLAYER = register(1, "entity_player", PacketPlayer::new);
 
-	public static final PacketEntityType<PacketEntityFallingBlock> ENTITY_FALLING_BLOCK = a(2, "entity_falling_block",
-			PacketEntityFallingBlock::new);
+	public static final PacketEntityType<PacketEntityFallingBlock> ENTITY_FALLING_BLOCK = register(2,
+			"entity_falling_block", PacketEntityFallingBlock::new);
 
-	public static final PacketEntityType<EntityFurniture> ENTITY_FURNITURE = a(3, "entity_furniture",
+	public static final PacketEntityType<EntityFurniture> ENTITY_FURNITURE = register(3, "entity_furniture",
 			EntityFurniture::new);
 
-	public static final PacketEntityType<EntitySimpleText> ENTITY_SIMPLE_TEXT = a(4, "entity_simple_text",
+	public static final PacketEntityType<EntitySimpleText> ENTITY_SIMPLE_TEXT = register(4, "entity_simple_text",
 			EntitySimpleText::new);
 
-	public static final PacketEntityType<EntityHologram> ENTITY_HOLOGRAM = a(5, "entity_hologram", EntityHologram::new);
+	public static final PacketEntityType<EntityHologram> ENTITY_HOLOGRAM = register(5, "entity_hologram",
+			EntityHologram::new);
 
-	public static final PacketEntityType<ParticleSpawner> PARTICLE_SPAWNER = a(6, "particle_spawner",
+	public static final PacketEntityType<ParticleSpawner> PARTICLE_SPAWNER = register(6, "particle_spawner",
 			ParticleSpawner::new);
 
-	protected static <T extends PacketEntity> PacketEntityType<T> a(int id, String name,
+	protected static <T extends PacketEntity> PacketEntityType<T> register(int id, String name,
 			PacketEntityConstructor<T> supplier) {
 		PacketEntityType<T> type = new PacketEntityType<T>(id, name, supplier);
 		AiostRegistry.PACKET_ENTITIES.register(id, name, type);

@@ -16,17 +16,17 @@ import net.minecraft.nbt.CompoundTag;
 
 public class PacketObjectTypes {
 
-	public static final PacketObjectType<Furniture> FURNITURE = a(0, "furniture", Furniture::new);
+	public static final PacketObjectType<Furniture> FURNITURE = register(0, "furniture", Furniture::new);
 
-	public static final PacketObjectType<SimpleText> SIMPLE_TEXT = a(1, "simple_text", SimpleText::new);
+	public static final PacketObjectType<SimpleText> SIMPLE_TEXT = register(1, "simple_text", SimpleText::new);
 
-	public static final PacketObjectType<Marker> MARKER = a(2, "marker", Marker::new);
+	public static final PacketObjectType<Marker> MARKER = register(2, "marker", Marker::new);
 
-	public static final PacketObjectType<Hologram> HOLOGRAM = a(3, "hologram", Hologram::new);
+	public static final PacketObjectType<Hologram> HOLOGRAM = register(3, "hologram", Hologram::new);
 
-	public static final PacketObjectType<TextDisplay> TEXT_DISPLAY = a(4, "text_display", TextDisplay::new);
+	public static final PacketObjectType<TextDisplay> TEXT_DISPLAY = register(4, "text_display", TextDisplay::new);
 
-	public static <T extends PacketObject> PacketObjectType<T> a(int id, String name,
+	public static <T extends PacketObject> PacketObjectType<T> register(int id, String name,
 			PacketObjectConstructor<T> constructor) {
 		PacketObjectType<T> type = new PacketObjectType<T>(id, name, constructor);
 		AiostRegistry.PACKET_OBJECTS.register(id, name, type);
