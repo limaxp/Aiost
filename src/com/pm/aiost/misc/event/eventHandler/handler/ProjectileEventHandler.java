@@ -7,11 +7,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.ProjectileHitEvent;
 
 import com.pm.aiost.effect.Effect;
-import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.TickableHandler;
 import com.pm.aiost.misc.particle.IParticle;
 
-public class ProjectileEventHandler implements EventHandler {
+public class ProjectileEventHandler implements EventHandler, TickableHandler {
 
 	protected Entity source;
 	protected float damage = 0F;

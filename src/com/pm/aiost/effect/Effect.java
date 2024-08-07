@@ -6,11 +6,13 @@ import java.util.function.Consumer;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.player.PlayerFishEvent;
 
 import com.pm.aiost.effect.effects.EmptyEffect;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
+import com.pm.aiost.misc.event.eventHandler.TickableHandler;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
@@ -19,7 +21,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
 
-public abstract class Effect implements EventHandler {
+public abstract class Effect implements EventHandler, TickableHandler {
 
 	public static final Effect EMPTY = new EmptyEffect();
 
@@ -243,6 +245,9 @@ public abstract class Effect implements EventHandler {
 		list.add(ChatColor.GRAY + "Type: " + ChatColor.DARK_GRAY + getType().displayName);
 		list.add(ChatColor.GRAY + "Actions: " + ChatColor.DARK_GRAY + actionsToString());
 		list.add(ChatColor.GRAY + "Condition: " + ChatColor.DARK_GRAY + EffectCondition.getName(condition));
+	}
+
+	public void onTick(Entity entity) {
 	}
 
 	public void onPlayerUnequipItem(PlayerEquipItemEvent event) {

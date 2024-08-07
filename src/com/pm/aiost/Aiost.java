@@ -107,7 +107,7 @@ public class Aiost extends JavaPlugin {
 			public void run() {
 				for (ServerPlayer serverPlayer : ServerPlayer.getOnlinePlayer()) {
 					serverPlayer.spawnParticles(); // TODO: Check visibility and render only to self!
-					serverPlayer.getEventHandler().onTick(serverPlayer);
+//					serverPlayer.getEventHandler().onTick(serverPlayer);
 					serverPlayer.update();
 				}
 				EntityParticleManager.render();
