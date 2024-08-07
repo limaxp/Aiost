@@ -116,41 +116,6 @@ public class AiostEventFactory {
 		return event;
 	}
 
-//	public static ProjectileHitEvent callProjectileHitEvent(@Nonnull CustomProjectile projectile,
-//			@Nonnull MovingObjectPosition movingObjectPosition) {
-//		ProjectileHitEvent event;
-//		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
-//			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-//					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity());
-//		} else {
-//			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
-//			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
-//			event = new ProjectileHitEvent((Projectile) projectile.getBukkitEntity(), null,
-//					CraftBlock.at(projectile.getWorld(), pos),
-//					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()));
-//		}
-//		PLUGIN_MANAGER.callEvent(event);
-//		return event;
-//	}
-//
-//	public static ProjectileHitEvent callItemProjectileHitEvent(@Nonnull EntityItemProjectile projectile,
-//			@Nonnull MovingObjectPosition movingObjectPosition) {
-//		ProjectileHitEvent event;
-//		ItemStack is = CraftItemStack.asCraftMirror(projectile.getItemStack());
-//		if (movingObjectPosition.getType() == MovingObjectPosition.EnumMovingObjectType.ENTITY) {
-//			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-//					((MovingObjectPositionEntity) movingObjectPosition).getEntity().getBukkitEntity(), is);
-//		} else {
-//			MovingObjectPositionBlock movingObjectBlockPosition = ((MovingObjectPositionBlock) movingObjectPosition);
-//			BlockPosition pos = movingObjectBlockPosition.getBlockPosition();
-//			event = new ItemProjectileHitEvent((Projectile) projectile.getBukkitEntity(),
-//					CraftBlock.at(projectile.world, pos),
-//					CraftBlock.notchToBlockFace(movingObjectBlockPosition.getDirection()), is);
-//		}
-//		PLUGIN_MANAGER.callEvent(event);
-//		return event;
-//	}
-
 	public static PacketThingAttackEvent callPacketThingAttackEvent(@Nonnull ServerPlayer serverPlayer,
 			@Nonnull PacketThing packetThing) {
 		PacketThingAttackEvent event = new PacketThingAttackEvent(serverPlayer, packetThing);
