@@ -34,7 +34,6 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.entities.EntityTrader;
 import com.pm.aiost.entity.goal.PathfinderGoalWalkToLocation;
 import com.pm.aiost.entity.spawner.StageEntitySpawner;
 import com.pm.aiost.game.Game;
@@ -54,6 +53,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.PathfinderMob;
+import net.minecraft.world.entity.npc.Villager;
 
 public class CastleDefend extends Game {
 
@@ -138,8 +138,10 @@ public class CastleDefend extends Game {
 		spawner.setSpawnSize(enemySize);
 		spawner.setSpawnCallback(this::spawnCallback);
 		spawner.setTime(WAVE_PAUSE_TIME);
-		EntityTrader trader = (EntityTrader) AiostEntityTypes.spawnEntity(AiostEntityTypes.TRADER, targetLocation);
+		Villager trader = AiostEntityTypes.spawnEntity(AiostEntityTypes.VILLAGER, targetLocation);
 		trader.setPersistenceRequired(true);
+		trader.setNoAi(true);
+		trader.setInvulnerable(true);
 	}
 
 	@Override
