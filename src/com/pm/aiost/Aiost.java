@@ -7,7 +7,7 @@ import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.group.EffectGroupBuilder;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.entities.EntityProjectile;
+import com.pm.aiost.entity.entities.projectile.EntityProjectile;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.item.Items;
@@ -132,7 +132,7 @@ public class Aiost extends JavaPlugin {
 	}
 
 	private static void startScheduler() {
-		// 0.25 sec
+		// 0.2 sec
 		new BukkitRunnable() {
 			@Override
 			public void run() {
@@ -145,7 +145,7 @@ public class Aiost extends JavaPlugin {
 				WorldManager.updateWorlds();
 				AiostScheduler.update();
 			}
-		}.runTaskTimer(Aiost.getPlugin(), 0, 5);
+		}.runTaskTimer(Aiost.getPlugin(), 0, 4);
 
 		// 0.5 sec
 		new BukkitRunnable() {

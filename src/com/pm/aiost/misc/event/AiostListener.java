@@ -757,6 +757,9 @@ public class AiostListener implements Listener {
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onProjectileHit(ProjectileHitEvent event) {
+		Projectile projectile = event.getEntity();
+		EventHandlerManager.get(projectile).onProjectileHit(event);
+
 		Entity hitEntity = event.getHitEntity();
 		if (hitEntity != null) {
 			if (hitEntity.getType() == EntityType.PLAYER)
@@ -766,10 +769,10 @@ public class AiostListener implements Listener {
 		} else
 			EventHandlerManager.get(event.getHitBlock().getLocation()).onProjectileHit(event);
 
-		if (event.getEntity().getShooter() instanceof Player) {
-			ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) event.getEntity().getShooter());
+		if (projectile.getShooter() instanceof Player) {
+			ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) projectile.getShooter());
 			EffectHandler.projectileHitRunEffects(serverPlayer, event);
-			EntityParticleManager.unregisterEntity(event.getEntity());
+			EntityParticleManager.unregisterEntity(projectile);
 		}
 	}
 

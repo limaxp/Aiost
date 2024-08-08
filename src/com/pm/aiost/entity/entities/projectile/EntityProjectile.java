@@ -1,10 +1,9 @@
-package com.pm.aiost.entity.entities;
+package com.pm.aiost.entity.entities.projectile;
 
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_20_R4.CraftServer;
 import org.bukkit.craftbukkit.v1_20_R4.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftLivingEntity;
-import org.bukkit.craftbukkit.v1_20_R4.entity.CraftSlime;
+import org.bukkit.craftbukkit.v1_20_R4.entity.CraftSnowball;
 import org.bukkit.entity.Projectile;
 import org.bukkit.projectiles.ProjectileSource;
 
@@ -14,23 +13,23 @@ import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.monster.Slime;
+import net.minecraft.world.entity.projectile.Snowball;
 import net.minecraft.world.level.Level;
 
-public class EntityProjectile extends Slime {
+public class EntityProjectile extends Snowball {
 
 	protected ProjectileEventHandler projectileHandler;
 
 	public EntityProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
-		super(EntityType.SLIME, level);
+		super(EntityType.SNOWBALL, level);
 	}
 
 	public EntityProjectile(Level level) {
-		super(EntityType.SLIME, level);
+		super(EntityType.SNOWBALL, level);
 	}
 
 	public EntityProjectile(Level level, double x, double y, double z) {
-		super(EntityType.SLIME, level);
+		super(EntityType.SNOWBALL, level);
 		setPos(x, y, z);
 	}
 
@@ -55,7 +54,7 @@ public class EntityProjectile extends Slime {
 		return bukkitEntity;
 	}
 
-	public static class ProjectileEntity extends CraftSlime implements Projectile {
+	public static class ProjectileEntity extends CraftSnowball implements Projectile {
 
 		public ProjectileEntity(EntityProjectile entity) {
 			super((CraftServer) Bukkit.getServer(), entity);
@@ -68,10 +67,7 @@ public class EntityProjectile extends Slime {
 
 		@Override
 		public void setShooter(ProjectileSource shooter) {
-			if (shooter instanceof CraftLivingEntity)
-				getHandle().projectileHandler.setSource((CraftEntity) shooter);
-			else
-				getHandle().projectileHandler.setSource(null);
+			getHandle().projectileHandler.setSource(shooter);
 			entity.projectileSource = shooter;
 		}
 

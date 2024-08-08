@@ -3,8 +3,6 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
-import com.pm.aiost.misc.event.AiostEventFactory;
-
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -110,22 +108,18 @@ public class EntityHelper {
 		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 
-	public static boolean launch(LivingEntity shooter, Entity entity, float heigth, float power, float accuracy) {
-		return launch(shooter, entity, shooter.getXRot(), shooter.getYHeadRot(), heigth, power, accuracy);
+	public static void launch(LivingEntity shooter, Entity entity, float heigth, float power, float accuracy) {
+		launch(shooter, entity, shooter.getXRot(), shooter.getYHeadRot(), heigth, power, accuracy);
 	}
 
-	public static boolean launch(LivingEntity shooter, Entity entity, float pitch, float yaw, float heigth, float power,
+	public static void launch(LivingEntity shooter, Entity entity, float pitch, float yaw, float heigth, float power,
 			float accuracy) {
-		if (AiostEventFactory.callProjectileLaunchEvent(entity.getBukkitEntity()).isCancelled())
-			return false;
-
 		float f5 = -Mth.sin(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
 		float f6 = -Mth.sin((pitch + heigth) * 0.017453292F);
 		float f7 = Mth.cos(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
 		shoot(entity, f5, f6, f7, power, accuracy);
 		Vec3 vec3d = shooter.getDeltaMovement();
 		entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.x, shooter.onGround() ? 0.0 : vec3d.y, vec3d.z));
-		return true;
 	}
 
 	public static void shoot(Entity entity, float motX, float motY, float motZ, float power, float accuracy) {
