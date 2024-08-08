@@ -11,7 +11,7 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.game.GameLobby;
@@ -31,6 +31,7 @@ import com.pm.aiost.world.ServerWorld;
 
 public class EventHandlerManager {
 
+	// TODO check if map fills because missing events!
 	private static final Map<Entity, EventHandler> ENTITY_MAP = new IdentityHashMap<Entity, EventHandler>(100);
 	private static final List<Entity> TICKABLE_ENTITIES = new IdentityArrayList<Entity>(100);
 	private static final List<TickableHandler> TICKABLE_ENTITY_HANDLER = new IdentityArrayList<TickableHandler>(100);
@@ -68,20 +69,19 @@ public class EventHandlerManager {
 
 	public static synchronized void registerEntities(World world) {
 		for (Entity entity : world.getEntities())
-			if (entity instanceof LivingEntity)
-				ENTITY_MAP.put(entity, get(entity.getLocation()));
+			if (entity instanceof Mob)
+				setEntityHandler(entity, get(entity.getLocation()));
 	}
 
 	public static synchronized void registerEntities(Chunk chunk) {
 		for (Entity entity : chunk.getEntities())
-			if (entity instanceof LivingEntity)
-				ENTITY_MAP.put(entity, get(entity.getLocation()));
+			if (entity instanceof Mob)
+				setEntityHandler(entity, get(entity.getLocation()));
 	}
 
 	public static synchronized void unregisterEntities(Chunk chunk) {
 		for (Entity entity : chunk.getEntities())
-			if (entity instanceof LivingEntity)
-				ENTITY_MAP.remove(entity);
+			removeEntityHandler(entity);
 	}
 
 	public static synchronized void setEntityHandler(Entity entity, EventHandler eventHandler) {
