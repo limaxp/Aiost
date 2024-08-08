@@ -14,7 +14,6 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
 import com.pm.aiost.entity.entities.Ball;
-import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.entity.entities.projectile.ArmorstandProjectile;
 import com.pm.aiost.entity.entities.projectile.BlockProjectile;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile;
@@ -64,9 +63,6 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static final EntityType<Ball> BALL = register("ball", EntityType.SLIME, EntityType.Builder
 			.<Ball>of(Ball::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
-
-	public static final EntityType<NpcBase> NPC_BASE = register("npcbase", EntityType.PLAYER, EntityType.Builder
-			.<NpcBase>of(NpcBase::new, MobCategory.MISC).sized(0.6F, 1.8F).eyeHeight(1.62F).clientTrackingRange(32));
 
 	public static <T extends Entity> EntityType<T> register(String name, EntityType<?> type,
 			EntityType.Builder<T> builder) {

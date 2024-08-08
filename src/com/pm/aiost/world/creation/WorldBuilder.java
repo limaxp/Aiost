@@ -3,7 +3,6 @@ package com.pm.aiost.world.creation;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -12,12 +11,10 @@ import org.bukkit.Chunk;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
 import org.bukkit.WorldCreator;
-import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
-import com.pm.aiost.entity.entities.NpcBase;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.FileUtils;
@@ -140,10 +137,6 @@ public class WorldBuilder {
 	public static void kickPlayer(World world) {
 		if (world.getPlayers().size() > 0)
 			ServerRequest.getHandler().sendLobby(ServerWorld.getByWorld(world).getServerPlayer());
-		Iterator<Entity> npcIter = world.getEntitiesByClasses(NpcBase.class).iterator();
-		while (npcIter.hasNext()) {
-			npcIter.next().remove(); // TODO find a way to be still able to save npcs!
-		}
 	}
 
 	public static void unloadChunks(World world, boolean save) {
