@@ -23,9 +23,10 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 	protected @Nullable ProjectileSource source;
 	protected float damage = 0F;
 	protected float knockback = 1F;
-	protected int duration = 10;
+	protected int duration = -1;
 	protected Effect effect = Effect.EMPTY;
 	protected @Nullable IParticle particle;
+	protected float explosionStrength;
 
 	public ProjectileEventHandler() {
 	}
@@ -36,8 +37,10 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 
 	@Override
 	public void onTick(Entity entity) {
-		if (duration-- < 0) {
+		if (duration-- == 0) {
 			entity.remove();
+			if (doesExplode())
+				entity.getWorld().createExplosion(entity.getLocation(), explosionStrength);
 			return;
 		}
 		if (particle != null)
@@ -127,5 +130,24 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 
 	public void setDuration(int duration) {
 		this.duration = duration / 4;
+	}
+
+	public boolean doesExplode() {
+		return explosionStrength != 0;
+	}
+
+	public void setExplode(boolean explode) {
+		if (explode)
+			explosionStrength = 4F;
+		else
+			explosionStrength = 0;
+	}
+
+	public void setExplode(float explosionStrength) {
+		this.explosionStrength = explosionStrength;
+	}
+
+	public float getExplode() {
+		return explosionStrength;
 	}
 }

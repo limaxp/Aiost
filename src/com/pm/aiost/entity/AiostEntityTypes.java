@@ -16,6 +16,8 @@ import com.mojang.datafixers.types.Type;
 import com.pm.aiost.entity.entities.Ball;
 import com.pm.aiost.entity.entities.EntityTrader;
 import com.pm.aiost.entity.entities.NpcBase;
+import com.pm.aiost.entity.entities.projectile.ArmorstandProjectile;
+import com.pm.aiost.entity.entities.projectile.BlockProjectile;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile;
 import com.pm.aiost.entity.entities.projectile.TNTProjectile;
 import com.pm.aiost.misc.nms.NMS;
@@ -53,6 +55,13 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static final EntityType<TNTProjectile> TNT_PROJECTILE = register("projectile", EntityType.SNOWBALL,
 			EntityType.Builder.<TNTProjectile>of(TNTProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
+
+	public static final EntityType<BlockProjectile> BLOCK_PROJECTILE = register("projectile", EntityType.SNOWBALL,
+			EntityType.Builder.<BlockProjectile>of(BlockProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
+
+	public static final EntityType<ArmorstandProjectile> ARMORSTAND_PROJECTILE = register("projectile",
+			EntityType.SNOWBALL, EntityType.Builder
+					.<ArmorstandProjectile>of(ArmorstandProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
 	public static final EntityType<EntityTrader> TRADER = register("trader", EntityType.VILLAGER,
 			EntityType.Builder.<EntityTrader>of(EntityTrader::new, MobCategory.CREATURE).sized(0.6F, 1.95F)

@@ -3,8 +3,12 @@ package com.pm.aiost.entity;
 import static org.bukkit.ChatColor.BOLD;
 import static org.bukkit.ChatColor.RED;
 
+import com.pm.aiost.entity.entities.projectile.EntityProjectile;
+
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.PathfinderMob;
@@ -108,18 +112,36 @@ public class EntityHelper {
 		entity.getAttribute(Attributes.LUCK).setBaseValue(0.01 * level);
 	}
 
-	public static void launch(LivingEntity shooter, Entity entity, float heigth, float power, float accuracy) {
-		launch(shooter, entity, shooter.getXRot(), shooter.getYHeadRot(), heigth, power, accuracy);
+	public static EntityProjectile launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
+			float heigth, float power, float accuracy) {
+		return launchProjectile(source, type, source.getXRot(), source.getYHeadRot(), heigth, power, accuracy);
 	}
 
-	public static void launch(LivingEntity shooter, Entity entity, float pitch, float yaw, float heigth, float power,
+	public static EntityProjectile launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
+			float pitch, float yaw, float heigth, float power, float accuracy) {
+		double x = source.getX();
+		double y = source.getY() + source.getEyeHeight() - 0.10000000149011612D;
+		double z = source.getZ();
+		EntityProjectile projectile = AiostEntityTypes.spawnEntity(type, (ServerLevel) source.level(), (int) x, (int) y,
+				(int) z);
+		projectile.setPos(x, y, z);
+		projectile.setOwner(source);
+		launch(source, projectile, pitch, yaw, heigth, power, accuracy);
+		return projectile;
+	}
+
+	public static void launch(LivingEntity source, Entity entity, float heigth, float power, float accuracy) {
+		launch(source, entity, source.getXRot(), source.getYHeadRot(), heigth, power, accuracy);
+	}
+
+	public static void launch(LivingEntity source, Entity entity, float pitch, float yaw, float heigth, float power,
 			float accuracy) {
 		float f5 = -Mth.sin(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
 		float f6 = -Mth.sin((pitch + heigth) * 0.017453292F);
 		float f7 = Mth.cos(yaw * 0.017453292F) * Mth.cos(pitch * 0.017453292F);
 		shoot(entity, f5, f6, f7, power, accuracy);
-		Vec3 vec3d = shooter.getDeltaMovement();
-		entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.x, shooter.onGround() ? 0.0 : vec3d.y, vec3d.z));
+		Vec3 vec3d = source.getDeltaMovement();
+		entity.setDeltaMovement(entity.getDeltaMovement().add(vec3d.x, source.onGround() ? 0.0 : vec3d.y, vec3d.z));
 	}
 
 	public static void shoot(Entity entity, float motX, float motY, float motZ, float power, float accuracy) {

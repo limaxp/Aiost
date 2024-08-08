@@ -14,12 +14,15 @@ import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.blueprints.SimpleLivingEntityEffect;
+import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.menu.menus.request.DoesUseEffectMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.utils.ProjectileHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -52,19 +55,16 @@ public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 
 	@Override
 	public void runEffect(LivingEntity entity) {
-//		launchTNT(entity, velocityMultiplier, damage, knockback, fuseTicks, effect);
+		ProjectileEventHandler handler = new ProjectileEventHandler(entity);
+		if (ProjectileHelper.launchProjectile(entity, AiostEntityTypes.TNT_PROJECTILE, 0.5F, velocityMultiplier * 0.4F,
+				0.95F, handler, false)) {
+			handler.setDamage(damage);
+			handler.setKnockback(knockback);
+			handler.setEffect(effect);
+			handler.setDuration(fuseTicks);
+			handler.setExplode(true);
+		}
 	}
-
-//	public static TNTProjectile launchTNT(LivingEntity entity, float velocityMultiplier, float damage, float knockback,
-//			int fuseTicks, Effect effect) {
-//		TNTProjectile projectile = new TNTProjectile(((CraftLivingEntity) entity).getHandle());
-//		projectile.setDamage(damage);
-//		projectile.setKnockback(knockback);
-//		projectile.setEffect(effect);
-//		projectile.setFuseTicks(fuseTicks);
-//		ProjectileHelper.launchProjectile(entity, projectile, velocityMultiplier);
-//		return projectile;
-//	}
 
 	@Override
 	public boolean equals(Effect effect) {

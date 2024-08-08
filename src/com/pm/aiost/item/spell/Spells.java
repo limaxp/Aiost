@@ -47,6 +47,7 @@ public class Spells {
 					projectile.setParticle(FLAME_PARTICLE);
 					projectile.setEffect(SET_BLOCK_ON_FIRE_EFFECT);
 					projectile.setDamage(3.0F);
+					projectile.setDuration(40);
 				}
 			});
 
@@ -74,6 +75,7 @@ public class Spells {
 					projectile.setParticle(WATER_BEAM_PARTICLE);
 					projectile.setEffect(SET_BLOCK_ON_WATER_EFFECT);
 					projectile.setDamage(3.0F);
+					projectile.setDuration(40);
 				}
 			});
 
@@ -102,6 +104,7 @@ public class Spells {
 					projectile.setParticle(EARTH_BEAM_PARTICLE);
 					projectile.setEffect(SHOOT_UP_BLOCK_EFFECT);
 					projectile.setDamage(3.0F);
+					projectile.setDuration(40);
 				}
 			});
 
@@ -130,6 +133,7 @@ public class Spells {
 					projectile.setParticle(WIND_BLOW_PARTICLE);
 					projectile.setDamage(3.0F);
 					projectile.setKnockback(3.0F);
+					projectile.setDuration(40);
 				}
 			});
 

@@ -24,15 +24,6 @@ public class EntityProjectile extends Snowball {
 		super(EntityType.SNOWBALL, level);
 	}
 
-	public EntityProjectile(Level level) {
-		super(EntityType.SNOWBALL, level);
-	}
-
-	public EntityProjectile(Level level, double x, double y, double z) {
-		super(EntityType.SNOWBALL, level);
-		setPos(x, y, z);
-	}
-
 	@Override
 	public void addAdditionalSaveData(CompoundTag nbttagcompound) {
 		AiostEntityTypes.saveId(nbttagcompound, AiostEntityTypes.PROJECTILE);
@@ -63,6 +54,14 @@ public class EntityProjectile extends Snowball {
 		@Override
 		public EntityProjectile getHandle() {
 			return (EntityProjectile) this.entity;
+		}
+
+		public void setProjectileHandler(ProjectileEventHandler projectileHandler) {
+			getHandle().setProjectileHandler(projectileHandler);
+		}
+
+		public ProjectileEventHandler getProjectileHandler() {
+			return getHandle().getProjectileHandler();
 		}
 
 		@Override

@@ -18,12 +18,15 @@ import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectHelper;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
+import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.menu.menus.request.DoesUseEffectMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.utils.ProjectileHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -77,7 +80,14 @@ public class ThrowArmorStandEffect extends Effect {
 			float knockback, Effect effect) {
 		itemStack = itemStack.clone();
 		itemStack.setAmount(1);
-//		LaunchArmorStandEffect.launchArmorStand(entity, itemStack, velocityMultiplier, damage, knockback, effect);
+
+		ProjectileEventHandler handler = new ProjectileEventHandler(entity);
+		if (ProjectileHelper.launchProjectile(entity, AiostEntityTypes.ARMORSTAND_PROJECTILE, 0.5F,
+				velocityMultiplier * 0.4F, 0.95F, handler, false)) {
+			handler.setDamage(damage);
+			handler.setKnockback(knockback);
+			handler.setEffect(effect);
+		}
 	}
 
 	@Override

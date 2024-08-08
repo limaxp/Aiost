@@ -10,7 +10,6 @@ import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.npc.Villager;
 import net.minecraft.world.level.Level;
 
@@ -18,15 +17,7 @@ public class EntityTrader extends Villager {
 
 	public EntityTrader(EntityType<? extends Villager> entitytypes, Level world) {
 		super(EntityType.VILLAGER, world);
-	}
-
-	public EntityTrader(Level world) {
-		super(EntityType.VILLAGER, world);
-	}
-
-	@Override
-	protected void registerGoals() {
-		this.goalSelector.addGoal(1, new FloatGoal(this));
+		setNoAi(true);
 	}
 
 	@Override
