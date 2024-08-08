@@ -31,6 +31,7 @@ import org.bukkit.event.entity.EntityPickupItemEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.event.entity.ItemDespawnEvent;
 import org.bukkit.event.entity.ItemMergeEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
@@ -363,7 +364,7 @@ public class AiostListener implements Listener {
 		if (event.getEntityType() == EntityType.PLAYER)
 			onPlayerPickupItem(event);
 		else
-			EventHandlerManager.get(event.getEntity()).onEntityPickupItem(event);
+			EventHandlerManager.getOrEmpty(event.getEntity()).onEntityPickupItem(event);
 	}
 
 	public void onPlayerPickupItem(EntityPickupItemEvent event) {
@@ -641,7 +642,7 @@ public class AiostListener implements Listener {
 	public void onEntityChangeBlockEvent(EntityChangeBlockEvent event) {
 		Entity entity = event.getEntity();
 		if (entity instanceof LivingEntity)
-			EventHandlerManager.get(entity).onEntityChangeBlock(event);
+			EventHandlerManager.getOrEmpty(entity).onEntityChangeBlock(event);
 		else if (entity instanceof FallingBlock) {
 			Object obj = MetaData.get(entity, "ConstantProximityFallingBlock");
 			if (obj != null) {
@@ -672,15 +673,11 @@ public class AiostListener implements Listener {
 			return;
 
 		if (event.getEntity() instanceof LivingEntity)
-			EventHandlerManager.setEntityHandler((LivingEntity) event.getEntity(), eventHandler);
+			EventHandlerManager.setEntityHandler(event.getEntity(), eventHandler);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onCreatureSpawn(CreatureSpawnEvent event) {
-		if (event.isCancelled())
-			return;
-
-//		AiostSpawnerCreature.onCreatureSpawn(event);
 		if (event.isCancelled())
 			return;
 
@@ -702,10 +699,14 @@ public class AiostListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
+	public void onItemDespawn(ItemDespawnEvent event) {
+		EventHandlerManager.removeEntityHandler(event.getEntity());
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
 	public void onEntityExplode(EntityExplodeEvent event) {
-		if (event.getEntity() instanceof LivingEntity)
-			EventHandlerManager.removeEntityHandler((LivingEntity) event.getEntity()).onEntityExplode(event);
-		else
+		EventHandlerManager.removeEntityHandler(event.getEntity()).onEntityExplode(event);
+		if (!(event.getEntity() instanceof LivingEntity))
 			EventHandlerManager.get(event.getLocation()).onEntityExplode(event);
 	}
 
@@ -731,9 +732,8 @@ public class AiostListener implements Listener {
 				}
 			}
 
-			else {
-				EventHandlerManager.get((LivingEntity) shooter).onProjectileLaunch(event);
-			}
+			else
+				EventHandlerManager.getOrEmpty(shooter).onProjectileLaunch(event);
 		}
 	}
 
@@ -750,30 +750,29 @@ public class AiostListener implements Listener {
 				EffectHandler.shootBowRunEffects(serverPlayer, event);
 		}
 
-		else {
-			EventHandlerManager.get(shooter).onEntityShootBow(event);
-		}
+		else
+			EventHandlerManager.getOrEmpty(shooter).onEntityShootBow(event);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
 	public void onProjectileHit(ProjectileHitEvent event) {
 		Projectile projectile = event.getEntity();
-		EventHandlerManager.get(projectile).onProjectileHit(event);
+		EventHandlerManager.removeEntityHandler(projectile).onProjectileHit(event);
 
 		Entity hitEntity = event.getHitEntity();
 		if (hitEntity != null) {
 			if (hitEntity.getType() == EntityType.PLAYER)
 				ServerPlayer.getByPlayer((Player) hitEntity).getEventHandler().onProjectileHit(event);
 			else
-				EventHandlerManager.get(hitEntity).onProjectileHit(event);
-		} else
-			EventHandlerManager.get(event.getHitBlock().getLocation()).onProjectileHit(event);
+				EventHandlerManager.getOrEmpty(hitEntity).onProjectileHit(event);
+		}
 
 		if (projectile.getShooter() instanceof Player) {
 			ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) projectile.getShooter());
 			EffectHandler.projectileHitRunEffects(serverPlayer, event);
 			EntityParticleManager.unregisterEntity(projectile);
-		}
+		} else if (projectile.getShooter() instanceof Entity)
+			EventHandlerManager.getOrEmpty((Entity) projectile.getShooter()).onProjectileHit(event);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
@@ -799,7 +798,7 @@ public class AiostListener implements Listener {
 			if (player.isOnline())
 				onPlayerDamage(player, event);
 		} else
-			EventHandlerManager.get(event.getEntity()).onEntityDamage(event);
+			EventHandlerManager.getOrEmpty(event.getEntity()).onEntityDamage(event);
 	}
 
 	public void onPlayerDamage(Player player, EntityDamageEvent event) {
@@ -822,7 +821,7 @@ public class AiostListener implements Listener {
 				damagedServerPlayer.getEventHandler().onPlayerDamageByEntity(damagedServerPlayer, event);
 			}
 		} else
-			EventHandlerManager.get(event.getEntity()).onEntityDamageByEntity(event);
+			EventHandlerManager.getOrEmpty(event.getEntity()).onEntityDamageByEntity(event);
 
 		if (event.getDamager() instanceof Player) {
 			Player damagerPlayer = (Player) event.getDamager();

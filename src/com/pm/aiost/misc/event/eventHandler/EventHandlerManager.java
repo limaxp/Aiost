@@ -64,7 +64,6 @@ public class EventHandlerManager {
 		int size = TICKABLE_ENTITIES.size();
 		for (int i = 0; i < size; i++)
 			TICKABLE_ENTITY_HANDLER.get(i).onTick(TICKABLE_ENTITIES.get(i));
-
 	}
 
 	public static synchronized void registerEntities(World world) {
@@ -93,13 +92,16 @@ public class EventHandlerManager {
 		}
 	}
 
-	public static synchronized @Nullable EventHandler removeEntityHandler(Entity entity) {
+	public static synchronized EventHandler removeEntityHandler(Entity entity) {
 		EventHandler eventHandler = ENTITY_MAP.remove(entity);
 		if (eventHandler instanceof TickableHandler) {
 			int index = TICKABLE_ENTITIES.lastIndexOf(entity);
 			TICKABLE_ENTITIES.remove(index);
 			TICKABLE_ENTITY_HANDLER.remove(index);
 		}
+
+		else if (eventHandler == null)
+			return EventHandler.NULL;
 		return eventHandler;
 	}
 
@@ -111,7 +113,7 @@ public class EventHandlerManager {
 		return serverWorld.getRegion(loc).getEventHandler();
 	}
 
-	public static @Nullable EventHandler get(ServerPlayer serverPlayer) {
+	public static EventHandler get(ServerPlayer serverPlayer) {
 		return serverPlayer.getEventHandler();
 	}
 
