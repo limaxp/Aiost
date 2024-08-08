@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.bukkit.Chunk;
@@ -55,7 +54,7 @@ public class EventHandlerManager {
 	public static void init() {
 	}
 
-	public static void init(@Nonnull EventHandler defaultHandler) {
+	public static void init(EventHandler defaultHandler) {
 		if (EventHandlerManager.defaultHandler != EventHandler.NULL)
 			return;
 		EventHandlerManager.defaultHandler = defaultHandler;
@@ -68,25 +67,25 @@ public class EventHandlerManager {
 
 	}
 
-	public static synchronized void registerEntities(@Nonnull World world) {
+	public static synchronized void registerEntities(World world) {
 		for (Entity entity : world.getEntities())
 			if (entity instanceof LivingEntity)
 				ENTITY_MAP.put(entity, get(entity.getLocation()));
 	}
 
-	public static synchronized void registerEntities(@Nonnull Chunk chunk) {
+	public static synchronized void registerEntities(Chunk chunk) {
 		for (Entity entity : chunk.getEntities())
 			if (entity instanceof LivingEntity)
 				ENTITY_MAP.put(entity, get(entity.getLocation()));
 	}
 
-	public static synchronized void unregisterEntities(@Nonnull Chunk chunk) {
+	public static synchronized void unregisterEntities(Chunk chunk) {
 		for (Entity entity : chunk.getEntities())
 			if (entity instanceof LivingEntity)
 				ENTITY_MAP.remove(entity);
 	}
 
-	public static synchronized void setEntityHandler(@Nonnull Entity entity, @Nonnull EventHandler eventHandler) {
+	public static synchronized void setEntityHandler(Entity entity, EventHandler eventHandler) {
 		ENTITY_MAP.put(entity, eventHandler);
 		if (eventHandler instanceof TickableHandler) {
 			TICKABLE_ENTITIES.add(entity);
@@ -94,7 +93,7 @@ public class EventHandlerManager {
 		}
 	}
 
-	public static synchronized @Nullable EventHandler removeEntityHandler(@Nonnull Entity entity) {
+	public static synchronized @Nullable EventHandler removeEntityHandler(Entity entity) {
 		EventHandler eventHandler = ENTITY_MAP.remove(entity);
 		if (eventHandler instanceof TickableHandler) {
 			int index = TICKABLE_ENTITIES.lastIndexOf(entity);
@@ -104,11 +103,11 @@ public class EventHandlerManager {
 		return eventHandler;
 	}
 
-	public static @Nonnull EventHandler get(@Nonnull Location loc) {
+	public static EventHandler get(Location loc) {
 		return ServerWorld.getByWorld(loc.getWorld()).getRegion(loc).getEventHandler();
 	}
 
-	public static @Nonnull EventHandler get(@Nonnull ServerWorld serverWorld, @Nonnull Location loc) {
+	public static EventHandler get(ServerWorld serverWorld, Location loc) {
 		return serverWorld.getRegion(loc).getEventHandler();
 	}
 
@@ -116,19 +115,19 @@ public class EventHandlerManager {
 		return serverPlayer.getEventHandler();
 	}
 
-	public static @Nullable EventHandler get(@Nonnull Entity entity) {
+	public static @Nullable EventHandler get(Entity entity) {
 		return ENTITY_MAP.get(entity);
 	}
 
-	public static @Nullable EventHandler getOrDefault(@Nonnull Entity entity, EventHandler eventHandler) {
+	public static EventHandler getOrDefault(Entity entity, EventHandler eventHandler) {
 		return ENTITY_MAP.getOrDefault(entity, eventHandler);
 	}
 
-	public static @Nullable EventHandler getOrEmpty(@Nonnull Entity entity) {
+	public static EventHandler getOrEmpty(Entity entity) {
 		return ENTITY_MAP.getOrDefault(entity, EventHandler.NULL);
 	}
 
-	public static @Nonnull EventHandler getDefault() {
+	public static EventHandler getDefault() {
 		return defaultHandler;
 	}
 
