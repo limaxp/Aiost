@@ -10,6 +10,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
@@ -672,7 +673,7 @@ public class AiostListener implements Listener {
 		if (event.isCancelled())
 			return;
 
-		if (event.getEntity() instanceof LivingEntity)
+		if (event.getEntity() instanceof Mob)
 			EventHandlerManager.setEntityHandler(event.getEntity(), eventHandler);
 	}
 
