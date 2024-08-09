@@ -18,6 +18,7 @@ import com.pm.aiost.item.spell.spells.DisguiseSpell;
 import com.pm.aiost.item.spell.spells.EffectSpell;
 import com.pm.aiost.item.spell.spells.HealSpell;
 import com.pm.aiost.item.spell.spells.ProjectileSpell;
+import com.pm.aiost.item.spell.spells.SummonEntitySpell;
 import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
 import com.pm.aiost.misc.particle.IParticle;
@@ -174,17 +175,17 @@ public class Spells {
 			new AuraEffect(new Particle(org.bukkit.Particle.HAPPY_VILLAGER, 100, 5, 0, false),
 					new HealEffect(new byte[] { EffectAction.TICK }, EffectCondition.NONE, 2.0), 5)));
 
-//	public static final SummonEntitySpell SUMMON_ZOMBIE = a(
-//			new SummonEntitySpell("SummonZombie", "Summon Zombie", 20, 8, AiostEntityTypes.OWNABLE_ZOMBIE, 1200));
-//
-//	public static final SummonEntitySpell SUMMON_SKELETON = a(new SummonEntitySpell("SummonSkeleton", "Summon Skeleton",
-//			25, 10, AiostEntityTypes.OWNABLE_SKELETON, 1200));
-//
-//	public static final SummonEntitySpell SUMMON_WITHER_SKELETON = a(new SummonEntitySpell("SummonWitherSkeleton",
-//			"Summon Wither Skeleton", 30, 14, AiostEntityTypes.OWNABLE_WITHER_SKELETON, 1200));
-//
-//	public static final SummonEntitySpell SUMMON_ENDERMAN = a(new SummonEntitySpell("SummonEnderman", "Summon Enderman",
-//			30, 14, AiostEntityTypes.OWNABLE_ENDERMAN, 1200));
+	public static final SummonEntitySpell SUMMON_ZOMBIE = a(
+			new SummonEntitySpell("SummonZombie", "Summon Zombie", 20, 8, AiostEntityTypes.ZOMBIE, 1200));
+
+	public static final SummonEntitySpell SUMMON_SKELETON = a(
+			new SummonEntitySpell("SummonSkeleton", "Summon Skeleton", 25, 10, AiostEntityTypes.SKELETON, 1200));
+
+	public static final SummonEntitySpell SUMMON_WITHER_SKELETON = a(new SummonEntitySpell("SummonWitherSkeleton",
+			"Summon Wither Skeleton", 30, 14, AiostEntityTypes.WITHER_SKELETON, 1200));
+
+	public static final SummonEntitySpell SUMMON_ENDERMAN = a(
+			new SummonEntitySpell("SummonEnderman", "Summon Enderman", 30, 14, AiostEntityTypes.ENDERMAN, 1200));
 
 	// TODO: Conjured Weapons?
 
