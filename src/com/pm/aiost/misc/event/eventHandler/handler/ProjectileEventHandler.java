@@ -26,7 +26,7 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 	}
 
 	public ProjectileEventHandler(@Nullable ProjectileSource source) {
-		this.source = source;
+		setSource(source);
 	}
 
 	@Override

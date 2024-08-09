@@ -19,6 +19,7 @@ import com.pm.aiost.misc.event.eventHandler.handler.CancelEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.DuelEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.DuelRegionEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.LobbyEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.OwnableEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.PlayerRegionEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.PlayerWorldEventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
@@ -50,6 +51,7 @@ public class EventHandlerManager {
 		register(DuelEventHandler::new);
 		register(DuelRegionEventHandler::new);
 		register(ProjectileEventHandler::new);
+		register(OwnableEventHandler::new);
 	}
 
 	public static void init() {
