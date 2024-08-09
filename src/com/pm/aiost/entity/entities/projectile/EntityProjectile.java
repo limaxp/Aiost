@@ -47,10 +47,6 @@ public class EntityProjectile extends Snowball {
 		this.projectileType = projectileType;
 	}
 
-	public EntityType<?> getProjectileType() {
-		return projectileType;
-	}
-
 	@Override
 	public CraftEntity getBukkitEntity() {
 		CraftEntity bukkitEntity = NMS.getBukkitEntity(this);
@@ -80,10 +76,6 @@ public class EntityProjectile extends Snowball {
 
 		public void setProjectileType(EntityType<?> projectileType) {
 			getHandle().projectileType = projectileType;
-		}
-
-		public EntityType<?> getProjectileType() {
-			return getHandle().projectileType;
 		}
 
 		@Override
