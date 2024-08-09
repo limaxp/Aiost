@@ -19,7 +19,7 @@ import com.pm.aiost.misc.event.EquipmentListener;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandler.QuitReason;
 import com.pm.aiost.misc.menu.Menu;
-import com.pm.aiost.misc.packet.listen.PacketWatcher;
+import com.pm.aiost.misc.packet.PacketWatcher;
 import com.pm.aiost.misc.server.ServerManager;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.handler.VisibilityManager;

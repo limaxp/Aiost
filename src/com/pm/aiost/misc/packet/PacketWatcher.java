@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.packet.listen;
+package com.pm.aiost.misc.packet;
 
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;

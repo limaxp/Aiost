@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.packet.listen;
+package com.pm.aiost.misc.packet;
 
 import java.util.List;
 
@@ -8,7 +8,6 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.misc.packet.PacketThing;
 import com.pm.aiost.player.ServerPlayer;
 
 import io.netty.channel.ChannelHandlerContext;
