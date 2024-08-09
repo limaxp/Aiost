@@ -4,12 +4,14 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
+import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 import com.pm.aiost.misc.profile.Profiles;
 
 import net.minecraft.network.protocol.game.ClientboundPlayerInfoUpdatePacket;
@@ -27,12 +29,17 @@ public class DisguisePlayer implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
-		Location loc = player.getLocation();
+	public void addPackets(LivingEntity entity, List<Object> packets) {
+		Location loc = entity.getLocation();
 		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile));
-		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
+		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), EntityType.PLAYER));
-		Disguise.addPlayerStatePackets(NMS.to(player), packets);
+		DisguiseBuilder.addEntityStatePackets(NMS.to(entity), packets);
+	}
+
+	@Override
+	public void removePackets(LivingEntity entity, List<Object> packets) {
+		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
 	}
 
 	@Override

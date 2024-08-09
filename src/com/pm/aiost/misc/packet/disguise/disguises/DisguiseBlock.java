@@ -8,7 +8,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.nms.NMS;
@@ -50,12 +50,16 @@ public class DisguiseBlock implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
-		Location loc = player.getLocation();
-		int id = player.getEntityId();
-		packets.add(PacketFactory.packetEntitySpawn(id, player.getUniqueId(), loc.getX(), loc.getY(), loc.getZ(),
+	public void addPackets(LivingEntity entity, List<Object> packets) {
+		Location loc = entity.getLocation();
+		int id = entity.getEntityId();
+		packets.add(PacketFactory.packetEntitySpawn(id, entity.getUniqueId(), loc.getX(), loc.getY(), loc.getZ(),
 				loc.getYaw(), loc.getPitch(), AiostEntityTypes.FALLING_BLOCK, blockId));
 		packets.add(PacketFactory.packetEntityMetadata(id, DATA_WATCHER));
+	}
+
+	@Override
+	public void removePackets(LivingEntity entity, List<Object> packets) {
 	}
 
 	@Override

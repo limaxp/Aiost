@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.entity.AiostEntityTypes;
@@ -39,11 +39,11 @@ public class DisguiseFurniture implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
-		Location loc = player.getLocation();
-		int id = player.getEntityId();
+	public void addPackets(LivingEntity entity, List<Object> packets) {
+		Location loc = entity.getLocation();
+		int id = entity.getEntityId();
 
-		packets.add(PacketFactory.packetEntitySpawn(id, player.getUniqueId(), loc.getX(), loc.getY() - 1.188,
+		packets.add(PacketFactory.packetEntitySpawn(id, entity.getUniqueId(), loc.getX(), loc.getY() - 1.188,
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.ARMOR_STAND));
 		packets.add(PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER));
 		if (is != null)
@@ -51,6 +51,10 @@ public class DisguiseFurniture implements Disguise {
 		else
 			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot,
 					NMS.to(Furniture.FURNITURES.get(furnitureID))));
+	}
+
+	@Override
+	public void removePackets(LivingEntity entity, List<Object> packets) {
 	}
 
 	@Override

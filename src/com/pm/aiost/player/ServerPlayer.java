@@ -4,7 +4,6 @@ import static com.pm.aiost.misc.utils.ChatColor.YELLOW;
 
 import java.sql.SQLException;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.Collection;
 import java.util.Deque;
@@ -51,9 +50,8 @@ import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.misc.packet.PacketFactory;
-import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.disguise.Disguise;
+import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 import com.pm.aiost.misc.packet.entity.entities.ChatHologram;
 import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
@@ -79,7 +77,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.LivingEntity;
 
 public class ServerPlayer implements AutoCloseable {
@@ -379,13 +376,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		List<Object> packets = new ArrayList<Object>();
-		packets.add(PacketFactory.packetEntityDestroy(player.getEntityId()));
-		if (this.disguise != null)
-			this.disguise.removePackets(player, packets);
-		disguise.addPackets(player, packets);
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(player))
-			PacketSender.send(con, packets);
+		DisguiseBuilder.setDisguise(player, disguise, this.disguise);
 		setSelfDisguise();
 		this.disguise = disguise;
 	}
@@ -397,21 +388,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void removeDisguise() {
-		if (this.disguise == null)
-			return;
-
-		List<Object> packets = new ArrayList<Object>();
-		net.minecraft.world.entity.player.Player entityPlayer = NMS.to(player);
-		packets.add(PacketFactory.packetEntityDestroy(entityPlayer.getId()));
-		disguise.removePackets(player, packets);
-		if (defaultDisguise != null)
-			defaultDisguise.addPackets(player, packets);
-		else {
-			packets.add(PacketFactory.packetEntitySpawn(entityPlayer));
-			Disguise.addPlayerStatePackets(entityPlayer, packets);
-		}
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(player))
-			PacketSender.send(con, packets);
+		DisguiseBuilder.removeDisguise(player, disguise, defaultDisguise);
 		removeSelfDisguise();
 		this.disguise = null;
 	}

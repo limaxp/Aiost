@@ -4,12 +4,13 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
+import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
 
 import net.minecraft.world.entity.EntityType;
 
@@ -29,11 +30,15 @@ public class DisguiseEntityLiving implements Disguise {
 	}
 
 	@Override
-	public void addPackets(Player player, List<Object> packets) {
-		Location loc = player.getLocation();
-		packets.add(PacketFactory.packetEntitySpawn(player.getEntityId(), player.getUniqueId(), loc.getX(), loc.getY(),
+	public void addPackets(LivingEntity entity, List<Object> packets) {
+		Location loc = entity.getLocation();
+		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), entity.getUniqueId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.get(entityId)));
-		Disguise.addPlayerStatePackets(NMS.to(player), packets);
+		DisguiseBuilder.addEntityStatePackets(NMS.to(entity), packets);
+	}
+
+	@Override
+	public void removePackets(LivingEntity entity, List<Object> packets) {
 	}
 
 	@Override
