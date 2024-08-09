@@ -11,26 +11,36 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Scoreboard;
 import org.bukkit.scoreboard.Team;
 
+import com.pm.aiost.entity.goal.FollowOwnerGoal;
+import com.pm.aiost.entity.goal.NearestAttackableTargetGoalExceptTeammates;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.TickableHandler;
+import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.world.entity.Mob;
 
 public class OwnableEventHandler implements EventHandler, TickableHandler {
 
 	protected LivingEntity entity;
-	protected Entity owner;
+	protected LivingEntity owner;
 	protected int duration = -1;
 
 	public OwnableEventHandler() {
 	}
 
-	public OwnableEventHandler(LivingEntity entity, Entity owner) {
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public OwnableEventHandler(LivingEntity entity, LivingEntity owner) {
 		setEntity(entity);
 		setOwner(owner);
 
-//		this.goalSelector.a(1, new PathfinderGoalFollowOwner(this, 1.0D, 10.0F, 2.0F, false));
-//		this.targetSelector.a(3,
-//				new PathfinderGoalNearestAttackableTargetExceptTeammates(this, EntityHuman.class, true));
+		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
+		if (entityNMS instanceof Mob) {
+			Mob mobNMS = (Mob) entityNMS;
+			mobNMS.goalSelector.addGoal(1, new FollowOwnerGoal(mobNMS, this, 1.0D, 10.0F, 2.0F, false));
+			mobNMS.targetSelector.addGoal(3, new NearestAttackableTargetGoalExceptTeammates(mobNMS, this,
+					net.minecraft.world.entity.player.Player.class, true));
+		}
 	}
 
 	@Override
@@ -57,11 +67,11 @@ public class OwnableEventHandler implements EventHandler, TickableHandler {
 		this.entity = entity;
 	}
 
-	public Entity getOwner() {
+	public LivingEntity getOwner() {
 		return owner;
 	}
 
-	public void setOwner(Entity owner) {
+	public void setOwner(LivingEntity owner) {
 		if (this.owner instanceof Player)
 			removeTeam((Player) this.owner);
 

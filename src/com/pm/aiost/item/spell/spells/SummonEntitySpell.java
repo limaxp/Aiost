@@ -5,7 +5,6 @@ import java.util.Set;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Particle;
-import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.entity.AiostEntityTypes;
@@ -58,7 +57,7 @@ public class SummonEntitySpell extends Spell {
 		return true;
 	}
 
-	protected void spawnEntity(Entity owner, Location loc) {
+	protected void spawnEntity(LivingEntity owner, Location loc) {
 		loc.getWorld().spawnParticle(Particle.PORTAL, loc, 20, 0.5F, 0.5F, 0.5F, 0.1F, null, false);
 		LivingEntity ownable = NMS.from(AiostEntityTypes.spawnEntity(entityType, loc));
 		OwnableEventHandler handler = new OwnableEventHandler(ownable, owner);
