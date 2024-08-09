@@ -51,6 +51,9 @@ public class ProjectileEventHandler implements EventHandler, TickableHandler {
 
 		if (event.getHitBlock() != null)
 			effect.onProjectileHit(event);
+
+		if (doesExplode())
+			event.getEntity().getWorld().createExplosion(event.getEntity().getLocation(), explosionStrength);
 	}
 
 	public @Nullable ProjectileSource getSource() {
