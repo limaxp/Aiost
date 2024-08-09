@@ -376,7 +376,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		DisguiseManager.setDisguise(player, disguise, this.disguise);
+		DisguiseManager.setDisguise_INTERN(player, disguise, this.disguise);
 		setSelfDisguise();
 		this.disguise = disguise;
 	}
@@ -388,7 +388,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void removeDisguise() {
-		DisguiseManager.removeDisguise(player, disguise, defaultDisguise);
+		DisguiseManager.removeDisguise_INTERN(player, disguise, defaultDisguise);
 		removeSelfDisguise();
 		this.disguise = null;
 	}

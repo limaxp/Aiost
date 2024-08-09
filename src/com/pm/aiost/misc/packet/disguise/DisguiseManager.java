@@ -9,6 +9,7 @@ import javax.annotation.Nullable;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 
 import com.google.common.base.Supplier;
 import com.pm.aiost.misc.nms.NMS;
@@ -50,16 +51,19 @@ public class DisguiseManager {
 		return disguise;
 	}
 
-	public static void setDisguise(ServerPlayer player, Disguise disguise) {
-		player.setDisguise(disguise);
-	}
-
 	public static void setDisguise(LivingEntity entity, Disguise disguise) {
-		setDisguise(entity, disguise, getDisguise(entity));
+		Disguise prevDisguise = getDisguise(entity);
+		List<Object> packets = new ArrayList<Object>();
+		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
+		if (prevDisguise != null)
+			prevDisguise.removePackets(entity, packets);
+		disguise.addPackets(entity, packets);
+		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entity))
+			PacketSender.send(con, packets);
 		// TODO save disguise!
 	}
 
-	public static void setDisguise(LivingEntity entity, Disguise disguise, Disguise prevDisguise) {
+	public static void setDisguise_INTERN(Player entity, Disguise disguise, Disguise prevDisguise) {
 		List<Object> packets = new ArrayList<Object>();
 		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
 		if (prevDisguise != null)
@@ -69,16 +73,22 @@ public class DisguiseManager {
 			PacketSender.send(con, packets);
 	}
 
-	public static void removeDisguise(ServerPlayer player) {
-		player.removeDisguise();
-	}
-
 	public static void removeDisguise(LivingEntity entity) {
-		removeDisguise(entity, getDisguise(entity), null);
-		// TODO save disguise!
+		Disguise disguise = getDisguise(entity);
+		if (disguise == null)
+			return;
+
+		List<Object> packets = new ArrayList<Object>();
+		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
+		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
+		disguise.removePackets(entity, packets);
+		packets.add(PacketFactory.packetEntitySpawn(entityNMS));
+		DisguiseManager.addEntityStatePackets(entityNMS, packets);
+		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entityNMS))
+			PacketSender.send(con, packets);
 	}
 
-	public static void removeDisguise(LivingEntity entity, Disguise disguise, Disguise defaultDisguise) {
+	public static void removeDisguise_INTERN(Player entity, Disguise disguise, Disguise defaultDisguise) {
 		if (disguise == null)
 			return;
 
