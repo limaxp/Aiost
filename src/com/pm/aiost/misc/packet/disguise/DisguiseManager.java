@@ -89,9 +89,6 @@ public class DisguiseManager {
 	}
 
 	public static void removeDisguise_INTERN(Player entity, Disguise disguise, Disguise defaultDisguise) {
-		if (disguise == null)
-			return;
-
 		List<Object> packets = new ArrayList<Object>();
 		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
 		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));

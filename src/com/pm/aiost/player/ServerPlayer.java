@@ -388,6 +388,9 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void removeDisguise() {
+		if (disguise == null)
+			return;
+
 		DisguiseManager.removeDisguise_INTERN(player, disguise, defaultDisguise);
 		removeSelfDisguise();
 		this.disguise = null;
