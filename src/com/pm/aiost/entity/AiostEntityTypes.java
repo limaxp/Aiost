@@ -14,6 +14,7 @@ import com.google.common.collect.ImmutableSet;
 import com.mojang.datafixers.DataFixUtils;
 import com.mojang.datafixers.types.Type;
 import com.pm.aiost.entity.entities.Ball;
+import com.pm.aiost.entity.entities.EntityRideable;
 import com.pm.aiost.entity.entities.projectile.ArmorstandProjectile;
 import com.pm.aiost.entity.entities.projectile.BlockProjectile;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile;
@@ -60,6 +61,10 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	public static final EntityType<ArmorstandProjectile> ARMORSTAND_PROJECTILE = register("projectile",
 			EntityType.SNOWBALL, EntityType.Builder
 					.<ArmorstandProjectile>of(ArmorstandProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
+
+	public static final EntityType<EntityRideable> RIDEABLE = register("rideable", EntityType.HORSE,
+			EntityType.Builder.<EntityRideable>of(EntityRideable::new, MobCategory.MISC).sized(1.3964844F, 1.6F)
+					.eyeHeight(1.52F).passengerAttachments(1.44375F).clientTrackingRange(10));
 
 	public static final EntityType<Ball> BALL = register("ball", EntityType.SLIME, EntityType.Builder
 			.<Ball>of(Ball::new, MobCategory.MONSTER).sized(0.52F, 0.52F).eyeHeight(0.325F).clientTrackingRange(10));
