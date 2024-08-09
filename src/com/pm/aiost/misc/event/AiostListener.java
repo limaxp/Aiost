@@ -29,6 +29,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityPickupItemEvent;
+import org.bukkit.event.entity.EntityRemoveEvent;
 import org.bukkit.event.entity.EntityShootBowEvent;
 import org.bukkit.event.entity.EntitySpawnEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
@@ -683,6 +684,11 @@ public class AiostListener implements Listener {
 			return;
 
 		EventHandlerManager.get(event.getEntity()).onCreatureSpawn(event);
+	}
+
+	@EventHandler(priority = EventPriority.LOW)
+	public void onEntityRemoveEvent(EntityRemoveEvent event) {
+		EventHandlerManager.removeEntityHandler(event.getEntity());
 	}
 
 	@EventHandler(priority = EventPriority.LOW)

@@ -19,7 +19,7 @@ import net.minecraft.world.level.Level;
 public class EntityProjectile extends Snowball {
 
 	private ProjectileEventHandler projectileHandler;
-	private EntityType<?> projectileType = AiostEntityTypes.PROJECTILE;
+	private EntityType<?> projectileType = EntityType.SNOWBALL;
 
 	public EntityProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
 		super(EntityType.SNOWBALL, level);
