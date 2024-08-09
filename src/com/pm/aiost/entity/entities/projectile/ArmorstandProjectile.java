@@ -10,11 +10,7 @@ public class ArmorstandProjectile extends EntityProjectile {
 
 	public ArmorstandProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
 		super(entitytypes, level);
-	}
-
-	@Override
-	public EntityType<?> getType() {
-		return EntityType.ARMOR_STAND;
+		setProjectileType(EntityType.ARMOR_STAND);
 	}
 
 	@Override

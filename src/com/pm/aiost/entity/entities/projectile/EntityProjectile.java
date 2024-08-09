@@ -18,10 +18,16 @@ import net.minecraft.world.level.Level;
 
 public class EntityProjectile extends Snowball {
 
-	protected ProjectileEventHandler projectileHandler;
+	private ProjectileEventHandler projectileHandler;
+	private EntityType<?> projectileType = AiostEntityTypes.PROJECTILE;
 
 	public EntityProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
 		super(EntityType.SNOWBALL, level);
+	}
+
+	@Override
+	public EntityType<?> getType() {
+		return projectileType;
 	}
 
 	@Override
@@ -35,6 +41,14 @@ public class EntityProjectile extends Snowball {
 
 	public ProjectileEventHandler getProjectileHandler() {
 		return projectileHandler;
+	}
+
+	public void setProjectileType(EntityType<?> projectileType) {
+		this.projectileType = projectileType;
+	}
+
+	public EntityType<?> getProjectileType() {
+		return projectileType;
 	}
 
 	@Override
@@ -62,6 +76,14 @@ public class EntityProjectile extends Snowball {
 
 		public ProjectileEventHandler getProjectileHandler() {
 			return getHandle().getProjectileHandler();
+		}
+
+		public void setProjectileType(EntityType<?> projectileType) {
+			getHandle().projectileType = projectileType;
+		}
+
+		public EntityType<?> getProjectileType() {
+			return getHandle().projectileType;
 		}
 
 		@Override

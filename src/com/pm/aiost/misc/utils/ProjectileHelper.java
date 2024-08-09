@@ -1,5 +1,7 @@
 package com.pm.aiost.misc.utils;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.Material;
 import org.bukkit.damage.DamageSource;
 import org.bukkit.damage.DamageType;
@@ -8,6 +10,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.projectiles.ProjectileSource;
 
+import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.entity.EntityHelper;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile.ProjectileEntity;
@@ -24,36 +27,54 @@ public class ProjectileHelper {
 
 	private static final ItemStack EMPTY = new ItemStack(Material.AIR);
 
-	public static boolean launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
+	public static @Nullable ProjectileEntity launchCustomProjectile(LivingEntity source, EntityType<?> type,
 			float height, float power, float accuracy, ProjectileEventHandler handler, boolean gravity) {
+		return launchCustomProjectile(source, type, source.getLocation().getPitch(), source.getLocation().getYaw(),
+				height, power, accuracy, handler, gravity);
+	}
+
+	public static @Nullable ProjectileEntity launchCustomProjectile(LivingEntity source, EntityType<?> type,
+			float pitch, float yaw, float height, float power, float accuracy, ProjectileEventHandler handler,
+			boolean gravity) {
+		ProjectileEntity entity = launchProjectile(source, AiostEntityTypes.PROJECTILE, EMPTY, pitch, yaw, height,
+				power, accuracy, handler, gravity);
+		if (entity != null)
+			entity.setProjectileType(type);
+		return entity;
+	}
+
+	public static @Nullable ProjectileEntity launchProjectile(LivingEntity source,
+			EntityType<? extends EntityProjectile> type, float height, float power, float accuracy,
+			ProjectileEventHandler handler, boolean gravity) {
 		return launchProjectile(source, type, EMPTY, height, power, accuracy, handler, gravity);
 	}
 
-	public static boolean launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
-			float pitch, float yaw, float height, float power, float accuracy, ProjectileEventHandler handler,
-			boolean gravity) {
+	public static @Nullable ProjectileEntity launchProjectile(LivingEntity source,
+			EntityType<? extends EntityProjectile> type, float pitch, float yaw, float height, float power,
+			float accuracy, ProjectileEventHandler handler, boolean gravity) {
 		return launchProjectile(source, type, EMPTY, pitch, yaw, height, power, accuracy, handler, gravity);
 	}
 
-	public static boolean launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
-			ItemStack is, float height, float power, float accuracy, ProjectileEventHandler handler, boolean gravity) {
+	public static @Nullable ProjectileEntity launchProjectile(LivingEntity source,
+			EntityType<? extends EntityProjectile> type, ItemStack is, float height, float power, float accuracy,
+			ProjectileEventHandler handler, boolean gravity) {
 		return launchProjectile(source, type, is, source.getLocation().getPitch(), source.getLocation().getYaw(),
 				height, power, accuracy, handler, gravity);
 	}
 
-	public static boolean launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,
-			ItemStack is, float pitch, float yaw, float height, float power, float accuracy,
-			ProjectileEventHandler handler, boolean gravity) {
+	public static @Nullable ProjectileEntity launchProjectile(LivingEntity source,
+			EntityType<? extends EntityProjectile> type, ItemStack is, float pitch, float yaw, float height,
+			float power, float accuracy, ProjectileEventHandler handler, boolean gravity) {
 		ProjectileEntity projectile = launchProjectile(source, type, pitch, yaw, height, power, accuracy);
 		if (AiostEventFactory.callProjectileLaunchEvent(projectile).isCancelled()) {
 			projectile.remove();
-			return false;
+			return null;
 		}
 		projectile.setItem(is);
 		projectile.setGravity(gravity);
 		projectile.setProjectileHandler(handler);
 		EventHandlerManager.setEntityHandler(projectile, handler);
-		return true;
+		return projectile;
 	}
 
 	private static ProjectileEntity launchProjectile(LivingEntity source, EntityType<? extends EntityProjectile> type,

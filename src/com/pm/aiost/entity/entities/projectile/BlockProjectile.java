@@ -10,11 +10,7 @@ public class BlockProjectile extends EntityProjectile {
 
 	public BlockProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
 		super(entitytypes, level);
-	}
-
-	@Override
-	public EntityType<?> getType() {
-		return EntityType.FALLING_BLOCK;
+		setProjectileType(EntityType.FALLING_BLOCK);
 	}
 
 	@Override

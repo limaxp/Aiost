@@ -87,7 +87,7 @@ public class ThrowItemEffect extends Effect {
 
 		ProjectileEventHandler handler = new ProjectileEventHandler(entity);
 		if (ProjectileHelper.launchProjectile(entity, AiostEntityTypes.PROJECTILE, itemStack, 0.5F,
-				velocityMultiplier * 0.4F, 0.95F, handler, false)) {
+				velocityMultiplier * 0.4F, 0.95F, handler, false) != null) {
 			handler.setDamage(damage);
 			handler.setKnockback(knockback);
 			handler.setEffect(effect);

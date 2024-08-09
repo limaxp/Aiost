@@ -57,7 +57,7 @@ public class LaunchTNTEffect extends SimpleLivingEntityEffect {
 	public void runEffect(LivingEntity entity) {
 		ProjectileEventHandler handler = new ProjectileEventHandler(entity);
 		if (ProjectileHelper.launchProjectile(entity, AiostEntityTypes.TNT_PROJECTILE, 0.5F, velocityMultiplier * 0.4F,
-				0.95F, handler, false)) {
+				0.95F, handler, false) != null) {
 			handler.setDamage(damage);
 			handler.setKnockback(knockback);
 			handler.setEffect(effect);

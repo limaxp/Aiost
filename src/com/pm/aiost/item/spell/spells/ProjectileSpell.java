@@ -30,7 +30,7 @@ public abstract class ProjectileSpell extends Spell {
 	public void cast(LivingEntity entity, int i) {
 		ProjectileEventHandler handler = new ProjectileEventHandler(entity);
 		if (ProjectileHelper.launchProjectile(entity, AiostEntityTypes.PROJECTILE, new ItemStack(Material.AIR), 0.5F,
-				power * 0.4F, 0.95F, handler, false)) {
+				power * 0.4F, 0.95F, handler, false) != null) {
 			modifyProjectile(handler);
 			entity.getWorld().playSound(entity.getLocation(), sound, SoundCategory.NEUTRAL, 0.5F,
 					0.4F / (0.5F * 0.4F + 0.8F));

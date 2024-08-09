@@ -10,11 +10,7 @@ public class TNTProjectile extends EntityProjectile {
 
 	public TNTProjectile(EntityType<? extends EntityProjectile> entitytypes, Level level) {
 		super(entitytypes, level);
-	}
-
-	@Override
-	public EntityType<?> getType() {
-		return EntityType.TNT;
+		setProjectileType(EntityType.TNT);
 	}
 
 	@Override
