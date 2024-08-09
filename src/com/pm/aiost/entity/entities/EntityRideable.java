@@ -9,9 +9,13 @@ import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.nms.NMS;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.animal.horse.Horse;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
 
 public class EntityRideable extends Horse {
 
@@ -24,6 +28,12 @@ public class EntityRideable extends Horse {
 	@Override
 	public EntityType<?> getType() {
 		return rideableType;
+	}
+
+	@Override
+	public InteractionResult interactAt(Player entityhuman, Vec3 vec3d, InteractionHand enumhand) {
+		doPlayerRide(entityhuman);
+		return super.interactAt(entityhuman, vec3d, enumhand);
 	}
 
 	@Override
