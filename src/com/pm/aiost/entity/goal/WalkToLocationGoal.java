@@ -7,7 +7,7 @@ import com.pm.aiost.misc.utils.LocationHelper;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.goal.Goal;
 
-public class PathfinderGoalWalkToLocation extends Goal {
+public class WalkToLocationGoal extends Goal {
 
 	public static final int MAX_TARGET_DISTANCE = 15;
 
@@ -19,11 +19,11 @@ public class PathfinderGoalWalkToLocation extends Goal {
 	private double z;
 	private int timeBetweenMovement;
 
-	public PathfinderGoalWalkToLocation(PathfinderMob entity, Location loc, double speed) {
+	public WalkToLocationGoal(PathfinderMob entity, Location loc, double speed) {
 		this(entity, loc, speed, 5);
 	}
 
-	public PathfinderGoalWalkToLocation(PathfinderMob entity, Location loc, double speed, int timeBetweenMovement) {
+	public WalkToLocationGoal(PathfinderMob entity, Location loc, double speed, int timeBetweenMovement) {
 		this.entity = entity;
 		this.loc = loc;
 		this.speed = speed;

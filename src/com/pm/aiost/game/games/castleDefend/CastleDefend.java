@@ -34,7 +34,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.entity.goal.PathfinderGoalWalkToLocation;
+import com.pm.aiost.entity.goal.WalkToLocationGoal;
 import com.pm.aiost.entity.spawner.StageEntitySpawner;
 import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameKit;
@@ -286,7 +286,7 @@ public class CastleDefend extends Game {
 			PathfinderMob insentient = (PathfinderMob) entity;
 			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
 			insentient.setPersistenceRequired();
-			insentient.goalSelector.addGoal(2, new PathfinderGoalWalkToLocation(insentient, targetLocation, 1.0F));
+			insentient.goalSelector.addGoal(2, new WalkToLocationGoal(insentient, targetLocation, 1.0F));
 		} // else if (entity instanceof CustomInsentient) {
 //			CustomInsentient insentient = (CustomInsentient) entity;
 //			EventHandlerManager.setEntityHandler(insentient.getBukkitEntity(), castleDefenseMobEventHandler);
