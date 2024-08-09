@@ -14,7 +14,7 @@ import com.pm.aiost.item.ItemLoader;
 import com.pm.aiost.misc.SpigotConfigManager;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
+import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.misc.registry.AiostRegistry;
@@ -128,7 +128,7 @@ public class UnlockableManager {
 		int i = 1;
 		for (String name : names) {
 			ConfigurationSection section = morphsSection.getConfigurationSection(name);
-			disguises[i] = DisguiseBuilder.create(section);
+			disguises[i] = DisguiseManager.create(section);
 			prices[i] = section.getInt("price");
 			descriptions[i] = section.getStringList("description");
 			i++;

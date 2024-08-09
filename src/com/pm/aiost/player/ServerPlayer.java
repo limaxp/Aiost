@@ -51,7 +51,7 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.packet.disguise.DisguiseBuilder;
+import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 import com.pm.aiost.misc.packet.entity.entities.ChatHologram;
 import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
 import com.pm.aiost.misc.packet.object.objects.Hologram;
@@ -376,7 +376,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		DisguiseBuilder.setDisguise(player, disguise, this.disguise);
+		DisguiseManager.setDisguise(player, disguise, this.disguise);
 		setSelfDisguise();
 		this.disguise = disguise;
 	}
@@ -388,7 +388,7 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void removeDisguise() {
-		DisguiseBuilder.removeDisguise(player, disguise, defaultDisguise);
+		DisguiseManager.removeDisguise(player, disguise, defaultDisguise);
 		removeSelfDisguise();
 		this.disguise = null;
 	}

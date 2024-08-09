@@ -25,7 +25,7 @@ import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 
-public class DisguiseBuilder {
+public class DisguiseManager {
 
 	private static final Map<String, Supplier<Disguise>> NAME_MAP = new HashMap<String, Supplier<Disguise>>();
 
@@ -90,7 +90,7 @@ public class DisguiseBuilder {
 			defaultDisguise.addPackets(entity, packets);
 		else {
 			packets.add(PacketFactory.packetEntitySpawn(entityNMS));
-			DisguiseBuilder.addEntityStatePackets(entityNMS, packets);
+			DisguiseManager.addEntityStatePackets(entityNMS, packets);
 		}
 		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entityNMS))
 			PacketSender.send(con, packets);
