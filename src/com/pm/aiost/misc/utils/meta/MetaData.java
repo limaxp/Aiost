@@ -3,6 +3,8 @@ package com.pm.aiost.misc.utils.meta;
 import java.util.List;
 import java.util.concurrent.Callable;
 
+import javax.annotation.Nullable;
+
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.LazyMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -28,24 +30,17 @@ public class MetaData {
 	}
 
 	public static boolean has(Metadatable metable, String key) {
-		List<MetadataValue> values = metable.getMetadata(key);
-		for (MetadataValue val : values) {
-			if (val.getOwningPlugin() == plugin)
-				return true;
-		}
-		return false;
-	}
-
-	public static MetadataValue getValue(Metadatable metable, String key) {
-		List<MetadataValue> values = metable.getMetadata(key);
-		for (MetadataValue val : values) {
-			if (val.getOwningPlugin() == plugin)
-				return val;
-		}
-		return null;
+		return metable.hasMetadata(key);
 	}
 
 	public static Object get(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).value();
+		return null;
+	}
+
+	public static Object getSafe(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
@@ -56,6 +51,13 @@ public class MetaData {
 
 	public static long getLong(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asLong();
+		return 0;
+	}
+
+	public static long getLongSafe(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
 				return val.asLong();
@@ -63,7 +65,14 @@ public class MetaData {
 		return 0;
 	}
 
-	public static int getInt(Metadatable metable, String key) {
+	public static long getInt(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asInt();
+		return 0;
+	}
+
+	public static int getIntSafe(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
@@ -74,6 +83,13 @@ public class MetaData {
 
 	public static short getShort(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asShort();
+		return 0;
+	}
+
+	public static short getShortSafe(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
 				return val.asShort();
@@ -82,6 +98,13 @@ public class MetaData {
 	}
 
 	public static byte getByte(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asByte();
+		return 0;
+	}
+
+	public static byte getByteSafe(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
@@ -92,6 +115,13 @@ public class MetaData {
 
 	public static float getFloat(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asFloat();
+		return 0;
+	}
+
+	public static float getFloatSafe(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
 				return val.asFloat();
@@ -100,6 +130,13 @@ public class MetaData {
 	}
 
 	public static double getDouble(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asDouble();
+		return 0;
+	}
+
+	public static double getDoubleSafe(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
@@ -110,6 +147,13 @@ public class MetaData {
 
 	public static boolean getBoolean(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asBoolean();
+		return false;
+	}
+
+	public static boolean getBooleanSafe(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
 				return val.asBoolean();
@@ -117,7 +161,14 @@ public class MetaData {
 		return false;
 	}
 
-	public static String getString(Metadatable metable, String key) {
+	public static @Nullable String getString(Metadatable metable, String key) {
+		List<MetadataValue> values = metable.getMetadata(key);
+		if (values.size() > 0)
+			return values.get(0).asString();
+		return null;
+	}
+
+	public static @Nullable String getStringSafe(Metadatable metable, String key) {
 		List<MetadataValue> values = metable.getMetadata(key);
 		for (MetadataValue val : values) {
 			if (val.getOwningPlugin() == plugin)
