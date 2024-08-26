@@ -57,14 +57,15 @@ public class DisguiseManager {
 	}
 
 	public static void setDisguise(LivingEntity entity, Disguise disguise) {
-		List<Object> packets = new ArrayList<Object>();
-		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
-		disguise.addPackets(entity, packets);
 		TrackedEntity tracker = NMS.getEntityTracker(entity);
-		if (tracker != null)
+		if (tracker != null) {
+			List<Object> packets = new ArrayList<Object>();
+			packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
+			disguise.addPackets(entity, packets);
 			for (ServerPlayerConnection con : tracker.seenBy)
 				for (Object packet : packets)
 					PacketSender.send(con, (Packet<?>) packet);
+		}
 		MetaData.set(entity, KEY, disguise);
 	}
 
@@ -73,16 +74,17 @@ public class DisguiseManager {
 		if (disguise == null)
 			return;
 
-		List<Object> packets = new ArrayList<Object>();
-		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
-		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
-		packets.add(PacketFactory.packetEntitySpawn(entityNMS));
-		DisguiseManager.addEntityStatePackets(entityNMS, packets);
 		TrackedEntity tracker = NMS.getEntityTracker(entity);
-		if (tracker != null)
+		if (tracker != null) {
+			List<Object> packets = new ArrayList<Object>();
+			net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
+			packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
+			packets.add(PacketFactory.packetEntitySpawn(entityNMS));
+			DisguiseManager.addEntityStatePackets(entityNMS, packets);
 			for (ServerPlayerConnection con : tracker.seenBy)
 				for (Object packet : packets)
 					PacketSender.send(con, (Packet<?>) packet);
+		}
 		MetaData.remove(entity, KEY);
 	}
 
