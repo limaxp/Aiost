@@ -22,6 +22,7 @@ import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
 import com.pm.aiost.misc.utils.meta.MetaData;
 
 import net.minecraft.network.protocol.Packet;
+import net.minecraft.server.level.ChunkMap.TrackedEntity;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -59,9 +60,11 @@ public class DisguiseManager {
 		List<Object> packets = new ArrayList<Object>();
 		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
 		disguise.addPackets(entity, packets);
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entity))
-			for (Object packet : packets)
-				PacketSender.send(con, (Packet<?>) packet);
+		TrackedEntity tracker = NMS.getEntityTracker(entity);
+		if (tracker != null)
+			for (ServerPlayerConnection con : tracker.seenBy)
+				for (Object packet : packets)
+					PacketSender.send(con, (Packet<?>) packet);
 		MetaData.set(entity, KEY, disguise);
 	}
 
@@ -75,9 +78,11 @@ public class DisguiseManager {
 		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
 		packets.add(PacketFactory.packetEntitySpawn(entityNMS));
 		DisguiseManager.addEntityStatePackets(entityNMS, packets);
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entityNMS))
-			for (Object packet : packets)
-				PacketSender.send(con, (Packet<?>) packet);
+		TrackedEntity tracker = NMS.getEntityTracker(entity);
+		if (tracker != null)
+			for (ServerPlayerConnection con : tracker.seenBy)
+				for (Object packet : packets)
+					PacketSender.send(con, (Packet<?>) packet);
 		MetaData.remove(entity, KEY);
 	}
 
