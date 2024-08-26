@@ -2,7 +2,7 @@ package com.pm.aiost.entity.spawner;
 
 import org.bukkit.configuration.ConfigurationSection;
 
-public class StageEntitySpawner extends MultiLocEntitySpawner {
+public class StageEntitySpawner extends EntitySpawner {
 
 	private int toSpawn;
 	private int currentlySpawned;

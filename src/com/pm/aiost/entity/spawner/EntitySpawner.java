@@ -11,6 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.misc.utils.LocationHelper;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -30,6 +31,8 @@ public abstract class EntitySpawner {
 	private int intervallTime;
 	private int time;
 	private int spawnSize;
+	private Location[] locations;
+	private int locationVaraety;
 
 	public EntitySpawner() {
 		this.random = new Random();
@@ -37,9 +40,8 @@ public abstract class EntitySpawner {
 		this.spawnCallback = NULL_CALLBACK;
 		this.intervallTime = 20;
 		this.spawnSize = 4;
+		locationVaraety = 1;
 	}
-
-	public abstract Location getLocation();
 
 	public final BukkitRunnable startScheduler() {
 		scheduler = new BukkitRunnable() {
@@ -70,6 +72,14 @@ public abstract class EntitySpawner {
 	}
 
 	public void spawn(int size) {
+		int spawnSize = size / locationVaraety;
+		if (spawnSize > 0)
+			for (int i = 0; i < locationVaraety; i++)
+				spawnRandom(spawnSize);
+		spawnRandom(size % locationVaraety);
+	}
+
+	private void spawnRandom(int size) {
 		Location loc = getLocation();
 		while (size > 0) {
 			int groupSize = Math.min(1 + random.nextInt(size), size);
@@ -78,6 +88,40 @@ public abstract class EntitySpawner {
 			for (int i = 0; i < groupSize; i++)
 				spawnCallback.accept(AiostEntityTypes.spawnEntity(type, loc));
 		}
+	}
+
+	public void setLocations(Location[] locations) {
+		this.locations = locations;
+		locationVaraety = locations.length;
+	}
+
+	public Location[] getLocations() {
+		return locations;
+	}
+
+	public void setLocation(int index, Location location) {
+		this.locations[index] = location;
+	}
+
+	public void setLocation(Location location) {
+		this.locations = new Location[] { location };
+		locationVaraety = 1;
+	}
+
+	public Location getLocation(int index) {
+		return locations[index];
+	}
+
+	public Location getLocation() {
+		return locations[random.nextInt(locations.length)];
+	}
+
+	public void setLocationVaraety(int locationVaraety) {
+		this.locationVaraety = locationVaraety;
+	}
+
+	public int getLocationVaraety() {
+		return locationVaraety;
 	}
 
 	public void setTime(int time) {
@@ -153,6 +197,12 @@ public abstract class EntitySpawner {
 		time = section.getInt("time");
 		spawnSize = section.getInt("spawnSize");
 		this.entityTypes = AiostEntityTypes.load(section, "entityTypes");
+		ConfigurationSection locationsSection = section.getConfigurationSection("locations");
+		List<Location> locations = new ArrayList<Location>();
+		for (String key : locationsSection.getKeys(false))
+			locations.add(LocationHelper.load(locationsSection.getConfigurationSection(key)));
+		this.locations = locations.toArray(new Location[locations.size()]);
+		locationVaraety = section.getInt("locationVaraety");
 	}
 
 	public void save(ConfigurationSection section) {
@@ -160,5 +210,10 @@ public abstract class EntitySpawner {
 		section.set("time", time);
 		section.set("spawnSize", spawnSize);
 		AiostEntityTypes.save(section, "entityTypes", entityTypes);
+		ConfigurationSection locationsSection = section.createSection("locations");
+		int size = locations.length;
+		for (int i = 0; i < size; i++)
+			LocationHelper.save(locations[i], locationsSection.createSection(Integer.toString(i)));
+		section.set("locationVaraety", locationVaraety);
 	}
 }
