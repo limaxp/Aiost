@@ -326,7 +326,7 @@ public class PlayerCommands {
 
 	public static boolean setDisguise(ServerPlayer serverPlayer, Disguise disguise) {
 		if (UnlockableTypes.MORPHS.get(serverPlayer) < 1) {
-			serverPlayer.setDefaultDisguise(disguise);
+			serverPlayer.setDisguise(disguise);
 			CommandUtil.sendMsg(serverPlayer.player, "You are disguised now");
 			return true;
 		} else {
@@ -364,7 +364,7 @@ public class PlayerCommands {
 
 	public static boolean removeDisguise(ServerPlayer serverPlayer) {
 		if (UnlockableTypes.MORPHS.get(serverPlayer) < 1) {
-			serverPlayer.removeDefaultDisguise();
+			serverPlayer.removeDisguise();
 			CommandUtil.sendMsg(serverPlayer.player, "You are not diguised anymore");
 			return true;
 		} else {

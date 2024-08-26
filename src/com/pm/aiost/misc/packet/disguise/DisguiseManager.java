@@ -9,18 +9,19 @@ import javax.annotation.Nullable;
 
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 import com.google.common.base.Supplier;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseBlock;
+import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntity;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseFurniture;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
-import com.pm.aiost.player.ServerPlayer;
+import com.pm.aiost.misc.utils.meta.MetaData;
 
+import net.minecraft.network.protocol.Packet;
 import net.minecraft.server.network.ServerPlayerConnection;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ItemStack;
@@ -28,9 +29,12 @@ import net.minecraft.world.item.Items;
 
 public class DisguiseManager {
 
+	public final static String KEY = "aiostguise";
+
 	private static final Map<String, Supplier<Disguise>> NAME_MAP = new HashMap<String, Supplier<Disguise>>();
 
 	static {
+		register("entity_", DisguiseEntity::new);
 		register("entity_living", DisguiseEntityLiving::new);
 		register("falling_block", DisguiseBlock::new);
 		register("furniture", DisguiseFurniture::new);
@@ -52,25 +56,13 @@ public class DisguiseManager {
 	}
 
 	public static void setDisguise(LivingEntity entity, Disguise disguise) {
-		Disguise prevDisguise = getDisguise(entity);
 		List<Object> packets = new ArrayList<Object>();
 		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
-		if (prevDisguise != null)
-			prevDisguise.removePackets(entity, packets);
 		disguise.addPackets(entity, packets);
 		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entity))
-			PacketSender.send(con, packets);
-		// TODO save disguise!
-	}
-
-	public static void setDisguise_INTERN(Player entity, Disguise disguise, Disguise prevDisguise) {
-		List<Object> packets = new ArrayList<Object>();
-		packets.add(PacketFactory.packetEntityDestroy(entity.getEntityId()));
-		if (prevDisguise != null)
-			prevDisguise.removePackets(entity, packets);
-		disguise.addPackets(entity, packets);
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entity))
-			PacketSender.send(con, packets);
+			for (Object packet : packets)
+				PacketSender.send(con, (Packet<?>) packet);
+		MetaData.set(entity, KEY, disguise);
 	}
 
 	public static void removeDisguise(LivingEntity entity) {
@@ -81,44 +73,24 @@ public class DisguiseManager {
 		List<Object> packets = new ArrayList<Object>();
 		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
 		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
-		disguise.removePackets(entity, packets);
 		packets.add(PacketFactory.packetEntitySpawn(entityNMS));
 		DisguiseManager.addEntityStatePackets(entityNMS, packets);
 		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entityNMS))
-			PacketSender.send(con, packets);
-	}
-
-	public static void removeDisguise_INTERN(Player entity, Disguise disguise, Disguise defaultDisguise) {
-		List<Object> packets = new ArrayList<Object>();
-		net.minecraft.world.entity.LivingEntity entityNMS = NMS.to(entity);
-		packets.add(PacketFactory.packetEntityDestroy(entityNMS.getId()));
-		disguise.removePackets(entity, packets);
-		if (defaultDisguise != null)
-			defaultDisguise.addPackets(entity, packets);
-		else {
-			packets.add(PacketFactory.packetEntitySpawn(entityNMS));
-			DisguiseManager.addEntityStatePackets(entityNMS, packets);
-		}
-		for (ServerPlayerConnection con : NMS.getTrackedPlayers(entityNMS))
-			PacketSender.send(con, packets);
-	}
-
-	public @Nullable Disguise getDisguise(ServerPlayer player) {
-		return player.getDisguise();
+			for (Object packet : packets)
+				PacketSender.send(con, (Packet<?>) packet);
+		MetaData.remove(entity, KEY);
 	}
 
 	public static @Nullable Disguise getDisguise(LivingEntity entity) {
-		// TODO
-		return null;
+		return (Disguise) MetaData.get(entity, KEY);
 	}
 
 	public static void addEntityStatePackets(net.minecraft.world.entity.LivingEntity entity, List<Object> packets) {
-		int id = entity.getId();
-		packets.add(PacketFactory.packetEntityMetadata(id, entity.getEntityData().getNonDefaultValues()));
+		packets.add(PacketFactory.packetEntityMetadata(entity.getId(), entity.getEntityData().getNonDefaultValues()));
 		for (EquipmentSlot slot : EquipmentSlot.values()) {
 			ItemStack equimentItem = entity.getItemBySlot(slot);
 			if (equimentItem.getItem() != Items.AIR)
-				packets.add(PacketFactory.packetEntityEquipment(id, slot, equimentItem));
+				packets.add(PacketFactory.packetEntityEquipment(entity.getId(), slot, equimentItem));
 		}
 	}
 }

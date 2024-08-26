@@ -59,10 +59,6 @@ public class DisguiseBlock implements Disguise {
 	}
 
 	@Override
-	public void removePackets(LivingEntity entity, List<Object> packets) {
-	}
-
-	@Override
 	public void load(ConfigurationSection section) {
 		String materialString = section.getString("material");
 		if (materialString != null)
@@ -71,11 +67,11 @@ public class DisguiseBlock implements Disguise {
 			setBlockId(section.getInt("blockId"));
 	}
 
-	public void setBlock(Block block) {
+	protected void setBlock(Block block) {
 		setBlockData(block.getBlockData());
 	}
 
-	public void setBlockData(BlockData block) {
+	protected void setBlockData(BlockData block) {
 		this.blockId = NMS.getBlockId(NMS.to(block));
 	}
 
@@ -83,7 +79,7 @@ public class DisguiseBlock implements Disguise {
 		return NMS.from(NMS.getByBlockId(blockId));
 	}
 
-	public void setMaterial(Material material) {
+	protected void setMaterial(Material material) {
 		this.blockId = NMS.getBlockId(NMS.getBlock(material).defaultBlockState());
 	}
 
@@ -91,7 +87,7 @@ public class DisguiseBlock implements Disguise {
 		return getBlockData().getMaterial();
 	}
 
-	public void setBlockId(int blockId) {
+	protected void setBlockId(int blockId) {
 		this.blockId = blockId;
 	}
 

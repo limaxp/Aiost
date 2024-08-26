@@ -146,18 +146,18 @@ public class UnlockableTypes {
 			// TODO: this doesnt work! probably must be set different or later
 			int current = serverPlayer.getSetting(PlayerSettings.MORPH);
 			if (current > 0)
-				serverPlayer.setDefaultDisguise(getObject(current));
+				serverPlayer.setDisguise(getObject(current));
 		}
 
 		@Override
 		public void set(ServerPlayer serverPlayer, short id) {
-			serverPlayer.setDefaultDisguise(getObject(id));
+			serverPlayer.setDisguise(getObject(id));
 			serverPlayer.setSetting(PlayerSettings.MORPH, id);
 		}
 
 		@Override
 		public void remove(ServerPlayer serverPlayer, short id) {
-			serverPlayer.removeDefaultDisguise();
+			serverPlayer.removeDisguise();
 			serverPlayer.setSetting(PlayerSettings.MORPH, (short) 0);
 		}
 

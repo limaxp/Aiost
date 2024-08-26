@@ -29,18 +29,6 @@ public class PacketSender {
 		player.send(packet);
 	}
 
-	public static void send(Player player, Object packet) {
-		send(player, (Packet<?>) packet);
-	}
-
-	public static void send(ServerPlayer player, Object packet) {
-		send(player, (Packet<?>) packet);
-	}
-
-	public static void send(ServerPlayerConnection player, Object packet) {
-		send(player, (Packet<?>) packet);
-	}
-
 	public static void send(Player player, Packet<?>... packets) {
 		send(NMS.to(player).connection, packets);
 	}

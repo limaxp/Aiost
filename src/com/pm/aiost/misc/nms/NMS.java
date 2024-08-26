@@ -9,6 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
+import org.bukkit.World;
 import org.bukkit.block.BlockFace;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.craftbukkit.v1_20_R4.CraftEquipmentSlot;
@@ -280,6 +281,14 @@ public class NMS {
 
 	public static int getMinecraftServerTick() {
 		return MinecraftServer.currentTick;
+	}
+
+	public static Entity getEntity(World world, int id) {
+		return getEntity(to(world), id);
+	}
+
+	public static Entity getEntity(ServerLevel world, int id) {
+		return world.entityManager.getEntityGetter().get(id);
 	}
 
 	public static void setBukkitEntity(Entity entity, CraftEntity value) {

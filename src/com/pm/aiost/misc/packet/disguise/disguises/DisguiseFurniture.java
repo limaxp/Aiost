@@ -2,7 +2,6 @@ package com.pm.aiost.misc.packet.disguise.disguises;
 
 import java.util.List;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.bukkit.Location;
@@ -20,9 +19,6 @@ import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
 
 public class DisguiseFurniture implements Disguise {
-
-	// TODO: DisguiseFurnitures can surely be made better! Also change
-	// PacketEncoder afterwards!
 
 	protected int furnitureID;
 	protected @Nullable ItemStack is;
@@ -54,10 +50,6 @@ public class DisguiseFurniture implements Disguise {
 	}
 
 	@Override
-	public void removePackets(LivingEntity entity, List<Object> packets) {
-	}
-
-	@Override
 	public void load(ConfigurationSection section) {
 		if (section.contains("item"))
 			setItemStack(ItemLoader.loadItem(section.get("item")));
@@ -77,13 +69,13 @@ public class DisguiseFurniture implements Disguise {
 			this.is = is;
 	}
 
-	public @Nonnull ItemStack getItemStack() {
+	public ItemStack getItemStack() {
 		if (is != null)
 			return is;
 		return Furniture.FURNITURES.get(furnitureID).clone();
 	}
 
-	public @Nonnull ItemStack getItemStackDirect() {
+	public ItemStack getItemStackDirect() {
 		if (is != null)
 			return is;
 		return Furniture.FURNITURES.get(furnitureID);

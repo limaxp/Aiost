@@ -7,25 +7,23 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
 
 import com.pm.aiost.entity.AiostEntityTypes;
-import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
-import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 
 import net.minecraft.world.entity.EntityType;
 
-public class DisguiseEntityLiving implements Disguise {
+public class DisguiseEntity implements Disguise {
 
 	protected int entityId;
 
-	public DisguiseEntityLiving() {
+	public DisguiseEntity() {
 	}
 
-	public DisguiseEntityLiving(EntityType<?> type) {
+	public DisguiseEntity(EntityType<?> type) {
 		this(AiostEntityTypes.getId(type));
 	}
 
-	public DisguiseEntityLiving(int entityId) {
+	public DisguiseEntity(int entityId) {
 		this.entityId = entityId;
 	}
 
@@ -34,7 +32,6 @@ public class DisguiseEntityLiving implements Disguise {
 		Location loc = entity.getLocation();
 		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), entity.getUniqueId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.get(entityId)));
-		DisguiseManager.addEntityStatePackets(NMS.to(entity), packets);
 	}
 
 	@Override

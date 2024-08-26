@@ -5,7 +5,6 @@ import java.util.List;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.misc.nms.NMS;
@@ -35,18 +34,7 @@ public class DisguisePlayer implements Disguise {
 		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), EntityType.PLAYER));
 		DisguiseManager.addEntityStatePackets(NMS.to(entity), packets);
-	}
-
-	@Override
-	public void removePackets(LivingEntity entity, List<Object> packets) {
 		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
-	}
-
-	@Override
-	public void removePackets(Player player, List<Object> packets) {
-		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
-		packets.add(PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER,
-				NMS.to(player).getGameProfile()));
 	}
 
 	@Override

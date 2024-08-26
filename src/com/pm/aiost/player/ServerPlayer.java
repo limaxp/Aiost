@@ -124,8 +124,6 @@ public class ServerPlayer implements AutoCloseable {
 	private @Nullable ItemStack itemBarItem;
 	private int itemBarSlot;
 	private boolean itemBarSuffixAdded;
-	private @Nullable Disguise disguise;
-	private @Nullable Disguise defaultDisguise;
 	private final List<ChatHologram> chatHolograms;
 	private final Object2IntMap<Object> cooldowns;
 	final List<IParticle> particles;
@@ -376,55 +374,15 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		DisguiseManager.setDisguise_INTERN(player, disguise, this.disguise);
-		setSelfDisguise();
-		this.disguise = disguise;
-	}
-
-	public void setDefaultDisguise(Disguise disguise) {
-		if (this.disguise == null || usesDefaultDisguise())
-			setDisguise(disguise);
-		defaultDisguise = disguise;
+		DisguiseManager.setDisguise(player, disguise);
 	}
 
 	public void removeDisguise() {
-		if (disguise == null)
-			return;
-
-		DisguiseManager.removeDisguise_INTERN(player, disguise, defaultDisguise);
-		removeSelfDisguise();
-		this.disguise = null;
+		DisguiseManager.removeDisguise(player);
 	}
 
-	public void removeDefaultDisguise() {
-		if (defaultDisguise == null)
-			return;
-
-		if (usesDefaultDisguise()) {
-			defaultDisguise = null;
-			removeDisguise();
-		} else
-			defaultDisguise = null;
-	}
-
-	private void setSelfDisguise() {
-//		EntityTrackerHelper.getTrackedPlayers(player).add(NMS.to(player));
-	}
-
-	private void removeSelfDisguise() {
-//		EntityTrackerHelper.getTrackedPlayers(player).remove(NMS.to(player));
-	}
-
-	public @Nullable Disguise getDisguise() {
-		return disguise;
-	}
-
-	public boolean hasDisguise() {
-		return disguise != null;
-	}
-
-	public boolean usesDefaultDisguise() {
-		return disguise == defaultDisguise;
+	public Disguise getDisguise() {
+		return DisguiseManager.getDisguise(player);
 	}
 
 	public void addChatHologram(ChatHologram hologram) {
