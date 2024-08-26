@@ -10,6 +10,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
+import com.pm.aiost.collection.list.IdentityArrayList;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.utils.LocationHelper;
 
@@ -36,7 +37,7 @@ public abstract class EntitySpawner {
 
 	public EntitySpawner() {
 		this.random = new Random();
-		this.entityTypes = new ArrayList<EntityType<?>>();
+		this.entityTypes = new IdentityArrayList<EntityType<?>>();
 		this.spawnCallback = NULL_CALLBACK;
 		this.intervallTime = 20;
 		this.spawnSize = 4;
@@ -84,7 +85,7 @@ public abstract class EntitySpawner {
 		while (size > 0) {
 			int groupSize = Math.min(1 + random.nextInt(size), size);
 			size -= groupSize;
-			EntityType<?> type = getRandomEntityType();
+			EntityType<?> type = entityTypes.get(random.nextInt(entityTypes.size()));
 			for (int i = 0; i < groupSize; i++)
 				spawnCallback.accept(AiostEntityTypes.spawnEntity(type, loc));
 		}
@@ -158,10 +159,6 @@ public abstract class EntitySpawner {
 
 	public List<EntityType<?>> getEntityTypes() {
 		return entityTypes;
-	}
-
-	public EntityType<?> getRandomEntityType() {
-		return entityTypes.get(random.nextInt(entityTypes.size()));
 	}
 
 	public void addEntityType(EntityType<?> type) {
