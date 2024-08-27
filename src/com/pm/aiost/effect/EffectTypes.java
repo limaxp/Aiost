@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.pm.aiost.effect.effects.ArrowEffect;
 import com.pm.aiost.effect.effects.AddItemEffect;
 import com.pm.aiost.effect.effects.AuraEffect;
 import com.pm.aiost.effect.effects.BlockOffhandEffect;
@@ -198,6 +199,9 @@ public class EffectTypes {
 
 	public static final EffectType<AddItemEffect> ADD_ITEM = register("AddItem", "Add Item",
 			Arrays.asList("Does add an item"), AddItemEffect::new);
+
+	public static final EffectType<ArrowEffect> ARROW = register("Arrow", "Arrow",
+			Arrays.asList("Makes sure you have an arrow for shooting bows"), ArrowEffect::new);
 
 	public static <T extends Effect> EffectType<T> register(String name, Supplier<T> constructor) {
 		return register(name, name, EffectType.EMPTY_LORE, constructor);
