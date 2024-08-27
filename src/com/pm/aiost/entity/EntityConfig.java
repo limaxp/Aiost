@@ -11,11 +11,14 @@ import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Wolf;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
+import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
+import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
 import net.minecraft.world.entity.EntityType;
@@ -23,27 +26,36 @@ import net.minecraft.world.entity.EntityType;
 public class EntityConfig {
 
 	public static final EntityConfig CHICKEN_HOSTILE = register("chicken_hostile", EntityType.WOLF, (e) -> {
+		((Wolf) e).setAngry(true);
 		DisguiseManager.setDisguise((LivingEntity) e, new DisguiseEntityLiving(AiostEntityTypes.CHICKEN));
 	});
 
-	public static final EntityConfig CREEPER_FAKE = register("fake", EntityType.SKELETON, (e) -> {
+	public static final EntityConfig CREEPER_FAKE = register("creeper_fake", EntityType.CHICKEN, (e) -> {
 		DisguiseManager.setDisguise((LivingEntity) e, new DisguiseEntityLiving(AiostEntityTypes.CREEPER));
 	});
 
 	public static final EntityConfig CREEPER_MELEE = register("creeper_melee", EntityType.SKELETON, (e) -> {
+		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
 		DisguiseManager.setDisguise((LivingEntity) e, new DisguiseEntityLiving(AiostEntityTypes.CREEPER));
 	});
 
 	public static final EntityConfig WITCH_MELEE = register("witch_melee", EntityType.SKELETON, (e) -> {
+		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
 		DisguiseManager.setDisguise((LivingEntity) e, new DisguiseEntityLiving(AiostEntityTypes.WITCH));
 	});
 
 	public static final EntityConfig BLAZE_MELEE = register("blaze_melee", EntityType.SKELETON, (e) -> {
+		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
 		DisguiseManager.setDisguise((LivingEntity) e, new DisguiseEntityLiving(AiostEntityTypes.BLAZE));
 	});
 
 	public static final EntityConfig SKELETON_MELEE = register("skeleton_melee", EntityType.SKELETON, (e) -> {
-		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.IRON_SWORD));
+		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+	});
+
+	public static final EntityConfig ORC = register("orc", EntityType.SKELETON, (e) -> {
+		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
+		DisguiseManager.setDisguise((LivingEntity) e, new DisguisePlayer(Profiles.ORC));
 	});
 
 	private static final Map<EntityType<?>, EntityConfig> WRAPPED = new IdentityHashMap<EntityType<?>, EntityConfig>(

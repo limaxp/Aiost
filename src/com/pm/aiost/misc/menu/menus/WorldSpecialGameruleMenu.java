@@ -50,7 +50,7 @@ public class WorldSpecialGameruleMenu extends SingleInventoryMenu {
 	private final ServerWorld serverWorld;
 
 	public WorldSpecialGameruleMenu(ServerWorld serverWorld, WorldGameruleMenu menu) {
-		super(BOLD + "Gamerules", 3, true);
+		super(BOLD + "Gamerules", 4, true);
 		this.serverWorld = serverWorld;
 		setBackLink(menu);
 		set(ITEMS);

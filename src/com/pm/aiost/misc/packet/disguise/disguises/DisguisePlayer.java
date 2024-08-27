@@ -34,7 +34,7 @@ public class DisguisePlayer implements Disguise {
 		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), profile.getId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), EntityType.PLAYER));
 		DisguiseManager.addEntityStatePackets(NMS.to(entity), packets);
-		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
+//		packets.add(PacketFactory.packetPlayerInfoRemove(profile.getId()));
 	}
 
 	@Override

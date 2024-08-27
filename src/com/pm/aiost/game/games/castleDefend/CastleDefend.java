@@ -143,6 +143,7 @@ public class CastleDefend extends Game {
 		trader.setPersistenceRequired(true);
 		trader.setNoAi(true);
 		trader.setInvulnerable(true);
+		trader.setHealth(Float.MAX_VALUE);
 	}
 
 	@Override
@@ -301,6 +302,7 @@ public class CastleDefend extends Game {
 		list.add(EntityConfig.wrap(AiostEntityTypes.ZOMBIE));
 		list.add(EntityConfig.wrap(AiostEntityTypes.SKELETON));
 		list.add(EntityConfig.SKELETON_MELEE);
+		list.add(EntityConfig.ORC);
 	}
 
 	protected void addLockedTypes(List<EntityConfig> list) {
@@ -364,7 +366,7 @@ public class CastleDefend extends Game {
 	protected void setRandomSpecialWave() {
 		switch (random.nextInt(8)) {
 		case 7:
-			setSpecialWave("Chicken Wave!", EntityConfig.CHICKEN_HOSTILE);
+			setSpecialWave("Chicken Wave!", EntityConfig.wrap(AiostEntityTypes.CHICKEN), EntityConfig.CHICKEN_HOSTILE);
 			break;
 		case 6:
 			setSpecialWave("Skeleton Wave!", EntityConfig.wrap(AiostEntityTypes.SKELETON), EntityConfig.SKELETON_MELEE);
