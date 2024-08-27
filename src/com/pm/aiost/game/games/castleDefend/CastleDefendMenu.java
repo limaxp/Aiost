@@ -9,14 +9,13 @@ import java.util.Arrays;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+import com.pm.aiost.entity.EntityConfig;
 import com.pm.aiost.misc.menu.menus.GameSettingMenu;
 import com.pm.aiost.misc.menu.menus.request.TextMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenu;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
-
-import net.minecraft.world.entity.EntityType;
 
 public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
@@ -53,7 +52,7 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 	private static void lockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityType<?>>(BOLD + "Lock entity type",
+		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Lock entity type",
 				game.getEntityTypes(), EnumerationMenu::createItem)) {
 
 			@Override
@@ -63,14 +62,14 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.removeEntityType((EntityType<?>) obj);
+				game.removeEntityType((EntityConfig) obj);
 			}
 		});
 	}
 
 	private static void unlockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityType<?>>(BOLD + "Unlock entity type",
+		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Unlock entity type",
 				game.getLockedTypes(), EnumerationMenu::createItem)) {
 
 			@Override
@@ -80,7 +79,7 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.addEntityType((EntityType<?>) obj);
+				game.addEntityType((EntityConfig) obj);
 			}
 		});
 	}

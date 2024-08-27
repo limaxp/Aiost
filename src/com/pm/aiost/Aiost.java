@@ -7,6 +7,7 @@ import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.effect.group.EffectGroupBuilder;
 import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.entity.EntityConfig;
 import com.pm.aiost.entity.entities.projectile.EntityProjectile;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
@@ -77,6 +78,7 @@ public class Aiost extends JavaPlugin {
 		PacketEntityType<?> packetEntityType = PacketEntityTypes.ENTITY_FURNITURE;
 		TileObjectType<?> tileObjectType = TileObjectTypes.BLINKING_BLOCK;
 		AiostWorldType<?> worldType = AiostWorldTypes.DEFAULT;
+		EntityConfig entityConfig = EntityConfig.CHICKEN_HOSTILE;
 
 		Logger.log("Loading aisot complete!");
 	}

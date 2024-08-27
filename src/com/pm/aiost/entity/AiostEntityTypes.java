@@ -52,13 +52,13 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 	public static final EntityType<EntityProjectile> PROJECTILE = register("projectile", EntityType.SNOWBALL,
 			EntityType.Builder.<EntityProjectile>of(EntityProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
-	public static final EntityType<TNTProjectile> TNT_PROJECTILE = register("projectile", EntityType.SNOWBALL,
+	public static final EntityType<TNTProjectile> TNT_PROJECTILE = register("tnt_projectile", EntityType.SNOWBALL,
 			EntityType.Builder.<TNTProjectile>of(TNTProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
-	public static final EntityType<BlockProjectile> BLOCK_PROJECTILE = register("projectile", EntityType.SNOWBALL,
+	public static final EntityType<BlockProjectile> BLOCK_PROJECTILE = register("block_projectile", EntityType.SNOWBALL,
 			EntityType.Builder.<BlockProjectile>of(BlockProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
-	public static final EntityType<ArmorstandProjectile> ARMORSTAND_PROJECTILE = register("projectile",
+	public static final EntityType<ArmorstandProjectile> ARMORSTAND_PROJECTILE = register("armorstand_projectile",
 			EntityType.SNOWBALL, EntityType.Builder
 					.<ArmorstandProjectile>of(ArmorstandProjectile::new, MobCategory.MISC).sized(0.25F, 0.25F));
 
@@ -139,6 +139,10 @@ public class AiostEntityTypes<T extends Entity> extends EntityType<T> {
 
 	public static EntityType<?> get(NamespacedKey key) {
 		return get(NMS.to(key));
+	}
+
+	public static int size() {
+		return BuiltInRegistries.ENTITY_TYPE.size();
 	}
 
 	public static Iterator<EntityType<?>> iterator() {

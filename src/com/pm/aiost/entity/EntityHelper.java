@@ -160,15 +160,15 @@ public class EntityHelper {
 				.scale(power);
 	}
 
-	public <T extends LivingEntity> void nearestAttackableTargetGoal(Mob entity, Class<T> clazz) {
+	public static <T extends LivingEntity> void nearestAttackableTargetGoal(Mob entity, Class<T> clazz) {
 		entity.targetSelector.addGoal(1, new NearestAttackableTargetGoal<T>(entity, clazz, true));
 	}
 
-	public void meleeAttackGoal(PathfinderMob entity, Class<? extends LivingEntity> clazz) {
+	public static void meleeAttackGoal(PathfinderMob entity, Class<? extends LivingEntity> clazz) {
 		entity.goalSelector.addGoal(1, new MeleeAttackGoal(entity, 1.0D, true));
 	}
 
-	public void cantBurnInSun(Mob entity) {
+	public static void cantBurnInSun(Mob entity) {
 		entity.equipItemIfPossible(new ItemStack(Items.IRON_HELMET));
 	}
 }

@@ -11,7 +11,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.collection.list.IdentityArrayList;
-import com.pm.aiost.entity.AiostEntityTypes;
+import com.pm.aiost.entity.EntityConfig;
 import com.pm.aiost.misc.utils.LocationHelper;
 
 import net.minecraft.world.entity.Entity;
@@ -26,7 +26,7 @@ public abstract class EntitySpawner {
 	};
 
 	public final Random random;
-	private List<EntityType<?>> entityTypes;
+	private List<EntityConfig> entityTypes;
 	private Consumer<Entity> spawnCallback;
 	private BukkitRunnable scheduler;
 	private int intervallTime;
@@ -37,7 +37,7 @@ public abstract class EntitySpawner {
 
 	public EntitySpawner() {
 		this.random = new Random();
-		this.entityTypes = new IdentityArrayList<EntityType<?>>();
+		this.entityTypes = new IdentityArrayList<EntityConfig>(8);
 		this.spawnCallback = NULL_CALLBACK;
 		this.intervallTime = 20;
 		this.spawnSize = 4;
@@ -85,9 +85,9 @@ public abstract class EntitySpawner {
 		while (size > 0) {
 			int groupSize = Math.min(1 + random.nextInt(size), size);
 			size -= groupSize;
-			EntityType<?> type = entityTypes.get(random.nextInt(entityTypes.size()));
+			EntityConfig type = entityTypes.get(random.nextInt(entityTypes.size()));
 			for (int i = 0; i < groupSize; i++)
-				spawnCallback.accept(AiostEntityTypes.spawnEntity(type, loc));
+				spawnCallback.accept(type.spawn(loc));
 		}
 	}
 
@@ -154,28 +154,55 @@ public abstract class EntitySpawner {
 	}
 
 	public void setEntityTypes(List<EntityType<?>> entityTypes) {
+		this.entityTypes.clear();
+		int size = entityTypes.size();
+		for (int i = 0; i < size; i++)
+			addEntity(entityTypes.get(i));
+	}
+
+	public void setEntities(List<EntityConfig> entityTypes) {
 		this.entityTypes = entityTypes;
 	}
 
-	public List<EntityType<?>> getEntityTypes() {
+	public List<EntityConfig> getEntities() {
 		return entityTypes;
 	}
 
-	public void addEntityType(EntityType<?> type) {
+	public void addEntity(EntityType<?> type) {
+		entityTypes.add(EntityConfig.wrap(type));
+	}
+
+	public void addEntity(EntityConfig type) {
 		entityTypes.add(type);
 	}
 
-	public void addEntityTypes(EntityType<?>... types) {
+	public void removeEntity(EntityType<?> type) {
+		entityTypes.remove(EntityConfig.wrap(type));
+	}
+
+	public void removeEntity(EntityConfig type) {
+		entityTypes.remove(type);
+	}
+
+	public void addEntities(EntityType<?>... types) {
+		int length = types.length;
+		for (int i = 0; i < length; i++)
+			entityTypes.add(EntityConfig.wrap(types[i]));
+	}
+
+	public void addEntities(EntityConfig... types) {
 		int length = types.length;
 		for (int i = 0; i < length; i++)
 			entityTypes.add(types[i]);
 	}
 
-	public void removeEntityType(EntityType<?> type) {
-		entityTypes.remove(type);
+	public void removeEntities(EntityType<?>... types) {
+		int length = types.length;
+		for (int i = 0; i < length; i++)
+			entityTypes.remove(EntityConfig.wrap(types[i]));
 	}
 
-	public void removeEntityTypes(EntityType<?>... types) {
+	public void removeEntities(EntityConfig... types) {
 		int length = types.length;
 		for (int i = 0; i < length; i++)
 			entityTypes.remove(types[i]);
@@ -193,7 +220,7 @@ public abstract class EntitySpawner {
 		intervallTime = section.getInt("intervallTime");
 		time = section.getInt("time");
 		spawnSize = section.getInt("spawnSize");
-		this.entityTypes = AiostEntityTypes.load(section, "entityTypes");
+		this.entityTypes = EntityConfig.load(section, "entityTypes");
 		ConfigurationSection locationsSection = section.getConfigurationSection("locations");
 		List<Location> locations = new ArrayList<Location>();
 		for (String key : locationsSection.getKeys(false))
@@ -206,7 +233,7 @@ public abstract class EntitySpawner {
 		section.set("intervallTime", intervallTime);
 		section.set("time", time);
 		section.set("spawnSize", spawnSize);
-		AiostEntityTypes.save(section, "entityTypes", entityTypes);
+		EntityConfig.save(section, "entityTypes", entityTypes);
 		ConfigurationSection locationsSection = section.createSection("locations");
 		int size = locations.length;
 		for (int i = 0; i < size; i++)

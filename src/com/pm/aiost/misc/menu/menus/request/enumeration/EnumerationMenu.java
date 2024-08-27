@@ -22,6 +22,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.effect.EffectType;
+import com.pm.aiost.entity.EntityConfig;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.item.custom.Slot;
 import com.pm.aiost.item.spell.Spell;
@@ -118,6 +119,13 @@ public class EnumerationMenu<T> extends ArrayInventoryMenu {
 
 	public static ItemStack createItem(EntityType<?> type) {
 		String name = type.toShortString();
+		name = name.substring(name.lastIndexOf(".") + 1).replace("_", " ");
+		name = name.substring(0, 1).toUpperCase() + name.substring(1);
+		return MetaHelper.setMeta(new ItemStack(Material.CHICKEN_SPAWN_EGG), GRAY + BOLD + name, ENTITY_TYPE_LORE);
+	}
+
+	public static ItemStack createItem(EntityConfig type) {
+		String name = type.name;
 		name = name.substring(name.lastIndexOf(".") + 1).replace("_", " ");
 		name = name.substring(0, 1).toUpperCase() + name.substring(1);
 		return MetaHelper.setMeta(new ItemStack(Material.CHICKEN_SPAWN_EGG), GRAY + BOLD + name, ENTITY_TYPE_LORE);

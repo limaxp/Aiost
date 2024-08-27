@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.effect.EffectType;
+import com.pm.aiost.entity.EntityConfig;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.item.spell.Spell;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
@@ -48,6 +49,9 @@ public abstract class AiostRegistry<T> {
 	public static final AiostRegistry<GameProfile> PROFILES = new GenIdRegistry<GameProfile>("Profile");
 
 	public static final AiostRegistry<AiostWorldType<?>> WORLD_TYPES = new BaseRegistry<AiostWorldType<?>>("WorldType");
+
+	public static final AiostRegistry<EntityConfig> ENTITY_CONFIGS = new GenIdRegistry<EntityConfig>(
+			"EntityConfigs");
 
 	public final String name;
 
