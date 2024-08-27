@@ -5,6 +5,10 @@ import java.util.Random;
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.misc.registry.AiostRegistry;
 
+/**
+ * https://mineskin.org/
+ * 
+ */
 public class Profiles {
 
 	public static final GameProfile ORC = register("Orc",

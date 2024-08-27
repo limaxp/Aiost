@@ -53,9 +53,8 @@ public class EntityConfig {
 		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
 	});
 
-	public static final EntityConfig ORC = register("orc", EntityType.SKELETON, (e) -> {
-		((LivingEntity) e).getEquipment().setItemInMainHand(new ItemStack(Material.AIR));
-		DisguiseManager.setDisguise((LivingEntity) e, new DisguisePlayer(Profiles.ORC));
+	public static final EntityConfig NPC = register("npc", EntityType.VILLAGER, (e) -> {
+		DisguiseManager.setDisguise((LivingEntity) e, new DisguisePlayer(Profiles.getRandom()));
 	});
 
 	private static final Map<EntityType<?>, EntityConfig> WRAPPED = new IdentityHashMap<EntityType<?>, EntityConfig>(
