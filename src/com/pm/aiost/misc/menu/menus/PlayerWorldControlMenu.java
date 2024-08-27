@@ -8,7 +8,6 @@ import static com.pm.aiost.misc.utils.ChatColor.RED;
 import java.util.Arrays;
 
 import org.bukkit.Material;
-import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -184,12 +183,8 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 		ServerWorld serverWorld = (ServerWorld) handler.getRegion();
 		String answer = type.checkRequired(serverWorld);
 		if (answer == null) {
-			WorldBuilder.save(serverWorld,
+			WorldBuilder.delete(serverWorld, true,
 					(world) -> WorldLoader.releasePlayerWorld(handler.getUniqueID(), name, type, world));
-			Player player = serverPlayer.player;
-			player.sendTitle("", GREEN + "World release successful!", 10, 70, 20);
-			serverPlayer.sendActionBar(GRAY + "as " + name);
-			player.closeInventory();
 		} else {
 			displayInSlot(getInventory(),
 					MetaHelper.setMeta(Material.BARRIER, RED + BOLD + "Release failed!", Arrays.asList(GRAY + answer)),
@@ -213,10 +208,8 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 		ServerWorld serverWorld = (ServerWorld) handler.getRegion();
 		String answer = type.checkRequired(serverWorld);
 		if (answer == null) {
-			WorldBuilder.save(serverWorld, (world) -> WorldLoader.saveReleasedWorld(handler.getUniqueID(), world));
-			Player player = serverPlayer.player;
-			player.sendTitle("", GREEN + "World update successful!", 10, 70, 20);
-			player.closeInventory();
+			WorldBuilder.delete(serverWorld, true,
+					(world) -> WorldLoader.saveReleasedWorld(handler.getUniqueID(), world));
 		} else {
 			displayInSlot(getInventory(),
 					MetaHelper.setMeta(Material.BARRIER, RED + BOLD + "Update Failed!", Arrays.asList(GRAY + answer)),
