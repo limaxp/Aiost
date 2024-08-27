@@ -40,10 +40,10 @@ public class AddItemEffect extends SimpleLivingEntityEffect {
 
 	@Override
 	public void runEffect(LivingEntity entity) {
-		addItem(entity, item);
+		addItem(entity);
 	}
 
-	public static void addItem(LivingEntity entity, ItemStack item) {
+	protected void addItem(LivingEntity entity) {
 		if (entity instanceof Player)
 			((Player) entity).getInventory().addItem(item);
 		else
@@ -114,4 +114,11 @@ public class AddItemEffect extends SimpleLivingEntityEffect {
 		list.add(ChatColor.GRAY + "Item: " + ChatColor.DARK_GRAY + item);
 	}
 
+	public void setItem(ItemStack item) {
+		this.item = item;
+	}
+
+	public ItemStack getItem() {
+		return item;
+	}
 }
