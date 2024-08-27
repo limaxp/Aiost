@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
+import com.pm.aiost.effect.effects.AddItemEffect;
 import com.pm.aiost.effect.effects.AuraEffect;
 import com.pm.aiost.effect.effects.BlockOffhandEffect;
 import com.pm.aiost.effect.effects.BreakBallEffect;
@@ -194,6 +195,9 @@ public class EffectTypes {
 
 	public static final EffectType<LuckyBlockEffect> LUCKY_BLOCK = register("LuckyBlock", "Lucky block",
 			Arrays.asList("Triggers a lucky block effect"), LuckyBlockEffect::getInstance);
+
+	public static final EffectType<AddItemEffect> ADD_ITEM = register("AddItem", "Add Item",
+			Arrays.asList("Does add an item"), AddItemEffect::new);
 
 	public static <T extends Effect> EffectType<T> register(String name, Supplier<T> constructor) {
 		return register(name, name, EffectType.EMPTY_LORE, constructor);
