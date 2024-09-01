@@ -60,7 +60,7 @@ public class ProfileBuilder {
 	}
 
 	public static GameProfile create(String name, UUID uuid, GameProfile profile) {
-		GameProfile result = new GameProfile(profile.getId(), name);
+		GameProfile result = new GameProfile(uuid, name);
 		PropertyMap resultPropertyMap = result.getProperties();
 		for (Entry<String, Property> entry : profile.getProperties().entries())
 			resultPropertyMap.put(entry.getKey(), entry.getValue());

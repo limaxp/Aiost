@@ -16,7 +16,6 @@ import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseBlock;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntity;
-import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseFurniture;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguisePlayer;
 import com.pm.aiost.misc.utils.meta.MetaData;
@@ -36,7 +35,6 @@ public class DisguiseManager {
 
 	static {
 		register("entity_", DisguiseEntity::new);
-		register("entity_living", DisguiseEntityLiving::new);
 		register("falling_block", DisguiseBlock::new);
 		register("furniture", DisguiseFurniture::new);
 		register("player", DisguisePlayer::new);
@@ -56,7 +54,7 @@ public class DisguiseManager {
 		return disguise;
 	}
 
-	public static void setDisguise(LivingEntity entity, Disguise disguise) {
+	public static void set(LivingEntity entity, Disguise disguise) {
 		TrackedEntity tracker = NMS.getEntityTracker(entity);
 		if (tracker != null) {
 			List<Object> packets = new ArrayList<Object>();
@@ -69,8 +67,8 @@ public class DisguiseManager {
 		MetaData.set(entity, KEY, disguise);
 	}
 
-	public static void removeDisguise(LivingEntity entity) {
-		Disguise disguise = getDisguise(entity);
+	public static void remove(LivingEntity entity) {
+		Disguise disguise = get(entity);
 		if (disguise == null)
 			return;
 
@@ -88,7 +86,7 @@ public class DisguiseManager {
 		MetaData.remove(entity, KEY);
 	}
 
-	public static @Nullable Disguise getDisguise(LivingEntity entity) {
+	public static @Nullable Disguise get(LivingEntity entity) {
 		return (Disguise) MetaData.get(entity, KEY);
 	}
 

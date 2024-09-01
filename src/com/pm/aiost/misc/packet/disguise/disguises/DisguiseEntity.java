@@ -9,14 +9,18 @@ import org.bukkit.entity.LivingEntity;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.disguise.Disguise;
+import com.pm.aiost.misc.packet.entity.entities.PacketLivingEntity;
 
+import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 import net.minecraft.world.entity.EntityType;
 
 public class DisguiseEntity implements Disguise {
 
 	protected int entityId;
+	protected final List<DataValue<?>> dataWatcher;
 
 	public DisguiseEntity() {
+		dataWatcher = PacketLivingEntity.createDatawatcher();
 	}
 
 	public DisguiseEntity(EntityType<?> type) {
@@ -24,6 +28,7 @@ public class DisguiseEntity implements Disguise {
 	}
 
 	public DisguiseEntity(int entityId) {
+		this();
 		this.entityId = entityId;
 	}
 
@@ -32,6 +37,12 @@ public class DisguiseEntity implements Disguise {
 		Location loc = entity.getLocation();
 		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), entity.getUniqueId(), loc.getX(), loc.getY(),
 				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.get(entityId)));
+		addDataPackets(entity, packets);
+	}
+
+	@Override
+	public void addDataPackets(LivingEntity entity, List<Object> packets) {
+		packets.add(PacketFactory.packetEntityMetadata(entity.getEntityId(), dataWatcher));
 	}
 
 	@Override

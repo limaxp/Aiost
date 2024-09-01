@@ -22,7 +22,7 @@ public class PacketLivingEntity extends PacketEntity {
 
 	public PacketLivingEntity(ServerWorld world) {
 		super(world);
-		dataWatcher = new ArrayList<DataValue<?>>();
+		dataWatcher = createDatawatcher();
 	}
 
 	public PacketLivingEntity(ServerWorld world, EntityType<?> type) {
@@ -30,9 +30,13 @@ public class PacketLivingEntity extends PacketEntity {
 	}
 
 	public PacketLivingEntity(ServerWorld world, int entityId) {
-		super(world);
+		this(world);
 		this.entityId = entityId;
-		dataWatcher = new ArrayList<DataValue<?>>();
+	}
+
+	public static List<DataValue<?>> createDatawatcher() {
+		List<DataValue<?>> dataWatcher = new ArrayList<DataValue<?>>();
+		return dataWatcher;
 	}
 
 	@Override

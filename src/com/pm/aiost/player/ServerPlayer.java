@@ -373,15 +373,15 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void setDisguise(Disguise disguise) {
-		DisguiseManager.setDisguise(player, disguise);
+		DisguiseManager.set(player, disguise);
 	}
 
 	public void removeDisguise() {
-		DisguiseManager.removeDisguise(player);
+		DisguiseManager.remove(player);
 	}
 
 	public Disguise getDisguise() {
-		return DisguiseManager.getDisguise(player);
+		return DisguiseManager.get(player);
 	}
 
 	public void addChatHologram(ChatHologram hologram) {

@@ -302,6 +302,7 @@ public class CastleDefend extends Game {
 		list.add(EntityConfig.wrap(AiostEntityTypes.ZOMBIE));
 		list.add(EntityConfig.wrap(AiostEntityTypes.SKELETON));
 		list.add(EntityConfig.SKELETON_MELEE);
+		list.add(EntityConfig.ORC);
 	}
 
 	protected void addLockedTypes(List<EntityConfig> list) {

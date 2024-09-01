@@ -9,7 +9,6 @@ import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 import com.pm.aiost.misc.packet.disguise.disguises.DisguiseFurniture;
-import com.pm.aiost.misc.packet.object.objects.Furniture;
 import com.pm.aiost.player.ServerPlayer;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -40,7 +39,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 			Entity entity = NMS.getEntity(player.getWorld(), ((ClientboundAddEntityPacket) packet).getId());
 			if (entity instanceof LivingEntity) {
 				org.bukkit.entity.LivingEntity bukkitEntity = NMS.from((LivingEntity) entity);
-				Disguise disguise = DisguiseManager.getDisguise(bukkitEntity);
+				Disguise disguise = DisguiseManager.get(bukkitEntity);
 				if (disguise != null) {
 					disguise.addPackets(bukkitEntity, out);
 					return;
@@ -53,12 +52,10 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 			Entity entity = NMS.getEntity(player.getWorld(), senderId);
 			if (entity instanceof LivingEntity) {
 				org.bukkit.entity.LivingEntity bukkitEntity = NMS.from((LivingEntity) entity);
-				Disguise disguise = DisguiseManager.getDisguise(bukkitEntity);
-				if (disguise instanceof DisguiseFurniture) {
-					if (bukkitEntity != player) {
-						out.add(PacketFactory.packetEntityMetadata(senderId, Furniture.DATA_WATCHER));
-						return;
-					}
+				Disguise disguise = DisguiseManager.get(bukkitEntity);
+				if (disguise != null) {
+					disguise.addDataPackets(bukkitEntity, out);
+					return;
 				}
 			}
 		}
@@ -70,7 +67,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 				Entity entity = NMS.getEntity(player.getWorld(), senderId);
 				if (entity instanceof LivingEntity) {
 					org.bukkit.entity.LivingEntity bukkitEntity = NMS.from((LivingEntity) entity);
-					Disguise disguise = DisguiseManager.getDisguise(bukkitEntity);
+					Disguise disguise = DisguiseManager.get(bukkitEntity);
 					if (disguise instanceof DisguiseFurniture)
 						NMS.ENTITYMOVE_SET_YA.invoke(packet, movePacket.getYa() - 1.188);
 				}
@@ -84,7 +81,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 			Entity entity = NMS.getEntity(player.getWorld(), teleportPacket.getId());
 			if (entity instanceof LivingEntity) {
 				org.bukkit.entity.LivingEntity bukkitEntity = NMS.from((LivingEntity) entity);
-				Disguise disguise = DisguiseManager.getDisguise(bukkitEntity);
+				Disguise disguise = DisguiseManager.get(bukkitEntity);
 				if (disguise instanceof DisguiseFurniture) {
 					try {
 						NMS.ENTITYTELEPORT_SET_Y.invoke(packet, teleportPacket.getY() - 1.188);
@@ -100,7 +97,7 @@ public class AiostPacketEncoder extends MessageToMessageEncoder<Packet<?>> {
 			Entity entity = NMS.getEntity(player.getWorld(), senderId);
 			if (entity instanceof LivingEntity) {
 				org.bukkit.entity.LivingEntity bukkitEntity = NMS.from((LivingEntity) entity);
-				Disguise disguise = DisguiseManager.getDisguise(bukkitEntity);
+				Disguise disguise = DisguiseManager.get(bukkitEntity);
 				if (disguise instanceof DisguiseFurniture) {
 					out.add(PacketFactory.packetEntityEquipment(senderId, EquipmentSlot.HEAD,
 							NMS.to(((DisguiseFurniture) disguise).getItemStackDirect())));

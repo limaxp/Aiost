@@ -55,7 +55,12 @@ public class DisguiseBlock implements Disguise {
 		int id = entity.getEntityId();
 		packets.add(PacketFactory.packetEntitySpawn(id, entity.getUniqueId(), loc.getX(), loc.getY(), loc.getZ(),
 				loc.getYaw(), loc.getPitch(), AiostEntityTypes.FALLING_BLOCK, blockId));
-		packets.add(PacketFactory.packetEntityMetadata(id, DATA_WATCHER));
+		addDataPackets(entity, packets);
+	}
+
+	@Override
+	public void addDataPackets(LivingEntity entity, List<Object> packets) {
+		packets.add(PacketFactory.packetEntityMetadata(entity.getEntityId(), DATA_WATCHER));
 	}
 
 	@Override

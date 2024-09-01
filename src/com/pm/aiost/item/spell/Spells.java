@@ -20,7 +20,7 @@ import com.pm.aiost.item.spell.spells.HealSpell;
 import com.pm.aiost.item.spell.spells.ProjectileSpell;
 import com.pm.aiost.item.spell.spells.SummonEntitySpell;
 import com.pm.aiost.misc.event.eventHandler.handler.ProjectileEventHandler;
-import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntityLiving;
+import com.pm.aiost.misc.packet.disguise.disguises.DisguiseEntity;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.particles.DataParticle;
 import com.pm.aiost.misc.particle.particles.Particle;
@@ -190,7 +190,7 @@ public class Spells {
 	// TODO: Conjured Weapons?
 
 	public static final DisguiseSpell TRANSFORM_TO_ZOMBIE = a(new DisguiseSpell("TransformToZombie",
-			"Transform to Zombie", 25, 10.0, new DisguiseEntityLiving(AiostEntityTypes.ZOMBIE), 800));
+			"Transform to Zombie", 25, 10.0, new DisguiseEntity(AiostEntityTypes.ZOMBIE), 800));
 
 	// TODO: Touch spells
 

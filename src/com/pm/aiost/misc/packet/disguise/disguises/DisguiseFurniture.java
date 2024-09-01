@@ -37,10 +37,14 @@ public class DisguiseFurniture implements Disguise {
 	@Override
 	public void addPackets(LivingEntity entity, List<Object> packets) {
 		Location loc = entity.getLocation();
-		int id = entity.getEntityId();
+		packets.add(PacketFactory.packetEntitySpawn(entity.getEntityId(), entity.getUniqueId(), loc.getX(),
+				loc.getY() - 1.188, loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.ARMOR_STAND));
+		addDataPackets(entity, packets);
+	}
 
-		packets.add(PacketFactory.packetEntitySpawn(id, entity.getUniqueId(), loc.getX(), loc.getY() - 1.188,
-				loc.getZ(), loc.getYaw(), loc.getPitch(), AiostEntityTypes.ARMOR_STAND));
+	@Override
+	public void addDataPackets(LivingEntity entity, List<Object> packets) {
+		int id = entity.getEntityId();
 		packets.add(PacketFactory.packetEntityMetadata(id, Furniture.DATA_WATCHER));
 		if (is != null)
 			packets.add(PacketFactory.packetEntityEquipment(id, Slot.HEAD.nmsSlot, NMS.to(is)));

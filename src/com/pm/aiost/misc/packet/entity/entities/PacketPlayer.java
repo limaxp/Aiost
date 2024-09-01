@@ -2,17 +2,17 @@ package com.pm.aiost.misc.packet.entity.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.mojang.authlib.GameProfile;
-import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
+import com.pm.aiost.misc.profile.ProfileBuilder;
 import com.pm.aiost.misc.profile.Profiles;
 import com.pm.aiost.world.ServerWorld;
 
@@ -31,7 +31,7 @@ public class PacketPlayer extends PacketEntity {
 	public static final EntityDataAccessor<Byte> DATA_PLAYER_MODE_CUSTOMISATION = new EntityDataAccessor<Byte>(17,
 			EntityDataSerializers.BYTE);
 
-	protected GameProfile profile;
+	private GameProfile profile;
 	protected List<DataValue<?>> dataWatcher;
 
 	public PacketPlayer(ServerWorld world) {
@@ -41,7 +41,7 @@ public class PacketPlayer extends PacketEntity {
 
 	public PacketPlayer(ServerWorld world, GameProfile profile) {
 		this(world);
-		this.profile = profile;
+		setProfile(profile);
 	}
 
 	public static List<DataValue<?>> createDatawatcher() {
@@ -56,11 +56,11 @@ public class PacketPlayer extends PacketEntity {
 				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
-		Bukkit.getScheduler()
-				.runTaskLater(
-						Aiost.getPlugin(), () -> PacketSender.sendNearby(world.world, x, y, z,
-								PACKET_OBJECT_VISIBILE_RANGE, PacketFactory.packetPlayerInfoRemove(profile.getId())),
-						10);
+//		Bukkit.getScheduler()
+//				.runTaskLater(
+//						Aiost.getPlugin(), () -> PacketSender.sendNearby(world.world, x, y, z,
+//								PACKET_OBJECT_VISIBILE_RANGE, PacketFactory.packetPlayerInfoRemove(profile.getId())),
+//						10);
 	}
 
 	@Override
@@ -69,8 +69,8 @@ public class PacketPlayer extends PacketEntity {
 				PacketFactory.packetPlayerInfo(ClientboundPlayerInfoUpdatePacket.Action.ADD_PLAYER, profile),
 				createSpawnPacket(), createMetadataPacket());
 
-		Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(),
-				() -> PacketSender.send(player, PacketFactory.packetPlayerInfoRemove(profile.getId())), 10);
+//		Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(),
+//				() -> PacketSender.send(player, PacketFactory.packetPlayerInfoRemove(profile.getId())), 10);
 	}
 
 	@Override
@@ -85,7 +85,7 @@ public class PacketPlayer extends PacketEntity {
 	@Override
 	public void load(CompoundTag nbt) {
 		super.load(nbt);
-		profile = Profiles.get(nbt.getString("profileName"));
+		setProfile(Profiles.get(nbt.getString("profileName")));
 	}
 
 	@Override
@@ -93,6 +93,10 @@ public class PacketPlayer extends PacketEntity {
 		super.save(nbt);
 		nbt.putString("profileName", profile.getName());
 		return nbt;
+	}
+
+	protected void setProfile(GameProfile profile) {
+		this.profile = ProfileBuilder.create(UUID.randomUUID(), profile);
 	}
 
 	@Override
