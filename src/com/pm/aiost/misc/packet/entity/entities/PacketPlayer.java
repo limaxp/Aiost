@@ -36,7 +36,7 @@ public class PacketPlayer extends PacketEntity {
 
 	public PacketPlayer(ServerWorld world) {
 		super(world);
-		initDatawatcher();
+		dataWatcher = createDatawatcher();
 	}
 
 	public PacketPlayer(ServerWorld world, GameProfile profile) {
@@ -44,9 +44,10 @@ public class PacketPlayer extends PacketEntity {
 		this.profile = profile;
 	}
 
-	protected void initDatawatcher() {
-		dataWatcher = new ArrayList<DataValue<?>>();
+	public static List<DataValue<?>> createDatawatcher() {
+		List<DataValue<?>> dataWatcher = new ArrayList<DataValue<?>>();
 		dataWatcher.add(DataValue.create(DATA_PLAYER_MODE_CUSTOMISATION, PLAYER_MODE_CUSTOMISATION_VIEWABLE_MASK));
+		return dataWatcher;
 	}
 
 	@Override
