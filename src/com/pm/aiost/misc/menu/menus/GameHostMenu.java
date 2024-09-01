@@ -70,7 +70,7 @@ public class GameHostMenu extends ViewInventoryMenu implements DatabaseGameMenu 
 	}
 
 	public ItemStack createItem(ResultSet resultSet) throws SQLException {
-		return createItem(resultSet, GRAY + "click to host Game", null);
+		return createItem(resultSet, GRAY + "click to host Game", null, null);
 	}
 
 	@Override

@@ -185,6 +185,7 @@ public class WorldLoader {
 
 	public static boolean deleteGame(ServerPlayer serverPlayer, UUID uuid) {
 		try {
+			DataAccess.getAccess().deleteGameStats(uuid);
 			DataAccess.getAccess().removeGame(uuid);
 		} catch (SQLIntegrityConstraintViolationException e) {
 			return false;

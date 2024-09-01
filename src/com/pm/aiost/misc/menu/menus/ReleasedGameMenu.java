@@ -66,7 +66,8 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 	}
 
 	public ItemStack createItem(ResultSet resultSet) throws SQLException {
-		return createItem(resultSet, GRAY + "Left click to host game", GRAY + "Right click to open game world");
+		return createItem(resultSet, GRAY + "Left click to host game", GRAY + "Right click to open game world",
+				GRAY + "Shift right click to delete game");
 	}
 
 	@Override

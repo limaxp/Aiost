@@ -88,10 +88,11 @@ public abstract interface DatabaseGameMenu {
 
 	public abstract GameData getData(int index);
 
-	public default ItemStack createItem(ResultSet resultSet, String clickText1, String clickText2) throws SQLException {
+	public default ItemStack createItem(ResultSet resultSet, String clickText1, String clickText2, String clickText3)
+			throws SQLException {
 		GameData data = createData(resultSet);
 		addData(data);
-		return createItem(data, clickText1, clickText2);
+		return createItem(data, clickText1, clickText2, clickText3);
 	}
 
 	public static GameData createData(ResultSet resultSet) throws SQLException {
@@ -113,9 +114,9 @@ public abstract interface DatabaseGameMenu {
 		return data;
 	}
 
-	public static ItemStack createItem(GameData data, String clickText1, String clickText2) {
+	public static ItemStack createItem(GameData data, String clickText1, String clickText2, String clickText3) {
 		return MetaHelper.setMeta(data.gameType.item.clone(), BOLD + data.name, Arrays.asList(clickText1, clickText2,
-				null, GRAY + "ID: " + DARK_GRAY + data.uuid.toString().substring(0, 18),
+				clickText3, null, GRAY + "ID: " + DARK_GRAY + data.uuid.toString().substring(0, 18),
 				GRAY + "Type: " + DARK_GRAY + data.gameType.name, GRAY + "Author: " + DARK_GRAY + data.authorName,
 				GRAY + "Environment: " + DARK_GRAY + EnvironmentHelper.getDisplayName(data.environment),
 				GRAY + "World type: " + DARK_GRAY + data.worldType.name,
