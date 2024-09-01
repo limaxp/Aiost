@@ -25,24 +25,16 @@ public class SpigotConfigManager extends ConfigManager {
 	}
 
 	public static void init() {
-		Logger.log("Initialize ConfigManager...");
-
 		aiostConfig = loadConfig(initResource("Aiost.yml"));
 		Ranks.register(aiostConfig.getConfigurationSection("ranks"));
 		PlayerPermissions.register(aiostConfig.getStringList("permissions"));
 		PlayerSettings.register(aiostConfig.getConfigurationSection("settings"));
 		WordFilter.loadConfig(aiostConfig.getConfigurationSection("wordRestrictions"));
 		webUrl = aiostConfig.getString("url", "www.aiost.com");
-
-		Logger.log("ConfigManager initialized!");
 	}
 
 	public static void terminate() {
-		Logger.log("Terminate ConfigManager...");
-
 		saveConfig(aiostConfig, new File(getConfigFolderPath(), "Aiost.yml"));
-
-		Logger.log("ConfigManager terminated!");
 	}
 
 	public static FileConfiguration loadConfig(File file) {

@@ -23,15 +23,11 @@ public class EffectGroupBuilder {
 	}
 
 	public void loadEffectGroups(ConfigurationSection effectGroupsSection) {
-		Logger.log("EffectGroupBuilder: Start loading Effects.yml...");
-
 		for (String effectGroupName : effectGroupsSection.getKeys(false)) {
 			loadEffectGroup(effectGroupsSection.getConfigurationSection(effectGroupName));
 			EffectRegistry.register(effectGroupName, createEffectGroup());
 			clear();
 		}
-
-		Logger.log("EffectGroupBuilder: Loading Effects.yml finished!");
 	}
 
 	public void loadEffectGroup(ConfigurationSection effectGroupSection) {
