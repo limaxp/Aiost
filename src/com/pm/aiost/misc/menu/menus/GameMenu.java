@@ -15,6 +15,8 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
+import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
+import com.pm.aiost.misc.menu.menus.request.GamesMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -54,44 +56,85 @@ public class GameMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case NETHER_STAR:
-				serverPlayer.doMenuRequest(GameJoinMenu.class,
-						() -> new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
-							}
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
+					}
 
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								GameMenu.MENU.open(serverPlayer);
-							}
-						});
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						GameMenu.MENU.open(serverPlayer);
+					}
+				});
 				break;
 
 			case END_CRYSTAL:
-				serverPlayer.doMenuRequest(GameHostMenu.class,
-						() -> new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						GameMenu.MENU.open(serverPlayer);
+					}
+
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						GameType<?> type = (GameType<?>) obj;
+						serverPlayer.doMenuRequest(new CallbackMenuRequest(
+								serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type), true) {
 
 							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameType<?> type = (GameType<?>) obj;
-								GameHostMenu menu = (GameHostMenu) serverPlayer.getOrCreateMenu(GameHostMenu.class,
-										GameHostMenu::new, type);
-								menu.setGameType(type);
-								menu.open(serverPlayer);
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
+							protected void openRequest(ServerPlayer serverPlayer) {
 								GameMenu.MENU.open(serverPlayer);
 							}
-						});
 
+							@Override
+							protected void onResult(ServerPlayer serverPlayer, Object obj) {
+								InventoryMenu menu = new GameStartMenu((GameData) obj);
+								menu.setBackLink(GameMenu.MENU); // TODO
+							}
+						});
+					}
+				});
 				break;
 
 			case DIAMOND:
+				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						GameType<?> type = (GameType<?>) obj;
+						GameKitMenu menu = new GameKitMenu(BOLD + type.name + " menu", type.get().getKits()) {
+
+							protected void kitInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
+							};
+						};
+						menu.setBackLink(GameMenu.MENU);
+						menu.open(serverPlayer);
+					}
+
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						GameMenu.MENU.open(serverPlayer);
+					}
+				});
+				break;
+
+			case PAPER:
+				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						GameType<?> type = (GameType<?>) obj;
+//						new GameStatsMenu(uuid).open(serverPlayer);
+					}
+
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						GameMenu.MENU.open(serverPlayer);
+					}
+				});
 				break;
 
 			case WRITTEN_BOOK:

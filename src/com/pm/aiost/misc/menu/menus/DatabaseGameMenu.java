@@ -23,7 +23,6 @@ import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.GameTypes;
 import com.pm.aiost.game.data.IGameData;
 import com.pm.aiost.misc.menu.AnvilMenu;
-import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.menus.PlayerWorldMenu.PlayerWorldData;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -161,12 +160,6 @@ public abstract interface DatabaseGameMenu {
 				}
 			}
 		};
-		menu.setBackLink(inv);
-		return menu;
-	}
-
-	public default InventoryMenu createHostWorldMenu(int dataIndex, Inventory inv) {
-		InventoryMenu menu = new GameStartMenu(getData(dataIndex));
 		menu.setBackLink(inv);
 		return menu;
 	}

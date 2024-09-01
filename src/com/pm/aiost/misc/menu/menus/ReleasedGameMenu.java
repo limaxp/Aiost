@@ -20,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
+import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -108,9 +109,10 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 					resetGameName(event.getInventory());
 			} else {
 				int dataIndex = parseBorderedIndex(event.getView().getTitle(), event.getSlot());
-				if (event.getClick() == ClickType.LEFT)
-					createHostWorldMenu(dataIndex, event.getInventory()).open(serverPlayer);
-				else if (event.getClick() == ClickType.RIGHT)
+				if (event.getClick() == ClickType.LEFT) {
+					InventoryMenu menu = new GameStartMenu(getData(dataIndex));
+					menu.setBackLink(event.getInventory());
+				} else if (event.getClick() == ClickType.RIGHT)
 					createOpenWorldMenu(dataIndex, event.getInventory()).open(serverPlayer);
 				else if (event.getClick() == ClickType.SHIFT_RIGHT)
 					createDeleteWorldMenu(slot, dataIndex, event.getInventory()).open(serverPlayer);

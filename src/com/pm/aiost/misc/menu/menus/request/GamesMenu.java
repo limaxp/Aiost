@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.menu.menus;
+package com.pm.aiost.misc.menu.menus.request;
 
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
@@ -23,10 +23,11 @@ import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ViewInventoryMenu;
+import com.pm.aiost.misc.menu.menus.DatabaseGameMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-public class GameHostMenu extends ViewInventoryMenu implements DatabaseGameMenu {
+public class GamesMenu extends ViewInventoryMenu implements DatabaseGameMenu {
 
 	private static final int[] BORDER_ITEM_SLOTS = new int[] { SORT_MODE_ITEM_SLOT, UUID_ITEM_SLOT,
 			AUTHOR_NAME_ITEM_SLOT, NAME_ITEM_SLOT };
@@ -39,10 +40,10 @@ public class GameHostMenu extends ViewInventoryMenu implements DatabaseGameMenu 
 	private GameData[] dataArray;
 	private int dataIndex;
 
-	public GameHostMenu(GameType<?> type) {
+	public GamesMenu(GameType<?> type) {
 		super(BOLD + type.name, true);
 		this.type = type;
-		setBackLink(ServerPlayer::openMenuRequest);
+		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
 	}
 
 	@Override
@@ -124,7 +125,7 @@ public class GameHostMenu extends ViewInventoryMenu implements DatabaseGameMenu 
 					resetGameName(event.getInventory());
 			} else {
 				int dataIndex = convertSlotToIndex(event.getSlot());
-				createHostWorldMenu(dataIndex, event.getInventory()).open(serverPlayer);
+				serverPlayer.setMenuRequestResult(getData(dataIndex));
 			}
 		}
 	}
@@ -188,9 +189,13 @@ public class GameHostMenu extends ViewInventoryMenu implements DatabaseGameMenu 
 		return menu;
 	}
 
-	void setGameType(GameType<?> type) {
+	public void setGameType(GameType<?> type) {
 		this.type = type;
 		this.name = BOLD + type.name;
+	}
+
+	public GameType<?> getType() {
+		return type;
 	}
 
 	@Override

@@ -39,10 +39,6 @@ public class PlayerWorldMenu extends ListInventoryMenu {
 	private static final ItemStack CANNOT_DELETE_ITEM = MetaHelper.setMeta(Material.BARRIER,
 			RED + BOLD + "Cannot delete!", Arrays.asList(GRAY + "World is used in game!", GRAY + "Cannot be deleted!"));
 
-	private static final String LOAD_TEXT = GRAY + "Left click to load world";
-	private static final String RENAME_TEXT = GRAY + "Shift left click to rename world";
-	private static final String DELETE_TEXT = GRAY + "Shift right click to delete world";
-
 	private ServerPlayer serverPlayer;
 	private List<PlayerWorldData> dataList;
 
@@ -89,7 +85,8 @@ public class PlayerWorldMenu extends ListInventoryMenu {
 
 	public static ItemStack createItem(PlayerWorldData data) {
 		return MetaHelper.setMeta(EnvironmentHelper.getMaterial(data.environment), BOLD + data.name,
-				Arrays.asList(LOAD_TEXT, RENAME_TEXT, DELETE_TEXT, null, null,
+				Arrays.asList(GRAY + "Left click to load world", GRAY + "Shift left click to rename world",
+						GRAY + "Shift right click to delete world", null, null,
 						GRAY + "ID: " + DARK_GRAY + data.uuid.toString().substring(0, 18),
 						GRAY + "Environment: " + DARK_GRAY + EnvironmentHelper.getDisplayName(data.environment),
 						GRAY + "Type: " + DARK_GRAY + data.worldType.name,

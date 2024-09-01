@@ -22,10 +22,6 @@ public class GameKitMenu extends LazyInventoryMenu {
 
 	private GameKit[] kits;
 
-	public GameKitMenu(GameKit[] kits) {
-		this(BOLD + "Kit Menu", kits);
-	}
-
 	public GameKitMenu(String name, GameKit[] kits) {
 		super(name, kits.length, true);
 		this.kits = kits;

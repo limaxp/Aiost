@@ -32,9 +32,6 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 
 	private static final int RELEASE_SLOT = 8;
 
-	private static final ItemStack MAIN_MENU_ITEM = MetaHelper.setMeta(Material.GOLD_BLOCK, RED + BOLD + "Main menu",
-			Arrays.asList(GRAY + "Click to open main menu"));
-
 	private static final ItemStack PLAYER_LIST_ITEM = MetaHelper.setMeta(Material.PLAYER_HEAD, GREEN + BOLD + "Player",
 			Arrays.asList(GRAY + "Click to open player list"));
 
@@ -62,8 +59,8 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 	private static final ItemStack FORBIDDEN_NAME_ITEM = MetaHelper.setMeta(Material.BARRIER,
 			RED + BOLD + "Forbidden name!", Arrays.asList(GRAY + "The given name is not allowed"));
 
-	private static final ItemStack[] ITEMS = new ItemStack[] { MAIN_MENU_ITEM, PLAYER_LIST_ITEM, ITEM_MENU_ITEM,
-			SPAWN_MENU_ITEM, EFFECTS_MENU_ITEM, SETTING_ITEM, TOOL_ITEM };
+	private static final ItemStack[] ITEMS = new ItemStack[] { TOOL_ITEM, ITEM_MENU_ITEM, SPAWN_MENU_ITEM, null,
+			EFFECTS_MENU_ITEM, SETTING_ITEM, PLAYER_LIST_ITEM };
 
 	private PlayerWorldEventHandler handler;
 
@@ -80,10 +77,6 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
 			switch (is.getType()) {
-
-			case GOLD_BLOCK:
-				MainMenu.getMenu().open(serverPlayer);
-				break;
 
 			case PLAYER_HEAD:
 				new PlayerListMenu(handler.getRegion().getServerPlayer()).open(serverPlayer);
