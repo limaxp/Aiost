@@ -34,7 +34,7 @@ public class DisguiseManager {
 	private static final Map<String, Supplier<Disguise>> NAME_MAP = new HashMap<String, Supplier<Disguise>>();
 
 	static {
-		register("entity_", DisguiseEntity::new);
+		register("entity", DisguiseEntity::new);
 		register("falling_block", DisguiseBlock::new);
 		register("furniture", DisguiseFurniture::new);
 		register("player", DisguisePlayer::new);
