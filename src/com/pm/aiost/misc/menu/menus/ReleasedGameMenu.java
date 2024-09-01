@@ -3,6 +3,7 @@ package com.pm.aiost.misc.menu.menus;
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
 import static com.pm.aiost.misc.utils.ChatColor.GREEN;
+import static com.pm.aiost.misc.utils.ChatColor.RED;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.bukkit.Material;
 import org.bukkit.entity.HumanEntity;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -19,10 +21,14 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
+import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.creation.WorldLoader;
 
 public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameMenu {
+
+	private static final ItemStack CANNOT_DELETE_ITEM = MetaHelper.setMeta(Material.BARRIER,
+			RED + BOLD + "Cannot delete!", Arrays.asList(GRAY + "Game cannot currently be deleted!"));
 
 	private static final int[] BORDER_ITEM_SLOTS = new int[] { SORT_MODE_ITEM_SLOT, NAME_ITEM_SLOT };
 
@@ -64,9 +70,14 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 	}
 
 	@Override
+	public void reset() {
+		super.reset();
+		dataList.clear();
+	}
+
+	@Override
 	public void resetMenu(Inventory currentlyUsed) {
 		reset();
-		dataList.clear();
 		Inventory newInv = createInventory(0);
 		List<HumanEntity> viewer = currentlyUsed.getViewers();
 		int length = viewer.size();
@@ -100,6 +111,8 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 					createHostWorldMenu(dataIndex, event.getInventory()).open(serverPlayer);
 				else if (event.getClick() == ClickType.RIGHT)
 					createOpenWorldMenu(dataIndex, event.getInventory()).open(serverPlayer);
+				else if (event.getClick() == ClickType.SHIFT_RIGHT)
+					createDeleteWorldMenu(slot, dataIndex, event.getInventory()).open(serverPlayer);
 			}
 		}
 	}
@@ -111,6 +124,19 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 		menu.setBackLink(inv);
 		menu.setYesCallback((serverPlayer, event) -> WorldLoader.loadReleasedWorld(serverPlayer, data.uuid, data.name,
 				data.environment, data.worldType, data.generateStructures, data.gameType));
+		return menu;
+	}
+
+	private YesNoMenu createDeleteWorldMenu(int slot, int dataIndex, Inventory inv) {
+		GameData data = getData(dataIndex);
+		YesNoMenu menu = new YesNoMenu(BOLD + "Delete " + data.name + "?",
+				Arrays.asList(GRAY + "Click to " + GREEN + BOLD + "delete" + GRAY + " game"));
+		menu.setBackLink(inv);
+		menu.setYesCallback((serverPlayer, event) -> {
+			if (!WorldLoader.deleteGame(serverPlayer, data.uuid))
+				displayInSlot(inv, CANNOT_DELETE_ITEM, slot, 100);
+			open(serverPlayer, dataIndex / MAX_ITEMS_WITH_BORDER);
+		});
 		return menu;
 	}
 

@@ -23,6 +23,7 @@ import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
 import com.pm.aiost.misc.menu.menus.PlayerWorldMenu;
+import com.pm.aiost.misc.menu.menus.ReleasedGameMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.FileUtils;
@@ -121,8 +122,7 @@ public class WorldLoader {
 		try {
 			DataAccess.getAccess().updatePlayerWorldLastSaveDate(uuid);
 		} catch (SQLException e) {
-			Logger.err("StandaloneServerRequestHandler: Error on updating player world last save date with id '" + uuid
-					+ "'", e);
+			Logger.err("WorldLoader: Error on updating player world last save date with id '" + uuid + "'", e);
 		}
 	}
 
@@ -146,8 +146,7 @@ public class WorldLoader {
 		try {
 			DataAccess.getAccess().renamePlayerWorld(uuid, newName);
 		} catch (SQLException e) {
-			Logger.err("StandaloneServerRequestHandler: Error on rename player world with id '" + uuid + "' to name '"
-					+ newName + "'", e);
+			Logger.err("WorldLoader: Error on rename player world with id '" + uuid + "' to name '" + newName + "'", e);
 		}
 		if (resetMenu) {
 			Menu menu = serverPlayer.getMenu(PlayerWorldMenu.class);
@@ -162,7 +161,7 @@ public class WorldLoader {
 		} catch (SQLIntegrityConstraintViolationException e) {
 			return false;
 		} catch (SQLException e) {
-			Logger.err("StandaloneServerRequestHandler: Error on removing player world with id '" + uuid, e);
+			Logger.err("WorldLoader: Error on removing player world with id '" + uuid, e);
 			return false;
 		}
 		deleteWorld(uuid);
@@ -177,11 +176,27 @@ public class WorldLoader {
 		try {
 			uuid = DataAccess.getAccess().addGame(worldID, name, type.getId());
 		} catch (SQLException e) {
-			Logger.err("StandaloneServerRequestHandler: Error on releasing player world with id '" + worldID
-					+ "' as type '" + type.name + "'", e);
+			Logger.err("WorldLoader: Error on releasing player world with id '" + worldID + "' as type '" + type.name
+					+ "'", e);
 			return;
 		}
 		saveWorld(uuid, world);
+	}
+
+	public static boolean deleteGame(ServerPlayer serverPlayer, UUID uuid) {
+		try {
+			DataAccess.getAccess().removeGame(uuid);
+		} catch (SQLIntegrityConstraintViolationException e) {
+			return false;
+		} catch (SQLException e) {
+			Logger.err("WorldLoader: Error on removing game with id '" + uuid, e);
+			return false;
+		}
+		deleteWorld(uuid);
+		Menu menu = serverPlayer.getMenu(ReleasedGameMenu.class);
+		if (menu != null)
+			((ReleasedGameMenu) menu).reset();
+		return true;
 	}
 
 	public static void loadGame(ByteArrayDataInput in) {
@@ -248,8 +263,7 @@ public class WorldLoader {
 		try {
 			DataAccess.getAccess().updateGame(uuid);
 		} catch (SQLException e) {
-			Logger.err("StandaloneServerRequestHandler: Error on updating player world last save date with id '" + uuid
-					+ "'", e);
+			Logger.err("WorldLoader: Error on updating player world last save date with id '" + uuid + "'", e);
 		}
 	}
 }
