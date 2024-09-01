@@ -1,6 +1,7 @@
 package com.pm.aiost.misc.profile;
 
 import java.util.Random;
+import java.util.UUID;
 
 import com.mojang.authlib.GameProfile;
 import com.pm.aiost.misc.registry.AiostRegistry;
@@ -16,12 +17,12 @@ public class Profiles {
 			"ewogICJ0aW1lc3RhbXAiIDogMTYwNDUzNTczMjc4NSwKICAicHJvZmlsZUlkIiA6ICJhYTZhNDA5NjU4YTk0MDIwYmU3OGQwN2JkMzVlNTg5MyIsCiAgInByb2ZpbGVOYW1lIiA6ICJiejE0IiwKICAic2lnbmF0dXJlUmVxdWlyZWQiIDogdHJ1ZSwKICAidGV4dHVyZXMiIDogewogICAgIlNLSU4iIDogewogICAgICAidXJsIiA6ICJodHRwOi8vdGV4dHVyZXMubWluZWNyYWZ0Lm5ldC90ZXh0dXJlLzEyZTgxM2E2MzcxNzEzYzljNzc0ZTc0MjBiZTMzZTZhMzkxZmExOGM5OGM2ZjlkYTA3NzQyMWQ2MDdiYWU0ZjkiCiAgICB9CiAgfQp9");
 
 	public static GameProfile register(String name, String skinSignature, String skin) {
-		return register(name, ProfileBuilder.create(name, skinSignature, skin));
+		return register(name, ProfileBuilder.create(name, UUID.randomUUID(), skinSignature, skin));
 	}
 
 	public static GameProfile register(String name, String skinSignature, String skin, String capeSignature,
 			String cape) {
-		return register(name, ProfileBuilder.create(name, skinSignature, skin, capeSignature, cape));
+		return register(name, ProfileBuilder.create(name, UUID.randomUUID(), skinSignature, skin, capeSignature, cape));
 	}
 
 	public static GameProfile register(String name, GameProfile profile) {

@@ -33,27 +33,14 @@ public class ProfileBuilder {
 		return GSON.toJson(profile, GameProfile.class);
 	}
 
-	public static GameProfile create(String name) {
-		return new GameProfile(UUID.randomUUID(), name);
-	}
-
 	public static GameProfile create(String name, UUID uuid) {
 		return new GameProfile(uuid, name);
-	}
-
-	public static GameProfile create(String name, String skinSignature, String skin) {
-		return create(name, UUID.randomUUID(), skinSignature, skin);
 	}
 
 	public static GameProfile create(String name, UUID uuid, String skinSignature, String skin) {
 		GameProfile profile = new GameProfile(uuid, name);
 		profile.getProperties().put("textures", new Property("textures", skin, skinSignature));
 		return profile;
-	}
-
-	public static GameProfile create(String name, String skinSignature, String skin, String capeSignature,
-			String cape) {
-		return create(name, UUID.randomUUID(), skinSignature, skin, capeSignature, cape);
 	}
 
 	public static GameProfile create(String name, UUID uuid, String skinSignature, String skin, String capeSignature,
@@ -65,6 +52,14 @@ public class ProfileBuilder {
 	}
 
 	public static GameProfile create(String name, GameProfile profile) {
+		return create(name, profile.getId(), profile);
+	}
+
+	public static GameProfile create(UUID uuid, GameProfile profile) {
+		return create(profile.getName(), uuid, profile);
+	}
+
+	public static GameProfile create(String name, UUID uuid, GameProfile profile) {
 		GameProfile result = new GameProfile(profile.getId(), name);
 		PropertyMap resultPropertyMap = result.getProperties();
 		for (Entry<String, Property> entry : profile.getProperties().entries())
