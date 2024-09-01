@@ -55,7 +55,9 @@ import com.pm.aiost.world.type.AiostWorldTypes;
 
 import net.minecraft.world.entity.EntityType;
 
-// All in one server technology
+/**
+ * All in one server technology
+ */
 public class Aiost extends JavaPlugin {
 
 	private static Aiost plugin;
@@ -65,22 +67,12 @@ public class Aiost extends JavaPlugin {
 		plugin = this;
 		Logger.setLogger(new SpigotLogger());
 
-		Logger.log("Start loading aisot...");
+		Logger.log("Start loading Aiost...");
 
 		EventHandlerManager.init();
-		EntityType<EntityProjectile> entityType = AiostEntityTypes.PROJECTILE;
-		GameType<?> gameType = GameTypes.SPLEEF;
-		UnlockableType<?> unlockableType = UnlockableTypes.HATS;
-		Spell spell = Spells.FLAME;
-		ParticleType<?> particleType = ParticleTypes.BEAM;
-		EffectType<?> effectType = EffectTypes.POTION_EFFECT;
-		PacketObjectType<?> packetObjectType = PacketObjectTypes.FURNITURE;
-		PacketEntityType<?> packetEntityType = PacketEntityTypes.ENTITY_FURNITURE;
-		TileObjectType<?> tileObjectType = TileObjectTypes.BLINKING_BLOCK;
-		AiostWorldType<?> worldType = AiostWorldTypes.DEFAULT;
-		EntityConfig entityConfig = EntityConfig.CHICKEN_HOSTILE;
+		initRegistry();
 
-		Logger.log("Loading aisot complete!");
+		Logger.log("Loading Aiost complete!");
 	}
 
 	@Override
@@ -90,7 +82,7 @@ public class Aiost extends JavaPlugin {
 		getServer().getPluginManager().registerEvents(new AiostListener(), this);
 		Commands.init();
 		SpigotConfigManager.init();
-		intDatabase();
+		initDatabase();
 		if (!SpigotConfig.HAS_BUNGEE)
 			HttpServer.start();
 		ServerManager.init();
@@ -122,15 +114,26 @@ public class Aiost extends JavaPlugin {
 		Logger.log("Aiost disabled!");
 	}
 
-	private static void intDatabase() {
-		Logger.log("Initialize Database...");
+	@SuppressWarnings("unused")
+	private static void initRegistry() {
+		EntityType<EntityProjectile> entityType = AiostEntityTypes.PROJECTILE;
+		GameType<?> gameType = GameTypes.SPLEEF;
+		UnlockableType<?> unlockableType = UnlockableTypes.HATS;
+		Spell spell = Spells.FLAME;
+		ParticleType<?> particleType = ParticleTypes.BEAM;
+		EffectType<?> effectType = EffectTypes.POTION_EFFECT;
+		PacketObjectType<?> packetObjectType = PacketObjectTypes.FURNITURE;
+		PacketEntityType<?> packetEntityType = PacketEntityTypes.ENTITY_FURNITURE;
+		TileObjectType<?> tileObjectType = TileObjectTypes.BLINKING_BLOCK;
+		AiostWorldType<?> worldType = AiostWorldTypes.DEFAULT;
+		EntityConfig entityConfig = EntityConfig.CHICKEN_HOSTILE;
+	}
 
+	private static void initDatabase() {
 		if (DatabaseManager.initConnection(SpigotConfigManager.getAiostConfig()))
 			DataAccess.init(new SpigotDatabaseAccess());
 		else
 			DataAccess.init(new SpigotFileAccess());
-
-		Logger.log("Database initialized!");
 	}
 
 	private static void startScheduler() {
