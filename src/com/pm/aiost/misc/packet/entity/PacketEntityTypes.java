@@ -4,12 +4,13 @@ import org.bukkit.Location;
 
 import com.pm.aiost.misc.packet.entity.PacketEntityType.PacketEntityConstructor;
 import com.pm.aiost.misc.packet.entity.entities.EntityFurniture;
-import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
 import com.pm.aiost.misc.packet.entity.entities.EntitySimpleText;
-import com.pm.aiost.misc.packet.entity.entities.PacketEntityFallingBlock;
-import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
+import com.pm.aiost.misc.packet.entity.entities.PacketFallingBlock;
+import com.pm.aiost.misc.packet.entity.entities.PacketLivingEntity;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
+import com.pm.aiost.misc.packet.entity.entities.TextDisplay;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.chunk.ServerChunk;
@@ -18,24 +19,25 @@ import net.minecraft.nbt.CompoundTag;
 
 public class PacketEntityTypes {
 
-	public static final PacketEntityType<PacketEntityLiving> ENTITY_LIVING = register(0, "entity_living",
-			PacketEntityLiving::new);
+	public static final PacketEntityType<PacketLivingEntity> LIVING_ENTITY = register(0, "living_entity",
+			PacketLivingEntity::new);
 
-	public static final PacketEntityType<PacketPlayer> ENTITY_PLAYER = register(1, "entity_player", PacketPlayer::new);
+	public static final PacketEntityType<PacketPlayer> PLAYER = register(1, "player", PacketPlayer::new);
 
-	public static final PacketEntityType<PacketEntityFallingBlock> ENTITY_FALLING_BLOCK = register(2,
-			"entity_falling_block", PacketEntityFallingBlock::new);
+	public static final PacketEntityType<PacketFallingBlock> FALLING_BLOCK = register(2, "falling_block",
+			PacketFallingBlock::new);
 
-	public static final PacketEntityType<EntityFurniture> ENTITY_FURNITURE = register(3, "entity_furniture",
+	public static final PacketEntityType<EntityFurniture> FURNITURE = register(3, "entity_furniture",
 			EntityFurniture::new);
 
-	public static final PacketEntityType<EntitySimpleText> ENTITY_SIMPLE_TEXT = register(4, "entity_simple_text",
+	public static final PacketEntityType<EntitySimpleText> SIMPLE_TEXT = register(4, "entity_simple_text",
 			EntitySimpleText::new);
 
-	public static final PacketEntityType<EntityHologram> ENTITY_HOLOGRAM = register(5, "entity_hologram",
-			EntityHologram::new);
+	public static final PacketEntityType<Hologram> HOLOGRAM = register(5, "hologram", Hologram::new);
 
-	public static final PacketEntityType<ParticleSpawner> PARTICLE_SPAWNER = register(6, "particle_spawner",
+	public static final PacketEntityType<TextDisplay> TEXT_DISPLAY = register(6, "text_display", TextDisplay::new);
+
+	public static final PacketEntityType<ParticleSpawner> PARTICLE_SPAWNER = register(7, "particle_spawner",
 			ParticleSpawner::new);
 
 	protected static <T extends PacketEntity> PacketEntityType<T> register(int id, String name,

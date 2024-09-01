@@ -32,12 +32,12 @@ import com.pm.aiost.misc.event.eventHandler.handler.PlayerWorldEventHandler;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
 import com.pm.aiost.misc.menu.menus.PlayerWorldToolMenu;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
+import com.pm.aiost.misc.packet.entity.entities.PacketLivingEntity;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.misc.particle.animations.Portal;
 import com.pm.aiost.misc.particle.particles.DataParticle;
 import com.pm.aiost.misc.profile.ProfileFetcher;
@@ -445,20 +445,20 @@ public class WorldCommands {
 		if (args.length == 1) {
 			Location loc = player.getLocation();
 			if (StringUtils.isInteger(args[0], 10)) {
-				PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(),
+				PacketLivingEntity entity = new PacketLivingEntity(serverPlayer.getServerWorld(),
 						CommandUtil.parseInt(sender, args[0]));
 				PacketEntityTypes.spawn(entity, loc);
 			} else {
 				EntityType<?> type = CommandUtil.parseEntityTypes(sender, args[0]);
 				if (type == null)
 					return false;
-				PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);
+				PacketLivingEntity entity = new PacketLivingEntity(serverPlayer.getServerWorld(), type);
 				PacketEntityTypes.spawn(entity, loc);
 			}
 			return true;
 		} else if (args.length > 3 && args.length < 7) {
 			if (StringUtils.isInteger(args[0], 10)) {
-				PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(),
+				PacketLivingEntity entity = new PacketLivingEntity(serverPlayer.getServerWorld(),
 						CommandUtil.parseInt(sender, args[3]));
 				PacketEntityTypes.spawn(entity, CommandUtil.parseX(player, args[0]),
 						CommandUtil.parseY(player, args[1]), CommandUtil.parseZ(player, args[2]),
@@ -468,7 +468,7 @@ public class WorldCommands {
 				EntityType<?> type = CommandUtil.parseEntityTypes(sender, args[3]);
 				if (type == null)
 					return false;
-				PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);
+				PacketLivingEntity entity = new PacketLivingEntity(serverPlayer.getServerWorld(), type);
 				PacketEntityTypes.spawn(entity, CommandUtil.parseX(player, args[0]),
 						CommandUtil.parseY(player, args[1]), CommandUtil.parseZ(player, args[2]),
 						args.length >= 5 ? CommandUtil.parseFloat(sender, args[4]) : 0,
@@ -492,7 +492,7 @@ public class WorldCommands {
 
 		if (args.length < 4) {
 			Hologram hologram = new Hologram(serverPlayer.getServerWorld(), convert(args));
-			PacketObjectTypes.spawn(hologram, player.getLocation());
+			PacketEntityTypes.spawn(hologram, player.getLocation());
 		} else {
 			if (args[0].charAt(0) == '~' || StringUtils.isInteger(args[0], 10)) {
 				Hologram hologram;
@@ -501,11 +501,11 @@ public class WorldCommands {
 							convert(Arrays.copyOfRange(args, 3, args.length)));
 				else
 					hologram = new Hologram(serverPlayer.getServerWorld(), args[3]);
-				PacketObjectTypes.spawn(hologram, CommandUtil.parseX(player, args[0]),
+				PacketEntityTypes.spawn(hologram, CommandUtil.parseX(player, args[0]),
 						CommandUtil.parseY(player, args[1]), CommandUtil.parseZ(player, args[2]));
 			} else {
 				Hologram hologram = new Hologram(serverPlayer.getServerWorld(), convert(args));
-				PacketObjectTypes.spawn(hologram, player.getLocation());
+				PacketEntityTypes.spawn(hologram, player.getLocation());
 			}
 		}
 		return true;

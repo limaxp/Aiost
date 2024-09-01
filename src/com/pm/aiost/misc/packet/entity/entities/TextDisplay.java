@@ -1,4 +1,4 @@
-package com.pm.aiost.misc.packet.object.objects;
+package com.pm.aiost.misc.packet.entity.entities;
 
 import java.util.Collection;
 import java.util.List;
@@ -11,8 +11,8 @@ import com.pm.aiost.collection.list.UnorderedIdentityArrayList;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
-import com.pm.aiost.misc.packet.object.PacketObjectType;
-import com.pm.aiost.misc.packet.object.PacketObjectTypes;
+import com.pm.aiost.misc.packet.entity.PacketEntityType;
+import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.world.ServerWorld;
 
@@ -132,8 +132,8 @@ public class TextDisplay extends Hologram {
 	}
 
 	@Override
-	public PacketObjectType<?> getPacketObjectType() {
-		return PacketObjectTypes.TEXT_DISPLAY;
+	public PacketEntityType<?> getPacketEntityType() {
+		return PacketEntityTypes.TEXT_DISPLAY;
 	}
 }
 

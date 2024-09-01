@@ -24,7 +24,7 @@ import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
 import com.pm.aiost.misc.packet.entity.entities.ParticleSpawner;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -157,8 +157,7 @@ public class PlayerWorldSpawnMenu {
 	}
 
 	private static void spawnHologram(ServerPlayer serverPlayer, List<String> text) {
-		PacketEntityTypes.spawn(new EntityHologram(serverPlayer.getServerWorld(), text),
-				serverPlayer.player.getLocation());
+		PacketEntityTypes.spawn(new Hologram(serverPlayer.getServerWorld(), text), serverPlayer.player.getLocation());
 		serverPlayer.player.closeInventory();
 	}
 

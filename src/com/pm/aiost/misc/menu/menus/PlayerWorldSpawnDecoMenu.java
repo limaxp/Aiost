@@ -22,8 +22,8 @@ import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.entities.EntityFurniture;
-import com.pm.aiost.misc.packet.entity.entities.PacketEntityFallingBlock;
-import com.pm.aiost.misc.packet.entity.entities.PacketEntityLiving;
+import com.pm.aiost.misc.packet.entity.entities.PacketFallingBlock;
+import com.pm.aiost.misc.packet.entity.entities.PacketLivingEntity;
 import com.pm.aiost.misc.packet.entity.entities.PacketPlayer;
 import com.pm.aiost.misc.profile.ProfileFetcher;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -160,7 +160,7 @@ public class PlayerWorldSpawnDecoMenu {
 	}
 
 	private static void spawnEntityLiving(ServerPlayer serverPlayer, EntityType<?> type) {
-		PacketEntityLiving entity = new PacketEntityLiving(serverPlayer.getServerWorld(), type);
+		PacketLivingEntity entity = new PacketLivingEntity(serverPlayer.getServerWorld(), type);
 		PacketEntityTypes.spawn(entity, serverPlayer.player.getLocation());
 	}
 
@@ -170,7 +170,7 @@ public class PlayerWorldSpawnDecoMenu {
 	}
 
 	private static void spawnBlock(ServerPlayer serverPlayer, Material material) {
-		PacketEntityFallingBlock player = new PacketEntityFallingBlock(serverPlayer.getServerWorld(), material);
+		PacketFallingBlock player = new PacketFallingBlock(serverPlayer.getServerWorld(), material);
 		PacketEntityTypes.spawn(player, serverPlayer.player.getLocation());
 	}
 

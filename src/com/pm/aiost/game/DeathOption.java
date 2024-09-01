@@ -111,7 +111,7 @@ public interface DeathOption {
 	}
 
 	public static void spawnBody(ServerPlayer serverPlayer) {
-		PacketPlayer packetPlayer = PacketEntityTypes.spawn(PacketEntityTypes.ENTITY_PLAYER,
+		PacketPlayer packetPlayer = PacketEntityTypes.spawn(PacketEntityTypes.PLAYER,
 				serverPlayer.player.getLocation());
 		// TODO set DataWatcher flag for lying down!
 	}

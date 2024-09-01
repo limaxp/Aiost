@@ -15,30 +15,30 @@ import com.pm.aiost.world.ServerWorld;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 
-public class PacketEntityFallingBlock extends PacketEntity {
+public class PacketFallingBlock extends PacketEntity {
 
 	protected int blockId;
 
-	public PacketEntityFallingBlock(ServerWorld world) {
+	public PacketFallingBlock(ServerWorld world) {
 		super(world);
 	}
 
-	public PacketEntityFallingBlock(ServerWorld world, Block block) {
+	public PacketFallingBlock(ServerWorld world, Block block) {
 		super(world);
 		setBlock(block);
 	}
 
-	public PacketEntityFallingBlock(ServerWorld world, BlockData block) {
+	public PacketFallingBlock(ServerWorld world, BlockData block) {
 		super(world);
 		setBlockData(block);
 	}
 
-	public PacketEntityFallingBlock(ServerWorld world, Material material) {
+	public PacketFallingBlock(ServerWorld world, Material material) {
 		super(world);
 		setMaterial(material);
 	}
 
-	public PacketEntityFallingBlock(ServerWorld world, int blockId) {
+	public PacketFallingBlock(ServerWorld world, int blockId) {
 		super(world);
 		setBlockId(blockId);
 	}
@@ -96,6 +96,6 @@ public class PacketEntityFallingBlock extends PacketEntity {
 
 	@Override
 	public PacketEntityType<?> getPacketEntityType() {
-		return PacketEntityTypes.ENTITY_FALLING_BLOCK;
+		return PacketEntityTypes.FALLING_BLOCK;
 	}
 }

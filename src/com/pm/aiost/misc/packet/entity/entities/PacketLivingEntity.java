@@ -15,21 +15,21 @@ import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.syncher.SynchedEntityData.DataValue;
 import net.minecraft.world.entity.EntityType;
 
-public class PacketEntityLiving extends PacketEntity {
+public class PacketLivingEntity extends PacketEntity {
 
 	protected int entityId;
 	protected final List<DataValue<?>> dataWatcher;
 
-	public PacketEntityLiving(ServerWorld world) {
+	public PacketLivingEntity(ServerWorld world) {
 		super(world);
 		dataWatcher = new ArrayList<DataValue<?>>();
 	}
 
-	public PacketEntityLiving(ServerWorld world, EntityType<?> type) {
+	public PacketLivingEntity(ServerWorld world, EntityType<?> type) {
 		this(world, AiostEntityTypes.getId(type));
 	}
 
-	public PacketEntityLiving(ServerWorld world, int entityId) {
+	public PacketLivingEntity(ServerWorld world, int entityId) {
 		super(world);
 		this.entityId = entityId;
 		dataWatcher = new ArrayList<DataValue<?>>();
@@ -69,6 +69,6 @@ public class PacketEntityLiving extends PacketEntity {
 
 	@Override
 	public PacketEntityType<?> getPacketEntityType() {
-		return PacketEntityTypes.ENTITY_LIVING;
+		return PacketEntityTypes.LIVING_ENTITY;
 	}
 }

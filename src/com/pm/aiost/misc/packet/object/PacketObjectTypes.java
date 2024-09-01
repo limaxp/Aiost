@@ -4,10 +4,8 @@ import org.bukkit.Location;
 
 import com.pm.aiost.misc.packet.object.PacketObjectType.PacketObjectConstructor;
 import com.pm.aiost.misc.packet.object.objects.Furniture;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.misc.packet.object.objects.Marker;
 import com.pm.aiost.misc.packet.object.objects.SimpleText;
-import com.pm.aiost.misc.packet.object.objects.TextDisplay;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.chunk.ServerChunk;
@@ -21,10 +19,6 @@ public class PacketObjectTypes {
 	public static final PacketObjectType<SimpleText> SIMPLE_TEXT = register(1, "simple_text", SimpleText::new);
 
 	public static final PacketObjectType<Marker> MARKER = register(2, "marker", Marker::new);
-
-	public static final PacketObjectType<Hologram> HOLOGRAM = register(3, "hologram", Hologram::new);
-
-	public static final PacketObjectType<TextDisplay> TEXT_DISPLAY = register(4, "text_display", TextDisplay::new);
 
 	public static <T extends PacketObject> PacketObjectType<T> register(int id, String name,
 			PacketObjectConstructor<T> constructor) {

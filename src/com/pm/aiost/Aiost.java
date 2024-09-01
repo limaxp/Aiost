@@ -123,7 +123,7 @@ public class Aiost extends JavaPlugin {
 		ParticleType<?> particleType = ParticleTypes.BEAM;
 		EffectType<?> effectType = EffectTypes.POTION_EFFECT;
 		PacketObjectType<?> packetObjectType = PacketObjectTypes.FURNITURE;
-		PacketEntityType<?> packetEntityType = PacketEntityTypes.ENTITY_FURNITURE;
+		PacketEntityType<?> packetEntityType = PacketEntityTypes.FURNITURE;
 		TileObjectType<?> tileObjectType = TileObjectTypes.BLINKING_BLOCK;
 		AiostWorldType<?> worldType = AiostWorldTypes.DEFAULT;
 		EntityConfig entityConfig = EntityConfig.CHICKEN_HOSTILE;

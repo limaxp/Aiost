@@ -151,6 +151,6 @@ public class EntityFurniture extends PacketEntity {
 
 	@Override
 	public PacketEntityType<?> getPacketEntityType() {
-		return PacketEntityTypes.ENTITY_FURNITURE;
+		return PacketEntityTypes.FURNITURE;
 	}
 }

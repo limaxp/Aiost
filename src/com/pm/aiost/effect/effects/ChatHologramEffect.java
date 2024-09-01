@@ -8,7 +8,7 @@ import com.pm.aiost.effect.EffectCondition;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.blueprints.SingletonEffect;
 import com.pm.aiost.misc.packet.entity.entities.ChatHologram;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.handler.ChatHologramHandler;
 

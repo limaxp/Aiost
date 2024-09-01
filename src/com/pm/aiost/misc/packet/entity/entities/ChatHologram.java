@@ -8,12 +8,11 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.network.protocol.Packet;
 
-public class ChatHologram extends EntityHologram {
+public class ChatHologram extends Hologram {
 
 	protected final List<Player> player;
 

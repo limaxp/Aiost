@@ -43,7 +43,9 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 				usePacket.dispatch(new ServerboundInteractPacket.Handler() {
 
 					public void onInteraction(InteractionHand var1) {
-						Logger.log("AiostPacketDecoder: interact");
+					}
+
+					public void onInteraction(InteractionHand var1, Vec3 var2) {
 						Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
 							if (!AiostEventFactory.callPacketObjectInteractEvent(serverPlayer, packetObject)
 									.isCancelled())
@@ -51,12 +53,7 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 						});
 					}
 
-					public void onInteraction(InteractionHand var1, Vec3 var2) {
-						Logger.log("AiostPacketDecoder: interact2");
-					}
-
 					public void onAttack() {
-						Logger.log("AiostPacketDecoder: attack");
 						Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
 							if (!AiostEventFactory.callPacketObjectAttackEvent(serverPlayer, packetObject)
 									.isCancelled())

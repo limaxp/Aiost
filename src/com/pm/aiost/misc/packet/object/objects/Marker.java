@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
 import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.misc.packet.object.PacketObjectTypes;
 import com.pm.aiost.player.ServerPlayer;

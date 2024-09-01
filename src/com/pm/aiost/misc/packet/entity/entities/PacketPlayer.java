@@ -101,6 +101,6 @@ public class PacketPlayer extends PacketEntity {
 
 	@Override
 	public PacketEntityType<?> getPacketEntityType() {
-		return PacketEntityTypes.ENTITY_PLAYER;
+		return PacketEntityTypes.PLAYER;
 	}
 }

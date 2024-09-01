@@ -1,7 +1,5 @@
 package com.pm.aiost.misc.packet.entity.entities;
 
-import java.util.UUID;
-
 import org.bukkit.entity.Player;
 
 import com.pm.aiost.entity.AiostEntityTypes;
@@ -10,7 +8,6 @@ import com.pm.aiost.misc.packet.PacketSender;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
 import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
@@ -55,8 +52,7 @@ public class EntitySimpleText extends PacketEntity {
 
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return PacketFactory.packetEntitySpawn(id, uuid, x + 0.5, y, z + 0.5, 0, 0,
-				AiostEntityTypes.ARMOR_STAND);
+		return PacketFactory.packetEntitySpawn(id, uuid, x + 0.5, y, z + 0.5, 0, 0, AiostEntityTypes.ARMOR_STAND);
 	}
 
 	public Packet<?> createMetaDataPacket() {
@@ -69,6 +65,6 @@ public class EntitySimpleText extends PacketEntity {
 
 	@Override
 	public PacketEntityType<?> getPacketEntityType() {
-		return PacketEntityTypes.ENTITY_SIMPLE_TEXT;
+		return PacketEntityTypes.SIMPLE_TEXT;
 	}
 }

@@ -53,8 +53,7 @@ import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.packet.disguise.DisguiseManager;
 import com.pm.aiost.misc.packet.entity.entities.ChatHologram;
-import com.pm.aiost.misc.packet.entity.entities.EntityHologram;
-import com.pm.aiost.misc.packet.object.objects.Hologram;
+import com.pm.aiost.misc.packet.entity.entities.Hologram;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.rank.Rank;
 import com.pm.aiost.player.handler.ItemBarHandler;
@@ -154,7 +153,7 @@ public class ServerPlayer implements AutoCloseable {
 		menus = null;
 		gamePlayer = GamePlayer.NULL_GAME_PLAYER;
 		if (!chatHolograms.isEmpty()) {
-			for (EntityHologram chatHologram : chatHolograms)
+			for (Hologram chatHologram : chatHolograms)
 				chatHologram.remove();
 		}
 		if (petEntity != null)
