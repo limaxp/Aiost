@@ -148,6 +148,7 @@ public class SpigotDatabaseAccess extends DatabaseAccess implements SpigotDataAc
 			}
 			gamePlayer.databaseSave(playerData);
 			playerData.append(';');
+			addCredits(gamePlayer.getDatabaseID(), gamePlayer.getCreditsEarned());
 		}
 
 		// TODO add teamData in Database Statement
