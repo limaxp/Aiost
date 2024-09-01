@@ -327,7 +327,7 @@ public class AiostListener implements Listener {
 
 		EffectData effectData = event.getServerPlayer().getEffectData();
 		effectData.removeEffect(event);
-		if (event.getItemStack() == null)
+		if (event.getItemStack() == null || event.getItemStack().getType() == Material.AIR)
 			return;
 
 		EffectHandler.itemEquipRunEffects(event);
@@ -350,7 +350,7 @@ public class AiostListener implements Listener {
 
 		EffectData effectData = event.getServerPlayer().getEffectData();
 		effectData.removeHandEffect(event);
-		if (event.getItemStack() == null)
+		if (event.getItemStack() == null || event.getItemStack().getType() == Material.AIR)
 			return;
 
 		EffectHandler.itemEquipRunEffects(event);
