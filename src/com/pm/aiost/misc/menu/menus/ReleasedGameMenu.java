@@ -71,7 +71,7 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 		List<HumanEntity> viewer = currentlyUsed.getViewers();
 		int length = viewer.size();
 		for (int i = 0; i < length; i++)
-			viewer.get(i).openInventory(newInv);
+			viewer.get(0).openInventory(newInv);
 	}
 
 	protected ResultSet runDatabaseFunction(int index) throws SQLException {
