@@ -1,7 +1,5 @@
 package com.pm.aiost.misc.event.events;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 
@@ -12,7 +10,7 @@ public class PlayerJumpEvent extends ServerPlayerEvent implements Cancellable {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean cancelled;
 
-	public PlayerJumpEvent(@Nonnull ServerPlayer serverPlayer) {
+	public PlayerJumpEvent(ServerPlayer serverPlayer) {
 		super(serverPlayer);
 		cancelled = false;
 	}

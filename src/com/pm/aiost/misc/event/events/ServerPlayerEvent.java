@@ -1,7 +1,5 @@
 package com.pm.aiost.misc.event.events;
 
-import javax.annotation.Nonnull;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
@@ -13,7 +11,7 @@ public abstract class ServerPlayerEvent extends Event {
 	private static final HandlerList handlers = new HandlerList();
 	private ServerPlayer serverPlayer;
 
-	protected ServerPlayerEvent(@Nonnull ServerPlayer serverPlayer) {
+	protected ServerPlayerEvent(ServerPlayer serverPlayer) {
 		this.serverPlayer = serverPlayer;
 	}
 

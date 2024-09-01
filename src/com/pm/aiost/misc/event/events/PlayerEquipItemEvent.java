@@ -1,8 +1,5 @@
 package com.pm.aiost.misc.event.events;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.EquipmentSlot;
@@ -18,8 +15,7 @@ public class PlayerEquipItemEvent extends ServerPlayerEvent implements Cancellab
 	private EquipmentAction action;
 	private boolean cancelled;
 
-	public PlayerEquipItemEvent(@Nonnull ServerPlayer serverPlayer, @Nullable ItemStack is, @Nonnull EquipmentSlot slot,
-			@Nonnull EquipmentAction action) {
+	public PlayerEquipItemEvent(ServerPlayer serverPlayer, ItemStack is, EquipmentSlot slot, EquipmentAction action) {
 		super(serverPlayer);
 		this.is = is;
 		this.slot = slot;

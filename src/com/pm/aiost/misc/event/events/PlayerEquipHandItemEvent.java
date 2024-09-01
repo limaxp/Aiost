@@ -1,8 +1,5 @@
 package com.pm.aiost.misc.event.events;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
-
 import org.bukkit.event.HandlerList;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
@@ -14,8 +11,8 @@ public class PlayerEquipHandItemEvent extends PlayerEquipItemEvent {
 	private static final HandlerList handlers = new HandlerList();
 	private boolean mainHand;
 
-	public PlayerEquipHandItemEvent(@Nonnull ServerPlayer serverPlayer, @Nullable ItemStack is,
-			@Nonnull EquipmentSlot slot, @Nonnull EquipmentAction action) {
+	public PlayerEquipHandItemEvent(ServerPlayer serverPlayer, ItemStack is, EquipmentSlot slot,
+			EquipmentAction action) {
 		super(serverPlayer, is, slot, action);
 		if (slot == EquipmentSlot.HAND)
 			mainHand = true;
