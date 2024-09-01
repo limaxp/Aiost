@@ -15,7 +15,6 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 import org.bukkit.GameMode;
@@ -640,11 +639,11 @@ public class ServerPlayer implements AutoCloseable {
 		return menu;
 	}
 
-	public void doMenuRequest(@Nonnull Object identifier, @Nonnull MenuRequest menuRequest) {
+	public void doMenuRequest(Object identifier, MenuRequest menuRequest) {
 		doMenuRequest(identifier, () -> menuRequest);
 	}
 
-	public void doMenuRequest(@Nonnull Object identifier, @Nonnull Supplier<MenuRequest> supplier) {
+	public void doMenuRequest(Object identifier, Supplier<MenuRequest> supplier) {
 		MenuRequest request = getStoredMenuRequest(identifier);
 		if (request == null) {
 			request = supplier.get();
@@ -653,24 +652,24 @@ public class ServerPlayer implements AutoCloseable {
 		doMenuRequest(request);
 	}
 
-	public void doMenuRequest(@Nonnull Supplier<MenuRequest> supplier) {
+	public void doMenuRequest(Supplier<MenuRequest> supplier) {
 		doMenuRequest(supplier.get());
 	}
 
-	public void doMenuRequest(@Nonnull MenuRequest menuRequest) {
+	public void doMenuRequest(MenuRequest menuRequest) {
 		if (menuRequestQueue.size() >= 10)
 			menuRequestQueue.pollLast();
 		menuRequestQueue.offerFirst(menuRequest);
 		menuRequest.open(this);
 	}
 
-	private MenuRequest getStoredMenuRequest(@Nonnull Object identifier) {
+	private MenuRequest getStoredMenuRequest(Object identifier) {
 		if (storedMenuRequests == null)
 			storedMenuRequests = new Object2ObjectLinkedOpenHashMap<Object, MenuRequest>(10);
 		return storedMenuRequests.get(identifier);
 	}
 
-	private void storeMenuRequest(@Nonnull Object identifier, @Nonnull MenuRequest menuRequest) {
+	private void storeMenuRequest(Object identifier, MenuRequest menuRequest) {
 		if (storedMenuRequests.size() >= 10)
 			storedMenuRequests.removeLast();
 		storedMenuRequests.putAndMoveToFirst(identifier, menuRequest);
