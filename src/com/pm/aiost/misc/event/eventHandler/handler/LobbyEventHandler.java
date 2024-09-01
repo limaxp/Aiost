@@ -9,7 +9,7 @@ import org.bukkit.event.entity.EntityExplodeEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
 
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.LobbyScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -67,7 +67,7 @@ public interface LobbyEventHandler extends EventHandler {
 	}
 
 	@Override
-	public default void onPacketThingAttack(PacketThingAttackEvent event) {
+	public default void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		if (!canModifyWorld(event.getServerPlayer()))
 			event.setCancelled(true);
 	}

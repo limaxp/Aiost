@@ -13,7 +13,7 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
@@ -108,7 +108,7 @@ public class EntityFurniture extends PacketEntity {
 	}
 
 	@Override
-	public void defaultPlayerAttack(PacketThingAttackEvent event) {
+	public void defaultPlayerAttack(PacketObjectAttackEvent event) {
 		// empty so doesn't get cancelled!
 	}
 

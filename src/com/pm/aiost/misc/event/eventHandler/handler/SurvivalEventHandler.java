@@ -1,7 +1,7 @@
 package com.pm.aiost.misc.event.eventHandler.handler;
 
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.SurvivalScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -26,8 +26,8 @@ public interface SurvivalEventHandler extends EventHandler {
 	}
 
 	@Override
-	public default void onPacketThingAttack(PacketThingAttackEvent event) {
-		event.getPacketThing().defaultPlayerAttack(event);
+	public default void onPacketObjectAttack(PacketObjectAttackEvent event) {
+		event.getPacketObject().defaultPlayerAttack(event);
 	}
 
 	@Override

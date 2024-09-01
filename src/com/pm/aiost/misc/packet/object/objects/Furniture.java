@@ -18,7 +18,7 @@ import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.item.ItemGroups;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.item.custom.Slot;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
@@ -133,15 +133,13 @@ public class Furniture extends PacketObject {
 	}
 
 	@Override
-	public void defaultPlayerAttack(PacketThingAttackEvent event) {
+	public void defaultPlayerAttack(PacketObjectAttackEvent event) {
 		// empty so doesn't get cancelled!
 	}
 
 	@Override
-	public void setPositionRotation(int x, int y, int z, float yaw, float pitch) {
-		this.x = x;
-		this.y = y;
-		this.z = z;
+	public void setPositionRotation(double x, double y, double z, float yaw, float pitch) {
+		super.setPositionRotation(x, y, z, yaw, pitch);
 		this.yaw = yaw;
 	}
 

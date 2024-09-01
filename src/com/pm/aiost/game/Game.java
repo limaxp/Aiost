@@ -32,7 +32,7 @@ import com.pm.aiost.game.data.IGameData;
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.SpectatorEventHandler;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
@@ -459,8 +459,8 @@ public abstract class Game implements AutoCloseable, IGameData, EventHandler {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
-		event.getPacketThing().defaultPlayerAttack(event);
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
+		event.getPacketObject().defaultPlayerAttack(event);
 	}
 
 	@Override

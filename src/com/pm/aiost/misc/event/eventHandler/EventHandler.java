@@ -34,8 +34,8 @@ import org.bukkit.event.player.PlayerItemHeldEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.menu.Menu;
@@ -183,10 +183,10 @@ public interface EventHandler {
 	public default void onProjectileHit(ProjectileHitEvent event) {
 	}
 
-	public default void onPacketThingAttack(PacketThingAttackEvent event) {
+	public default void onPacketObjectAttack(PacketObjectAttackEvent event) {
 	}
 
-	public default void onPacketThingInteract(PacketThingInteractEvent event) {
+	public default void onPacketObjectInteract(PacketObjectInteractEvent event) {
 	}
 
 	public default void load(ConfigurationSection section) {
@@ -198,7 +198,7 @@ public interface EventHandler {
 	public default Menu getMenu() {
 		return MainMenu.getMenu();
 	}
-	
+
 	public default void openMenu(Player player) {
 		getMenu().open(player);
 	}

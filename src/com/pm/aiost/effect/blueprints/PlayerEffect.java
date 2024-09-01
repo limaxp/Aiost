@@ -27,8 +27,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import com.pm.aiost.effect.Effect;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.event.events.ServerPlayerEvent;
 import com.pm.aiost.player.ServerPlayer;
@@ -203,12 +203,12 @@ public abstract class PlayerEffect extends Effect {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		onServerPlayerEvent(event);
 	}
 
 	@Override
-	public void onPacketThingInteract(PacketThingInteractEvent event) {
+	public void onPacketObjectInteract(PacketObjectInteractEvent event) {
 		onServerPlayerEvent(event);
 	}
 

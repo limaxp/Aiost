@@ -83,8 +83,8 @@ import com.pm.aiost.item.Items;
 import com.pm.aiost.item.block.CustomBlock;
 import com.pm.aiost.misc.command.Commands;
 import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipHandItemEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.event.events.PlayerJumpEvent;
@@ -905,19 +905,19 @@ public class AiostListener implements Listener {
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		if (event.isCancelled())
 			return;
 
-		event.getServerPlayer().getEventHandler().onPacketThingAttack(event);
+		event.getServerPlayer().getEventHandler().onPacketObjectAttack(event);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)
-	public void onPacketThingInteract(PacketThingInteractEvent event) {
+	public void onPacketObjectInteract(PacketObjectInteractEvent event) {
 		if (event.isCancelled())
 			return;
 
-		event.getServerPlayer().getEventHandler().onPacketThingInteract(event);
+		event.getServerPlayer().getEventHandler().onPacketObjectInteract(event);
 	}
 
 	@EventHandler(priority = EventPriority.LOW)

@@ -36,8 +36,8 @@ import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.effect.EffectTypes;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
@@ -225,12 +225,12 @@ public class CancelEventEffect extends Effect {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		event.setCancelled(true);
 	}
 
 	@Override
-	public void onPacketThingInteract(PacketThingInteractEvent event) {
+	public void onPacketObjectInteract(PacketObjectInteractEvent event) {
 		event.setCancelled(true);
 	}
 

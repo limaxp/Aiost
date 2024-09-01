@@ -55,7 +55,7 @@ public class EntitySimpleText extends PacketEntity {
 
 	@Override
 	public Packet<?> createSpawnPacket() {
-		return PacketFactory.packetEntitySpawn(id, UUID.randomUUID(), x + 0.5, y, z + 0.5, 0, 0,
+		return PacketFactory.packetEntitySpawn(id, uuid, x + 0.5, y, z + 0.5, 0, 0,
 				AiostEntityTypes.ARMOR_STAND);
 	}
 

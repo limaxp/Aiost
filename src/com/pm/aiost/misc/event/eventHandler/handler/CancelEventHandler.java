@@ -25,8 +25,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.player.ServerPlayer;
 
 public interface CancelEventHandler extends EventHandler {
@@ -189,12 +189,12 @@ public interface CancelEventHandler extends EventHandler {
 	}
 
 	@Override
-	public default void onPacketThingAttack(PacketThingAttackEvent event) {
+	public default void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		event.setCancelled(true);
 	}
 
 	@Override
-	public default void onPacketThingInteract(PacketThingInteractEvent event) {
+	public default void onPacketObjectInteract(PacketObjectInteractEvent event) {
 		event.setCancelled(true);
 	}
 

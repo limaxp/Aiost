@@ -65,8 +65,9 @@ public class ServerChunk {
 	}
 
 	public void addPacketObject(PacketObject packetObject) {
-		PacketObject prev = packetObjects
-				.putIfAbsent(ServerChunkSection.getKey(packetObject.x, packetObject.y, packetObject.z), packetObject);
+		PacketObject prev = packetObjects.putIfAbsent(
+				ServerChunkSection.getKey((int) packetObject.x, (int) packetObject.y, (int) packetObject.z),
+				packetObject);
 		if (prev == null) {
 			world.addPacketThing(packetObject);
 			packetObject.spawn();
@@ -74,7 +75,8 @@ public class ServerChunk {
 	}
 
 	public void loadPacketObject(PacketObject packetObject) {
-		packetObjects.put(ServerChunkSection.getKey(packetObject.x, packetObject.y, packetObject.z), packetObject);
+		packetObjects.put(ServerChunkSection.getKey((int) packetObject.x, (int) packetObject.y, (int) packetObject.z),
+				packetObject);
 		world.addPacketThing(packetObject);
 	}
 

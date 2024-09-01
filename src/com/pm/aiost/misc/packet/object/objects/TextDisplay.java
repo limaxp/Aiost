@@ -68,7 +68,7 @@ public class TextDisplay extends Hologram {
 
 	@Override
 	public void remove() {
-		world.removePacketObject(x, y, z);
+		world.removePacketObject((int) x, (int) y, (int) z);
 		PacketSender.send(playerList, createRemovePacket());
 		playerList.clear();
 	}

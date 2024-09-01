@@ -12,7 +12,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.scoreboard.scoreboards.PlayerRegionScoreboard;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.region.IRegion;
@@ -82,7 +82,7 @@ public class PlayerRegionEventHandler implements EventHandler {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		if (!canModifyWorld(event.getServerPlayer()))
 			event.setCancelled(true);
 	}

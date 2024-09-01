@@ -46,7 +46,7 @@ import com.pm.aiost.game.WinCondition;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.ShopMenu;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
@@ -246,7 +246,7 @@ public class CastleDefend extends Game {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		event.setCancelled(true);
 	}
 

@@ -22,13 +22,13 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.PluginManager;
 
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipHandItemEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
-import com.pm.aiost.misc.event.events.PlayerJumpEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent.EquipmentAction;
-import com.pm.aiost.misc.packet.PacketThing;
+import com.pm.aiost.misc.event.events.PlayerJumpEvent;
+import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.player.ServerPlayer;
 
 public class AiostEventFactory {
@@ -116,16 +116,16 @@ public class AiostEventFactory {
 		return event;
 	}
 
-	public static PacketThingAttackEvent callPacketThingAttackEvent(@Nonnull ServerPlayer serverPlayer,
-			@Nonnull PacketThing packetThing) {
-		PacketThingAttackEvent event = new PacketThingAttackEvent(serverPlayer, packetThing);
+	public static PacketObjectAttackEvent callPacketObjectAttackEvent(@Nonnull ServerPlayer serverPlayer,
+			@Nonnull PacketObject packetObject) {
+		PacketObjectAttackEvent event = new PacketObjectAttackEvent(serverPlayer, packetObject);
 		PLUGIN_MANAGER.callEvent(event);
 		return event;
 	}
 
-	public static PacketThingInteractEvent callPacketThingInteractEvent(@Nonnull ServerPlayer serverPlayer,
-			@Nonnull PacketThing packetThing) {
-		PacketThingInteractEvent event = new PacketThingInteractEvent(serverPlayer, packetThing);
+	public static PacketObjectInteractEvent callPacketObjectInteractEvent(@Nonnull ServerPlayer serverPlayer,
+			@Nonnull PacketObject packetObject) {
+		PacketObjectInteractEvent event = new PacketObjectInteractEvent(serverPlayer, packetObject);
 		PLUGIN_MANAGER.callEvent(event);
 		return event;
 	}

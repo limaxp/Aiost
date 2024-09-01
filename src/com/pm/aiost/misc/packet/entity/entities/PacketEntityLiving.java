@@ -58,12 +58,12 @@ public class PacketEntityLiving extends PacketEntity {
 		return PacketFactory.packetEntitySpawn(id, uuid, x, y, z, yaw, pitch, AiostEntityTypes.get(entityId));
 	}
 
-	public void setId(int entityId) {
+	public void setEntityId(int entityId) {
 		if (entityId == 0)
 			this.entityId = entityId;
 	}
 
-	public int getId() {
+	public int getEntityId() {
 		return entityId;
 	}
 

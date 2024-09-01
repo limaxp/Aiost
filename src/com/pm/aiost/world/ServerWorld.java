@@ -32,7 +32,6 @@ import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandlerLoader;
 import com.pm.aiost.misc.menu.Menu;
-import com.pm.aiost.misc.packet.PacketThing;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
 import com.pm.aiost.misc.packet.object.PacketObject;
@@ -64,7 +63,7 @@ public class ServerWorld implements AutoCloseable, IRegion {
 	public final World world;
 	private Long2ObjectMap<ServerChunk> chunks;
 	private final RegionFileCache regionFileCache;
-	private Int2ObjectMap<PacketThing> packetThings;
+	private Int2ObjectMap<PacketObject> packetObjects;
 	private List<TickableObject> tickingObjects;
 	private final WorldEffects worldEffects;
 	private final WorldRegions worldRegions;
@@ -77,7 +76,7 @@ public class ServerWorld implements AutoCloseable, IRegion {
 	public ServerWorld(World world) {
 		this.world = world;
 		chunks = new Long2ObjectOpenHashMap<ServerChunk>();
-		packetThings = new Int2ObjectOpenHashMap<PacketThing>();
+		packetObjects = new Int2ObjectOpenHashMap<PacketObject>();
 		tickingObjects = new UnorderedIdentityArrayList<TickableObject>();
 
 		File aiostFile = new File(Bukkit.getWorldContainer(), world.getName() + File.separator + "aiost");
@@ -103,7 +102,7 @@ public class ServerWorld implements AutoCloseable, IRegion {
 		else if (eventHandlerLoader.doesForceSave())
 			eventHandlerLoader.save(eventHandler);
 
-		packetThings = null;
+		packetObjects = null;
 		tickingObjects = null;
 		serverPlayer = null;
 		chunks = null;
@@ -169,25 +168,16 @@ public class ServerWorld implements AutoCloseable, IRegion {
 			tickingObjects.get(i).tick();
 	}
 
-	public void addPacketThing(PacketThing packetThing) {
-		packetThings.put(packetThing.getId(), packetThing);
+	public void addPacketThing(PacketObject packetThing) {
+		packetObjects.put(packetThing.getId(), packetThing);
 		if (packetThing instanceof TickableObject)
 			tickingObjects.add((TickableObject) packetThing);
 	}
 
-	public void removePacketThing(PacketThing packetThing) {
-		packetThings.remove(packetThing.getId());
+	public void removePacketThing(PacketObject packetThing) {
+		packetObjects.remove(packetThing.getId());
 		if (packetThing instanceof TickableObject)
 			tickingObjects.remove((TickableObject) packetThing);
-	}
-
-	@Nullable
-	public PacketThing getPacketThing(int id) {
-		return packetThings.get(id);
-	}
-
-	public Collection<PacketThing> getPacketThings() {
-		return packetThings.values();
 	}
 
 	public void addTickingObject(TickableObject tickingObject) {
@@ -198,8 +188,12 @@ public class ServerWorld implements AutoCloseable, IRegion {
 		tickingObjects.remove(tickingObject);
 	}
 
+	public Collection<PacketObject> getPacketObjects() {
+		return packetObjects.values();
+	}
+
 	public void addPacketObject(PacketObject packetObject) {
-		getChunk(packetObject.x >> 4, packetObject.z >> 4).addPacketObject(packetObject);
+		getChunk((int) packetObject.x >> 4, (int) packetObject.z >> 4).addPacketObject(packetObject);
 	}
 
 	@Nullable
@@ -215,6 +209,11 @@ public class ServerWorld implements AutoCloseable, IRegion {
 	@Nullable
 	public PacketObject removePacketObject(int x, int y, int z) {
 		return getChunk(x >> 4, z >> 4).removePacketObject(x, y, z);
+	}
+
+	@Nullable
+	public PacketObject getPacketObject(int id) {
+		return packetObjects.get(id);
 	}
 
 	@Nullable
@@ -326,7 +325,7 @@ public class ServerWorld implements AutoCloseable, IRegion {
 
 	@Nullable
 	public PacketEntity getPacketEntity(int id) {
-		return (PacketEntity) packetThings.get(id);
+		return (PacketEntity) packetObjects.get(id);
 	}
 
 	public List<PacketEntity> getPacketEntities(Chunk chunk) {

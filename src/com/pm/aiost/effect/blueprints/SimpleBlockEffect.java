@@ -33,8 +33,8 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerSwapHandItemsEvent;
 
 import com.pm.aiost.effect.Effect;
-import com.pm.aiost.misc.event.events.PacketThingAttackEvent;
-import com.pm.aiost.misc.event.events.PacketThingInteractEvent;
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.event.events.PacketObjectInteractEvent;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -181,12 +181,12 @@ public abstract class SimpleBlockEffect extends Effect {
 	}
 
 	@Override
-	public void onPacketThingAttack(PacketThingAttackEvent event) {
+	public void onPacketObjectAttack(PacketObjectAttackEvent event) {
 		runEffect(event.getPlayer().getLocation().getBlock());
 	}
 
 	@Override
-	public void onPacketThingInteract(PacketThingInteractEvent event) {
+	public void onPacketObjectInteract(PacketObjectInteractEvent event) {
 		runEffect(event.getPlayer().getLocation().getBlock());
 	}
 

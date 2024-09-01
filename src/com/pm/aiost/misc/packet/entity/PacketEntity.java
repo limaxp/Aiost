@@ -2,25 +2,15 @@ package com.pm.aiost.misc.packet.entity;
 
 import java.util.UUID;
 
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.inventory.EquipmentSlot;
-import org.bukkit.inventory.ItemStack;
-
-import com.pm.aiost.misc.nms.NMS;
-import com.pm.aiost.misc.packet.PacketFactory;
-import com.pm.aiost.misc.packet.PacketSender;
-import com.pm.aiost.misc.packet.PacketThing;
+import com.pm.aiost.misc.packet.object.PacketObject;
+import com.pm.aiost.misc.packet.object.PacketObjectType;
 import com.pm.aiost.world.ServerWorld;
 
 import net.minecraft.nbt.CompoundTag;
 
-public abstract class PacketEntity extends PacketThing {
+public abstract class PacketEntity extends PacketObject {
 
 	public final UUID uuid;
-	public double x;
-	public double y;
-	public double z;
 	public float yaw;
 	public float pitch;
 
@@ -32,14 +22,13 @@ public abstract class PacketEntity extends PacketThing {
 	public abstract PacketEntityType<?> getPacketEntityType();
 
 	@Override
-	public void spawn() {
-		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
+	public PacketObjectType<?> getPacketObjectType() {
+		return null;
 	}
 
 	@Override
-	public void remove() {
+	protected void removeFromWorld() {
 		world.removePacketEntity(this);
-		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
 	}
 
 	@Override
@@ -67,10 +56,7 @@ public abstract class PacketEntity extends PacketThing {
 		return getPacketEntityType().name;
 	}
 
-	public void setPositionRotation(Location loc) {
-		setPositionRotation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
-	}
-
+	@Override
 	public void setPositionRotation(double x, double y, double z, float yaw, float pitch) {
 		this.x = x;
 		this.y = y;
@@ -79,44 +65,8 @@ public abstract class PacketEntity extends PacketThing {
 		this.pitch = pitch;
 	}
 
-	public Block getBlock() {
-		return world.world.getBlockAt((int) x, (int) y, (int) z);
-	}
-
-	// TODO: Implements this in PacketEntityfurniture
-	public void setEquipment(EquipmentSlot slot, ItemStack is) {
-		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
-				PacketFactory.packetEntityEquipment(id, NMS.to(slot), NMS.to(is)));
-	}
-
-	@Override
-	public double getX() {
-		return x;
-	}
-
-	@Override
-	public double getY() {
-		return y;
-	}
-
-	@Override
-	public double getZ() {
-		return z;
-	}
-
-	@Override
-	public int getBlockX() {
-		return (int) x;
-	}
-
-	@Override
-	public int getBlockY() {
-		return (int) y;
-	}
-
-	@Override
-	public int getBlockZ() {
-		return (int) z;
+	public UUID getUUID() {
+		return uuid;
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.nms.NMS;
+import com.pm.aiost.misc.packet.object.PacketObject;
 import com.pm.aiost.player.ServerPlayer;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -37,16 +38,16 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 				return;
 			}
 
-			PacketThing packetThing = serverPlayer.getServerWorld().getPacketThing(id);
-			if (packetThing != null) {
+			PacketObject packetObject = serverPlayer.getServerWorld().getPacketObject(id);
+			if (packetObject != null) {
 				usePacket.dispatch(new ServerboundInteractPacket.Handler() {
 
 					public void onInteraction(InteractionHand var1) {
 						Logger.log("AiostPacketDecoder: interact");
 						Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
-							if (!AiostEventFactory.callPacketThingInteractEvent(serverPlayer, packetThing)
+							if (!AiostEventFactory.callPacketObjectInteractEvent(serverPlayer, packetObject)
 									.isCancelled())
-								packetThing.onPlayerInteract(serverPlayer);
+								packetObject.onPlayerInteract(serverPlayer);
 						});
 					}
 
@@ -57,8 +58,9 @@ public class AiostPacketDecoder extends MessageToMessageDecoder<Packet<?>> {
 					public void onAttack() {
 						Logger.log("AiostPacketDecoder: attack");
 						Bukkit.getScheduler().runTask(Aiost.getPlugin(), () -> {
-							if (!AiostEventFactory.callPacketThingAttackEvent(serverPlayer, packetThing).isCancelled())
-								packetThing.onPlayerAttack(serverPlayer);
+							if (!AiostEventFactory.callPacketObjectAttackEvent(serverPlayer, packetObject)
+									.isCancelled())
+								packetObject.onPlayerAttack(serverPlayer);
 						});
 					}
 				});

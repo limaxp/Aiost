@@ -2,107 +2,159 @@ package com.pm.aiost.misc.packet.object;
 
 import org.bukkit.Location;
 import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 
+import com.pm.aiost.misc.event.events.PacketObjectAttackEvent;
+import com.pm.aiost.misc.nms.NMS;
+import com.pm.aiost.misc.packet.PacketFactory;
 import com.pm.aiost.misc.packet.PacketSender;
-import com.pm.aiost.misc.packet.PacketThing;
+import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
+import com.pm.aiost.world.chunk.ChunkWatcher;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.protocol.Packet;
 
-public abstract class PacketObject extends PacketThing {
+public abstract class PacketObject {
 
-	public int x;
-	public int y;
-	public int z;
+	public static final int PACKET_OBJECT_VISIBILE_RANGE = ChunkWatcher.VIEW_DISTANCE * 16;
+
+	public final ServerWorld world;
+	protected int id;
+	public double x;
+	public double y;
+	public double z;
 
 	protected PacketObject(ServerWorld world) {
-		super(world);
+		this.world = world;
+		id = generateId();
 	}
 
 	public abstract PacketObjectType<?> getPacketObjectType();
 
-	@Override
+	public abstract Packet<?> createSpawnPacket();
+
+	protected int generateId() {
+		return NMS.getEntityCount().incrementAndGet();
+	}
+
+	protected int generateIds(int amount) {
+		return NMS.getEntityCount().getAndAdd(amount) + 1;
+	}
+
 	public void spawn() {
 		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createSpawnPacket());
 	}
 
-	@Override
+	public void show(Player player) {
+		spawn(player);
+	}
+
+	public void spawn(Player player) {
+		PacketSender.send(player, createSpawnPacket());
+	}
+
 	public void remove() {
-		world.removePacketObject(x, y, z);
+		removeFromWorld();
 		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE, createRemovePacket());
 	}
 
-	@Override
+	public void hide(Player player) {
+		PacketSender.send(player, createRemovePacket());
+	}
+
+	public Packet<?> createRemovePacket() {
+		return PacketFactory.packetEntityDestroy(id);
+	}
+
+	protected void removeFromWorld() {
+		world.removePacketObject((int) x, (int) y, (int) z);
+	}
+
+	public void onPlayerAttack(ServerPlayer serverPlayer) {
+		remove();
+	}
+
+	public void defaultPlayerAttack(PacketObjectAttackEvent event) {
+		if (!event.getServerPlayer().isAdmin())
+			event.setCancelled(true);
+	}
+
+	public void onPlayerInteract(ServerPlayer serverPlayer) {
+	}
+
 	public void load(CompoundTag nbt) {
 		x = nbt.getInt("x");
 		y = nbt.getInt("y");
 		z = nbt.getInt("z");
 	}
 
-	@Override
 	public CompoundTag save(CompoundTag nbt) {
 		nbt.putInt("id", getPacketObjectType().id);
-		nbt.putInt("x", x);
-		nbt.putInt("y", y);
-		nbt.putInt("z", z);
+		nbt.putInt("x", (int) x);
+		nbt.putInt("y", (int) y);
+		nbt.putInt("z", (int) z);
 		return nbt;
 	}
 
-	@Override
-	public String getName() {
-		return getPacketObjectType().name;
-	}
-
 	public void setPositionRotation(Location loc) {
-		setPositionRotation(loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(), loc.getYaw(), loc.getPitch());
+		setPositionRotation(loc.getX(), loc.getY(), loc.getZ(), loc.getYaw(), loc.getPitch());
 	}
 
-	public void setPositionRotation(int x, int y, int z, float yaw, float pitch) {
+	public void setPositionRotation(double x, double y, double z, float yaw, float pitch) {
 		this.x = x;
 		this.y = y;
 		this.z = z;
 	}
 
-	public Block getBlock() {
-		return world.world.getBlockAt(x, y, z);
+	// TODO: Implements this in PacketEntityFurniture
+	public void setEquipment(EquipmentSlot slot, ItemStack is) {
+		PacketSender.sendNearby(world.world, x, y, z, PACKET_OBJECT_VISIBILE_RANGE,
+				PacketFactory.packetEntityEquipment(id, NMS.to(slot), NMS.to(is)));
 	}
 
-	@Override
+	public Block getBlock() {
+		return world.world.getBlockAt((int) x, (int) y, (int) z);
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public String getName() {
+		return getPacketObjectType().name;
+	}
+
 	public double getX() {
 		return x;
 	}
 
-	@Override
 	public double getY() {
 		return y;
 	}
 
-	@Override
 	public double getZ() {
 		return z;
 	}
 
-	@Override
 	public int getBlockX() {
-		return x;
+		return (int) x;
 	}
 
-	@Override
 	public int getBlockY() {
-		return y;
+		return (int) y;
 	}
 
-	@Override
 	public int getBlockZ() {
-		return z;
+		return (int) z;
 	}
 
-	@Override
 	public float getYaw() {
 		return 0;
 	}
 
-	@Override
 	public float getPitch() {
 		return 0;
 	}
