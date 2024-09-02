@@ -1,6 +1,5 @@
 package com.pm.aiost.misc.menu.menus.request;
 
-import static com.pm.aiost.misc.utils.ChatColor.BLUE;
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
@@ -20,52 +19,68 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import com.pm.aiost.misc.menu.AnvilMenu;
+import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.menu.menus.ItemNBTMenu;
+import com.pm.aiost.misc.menu.menus.ItemAttributeModifierMenu;
+import com.pm.aiost.misc.menu.menus.ItemCanPlaceMenu;
+import com.pm.aiost.misc.menu.menus.ItemCanPlaceMenu.ItemCanDestroyMenu;
+import com.pm.aiost.misc.menu.menus.ItemHideFlagsMenu;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
+import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 public class CreateItemMenu extends SingleInventoryMenu {
-
-	private static final ItemStack CHOOSE_ITEM = MetaHelper.setMeta(Material.STICK, PURPLE + BOLD + "Choose item",
-			Arrays.asList(GRAY + "Left click to choose a material", GRAY + "Right click to choose custom item",
-					GRAY + "Or drag item here to use it"));
-
-	private static final ItemStack AMOUNT_ITEM = MetaHelper.setMeta(Material.BEETROOT_SEEDS,
-			PURPLE + BOLD + "Change amount", Arrays.asList(GRAY + "Click to change stack size"));
-
-	private static final ItemStack DAMAGE_ITEM = MetaHelper.setMeta(Material.ANVIL, PURPLE + BOLD + "Change damage",
-			Arrays.asList(GRAY + "Click to change durability damage"));
-
-	private static final ItemStack RENAME_ITEM = MetaHelper.setMeta(Material.NAME_TAG, PURPLE + BOLD + "Change name",
-			Arrays.asList(GRAY + "Click to rename your item"));
-
-	private static final ItemStack LORE_ITEM = MetaHelper.setMeta(Material.WRITABLE_BOOK, PURPLE + BOLD + "Change lore",
-			Arrays.asList(GRAY + "Click to change item lore"));
-
-	public static final ItemStack ENCHANTMENTS_ITEM = MetaHelper.setMeta(Material.ENCHANTING_TABLE,
-			PURPLE + BOLD + "Change enchantments", Arrays.asList(GRAY + "Click to change item enchantments"));
-
-	private static final ItemStack ACCEPT_ITEM = MetaHelper.setMeta(Material.NETHER_STAR, GOLD + BOLD + "Accept item",
-			Arrays.asList(GRAY + "Click to accept item"));
-
-	private static final ItemStack NBT_ITEM = MetaHelper.setMeta(Material.COMPARATOR, BLUE + BOLD + "Edit NBT",
-			Arrays.asList(GRAY + "Click to edit item nbt"));
-
-	private static final ItemStack[] ITEMS = new ItemStack[] { CHOOSE_ITEM, AMOUNT_ITEM, DAMAGE_ITEM, RENAME_ITEM,
-			LORE_ITEM, ENCHANTMENTS_ITEM, ACCEPT_ITEM };
 
 	private static final int CHOOSE_ITEM_SLOT = 10;
 
 	protected ItemStack item;
 
 	public CreateItemMenu() {
-		super(BOLD + "Choose Item", 3, true);
+		super(BOLD + "Choose Item", 4, true);
 		item = new ItemStack(Material.STICK);
-		set(ITEMS);
-		addBorderItem(17, NBT_ITEM);
 		setBackLink(ServerPlayer::openMenuRequestPrev);
+		set(MetaHelper.setMeta(Material.STICK, PURPLE + BOLD + "Choose item",
+				Arrays.asList(GRAY + "Left click to choose a material", GRAY + "Right click to choose custom item",
+						GRAY + "Or drag item here to use it")),
+
+				MetaHelper.setMeta(Material.BEETROOT_SEEDS, PURPLE + BOLD + "Change amount",
+						Arrays.asList(GRAY + "Click to change stack size")),
+
+				MetaHelper.setMeta(Material.ANVIL, PURPLE + BOLD + "Change damage",
+						Arrays.asList(GRAY + "Click to change durability damage")),
+
+				MetaHelper.setMeta(Material.NAME_TAG, PURPLE + BOLD + "Change name",
+						Arrays.asList(GRAY + "Click to rename your item")),
+
+				MetaHelper.setMeta(Material.WRITABLE_BOOK, PURPLE + BOLD + "Change lore",
+						Arrays.asList(GRAY + "Click to change item lore")),
+
+				MetaHelper.setMeta(Material.ENCHANTING_TABLE, PURPLE + BOLD + "Change enchantments",
+						Arrays.asList(GRAY + "Click to change item enchantments")),
+
+				MetaHelper.setMeta(Material.IRON_SWORD, PURPLE + BOLD + "Attribute modifiers",
+						Arrays.asList(GRAY + "Click to change attribute modifiers")),
+
+				MetaHelper.setMeta(Material.DIAMOND, PURPLE + BOLD + "Unbreakable",
+						Arrays.asList(GRAY + "Click to change breakable status")),
+
+				MetaHelper.setMeta(Material.CRAFTING_TABLE, PURPLE + BOLD + "Custom modeldata",
+						Arrays.asList(GRAY + "Click to change custom model data")),
+
+				MetaHelper.setMeta(Material.WHITE_BANNER, PURPLE + BOLD + "Hide flags",
+						Arrays.asList(GRAY + "Click to change hide flags")),
+
+				MetaHelper.setMeta(Material.STONE, PURPLE + BOLD + "Can place on",
+						Arrays.asList(GRAY + "Click to change can place on block")),
+
+				MetaHelper.setMeta(Material.IRON_PICKAXE, PURPLE + BOLD + "Can break",
+						Arrays.asList(GRAY + "Click to change can break blocks")),
+
+				null,
+
+				MetaHelper.setMeta(Material.NETHER_STAR, GOLD + BOLD + "Accept item",
+						Arrays.asList(GRAY + "Click to accept item")));
 	}
 
 	@Override
@@ -113,11 +128,31 @@ public class CreateItemMenu extends SingleInventoryMenu {
 				break;
 
 			case 16:
-				serverPlayer.setMenuRequestResult(item);
+				new ItemAttributeModifierMenu(serverPlayer).open(serverPlayer);
 				break;
 
-			case 26:
-				ItemNBTMenu.getMenu().open(serverPlayer);
+			case 19:
+				unbreakableClick(serverPlayer, event.getSlot());
+				break;
+
+			case 20:
+				createChangeCustomModeldataMenu(serverPlayer).open(serverPlayer);
+				break;
+
+			case 21:
+				ItemHideFlagsMenu.getMenu().open(serverPlayer);
+				break;
+
+			case 22:
+				new ItemCanPlaceMenu(serverPlayer).open(serverPlayer);
+				break;
+
+			case 23:
+				new ItemCanDestroyMenu(serverPlayer).open(serverPlayer);
+				break;
+
+			case 25:
+				serverPlayer.setMenuRequestResult(item);
 				break;
 
 			default:
@@ -135,29 +170,27 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.menuRequest(CHOOSE_ITEM,
-					() -> new SingleMenuRequest(ItemMenu.getMenu(), CreateItemMenu.this::open, false) {
+			serverPlayer.menuRequest(new SingleMenuRequest(ItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setItem((Material) obj);
-						}
-					});
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					setItem((Material) obj);
+				}
+			});
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.menuRequest(ITEMS,
-					() -> new SingleMenuRequest(CustomItemMenu.getMenu(), CreateItemMenu.this::open, false) {
+			serverPlayer.menuRequest(new SingleMenuRequest(CustomItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setClone((ItemStack) obj);
-						}
-					});
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					setClone((ItemStack) obj);
+				}
+			});
 	}
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(AMOUNT_ITEM,
-				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open, false) {
+		serverPlayer.menuRequest(
+				new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -167,8 +200,8 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(DAMAGE_ITEM,
-				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open, false) {
+		serverPlayer.menuRequest(
+				new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -178,8 +211,8 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(LORE_ITEM,
-				() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
+		serverPlayer.menuRequest(
+				new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
 						CreateItemMenu.this::open, false) {
 
 					@SuppressWarnings("unchecked")
@@ -235,5 +268,49 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	protected final void setDamage(short damage) {
 		item.setDurability(damage > 0 ? damage : 0);
 		getInventory().setItem(CHOOSE_ITEM_SLOT, item);
+	}
+
+	private void unbreakableClick(ServerPlayer serverPlayer, int slot) {
+		ItemMeta itemMeta = item.getItemMeta();
+		ItemStack clone = item.clone();
+		if (!itemMeta.isUnbreakable()) {
+			itemMeta.setUnbreakable(true);
+			clone.setType(Material.LIME_DYE);
+		} else {
+			itemMeta.setUnbreakable(false);
+			clone.setType(Material.GRAY_DYE);
+		}
+		item.setItemMeta(itemMeta);
+		InventoryMenu.displayInSlot(serverPlayer.player, clone, slot);
+	}
+
+	private AnvilMenu createChangeCustomModeldataMenu(ServerPlayer serverPlayer) {
+		ItemMeta itemMeta = item.getItemMeta();
+		int customModelData = 0;
+		if (itemMeta.hasCustomModelData())
+			customModelData = itemMeta.getCustomModelData();
+
+		AnvilMenu menu = new AnvilMenu(BOLD + "custom modeldata",
+				MetaHelper.setMeta(Material.PAPER, Integer.toString(customModelData))) {
+			@Override
+			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
+				event.setCancelled(true);
+				if (event.getSlot() != 2)
+					return;
+
+				int id;
+				try {
+					id = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
+				} catch (NumberFormatException e) {
+					serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+					return;
+				}
+				itemMeta.setCustomModelData(id);
+				item.setItemMeta(itemMeta);
+				CreateItemMenu.this.open(serverPlayer);
+			}
+		};
+		menu.setBackLink(this);
+		return menu;
 	}
 }

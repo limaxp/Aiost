@@ -4,6 +4,7 @@ import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,10 +14,13 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
+import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NBT.HideFlag;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
+
+import net.minecraft.nbt.CompoundTag;
 
 public class ItemHideFlagsMenu {
 
@@ -43,7 +47,7 @@ public class ItemHideFlagsMenu {
 				MetaHelper.setMeta(Material.WHITE_BANNER, GRAY + BOLD + "Hide others",
 						Arrays.asList(GRAY + "Click to change other visibility")));
 		menu.setInventoryClickCallback(ItemHideFlagsMenu::menuClick);
-		menu.setBackLink(ItemNBTMenu.getMenu());
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 
@@ -85,7 +89,7 @@ public class ItemHideFlagsMenu {
 	}
 
 	private static void flagClick(ServerPlayer serverPlayer, ItemStack is, int slot, byte flag) {
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> {
+		modifyNBT(serverPlayer, (nbtTag) -> {
 			boolean activated = NBT.switchHideFlag(nbtTag, flag);
 			Bukkit.getScheduler().runTaskLater(Aiost.getPlugin(), () -> {
 				ItemStack clone = is.clone();
@@ -101,4 +105,16 @@ public class ItemHideFlagsMenu {
 	public static InventoryMenu getMenu() {
 		return MENU;
 	}
+
+	public static void modifyNBT(ServerPlayer serverPlayer, Consumer<CompoundTag> consumer) {
+		CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class);
+		CompoundTag nbtTag = NBT.getNBT(createItemMenu.getItem());
+		consumer.accept(nbtTag);
+		createItemMenu.setItem(NBT.loadItem(nbtTag));
+	}
+
+	public static ItemStack getItem(ServerPlayer serverPlayer) {
+		return ((CreateItemMenu) serverPlayer.getMenu(CreateItemMenu.class)).getItem();
+	}
+
 }

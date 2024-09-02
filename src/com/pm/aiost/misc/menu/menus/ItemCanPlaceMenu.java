@@ -33,14 +33,14 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 
 	public ItemCanPlaceMenu(String name, ServerPlayer serverPlayer) {
 		super(BOLD + name, 6, false);
-		ListTag nbtList = getList(NBT.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBT.getNBT(ItemHideFlagsMenu.getItem(serverPlayer)));
 		int size = nbtList.size();
 		ItemStack[] items = new ItemStack[size + 1];
 		for (int i = 0; i < size; i++)
 			items[i] = new ItemStack(NBT.stringToMaterial(nbtList.getString(i)));
 		items[size] = ADD_BLOCK_ITEM;
 		set(items);
-		setBackLink(ItemNBTMenu.getMenu());
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -66,7 +66,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 				int slot = event.getSlot();
 				inv.setItem(slot + 1, is);
 				inv.setItem(slot, new ItemStack(material));
-				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.addMaterial(getList(nbtTag), material));
+				ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.addMaterial(getList(nbtTag), material));
 			}
 		});
 	}
@@ -82,7 +82,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 				break;
 			}
 		}
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeMaterial(getList(nbtTag), is.getType()));
+		ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeMaterial(getList(nbtTag), is.getType()));
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {

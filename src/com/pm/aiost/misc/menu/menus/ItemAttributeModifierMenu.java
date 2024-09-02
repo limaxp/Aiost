@@ -36,7 +36,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 	public ItemAttributeModifierMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Attribute modifiers", GenericAttribute.size() * 9, false);
 		setCategories(BORDER_ITEM, GenericAttribute.getItems());
-		ListTag nbtList = getList(NBT.getNBT(ItemNBTMenu.getItem(serverPlayer)));
+		ListTag nbtList = getList(NBT.getNBT(ItemHideFlagsMenu.getItem(serverPlayer)));
 		@SuppressWarnings("unchecked")
 		List<ItemStack>[] items = new List[GenericAttribute.size()];
 		int size = nbtList.size();
@@ -53,7 +53,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 					attribute.getDouble(NBT.AMOUNT_KEY)));
 		}
 		setCategorized(items);
-		setBackLink(ItemNBTMenu.getMenu());
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	private static ItemStack createItem(GenericAttribute attribute, String slot, double value) {
@@ -93,7 +93,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 			if (inv.getItem(i) == null) {
 				String slotName = Slot.MAIN_HAND.name;
 				inv.setItem(i, createItem(attribute, slotName, (short) 1));
-				ItemNBTMenu.modifyNBT(serverPlayer,
+				ItemHideFlagsMenu.modifyNBT(serverPlayer,
 						(nbtTag) -> NBT.addAttributeModifier(getList(nbtTag), attribute.name, 1.0, slotName));
 				return;
 			}
@@ -118,7 +118,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 						return;
 					}
 					GenericAttribute attribute = GenericAttribute.get(attributeId);
-					ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifier(getList(nbtTag),
+					ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifier(getList(nbtTag),
 							attribute.name, lore.get(0).substring(2), value));
 					lore.set(1, DARK_GRAY + value);
 					im.setLore(lore);
@@ -144,7 +144,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 				im.setLore(lore);
 				is.setItemMeta(im);
 				GenericAttribute attribute = GenericAttribute.get(attributeId);
-				ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifierSlot(getList(nbtTag),
+				ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifierSlot(getList(nbtTag),
 						attribute.name, slot, Double.parseDouble(lore.get(1).substring(2))));
 			}
 		});
@@ -165,8 +165,8 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 		}
 		inv.setItem(i - 1, null);
 		GenericAttribute attribute = GenericAttribute.get(attributeId);
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeAttributeModifier(getList(nbtTag), attribute.name,
-				is.getItemMeta().getLore().get(0).substring(2)));
+		ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeAttributeModifier(getList(nbtTag),
+				attribute.name, is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {
