@@ -75,7 +75,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 	}
 
 	private void addEnchantmentClick(ServerPlayer serverPlayer, ItemStack is, InventoryClickEvent event) {
-		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENCHANTMENT_MENU) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENCHANTMENT_MENU, false) {
 
 			@Override
 			public void openRequest(ServerPlayer serverPlayer) {
@@ -106,8 +106,8 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 				break;
 			}
 		}
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeEnchantment(getList(nbtTag),
-				is.getItemMeta().getLore().get(0).substring(2)));
+		ItemNBTMenu.modifyNBT(serverPlayer,
+				(nbtTag) -> NBT.removeEnchantment(getList(nbtTag), is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
 	private AnvilMenu createLevelMenu(ServerPlayer serverPlayer, ItemStack is) {
@@ -128,8 +128,7 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 						return;
 					}
 					String id = im.getLore().get(0).substring(2);
-					ItemNBTMenu.modifyNBT(serverPlayer,
-							(nbtTag) -> NBT.setEnchantment(getList(nbtTag), id, level));
+					ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setEnchantment(getList(nbtTag), id, level));
 					MetaHelper.setMeta(is, name.substring(0, lastSpaceIndex) + ' ' + level);
 					ItemEnchantmentsMenu.this.open(serverPlayer);
 				}

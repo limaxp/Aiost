@@ -13,7 +13,7 @@ import org.bukkit.block.Block;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.tileObject.TickableObject;
@@ -85,7 +85,7 @@ public class BlinkingBlock extends TileObject implements TickableObject {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> EnumerationMenus.BLOCK_MENU, () -> new NumberMenu(BOLD + "Choose delay value") },
 				new Consumer[] { (material) -> this.material = (Material) material,
 						(delay) -> this.delay = ((Double) delay).intValue() });

@@ -93,7 +93,7 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 			switch (event.getSlot()) {
 
 			case ENVIRONMENT_SLOT:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENVIRONMENT_MENU) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENVIRONMENT_MENU, false) {
 
 					@Override
 					protected void openRequest(ServerPlayer serverPlayer) {
@@ -108,7 +108,7 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 				break;
 
 			case TYPE_SLOT:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.WORLD_TYPE_MENU) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.WORLD_TYPE_MENU, false) {
 
 					@Override
 					protected void openRequest(ServerPlayer serverPlayer) {

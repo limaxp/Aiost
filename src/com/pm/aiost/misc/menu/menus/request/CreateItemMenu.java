@@ -118,7 +118,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.doMenuRequest(CHOOSE_ITEM, () -> new SingleMenuRequest(ItemMenu.getMenu()) {
+			serverPlayer.doMenuRequest(CHOOSE_ITEM, () -> new SingleMenuRequest(ItemMenu.getMenu(), false) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -132,7 +132,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 			});
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.doMenuRequest(ITEMS, () -> new SingleMenuRequest(CustomItemMenu.getMenu()) {
+			serverPlayer.doMenuRequest(ITEMS, () -> new SingleMenuRequest(CustomItemMenu.getMenu(), false) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -147,38 +147,41 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(AMOUNT_ITEM, () -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount")) {
+		serverPlayer.doMenuRequest(AMOUNT_ITEM,
+				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), false) {
 
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				setAmount(((Double) obj).intValue());
-			}
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						setAmount(((Double) obj).intValue());
+					}
 
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				CreateItemMenu.this.open(serverPlayer);
-			}
-		});
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						CreateItemMenu.this.open(serverPlayer);
+					}
+				});
 	}
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(DAMAGE_ITEM, () -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage")) {
+		serverPlayer.doMenuRequest(DAMAGE_ITEM,
+				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), false) {
 
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				setDamage(((Double) obj).shortValue());
-			}
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						setDamage(((Double) obj).shortValue());
+					}
 
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				CreateItemMenu.this.open(serverPlayer);
-			}
-		});
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						CreateItemMenu.this.open(serverPlayer);
+					}
+				});
 	}
 
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
 		serverPlayer.doMenuRequest(LORE_ITEM,
-				() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new)) {
+				() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
+						false) {
 
 					@SuppressWarnings("unchecked")
 					@Override

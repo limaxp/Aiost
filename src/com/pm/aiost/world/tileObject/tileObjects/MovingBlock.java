@@ -16,7 +16,7 @@ import org.bukkit.Location;
 import com.pm.aiost.misc.menu.menus.request.LocationsMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.nms.NBT.NBTType;
 import com.pm.aiost.misc.utils.LocationHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -97,7 +97,7 @@ public class MovingBlock extends TileObject implements TickableObject {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> serverPlayer.getOrCreateMenu(LocationsMenu.class, LocationsMenu::new),
 						() -> new NumberMenu(BOLD + "Choose delay value") },
 				new Consumer[] { (locations) -> this.locations = (List<Location>) locations,

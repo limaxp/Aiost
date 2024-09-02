@@ -39,7 +39,7 @@ import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
 import com.pm.aiost.misc.menu.menus.GameRateMenu;
 import com.pm.aiost.misc.menu.menus.GameSettingMenu;
 import com.pm.aiost.misc.menu.menus.request.TextMenu;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.scoreboard.scoreboards.GameScoreboard;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.player.ServerPlayer;
@@ -842,7 +842,7 @@ public abstract class Game implements AutoCloseable, IGameData, EventHandler {
 			ServerRequest.getHandler().joinGame(serverPlayer, game);
 			return;
 		}
-		serverPlayer.doMenuRequest(new CallbackMenuRequest(TextMenu.create(BOLD + "Password", "password"), true) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(TextMenu.create(BOLD + "Password", "password"), true) {
 			@Override
 			protected void openRequest(ServerPlayer serverPlayer) {
 				if (backLink == null)

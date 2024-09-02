@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 
 import com.pm.aiost.effect.Effect;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.NoMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -59,7 +59,7 @@ public abstract class SingletonEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleNoMenuRequest(requestConsumer, targetConsumer);
+		return new NoMenuRequest(requestConsumer, targetConsumer, false);
 	}
 
 	@Override

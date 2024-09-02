@@ -75,7 +75,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case NAME_TAG:
-				serverPlayer.doMenuRequest(SIZE_ITEM, () -> new SingleMenuRequest(NumberMenu::new) {
+				serverPlayer.doMenuRequest(SIZE_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -92,7 +92,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 			case BLACK_BANNER:
 				switch (event.getSlot()) {
 				case R_ITEM_SLOT:
-					serverPlayer.doMenuRequest(R_ITEM, () -> new SingleMenuRequest(NumberMenu::new) {
+					serverPlayer.doMenuRequest(R_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -107,7 +107,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 					break;
 
 				case G_ITEM_SLOT:
-					serverPlayer.doMenuRequest(G_ITEM, () -> new SingleMenuRequest(NumberMenu::new) {
+					serverPlayer.doMenuRequest(G_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -122,7 +122,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 					break;
 
 				case B_ITEM_SLOT:
-					serverPlayer.doMenuRequest(B_ITEM, () -> new SingleMenuRequest(NumberMenu::new) {
+					serverPlayer.doMenuRequest(B_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

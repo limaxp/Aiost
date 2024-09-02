@@ -10,26 +10,39 @@ public abstract class MenuRequest {
 	public static final Consumer<ServerPlayer> EMPTY_CONSUMER = (serverPlayer) -> {
 	};
 
+	protected Consumer<ServerPlayer> requestConsumer;
+	protected Consumer<ServerPlayer> targetConsumer;
+	protected boolean isSaved;
+
+	public MenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer, boolean isSaved) {
+		this.requestConsumer = requestConsumer;
+		this.targetConsumer = targetConsumer;
+		this.isSaved = isSaved;
+	}
+
 	public abstract void setResult(ServerPlayer serverPlayer, Object obj);
 
 	public abstract void openPrev(ServerPlayer serverPlayer);
 
 	public abstract void open(ServerPlayer serverPlayer);
 
-	public final void doOpenRequest(ServerPlayer serverPlayer) {
+	public final void cancel(ServerPlayer serverPlayer) {
 		serverPlayer.popMenuRequest();
 		openRequest(serverPlayer);
 	}
 
-	protected abstract void openRequest(ServerPlayer serverPlayer);
-
-	public final void doOpenTarget(ServerPlayer serverPlayer) {
-		serverPlayer.popMenuRequest();
+	public final void finish(ServerPlayer serverPlayer) {
+		if (!isSaved)
+			serverPlayer.popMenuRequest();
 		openTarget(serverPlayer);
 	}
 
+	protected void openRequest(ServerPlayer serverPlayer) {
+		requestConsumer.accept(serverPlayer);
+	}
+
 	protected void openTarget(ServerPlayer serverPlayer) {
-		openRequest(serverPlayer);
+		targetConsumer.accept(serverPlayer);
 	}
 
 	public abstract boolean hasPrevMenu();
@@ -39,4 +52,12 @@ public abstract class MenuRequest {
 	public abstract Menu getMenu();
 
 	public abstract Menu getMenu(int index);
+
+	public void setSaved(boolean isSaved) {
+		this.isSaved = isSaved;
+	}
+
+	public boolean isSaved() {
+		return isSaved;
+	}
 }

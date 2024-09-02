@@ -18,7 +18,6 @@ import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.WordFilter;
@@ -95,7 +94,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 			case FIREWORK_STAR:
 				serverPlayer.doMenuRequest(EFFECTS_MENU_ITEM,
 						new SingleMenuRequest(serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
-								() -> new WorldEffectsMenu(serverPlayer.getServerWorld()))) {
+								() -> new WorldEffectsMenu(serverPlayer.getServerWorld())), false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -124,7 +123,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 						createUpdateWorldMenu(((ReleasedWorldEventHandler) handler).getGameType()).open(serverPlayer);
 					else {
 						serverPlayer.doMenuRequest(RELEASE_ITEM,
-								new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU) {
+								new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, false) {
 
 									@Override
 									public void onResult(ServerPlayer serverPlayer, Object obj) {

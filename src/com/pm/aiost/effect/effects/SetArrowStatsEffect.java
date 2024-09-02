@@ -19,7 +19,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -150,7 +150,7 @@ public class SetArrowStatsEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer, new Supplier[] { EffectActionMenu::new,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, new Supplier[] { EffectActionMenu::new,
 				EffectConditionMenu::getMenu, () -> new NumberMenu(BOLD + "Choose velocity multiplier"),
 				() -> new NumberMenu(BOLD + "Choose extra Damage"),
 				() -> new NumberMenu(BOLD + "Choose knockback strength"),

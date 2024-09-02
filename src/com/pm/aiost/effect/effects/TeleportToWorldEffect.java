@@ -23,7 +23,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.TextMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -123,7 +123,7 @@ public class TeleportToWorldEffect extends SimpleEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> TextMenu.create("Choose world", "name"), () -> new NumberMenu(BOLD + "Choose x"),
 						() -> new NumberMenu(BOLD + "Choose y"), () -> new NumberMenu(BOLD + "Choose z") },

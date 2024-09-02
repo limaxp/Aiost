@@ -18,7 +18,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -91,7 +91,7 @@ public class CastSpellEffect extends SimpleLivingEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> EnumerationMenus.SPELL_MENU },
 				new Consumer[] { this::setActions, this::setCondition, (spell) -> this.spell = (Spell) spell });

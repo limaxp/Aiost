@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.NoMenuRequest;
 import com.pm.aiost.misc.particle.particles.Particle;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -67,7 +67,7 @@ public interface IParticle {
 
 	public default MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleNoMenuRequest(requestConsumer, targetConsumer);
+		return new NoMenuRequest(requestConsumer, targetConsumer, false);
 	}
 
 	public void setDefault();

@@ -10,7 +10,7 @@ import com.pm.aiost.misc.menu.menus.PlayerWorldItemMenu;
 import com.pm.aiost.misc.menu.menus.PlayerWorldSpawnMenu;
 import com.pm.aiost.misc.menu.menus.WorldSettingMenu;
 import com.pm.aiost.misc.menu.menus.request.WorldEffectsMenu;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 public class MenuCommands {
@@ -55,8 +55,8 @@ public class MenuCommands {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
 		ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) sender);
-		serverPlayer.doMenuRequest(new CallbackMenuRequest(serverPlayer.getServerWorld()
-				.getOrCreateMenu(WorldEffectsMenu.class, () -> new WorldEffectsMenu(serverPlayer.getServerWorld()))) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(serverPlayer.getServerWorld().getOrCreateMenu(
+				WorldEffectsMenu.class, () -> new WorldEffectsMenu(serverPlayer.getServerWorld())), false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

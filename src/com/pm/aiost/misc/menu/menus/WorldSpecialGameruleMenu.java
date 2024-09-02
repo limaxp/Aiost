@@ -66,7 +66,7 @@ public class WorldSpecialGameruleMenu extends SingleInventoryMenu {
 			Class<?> type = gamerule.getType();
 			if (type == Integer.class) {
 				serverPlayer.doMenuRequest(gamerule, () -> new SingleMenuRequest(
-						new NumberMenu(event.getCurrentItem().getItemMeta().getDisplayName())) {
+						new NumberMenu(event.getCurrentItem().getItemMeta().getDisplayName()), false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {

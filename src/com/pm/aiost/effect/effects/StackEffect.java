@@ -34,7 +34,7 @@ import com.pm.aiost.misc.event.AiostEventFactory;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent.EquipmentAction;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest.SimpleSingleMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -274,7 +274,7 @@ public class StackEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleSingleMenuRequest(requestConsumer, targetConsumer, new NumberMenu(BOLD + "Choose size")) {
+		return new SingleMenuRequest(new NumberMenu(BOLD + "Choose size"), requestConsumer, targetConsumer) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

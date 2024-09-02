@@ -12,7 +12,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleType;
 import com.pm.aiost.misc.particle.ParticleTypes;
@@ -97,7 +97,7 @@ public class VerticalRing extends Ring {
 	@Override
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
 						() -> new NumberMenu(BOLD + "Choose size"), () -> new NumberMenu(BOLD + "Choose yaw") },
 

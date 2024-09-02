@@ -21,7 +21,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateTextMenu;
 import com.pm.aiost.misc.menu.menus.request.creation.CreationMenus;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.packet.entity.PacketEntity;
 import com.pm.aiost.misc.packet.entity.PacketEntityTypes;
 import com.pm.aiost.misc.packet.entity.entities.Hologram;
@@ -69,8 +69,8 @@ public class PlayerWorldSpawnMenu {
 			switch (is.getType()) {
 
 			case ARMOR_STAND:
-				serverPlayer.doMenuRequest(CREATE_TEXT_MENU_IDENTIFIER, () -> new CallbackMenuRequest(
-						serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new)) {
+				serverPlayer.doMenuRequest(CREATE_TEXT_MENU_IDENTIFIER, () -> new SingleMenuRequest(
+						serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), false) {
 
 					@SuppressWarnings("unchecked")
 					@Override
@@ -87,7 +87,7 @@ public class PlayerWorldSpawnMenu {
 
 			case ZOMBIE_HEAD:
 				serverPlayer.doMenuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-						() -> new CallbackMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU) {
+						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -109,7 +109,7 @@ public class PlayerWorldSpawnMenu {
 				ClickType click = event.getClick();
 				if (click == ClickType.LEFT)
 					serverPlayer.doMenuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new CallbackMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU) {
+							() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -123,7 +123,7 @@ public class PlayerWorldSpawnMenu {
 							});
 				else if (click == ClickType.RIGHT)
 					serverPlayer.doMenuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new CallbackMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer)) {
+							() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {

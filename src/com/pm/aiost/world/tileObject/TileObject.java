@@ -10,7 +10,7 @@ import org.bukkit.block.Block;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.NoMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
 import com.pm.aiost.world.chunk.ServerChunk;
@@ -124,7 +124,7 @@ public abstract class TileObject implements Cloneable {
 
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleNoMenuRequest(requestConsumer, targetConsumer);
+		return new NoMenuRequest(requestConsumer, targetConsumer, false);
 	}
 
 	public void createDescription(List<String> list) {

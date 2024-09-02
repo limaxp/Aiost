@@ -105,7 +105,7 @@ public class MultiParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(new MultiParticleMenu()) {
+		return new SingleMenuRequest(new MultiParticleMenu(), false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

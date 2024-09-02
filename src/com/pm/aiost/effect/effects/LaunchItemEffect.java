@@ -25,7 +25,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.utils.ProjectileHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -138,7 +138,7 @@ public class LaunchItemEffect extends SimpleLivingEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new),
 						() -> new NumberMenu(BOLD + "Choose velocity"), () -> new NumberMenu(BOLD + "Choose damage"),

@@ -4,54 +4,79 @@ import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import com.pm.aiost.misc.menu.Menu;
+import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
-public abstract class SingleMenuRequest extends CallbackMenuRequest {
+public abstract class SingleMenuRequest extends MenuRequest {
 
-	public SingleMenuRequest(Supplier<Menu> menuSupplier) {
-		super(menuSupplier);
+	protected Supplier<Menu> menuSupplier;
+	protected Menu menu;
+
+	public SingleMenuRequest(Supplier<Menu> menu, boolean isSaved) {
+		super(EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
+		this.menuSupplier = menu;
 	}
 
-	public SingleMenuRequest(Menu menu) {
-		super(menu);
+	public SingleMenuRequest(Menu menu, boolean isSaved) {
+		super(EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
+		this.menu = menu;
 	}
 
-	protected SingleMenuRequest() {
+	public SingleMenuRequest(Supplier<Menu> menu, Consumer<ServerPlayer> requestConsumer,
+			Consumer<ServerPlayer> targetConsumer) {
+		super(requestConsumer, targetConsumer, false);
+		this.menuSupplier = menu;
+	}
+
+	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
+		super(requestConsumer, targetConsumer, false);
+		this.menu = menu;
 	}
 
 	@Override
 	public void setResult(ServerPlayer serverPlayer, Object obj) {
-		doOpenTarget(serverPlayer);
+		if (!isSaved)
+			serverPlayer.popMenuRequest();
 		onResult(serverPlayer, obj);
+		openTarget(serverPlayer);
 	}
 
-	public static abstract class SimpleSingleMenuRequest extends SingleMenuRequest {
+	protected abstract void onResult(ServerPlayer serverPlayer, Object obj);
 
-		protected Consumer<ServerPlayer> requestConsumer;
-		protected Consumer<ServerPlayer> targetConsumer;
+//	@Override
+//	public void setResult(ServerPlayer serverPlayer, Object obj) {
+//		finish(serverPlayer);
+//	}
 
-		public SimpleSingleMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
-				Supplier<Menu> menuSupplier) {
-			super(menuSupplier);
-			this.requestConsumer = requestConsumer;
-			this.targetConsumer = targetConsumer;
-		}
+	@Override
+	public void openPrev(ServerPlayer serverPlayer) {
+		cancel(serverPlayer);
+	}
 
-		public SimpleSingleMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
-				Menu menu) {
-			super(menu);
-			this.requestConsumer = requestConsumer;
-			this.targetConsumer = targetConsumer;
-		}
+	@Override
+	public void open(ServerPlayer serverPlayer) {
+		getMenu().open(serverPlayer);
+	}
 
-		@Override
-		public void openRequest(ServerPlayer serverPlayer) {
-			requestConsumer.accept(serverPlayer);
-		}
+	@Override
+	public boolean hasPrevMenu() {
+		return false;
+	}
 
-		@Override
-		public void openTarget(ServerPlayer serverPlayer) {
-			targetConsumer.accept(serverPlayer);
-		}
+	@Override
+	public boolean hasNextMenu() {
+		return false;
+	}
+
+	@Override
+	public Menu getMenu() {
+		if (menu == null)
+			menu = menuSupplier.get();
+		return menu;
+	}
+
+	@Override
+	public Menu getMenu(int index) {
+		return getMenu();
 	}
 }

@@ -15,7 +15,7 @@ import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 public class ArrowEffect extends Effect {
@@ -54,7 +54,7 @@ public class ArrowEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu },
 				new Consumer[] { this::setActions, this::setCondition });
 	}

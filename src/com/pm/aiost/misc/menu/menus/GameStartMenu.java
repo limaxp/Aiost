@@ -70,7 +70,7 @@ public class GameStartMenu extends SingleInventoryMenu {
 
 			case 10:
 				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set min player", minPlayer)) {
+						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set min player", minPlayer), false) {
 
 							@Override
 							public void openRequest(ServerPlayer serverPlayer) {
@@ -86,7 +86,7 @@ public class GameStartMenu extends SingleInventoryMenu {
 
 			case 11:
 				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set max player", maxPlayer)) {
+						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set max player", maxPlayer), false) {
 
 							@Override
 							public void openRequest(ServerPlayer serverPlayer) {
@@ -104,7 +104,7 @@ public class GameStartMenu extends SingleInventoryMenu {
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.SHIFT_LEFT) {
 					serverPlayer.doMenuRequest(new SingleMenuRequest(
-							TextMenu.create(BOLD + "Set password", password != null ? password : "password")) {
+							TextMenu.create(BOLD + "Set password", password != null ? password : "password"), false) {
 
 						@Override
 						public void openRequest(ServerPlayer serverPlayer) {

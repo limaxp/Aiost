@@ -44,7 +44,7 @@ public class MarkerPlacerEffect extends SingletonEffect {
 	}
 
 	public void openMarkerMenu(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(this, new SingleMenuRequest(MarkerMenu.MENU) {
+		serverPlayer.doMenuRequest(this, new SingleMenuRequest(MarkerMenu.MENU, false) {
 
 			@Override
 			protected void openRequest(ServerPlayer serverPlayer) {

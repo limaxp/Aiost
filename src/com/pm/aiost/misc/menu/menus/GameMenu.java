@@ -18,7 +18,7 @@ import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.DatabaseGameMenu.GameData;
 import com.pm.aiost.misc.menu.menus.request.GamesMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -56,7 +56,7 @@ public class GameMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case NETHER_STAR:
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -71,7 +71,7 @@ public class GameMenu {
 				break;
 
 			case END_CRYSTAL:
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
 					@Override
 					public void openRequest(ServerPlayer serverPlayer) {
@@ -81,7 +81,7 @@ public class GameMenu {
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
 						GameType<?> type = (GameType<?>) obj;
-						serverPlayer.doMenuRequest(new CallbackMenuRequest(
+						serverPlayer.doMenuRequest(new SingleMenuRequest(
 								serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type), true) {
 
 							@Override
@@ -93,6 +93,7 @@ public class GameMenu {
 							protected void onResult(ServerPlayer serverPlayer, Object obj) {
 								InventoryMenu menu = new GameStartMenu((GameData) obj);
 								menu.setBackLink(GameMenu.MENU); // TODO
+								menu.open(serverPlayer);
 							}
 						});
 					}
@@ -100,7 +101,7 @@ public class GameMenu {
 				break;
 
 			case DIAMOND:
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -122,7 +123,7 @@ public class GameMenu {
 				break;
 
 			case PAPER:
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {

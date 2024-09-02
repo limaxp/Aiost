@@ -9,7 +9,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 public abstract class CreationMenu<T> extends SingleInventoryMenu {
@@ -33,7 +33,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
 			if (event.getSlot() == objects.size()) {
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(sourceMenu) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -50,7 +50,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 				if (click == ClickType.LEFT)
 					serverPlayer.setMenuRequestResult(objects.get(event.getSlot()));
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(new CallbackMenuRequest(sourceMenu) {
+					serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

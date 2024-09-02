@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
 
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaData;
 import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.ServerWorld;
@@ -80,7 +80,7 @@ public class ProximityFallingBlock extends TileObject implements TickableObject 
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose damage value"),
 						() -> new NumberMenu(BOLD + "Choose range value") },
 				new Consumer[] { (damage) -> this.damage = (Double) damage, (range) -> setRange((Double) range) });

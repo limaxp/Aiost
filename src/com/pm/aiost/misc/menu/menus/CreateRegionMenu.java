@@ -77,7 +77,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 			case RED_BANNER:
 				if (serverPlayer.isAdmin())
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EVENT_HANDLER_MENU) {
+					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EVENT_HANDLER_MENU, false) {
 
 						@Override
 						protected void openRequest(ServerPlayer serverPlayer) {
@@ -92,23 +92,24 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 					});
 				else
 					// TODO make it so these EventHandler actually work in a game!
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.REGION_EVENT_HANDLER_MENU) {
+					serverPlayer
+							.doMenuRequest(new SingleMenuRequest(EnumerationMenus.REGION_EVENT_HANDLER_MENU, false) {
 
-						@Override
-						protected void openRequest(ServerPlayer serverPlayer) {
-							CreateRegionMenu.this.open(serverPlayer);
-						}
+								@Override
+								protected void openRequest(ServerPlayer serverPlayer) {
+									CreateRegionMenu.this.open(serverPlayer);
+								}
 
-						@SuppressWarnings("unchecked")
-						@Override
-						protected void onResult(ServerPlayer serverPlayer, Object obj) {
-							setEventHandler((Supplier<EventHandler>) obj);
-						}
-					});
+								@SuppressWarnings("unchecked")
+								@Override
+								protected void onResult(ServerPlayer serverPlayer, Object obj) {
+									setEventHandler((Supplier<EventHandler>) obj);
+								}
+							});
 				break;
 
 			case STONE:
-				serverPlayer.doMenuRequest(NO_NAME_ITEM, () -> new SingleMenuRequest(new LocationMenu(loc1)) {
+				serverPlayer.doMenuRequest(NO_NAME_ITEM, () -> new SingleMenuRequest(new LocationMenu(loc1), false) {
 
 					@Override
 					public void openRequest(ServerPlayer serverPlayer) {
@@ -123,18 +124,19 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 				break;
 
 			case GOLD_BLOCK:
-				serverPlayer.doMenuRequest(NO_EVENT_HANDLER_ITEM, () -> new SingleMenuRequest(new LocationMenu(loc2)) {
+				serverPlayer.doMenuRequest(NO_EVENT_HANDLER_ITEM,
+						() -> new SingleMenuRequest(new LocationMenu(loc2), false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						CreateRegionMenu.this.open(serverPlayer);
-					}
+							@Override
+							public void openRequest(ServerPlayer serverPlayer) {
+								CreateRegionMenu.this.open(serverPlayer);
+							}
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setLocation2((Location) loc1);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								setLocation2((Location) loc1);
+							}
+						});
 				break;
 
 			case NETHER_STAR:

@@ -22,7 +22,7 @@ import com.pm.aiost.misc.menu.menus.request.EffectActionMenu;
 import com.pm.aiost.misc.menu.menus.request.EffectConditionMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.misc.utils.ProjectileHelper;
@@ -137,7 +137,7 @@ public class LaunchParticleEffect extends SimpleLivingEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu, ChooseParticleMenu::getMenu,
 						() -> new NumberMenu(BOLD + "Choose velocity"), () -> new NumberMenu(BOLD + "Choose damage"),
 						() -> new NumberMenu(BOLD + "Choose knockback"), DoesUseEffectMenu::getMenu },

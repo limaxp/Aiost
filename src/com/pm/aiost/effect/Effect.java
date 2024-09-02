@@ -16,7 +16,7 @@ import com.pm.aiost.misc.event.eventHandler.TickableHandler;
 import com.pm.aiost.misc.event.events.PlayerEquipItemEvent;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.NoMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -160,7 +160,7 @@ public abstract class Effect implements EventHandler, TickableHandler {
 
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleNoMenuRequest(requestConsumer, targetConsumer);
+		return new NoMenuRequest(requestConsumer, targetConsumer, false);
 	}
 
 	@Override

@@ -19,7 +19,6 @@ import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.CreateItemMenu;
 import com.pm.aiost.misc.menu.menus.request.CustomItemMenu;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.PlayerHead;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -56,7 +55,7 @@ public class PlayerWorldItemMenu {
 			switch (is.getType()) {
 
 			case BLAZE_ROD:
-				serverPlayer.doMenuRequest(menu, new CallbackMenuRequest(CustomItemMenu.getMenu(), true) {
+				serverPlayer.doMenuRequest(menu, new SingleMenuRequest(CustomItemMenu.getMenu(), true) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -73,18 +72,19 @@ public class PlayerWorldItemMenu {
 			case WOODEN_AXE:
 				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 						CreateItemMenu::new);
-				serverPlayer.doMenuRequest(PlayerWorldItemMenu.class, () -> new SingleMenuRequest(createItemMenu) {
+				serverPlayer.doMenuRequest(PlayerWorldItemMenu.class,
+						() -> new SingleMenuRequest(createItemMenu, false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						PlayerWorldItemMenu.menu.open(serverPlayer);
-					}
+							@Override
+							public void openRequest(ServerPlayer serverPlayer) {
+								PlayerWorldItemMenu.menu.open(serverPlayer);
+							}
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						serverPlayer.addItem((ItemStack) obj);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								serverPlayer.addItem((ItemStack) obj);
+							}
+						});
 				break;
 
 			case STONE:

@@ -18,7 +18,7 @@ import com.pm.aiost.effect.Effect;
 import com.pm.aiost.effect.EffectType;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.Banner;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -55,7 +55,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.RIGHT)
 					serverPlayer.doMenuRequest(effects,
-							() -> new CallbackMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU) {
+							() -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -72,18 +72,19 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 				break;
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(effects, () -> new CallbackMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU) {
+				serverPlayer.doMenuRequest(effects,
+						() -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU, false) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						addEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
-					}
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								addEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
+							}
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						EffectEntryMenu.this.open(serverPlayer);
-					}
-				});
+							@Override
+							public void openRequest(ServerPlayer serverPlayer) {
+								EffectEntryMenu.this.open(serverPlayer);
+							}
+						});
 				break;
 
 			case NETHER_STAR:

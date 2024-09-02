@@ -47,7 +47,7 @@ public class GameSettingMenu<T extends Game> extends ArrayInventoryMenu {
 	private static void livesClick(ServerPlayer serverPlayer, InventoryClickEvent event, Game game) {
 		event.setCancelled(true);
 		serverPlayer.doMenuRequest(
-				new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose lives", game.getStartLives())) {
+				new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose lives", game.getStartLives()), false) {
 
 					@Override
 					public void openRequest(ServerPlayer serverPlayer) {

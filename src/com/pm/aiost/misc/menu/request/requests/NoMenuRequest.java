@@ -6,21 +6,26 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
-public abstract class NoMenuRequest extends MenuRequest {
+public class NoMenuRequest extends MenuRequest {
+
+	public NoMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
+			boolean isSaved) {
+		super(requestConsumer, targetConsumer, isSaved);
+	}
 
 	@Override
 	public void setResult(ServerPlayer serverPlayer, Object obj) {
-		doOpenTarget(serverPlayer);
+		finish(serverPlayer);
 	}
 
 	@Override
 	public void openPrev(ServerPlayer serverPlayer) {
-		doOpenRequest(serverPlayer);
+		cancel(serverPlayer);
 	}
 
 	@Override
 	public void open(ServerPlayer serverPlayer) {
-		doOpenTarget(serverPlayer);
+		finish(serverPlayer);
 	}
 
 	@Override
@@ -41,26 +46,5 @@ public abstract class NoMenuRequest extends MenuRequest {
 	@Override
 	public Menu getMenu(int index) {
 		return null;
-	}
-
-	public static class SimpleNoMenuRequest extends NoMenuRequest {
-
-		protected Consumer<ServerPlayer> requestConsumer;
-		protected Consumer<ServerPlayer> targetConsumer;
-
-		public SimpleNoMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-			this.requestConsumer = requestConsumer;
-			this.targetConsumer = targetConsumer;
-		}
-
-		@Override
-		public void openRequest(ServerPlayer serverPlayer) {
-			requestConsumer.accept(serverPlayer);
-		}
-
-		@Override
-		public void openTarget(ServerPlayer serverPlayer) {
-			targetConsumer.accept(serverPlayer);
-		}
 	}
 }

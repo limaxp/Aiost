@@ -687,12 +687,12 @@ public class ServerPlayer implements AutoCloseable {
 		menuRequestQueue.peekFirst().openPrev(this);
 	}
 
-	public void openMenuRequestRequestMenu() {
-		menuRequestQueue.peekFirst().doOpenRequest(this);
+	public void cancelMenuRequest() {
+		menuRequestQueue.peekFirst().cancel(this);
 	}
 
-	public void openMenuRequestTargetMenu() {
-		menuRequestQueue.peekFirst().doOpenTarget(this);
+	public void finishMenuRequest() {
+		menuRequestQueue.peekFirst().finish(this);
 	}
 
 	public void setMenuRequestResult(Object obj) {

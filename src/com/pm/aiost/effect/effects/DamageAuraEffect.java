@@ -20,7 +20,7 @@ import com.pm.aiost.effect.EffectTypes;
 import com.pm.aiost.misc.menu.menus.request.ChooseParticleMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
 import com.pm.aiost.player.ServerPlayer;
@@ -119,7 +119,7 @@ public class DamageAuraEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { ChooseParticleMenu::getMenu, () -> new NumberMenu(BOLD + "Choose damage"),
 						() -> new NumberMenu(BOLD + "Choose range") },
 				new Consumer[] { (particle) -> this.particle = (IParticle) particle,

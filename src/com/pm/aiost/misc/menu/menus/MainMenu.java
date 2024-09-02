@@ -20,7 +20,7 @@ import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -96,7 +96,7 @@ public class MainMenu {
 				return true;
 
 			case PLAYER_HEAD:
-				serverPlayer.doMenuRequest(new CallbackMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU, true) {
 
 					@Override
 					protected void openRequest(ServerPlayer serverPlayer) {

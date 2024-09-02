@@ -52,7 +52,7 @@ public class LocationsMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(ADD_LOCATION_ITEM, () -> new SingleMenuRequest(new LocationMenu()) {
+				serverPlayer.doMenuRequest(ADD_LOCATION_ITEM, () -> new SingleMenuRequest(new LocationMenu(), false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -69,7 +69,7 @@ public class LocationsMenu extends SingleInventoryMenu {
 
 			case RED_BANNER:
 				serverPlayer.doMenuRequest(locations,
-						() -> new SingleMenuRequest(new LocationMenu(locations.get(event.getSlot()))) {
+						() -> new SingleMenuRequest(new LocationMenu(locations.get(event.getSlot())), false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

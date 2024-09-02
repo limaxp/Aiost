@@ -13,7 +13,7 @@ import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.menu.request.requests.CallbackMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
@@ -45,18 +45,19 @@ public class DataParticleMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case STONE:
-				serverPlayer.doMenuRequest(MATERIAL_MENU_IDENTIFIER, () -> new CallbackMenuRequest(ItemMenu.getMenu()) {
+				serverPlayer.doMenuRequest(MATERIAL_MENU_IDENTIFIER,
+						() -> new SingleMenuRequest(ItemMenu.getMenu(), false) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setMaterial(serverPlayer, (Material) obj);
-					}
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								setMaterial(serverPlayer, (Material) obj);
+							}
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						menu.open(serverPlayer);
-					}
-				});
+							@Override
+							public void openRequest(ServerPlayer serverPlayer) {
+								menu.open(serverPlayer);
+							}
+						});
 				break;
 
 			case STICK:

@@ -132,7 +132,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 	}
 
 	private void changeSlotClick(ServerPlayer serverPlayer, ItemStack is, int attributeId, InventoryClickEvent event) {
-		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EQUIPMENT_SLOT_MENU) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EQUIPMENT_SLOT_MENU, false) {
 
 			@Override
 			public void openRequest(ServerPlayer serverPlayer) {
@@ -169,8 +169,8 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 		}
 		inv.setItem(i - 1, null);
 		GenericAttribute attribute = GenericAttribute.get(attributeId);
-		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeAttributeModifier(getList(nbtTag),
-				attribute.name, is.getItemMeta().getLore().get(0).substring(2)));
+		ItemNBTMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.removeAttributeModifier(getList(nbtTag), attribute.name,
+				is.getItemMeta().getLore().get(0).substring(2)));
 	}
 
 	protected ListTag getList(CompoundTag nbtTag) {

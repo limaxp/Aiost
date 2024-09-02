@@ -36,24 +36,25 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 	private static void waveClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose wave", game.getWave())) {
+		serverPlayer.doMenuRequest(
+				new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose wave", game.getWave()), false) {
 
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.openInventory(event.getInventory());
-			}
+					@Override
+					public void openRequest(ServerPlayer serverPlayer) {
+						serverPlayer.openInventory(event.getInventory());
+					}
 
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.setWave((int) obj);
-			}
-		});
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						game.setWave((int) obj);
+					}
+				});
 	}
 
 	private static void lockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
 		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Lock entity type",
-				game.getEntityTypes(), EnumerationMenu::createItem)) {
+				game.getEntityTypes(), EnumerationMenu::createItem), false) {
 
 			@Override
 			public void openRequest(ServerPlayer serverPlayer) {
@@ -70,7 +71,7 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 	private static void unlockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
 		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Unlock entity type",
-				game.getLockedTypes(), EnumerationMenu::createItem)) {
+				game.getLockedTypes(), EnumerationMenu::createItem), false) {
 
 			@Override
 			public void openRequest(ServerPlayer serverPlayer) {

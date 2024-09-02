@@ -56,7 +56,7 @@ public class ItemCanPlaceMenu extends SingleInventoryMenu {
 	}
 
 	private void addBlockClick(ServerPlayer serverPlayer, ItemStack is, InventoryClickEvent event) {
-		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BLOCK_MENU) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, false) {
 
 			@Override
 			public void openRequest(ServerPlayer serverPlayer) {

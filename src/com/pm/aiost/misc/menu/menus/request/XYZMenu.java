@@ -59,7 +59,7 @@ public class XYZMenu extends SingleInventoryMenu {
 		event.setCancelled(true);
 		int slot = event.getSlot();
 		if (slot == 10)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose x", x)) {
+			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose x", x), false) {
 
 				@Override
 				public void openRequest(ServerPlayer serverPlayer) {
@@ -72,7 +72,7 @@ public class XYZMenu extends SingleInventoryMenu {
 				}
 			});
 		else if (slot == 11)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose y", y)) {
+			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose y", y), false) {
 
 				@Override
 				public void openRequest(ServerPlayer serverPlayer) {
@@ -85,7 +85,7 @@ public class XYZMenu extends SingleInventoryMenu {
 				}
 			});
 		else if (slot == 12)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose z", z)) {
+			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose z", z), false) {
 
 				@Override
 				public void openRequest(ServerPlayer serverPlayer) {

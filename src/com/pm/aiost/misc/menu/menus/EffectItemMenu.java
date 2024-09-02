@@ -130,7 +130,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 						CreateItemMenu::new);
 				createItemMenu.setItem(item);
-				serverPlayer.doMenuRequest(EFFECT_BLOCK_SYMBOL, () -> new SingleMenuRequest(createItemMenu) {
+				serverPlayer.doMenuRequest(EFFECT_BLOCK_SYMBOL, () -> new SingleMenuRequest(createItemMenu, false) {
 
 					@Override
 					public void openRequest(ServerPlayer serverPlayer) {
@@ -152,7 +152,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			case BLACK_BANNER:
 				currentSlot = event.getSlot();
 				serverPlayer.doMenuRequest(NUMBER_1_SYMBOL,
-						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer)) {
+						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer), false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -170,7 +170,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				currentSlot = event.getSlot();
 				if (blockMode)
 					serverPlayer.doMenuRequest(BLOCK_EFFECT_SYMBOL,
-							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer)) {
+							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer), false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -187,23 +187,23 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				break;
 
 			case WRITABLE_BOOK:
-				serverPlayer
-						.doMenuRequest(CHOOSE_EFFECT_SYMBOL,
-								() -> new SingleMenuRequest(
-										serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
-												() -> new WorldEffectsMenu(serverPlayer.getServerWorld()))) {
+				serverPlayer.doMenuRequest(CHOOSE_EFFECT_SYMBOL,
+						() -> new SingleMenuRequest(
+								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
+										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
+								false) {
 
-									@Override
-									public void onResult(ServerPlayer serverPlayer, Object obj) {
-										EffectEntry entry = (EffectEntry) obj;
-										setEffects(entry);
-									}
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								EffectEntry entry = (EffectEntry) obj;
+								setEffects(entry);
+							}
 
-									@Override
-									public void openRequest(ServerPlayer serverPlayer) {
-										EffectItemMenu.this.open(serverPlayer);
-									}
-								});
+							@Override
+							public void openRequest(ServerPlayer serverPlayer) {
+								EffectItemMenu.this.open(serverPlayer);
+							}
+						});
 				break;
 
 			case DISPENSER:

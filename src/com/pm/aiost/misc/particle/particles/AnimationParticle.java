@@ -9,10 +9,10 @@ import org.bukkit.configuration.ConfigurationSection;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.menus.request.AnimationParticleMenu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.NoMenuRequest.SimpleNoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.NoMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleBuilder;
-import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.player.ServerPlayer;
 
 import net.minecraft.nbt.CompoundTag;
@@ -65,7 +65,7 @@ public abstract class AnimationParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(new AnimationParticleMenu(this)) {
+		return new SingleMenuRequest(new AnimationParticleMenu(this), false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -97,7 +97,7 @@ public abstract class AnimationParticle implements IParticle {
 
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleNoMenuRequest(requestConsumer, targetConsumer);
+		return new NoMenuRequest(requestConsumer, targetConsumer, false);
 	}
 
 	@Override

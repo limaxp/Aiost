@@ -22,7 +22,7 @@ import com.pm.aiost.misc.menu.menus.request.DataParticleMenu;
 import com.pm.aiost.misc.menu.menus.request.NumberMenu;
 import com.pm.aiost.misc.menu.menus.request.enumeration.EnumerationMenus;
 import com.pm.aiost.misc.menu.request.MenuRequest;
-import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest.SimpleMultiMenuRequest;
+import com.pm.aiost.misc.menu.request.requests.MultiMenuRequest;
 import com.pm.aiost.misc.nms.NBT;
 import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.PacketFactory;
@@ -185,7 +185,7 @@ public class DataParticle<T> extends Particle {
 	@SuppressWarnings("unchecked")
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SimpleMultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer,
 				new Supplier[] { () -> EnumerationMenus.PARTICLE_MENU,
 						() -> new NumberMenu(ChatColor.BOLD + "Choose count"),
 						() -> new NumberMenu(ChatColor.BOLD + "Choose offset x"),
