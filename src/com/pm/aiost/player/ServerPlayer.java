@@ -20,6 +20,7 @@ import javax.annotation.Nullable;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.block.BlockFace;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.EquipmentSlot;
@@ -43,8 +44,10 @@ import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.event.EquipmentListener;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandler.QuitReason;
+import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.event.eventHandler.TickableHandler;
 import com.pm.aiost.misc.event.eventHandler.handler.CancelEventHandler;
+import com.pm.aiost.misc.event.eventHandler.handler.OwnableEventHandler;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.Menu;
 import com.pm.aiost.misc.menu.request.MenuRequest;
@@ -75,7 +78,6 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectLinkedOpenHashMap;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
-import net.minecraft.world.entity.LivingEntity;
 
 public class ServerPlayer implements AutoCloseable {
 
@@ -983,16 +985,16 @@ public class ServerPlayer implements AutoCloseable {
 	}
 
 	public void spawnPet(int id) {
-		// TODO
-		petEntity = (LivingEntity) AiostEntityTypes.spawnEntity(UnlockableTypes.PETS.getObject(id),
-				player.getLocation());
-//		if (petEntity != null)
-//			petEntity.setOwner(player);
+		if (petEntity != null)
+			despawnPet();
+		petEntity = (LivingEntity) NMS
+				.from(AiostEntityTypes.spawnEntity(UnlockableTypes.PETS.getObject(id), player.getLocation()));
+		OwnableEventHandler handler = new OwnableEventHandler(petEntity, player);
+		EventHandlerManager.setEntityHandler(petEntity, handler);
 	}
 
 	public void despawnPet() {
-		// TODO
-//		petEntity.die();
+		petEntity.remove();
 		petEntity = null;
 	}
 

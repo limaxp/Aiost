@@ -11,7 +11,6 @@ import com.pm.aiost.effect.Effect;
 import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.menus.PlayerSkillMenu;
 import com.pm.aiost.misc.menu.menus.UnlockableMenu;
-import com.pm.aiost.misc.nms.NMS;
 import com.pm.aiost.misc.packet.disguise.Disguise;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.registry.AiostRegistry;
@@ -19,7 +18,6 @@ import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.player.settings.PlayerSettings;
 
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
 
 public class UnlockableTypes {
 
@@ -102,7 +100,7 @@ public class UnlockableTypes {
 	};
 
 	public static final UnlockableType<IParticle> PROJECTILE_PARTICLE = new UnlockableType<IParticle>(
-			"Projectile Particle") {
+			"Projectile Particles") {
 
 		@Override
 		public void load(ConfigurationSection section) {
@@ -201,7 +199,6 @@ public class UnlockableTypes {
 		}
 	};
 
-	// TODO
 	public static final UnlockableType<ItemStack> HATS = new UnlockableType<ItemStack>("Hats") {
 
 		@Override
@@ -217,48 +214,7 @@ public class UnlockableTypes {
 		public void set(ServerPlayer serverPlayer, short id) {
 			serverPlayer.setHelmet(getObject(id));
 			serverPlayer.setSetting(PlayerSettings.HAT, id);
-		}
-
-		@Override
-		public void remove(ServerPlayer serverPlayer, short id) {
-			int current = serverPlayer.getSetting(PlayerSettings.HAT);
-			if (current < 1)
-				return;
-			serverPlayer.setHelmet(null);
-			serverPlayer.setSetting(PlayerSettings.HAT, (short) 0);
-		}
-
-		@Override
-		public short get(ServerPlayer serverPlayer) {
-			return serverPlayer.getSetting(PlayerSettings.HAT);
-		}
-
-		@Override
-		public boolean initializePlayer() {
-			return false;
-		};
-	};
-
-	// TODO
-	public static final UnlockableType<ItemStack> SUITS = new UnlockableType<ItemStack>("Suits") {
-
-		@Override
-		public void load(ConfigurationSection section) {
-			UnlockableManager.loadItemStacks(section, this, new ItemStack(Material.IRON_CHESTPLATE));
-		}
-
-		@Override
-		public void init(ServerPlayer serverPlayer) {
-		}
-
-		@Override
-		public void set(ServerPlayer serverPlayer, short id) {
-			ItemStack is = getObject(id);
-			Item item = NMS.to(is).getItem();
-			if (NMS.isArmor(item)) {
-				System.out.println(NMS.getArmorSlot(item));
-				serverPlayer.setItem(NMS.getArmorSlot(item), is);
-			}
+			// TODO
 		}
 
 		@Override
