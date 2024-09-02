@@ -41,7 +41,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 			setItem(effects.get(i), 10 + i);
 		getInventory().setItem(i + 10, ADD_EFFECT_ITEM);
 		getInventory().setItem(i + 11, ACCEPT_EFFECT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -54,7 +54,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 			case RED_BANNER:
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
+					serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
 							EffectEntryMenu.this::open, false) {
 
 						@Override
@@ -67,7 +67,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 				break;
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
+				serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
 						EffectEntryMenu.this::open, false) {
 
 					@Override
@@ -121,7 +121,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 	private Effect createEffect(ServerPlayer serverPlayer, EffectType<?> type, int slot) {
 		Effect effect = type.create();
 		effect.setDefault();
-		serverPlayer.doMenuRequest(effect.getClass(), effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
+		serverPlayer.menuRequest(effect.getClass(), effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
 			setItem(effect, slot);
 			open(serverPlayer1);
 		}));

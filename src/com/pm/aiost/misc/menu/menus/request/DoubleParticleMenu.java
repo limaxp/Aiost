@@ -37,7 +37,7 @@ public class DoubleParticleMenu extends SingleInventoryMenu {
 		particles = new IParticle[2];
 		set(MultiParticleMenu.CHOOSE_PARTICLE_ITEM_1.clone(), MultiParticleMenu.CHOOSE_PARTICLE_ITEM_2.clone(), null,
 				null, null, MultiParticleMenu.RESET_ITEM, MultiParticleMenu.ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class DoubleParticleMenu extends SingleInventoryMenu {
 		int index = InventoryMenu.convertSlotToIndex(event.getSlot());
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.doMenuRequest(
+			serverPlayer.menuRequest(
 					new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, DoubleParticleMenu.this::open, false) {
 
 						@Override
@@ -79,7 +79,7 @@ public class DoubleParticleMenu extends SingleInventoryMenu {
 						}
 					});
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
+			serverPlayer.menuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
 					DoubleParticleMenu.this::open, false) {
 
 				@Override

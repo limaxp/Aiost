@@ -62,7 +62,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 		item = new ItemStack(Material.STICK);
 		set(ITEMS);
 		addBorderItem(17, NBT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -118,7 +118,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.doMenuRequest(CHOOSE_ITEM,
+			serverPlayer.menuRequest(CHOOSE_ITEM,
 					() -> new SingleMenuRequest(ItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
 						@Override
@@ -128,7 +128,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 					});
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.doMenuRequest(ITEMS,
+			serverPlayer.menuRequest(ITEMS,
 					() -> new SingleMenuRequest(CustomItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
 						@Override
@@ -139,7 +139,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(AMOUNT_ITEM,
+		serverPlayer.menuRequest(AMOUNT_ITEM,
 				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open, false) {
 
 					@Override
@@ -150,7 +150,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(DAMAGE_ITEM,
+		serverPlayer.menuRequest(DAMAGE_ITEM,
 				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open, false) {
 
 					@Override
@@ -161,7 +161,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(LORE_ITEM,
+		serverPlayer.menuRequest(LORE_ITEM,
 				() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
 						CreateItemMenu.this::open, false) {
 

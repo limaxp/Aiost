@@ -43,7 +43,7 @@ public class GamesMenu extends ViewInventoryMenu implements DatabaseGameMenu {
 	public GamesMenu(GameType<?> type) {
 		super(BOLD + type.name, true);
 		this.type = type;
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

@@ -36,7 +36,7 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 		this.particle = particle;
 		set(CHOOSE_PARTICLE.clone(), CHOOSE_ANIMATION.clone(), null, null, null, MultiParticleMenu.RESET_ITEM,
 				MultiParticleMenu.ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -72,7 +72,7 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 	private void particleItemClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.doMenuRequest(CHOOSE_PARTICLE,
+			serverPlayer.menuRequest(CHOOSE_PARTICLE,
 					() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, AnimationParticleMenu.this::open,
 							false) {
 
@@ -82,7 +82,7 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 						}
 					});
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-			serverPlayer.doMenuRequest(particle,
+			serverPlayer.menuRequest(particle,
 					() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
 							AnimationParticleMenu.this::open, false) {
 
@@ -94,7 +94,7 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 	}
 
 	private void animationItemClick(ServerPlayer serverPlayer) {
-		serverPlayer.doMenuRequest(CHOOSE_ANIMATION, () -> particle.getAnimationMenuRequest(this));
+		serverPlayer.menuRequest(CHOOSE_ANIMATION, () -> particle.getAnimationMenuRequest(this));
 	}
 
 	private void setParticle(IParticle particle) {

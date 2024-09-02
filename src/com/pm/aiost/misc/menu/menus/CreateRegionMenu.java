@@ -77,7 +77,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 			case RED_BANNER:
 				if (serverPlayer.isAdmin())
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EVENT_HANDLER_MENU,
+					serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.EVENT_HANDLER_MENU,
 							CreateRegionMenu.this::open, false) {
 
 						@SuppressWarnings("unchecked")
@@ -88,7 +88,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 					});
 				else
 					// TODO make it so these EventHandler actually work in a game!
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.REGION_EVENT_HANDLER_MENU,
+					serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.REGION_EVENT_HANDLER_MENU,
 							CreateRegionMenu.this::open, false) {
 
 						@SuppressWarnings("unchecked")
@@ -100,7 +100,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 				break;
 
 			case STONE:
-				serverPlayer.doMenuRequest(NO_NAME_ITEM,
+				serverPlayer.menuRequest(NO_NAME_ITEM,
 						() -> new SingleMenuRequest(new LocationMenu(loc1), CreateRegionMenu.this::open, false) {
 
 							@Override
@@ -111,7 +111,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 				break;
 
 			case GOLD_BLOCK:
-				serverPlayer.doMenuRequest(NO_EVENT_HANDLER_ITEM,
+				serverPlayer.menuRequest(NO_EVENT_HANDLER_ITEM,
 						() -> new SingleMenuRequest(new LocationMenu(loc2), CreateRegionMenu.this::open, false) {
 
 							@Override

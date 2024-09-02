@@ -25,7 +25,7 @@ public class SearchItemMenu extends SingleInventoryMenu {
 	public SearchItemMenu(String name, String text) {
 		super(name, 6, false);
 		this.text = text;
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 		addBorderItem(9, MetaHelper.setMeta(Material.PAPER, GRAY + BOLD + "Search item",
 				Arrays.asList(GRAY + "Click to search for item")));
 		if (text != null && !text.isEmpty())
@@ -39,7 +39,7 @@ public class SearchItemMenu extends SingleInventoryMenu {
 		if (event.getCurrentItem() == null)
 			return;
 		if (slot == 45)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.create(BOLD + "Choose name", text),
+			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.create(BOLD + "Choose name", text),
 					SearchItemMenu.this::open, false) {
 
 				@Override

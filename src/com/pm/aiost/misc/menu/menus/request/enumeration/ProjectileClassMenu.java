@@ -39,7 +39,7 @@ public class ProjectileClassMenu {
 		InventoryMenu menu = new ArrayInventoryMenu(BOLD + "Choose projectile", size, true);
 		menu.set(itemStacks);
 		menu.setInventoryClickCallback(ProjectileClassMenu::menuClick);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 

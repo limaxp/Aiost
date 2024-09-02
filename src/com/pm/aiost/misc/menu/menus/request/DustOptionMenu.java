@@ -63,7 +63,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 	public DustOptionMenu() {
 		super(BOLD + "Set dust options", 3, true);
 		set(SIZE_ITEM.clone(), R_ITEM, G_ITEM, B_ITEM, RANDOM_COLOR_OFF_ITEM, RESET_ITEM, ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case NAME_TAG:
-				serverPlayer.doMenuRequest(SIZE_ITEM,
+				serverPlayer.menuRequest(SIZE_ITEM,
 						() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
 							@Override
@@ -88,7 +88,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 			case BLACK_BANNER:
 				switch (event.getSlot()) {
 				case R_ITEM_SLOT:
-					serverPlayer.doMenuRequest(R_ITEM,
+					serverPlayer.menuRequest(R_ITEM,
 							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
 								@Override
@@ -99,7 +99,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 					break;
 
 				case G_ITEM_SLOT:
-					serverPlayer.doMenuRequest(G_ITEM,
+					serverPlayer.menuRequest(G_ITEM,
 							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
 								@Override
@@ -110,7 +110,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 					break;
 
 				case B_ITEM_SLOT:
-					serverPlayer.doMenuRequest(B_ITEM,
+					serverPlayer.menuRequest(B_ITEM,
 							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
 								@Override

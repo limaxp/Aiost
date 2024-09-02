@@ -38,7 +38,7 @@ public class CustomItemMenu {
 	private static void createMainMenu() {
 		menu = new ArrayInventoryMenu(BOLD + "Items", ItemGroups.size() + 1, true);
 		menu.setInventoryClickCallback(CustomItemMenu::mainMenuClick);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	private static void createGroupMenus() {

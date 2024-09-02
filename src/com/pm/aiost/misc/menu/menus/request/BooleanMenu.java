@@ -17,7 +17,7 @@ public class BooleanMenu {
 
 	public static YesNoMenu create(String name, List<String> yesDescription, List<String> noDescription) {
 		YesNoMenu menu = new YesNoMenu(name, yesDescription, noDescription);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		menu.setYesCallback((serverPlayer, event) -> serverPlayer.setMenuRequestResult(true));
 		menu.setNoCallback((serverPlayer, event) -> serverPlayer.setMenuRequestResult(false));
 		return menu;

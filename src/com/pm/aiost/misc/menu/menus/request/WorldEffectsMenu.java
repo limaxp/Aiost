@@ -42,7 +42,7 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 		this.worldEffects = worldEffects;
 		this.fileNames = fileNames;
 		effects = new EffectEntry[fileNames.length];
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -70,7 +70,7 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 					answerClick(serverPlayer, event);
 				else if (clickType == ClickType.RIGHT) {
 					int index = InventoryMenu.parseIndex(event.getView().getTitle(), event.getSlot());
-					serverPlayer.doMenuRequest(effects,
+					serverPlayer.menuRequest(effects,
 							() -> new SingleMenuRequest(
 									new EffectEntryMenu(new FastArrayList<Effect>(effects[index].toArray())),
 									WorldEffectsMenu.this::open, false) {

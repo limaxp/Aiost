@@ -66,7 +66,7 @@ public class PlayerWorldSpawnDecoMenu {
 			switch (is.getType()) {
 
 			case ARMOR_STAND:
-				serverPlayer.doMenuRequest(MENU,
+				serverPlayer.menuRequest(MENU,
 						() -> new SingleMenuRequest(
 								serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new),
 								PlayerWorldSpawnDecoMenu.MENU::open, false) {
@@ -79,7 +79,7 @@ public class PlayerWorldSpawnDecoMenu {
 				break;
 
 			case ZOMBIE_HEAD:
-				serverPlayer.doMenuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
+				serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
 						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU,
 								PlayerWorldSpawnDecoMenu.MENU::open, false) {
 
@@ -93,7 +93,7 @@ public class PlayerWorldSpawnDecoMenu {
 			case PLAYER_HEAD:
 				ClickType click = event.getClick();
 				if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-					serverPlayer.doMenuRequest(PLAYER_PROFILE_MENU_IDENTIFIER,
+					serverPlayer.menuRequest(PLAYER_PROFILE_MENU_IDENTIFIER,
 							() -> new SingleMenuRequest(EnumerationMenus.GAME_RPOFILES_MENU,
 									PlayerWorldSpawnDecoMenu.MENU::open, false) {
 
@@ -107,7 +107,7 @@ public class PlayerWorldSpawnDecoMenu {
 				break;
 
 			case STONE:
-				serverPlayer.doMenuRequest(MENU, () -> new SingleMenuRequest(EnumerationMenus.BLOCK_MENU,
+				serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(EnumerationMenus.BLOCK_MENU,
 						PlayerWorldSpawnDecoMenu.MENU::open, false) {
 
 					@Override

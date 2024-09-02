@@ -20,7 +20,7 @@ public class TextMenu {
 				}
 			}
 		};
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 
@@ -41,7 +41,7 @@ public class TextMenu {
 				}
 			}
 		};
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 
@@ -62,7 +62,7 @@ public class TextMenu {
 				}
 			}
 		};
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 }

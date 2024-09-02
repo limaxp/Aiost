@@ -55,7 +55,7 @@ public class MenuCommands {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
 		ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) sender);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(
+		serverPlayer.menuRequest(new SingleMenuRequest(
 				serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
 						() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
 				ServerPlayer::closeInventory, false) {

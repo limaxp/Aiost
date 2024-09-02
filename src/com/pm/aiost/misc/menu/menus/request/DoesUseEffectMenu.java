@@ -15,7 +15,7 @@ public class DoesUseEffectMenu {
 
 	public static YesNoMenu createMenu() {
 		YesNoMenu menu = new YesNoMenu(ChatColor.BOLD + "Use Effect", Arrays.asList(), Arrays.asList());
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		menu.setYesCallback((serverPlayer, event) -> CreationMenus.getEffectMenu(serverPlayer).open(serverPlayer));
 		menu.setNoCallback((serverPlayer, event) -> serverPlayer.setMenuRequestResult(Effect.EMPTY));
 		return menu;

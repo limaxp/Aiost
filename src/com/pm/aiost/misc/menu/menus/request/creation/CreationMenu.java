@@ -23,7 +23,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 		objects = new ArrayList<T>();
 		this.addItem = addItem;
 		this.sourceMenu = sourceMenu;
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 		set(addItem);
 	}
 
@@ -33,7 +33,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
 			if (event.getSlot() == objects.size()) {
-				serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
+				serverPlayer.menuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -45,7 +45,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 				if (click == ClickType.LEFT)
 					serverPlayer.setMenuRequestResult(objects.get(event.getSlot()));
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
+					serverPlayer.menuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

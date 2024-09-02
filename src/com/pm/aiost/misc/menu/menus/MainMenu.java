@@ -96,7 +96,7 @@ public class MainMenu {
 				return true;
 
 			case PLAYER_HEAD:
-				serverPlayer.doMenuRequest(
+				serverPlayer.menuRequest(
 						new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU, MainMenu.MENU::open, true) {
 
 							@Override

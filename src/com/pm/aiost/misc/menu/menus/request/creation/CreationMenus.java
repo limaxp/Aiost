@@ -49,7 +49,7 @@ public class CreationMenus {
 			protected TileObject createValue(ServerPlayer serverPlayer, Object obj, int slot) {
 				TileObject tileObject = ((TileObjectType<?>) obj).constructor.get(null);
 				tileObject.setDefault();
-				serverPlayer.doMenuRequest(tileObject.getClass(),
+				serverPlayer.menuRequest(tileObject.getClass(),
 						tileObject.getMenuRequest(serverPlayer, (serverPlayer1) -> {
 							setItem(tileObject, slot);
 							open(serverPlayer1);
@@ -82,7 +82,7 @@ public class CreationMenus {
 			protected IParticle createValue(ServerPlayer serverPlayer, Object obj, int slot) {
 				IParticle particle = ((ParticleType<?>) obj).create();
 				particle.setDefault();
-				serverPlayer.doMenuRequest(particle.getClass(), particle.getMenuRequest((serverPlayer1) -> {
+				serverPlayer.menuRequest(particle.getClass(), particle.getMenuRequest((serverPlayer1) -> {
 					setItem(particle, slot);
 					open(serverPlayer1);
 				}));
@@ -113,7 +113,7 @@ public class CreationMenus {
 			protected Effect createValue(ServerPlayer serverPlayer, Object obj, int slot) {
 				Effect effect = ((EffectType<?>) obj).create();
 				effect.setDefault();
-				serverPlayer.doMenuRequest(effect.getClass(), effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
+				serverPlayer.menuRequest(effect.getClass(), effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
 					setItem(effect, slot);
 					open(serverPlayer1);
 				}));

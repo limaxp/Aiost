@@ -54,7 +54,7 @@ public class LocationMenu extends SingleInventoryMenu {
 						Arrays.asList(GRAY + "Click to set z value"), Banner.zPattern(DyeColor.WHITE)),
 
 				null, null, RESET_ITEM, ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

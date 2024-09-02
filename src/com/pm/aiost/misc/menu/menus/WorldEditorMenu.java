@@ -64,7 +64,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 				if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
 					setType(Material.AIR);
 				else if (click == ClickType.LEFT)
-					serverPlayer.doMenuRequest(
+					serverPlayer.menuRequest(
 							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
 
 								@Override
@@ -73,7 +73,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 								}
 							});
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(this, new SingleMenuRequest(
+					serverPlayer.menuRequest(this, new SingleMenuRequest(
 							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
 
 						@Override
@@ -87,7 +87,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 				if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
 					setType2(Material.AIR);
 				else if (click == ClickType.LEFT)
-					serverPlayer.doMenuRequest(
+					serverPlayer.menuRequest(
 							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
 
 								@Override
@@ -96,7 +96,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 								}
 							});
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(this, new SingleMenuRequest(
+					serverPlayer.menuRequest(this, new SingleMenuRequest(
 							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
 
 						@Override
@@ -107,7 +107,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 				break;
 
 			case 12:
-				serverPlayer.doMenuRequest(
+				serverPlayer.menuRequest(
 						new SingleMenuRequest(EnumerationMenus.BRUSH_MENU, WorldEditorMenu.this::open, false) {
 
 							@Override
@@ -118,7 +118,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 				break;
 
 			case 13:
-				serverPlayer.doMenuRequest(
+				serverPlayer.menuRequest(
 						new SingleMenuRequest(EnumerationMenus.BRUSH_MODE_MENU, WorldEditorMenu.this::open, false) {
 
 							@Override

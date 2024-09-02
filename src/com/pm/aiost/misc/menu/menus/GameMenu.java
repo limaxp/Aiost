@@ -56,8 +56,8 @@ public class GameMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case NETHER_STAR:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+				serverPlayer
+						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -67,13 +67,13 @@ public class GameMenu {
 				break;
 
 			case END_CRYSTAL:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+				serverPlayer
+						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								GameType<?> type = (GameType<?>) obj;
-								serverPlayer.doMenuRequest(new SingleMenuRequest(
+								serverPlayer.menuRequest(new SingleMenuRequest(
 										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
 										GameMenu.MENU::open, true) {
 
@@ -89,8 +89,8 @@ public class GameMenu {
 				break;
 
 			case DIAMOND:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+				serverPlayer
+						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -103,8 +103,8 @@ public class GameMenu {
 				break;
 
 			case PAPER:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+				serverPlayer
+						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

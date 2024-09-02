@@ -77,7 +77,7 @@ public class CreateTextMenu extends SingleInventoryMenu {
 		inv.setItem(FIRST_BORDERED_SLOT, ADD_LINE_ITEM);
 		inv.setItem(24, RESET_ITEM);
 		inv.setItem(25, ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

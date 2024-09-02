@@ -51,7 +51,7 @@ public class XYZMenu extends SingleInventoryMenu {
 						Arrays.asList(GRAY + "Click to set z value"), Banner.zPattern(DyeColor.WHITE)),
 
 				null, null, RESET_ITEM, ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -59,7 +59,7 @@ public class XYZMenu extends SingleInventoryMenu {
 		event.setCancelled(true);
 		int slot = event.getSlot();
 		if (slot == 10)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose x", x),
+			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose x", x),
 					XYZMenu.this::open, false) {
 
 				@Override
@@ -68,7 +68,7 @@ public class XYZMenu extends SingleInventoryMenu {
 				}
 			});
 		else if (slot == 11)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose y", y),
+			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose y", y),
 					XYZMenu.this::open, false) {
 
 				@Override
@@ -77,7 +77,7 @@ public class XYZMenu extends SingleInventoryMenu {
 				}
 			});
 		else if (slot == 12)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose z", z),
+			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose z", z),
 					XYZMenu.this::open, false) {
 
 				@Override

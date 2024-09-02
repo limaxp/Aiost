@@ -31,7 +31,7 @@ public class ItemMenu {
 		menu = new ArrayInventoryMenu(BOLD + "Items", items.length, true);
 		menu.set(items);
 		menu.setInventoryClickCallback(ItemMenu::mainMenuClick);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 //	private static ItemStack[] getTabIcons() {

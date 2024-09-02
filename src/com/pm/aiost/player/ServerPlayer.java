@@ -639,24 +639,24 @@ public class ServerPlayer implements AutoCloseable {
 		return menu;
 	}
 
-	public void doMenuRequest(Object identifier, MenuRequest menuRequest) {
-		doMenuRequest(identifier, () -> menuRequest);
+	public void menuRequest(Object identifier, MenuRequest menuRequest) {
+		menuRequest(identifier, () -> menuRequest);
 	}
 
-	public void doMenuRequest(Object identifier, Supplier<MenuRequest> supplier) {
+	public void menuRequest(Object identifier, Supplier<MenuRequest> supplier) {
 		MenuRequest request = getStoredMenuRequest(identifier);
 		if (request == null) {
 			request = supplier.get();
 			storeMenuRequest(identifier, request);
 		}
-		doMenuRequest(request);
+		menuRequest(request);
 	}
 
-	public void doMenuRequest(Supplier<MenuRequest> supplier) {
-		doMenuRequest(supplier.get());
+	public void menuRequest(Supplier<MenuRequest> supplier) {
+		menuRequest(supplier.get());
 	}
 
-	public void doMenuRequest(MenuRequest menuRequest) {
+	public void menuRequest(MenuRequest menuRequest) {
 		if (menuRequestQueue.size() >= 10)
 			menuRequestQueue.pollLast();
 		menuRequestQueue.offerFirst(menuRequest);
@@ -683,7 +683,7 @@ public class ServerPlayer implements AutoCloseable {
 		menuRequestQueue.peekFirst().open(this);
 	}
 
-	public void openMenuRequestPrevMenu() {
+	public void openMenuRequestPrev() {
 		menuRequestQueue.peekFirst().openPrev(this);
 	}
 

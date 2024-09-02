@@ -61,7 +61,7 @@ public class MultiParticleMenu extends SingleInventoryMenu {
 		particles = new ArrayList<IParticle>();
 		set(CHOOSE_PARTICLE_ITEM_1.clone(), CHOOSE_PARTICLE_ITEM_2.clone(), CHOOSE_PARTICLE_ITEM_3.clone(),
 				CHOOSE_PARTICLE_ITEM_4.clone(), CHOOSE_PARTICLE_ITEM_5.clone(), RESET_ITEM, ACCEPT_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -98,7 +98,7 @@ public class MultiParticleMenu extends SingleInventoryMenu {
 	private void particleItemClick_(ServerPlayer serverPlayer, InventoryClickEvent event, int index) {
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.doMenuRequest(
+			serverPlayer.menuRequest(
 					new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MultiParticleMenu.this::open, false) {
 
 						@Override
@@ -108,7 +108,7 @@ public class MultiParticleMenu extends SingleInventoryMenu {
 					});
 
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
+			serverPlayer.menuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
 					MultiParticleMenu.this::open, false) {
 
 				@Override

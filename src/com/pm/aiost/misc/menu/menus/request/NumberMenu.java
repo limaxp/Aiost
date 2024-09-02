@@ -89,7 +89,7 @@ public class NumberMenu extends SingleInventoryMenu {
 	protected void initMenu() {
 		set(ITEMS);
 		getInventory().setItem(FIRST_ANSWER_SLOT, NUMBER_0);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

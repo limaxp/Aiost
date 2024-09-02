@@ -96,7 +96,7 @@ public class EnumerationMenu<T> extends ArrayInventoryMenu {
 	private EnumerationMenu(String name, int size, IntFunction<T> typeSupplier) {
 		super(name, size, false);
 		this.typeSupplier = typeSupplier;
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

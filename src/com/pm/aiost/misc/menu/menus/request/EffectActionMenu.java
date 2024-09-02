@@ -58,7 +58,7 @@ public class EffectActionMenu extends LazyInventoryMenu {
 	public EffectActionMenu() {
 		super(BOLD + "Choose Actions", EffectAction.getMainActions().size(), true);
 		actionList = new ByteArrayList();
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override

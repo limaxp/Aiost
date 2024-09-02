@@ -69,7 +69,7 @@ public class PlayerWorldSpawnMenu {
 			switch (is.getType()) {
 
 			case ARMOR_STAND:
-				serverPlayer.doMenuRequest(CREATE_TEXT_MENU_IDENTIFIER,
+				serverPlayer.menuRequest(CREATE_TEXT_MENU_IDENTIFIER,
 						() -> new SingleMenuRequest(
 								serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), MENU::open,
 								false) {
@@ -83,7 +83,7 @@ public class PlayerWorldSpawnMenu {
 				break;
 
 			case ZOMBIE_HEAD:
-				serverPlayer.doMenuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
+				serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
 						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, MENU::open, false) {
 
 							@Override
@@ -100,7 +100,7 @@ public class PlayerWorldSpawnMenu {
 			case LAVA_BUCKET:
 				ClickType click = event.getClick();
 				if (click == ClickType.LEFT)
-					serverPlayer.doMenuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
+					serverPlayer.menuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
 							() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open, false) {
 
 								@Override
@@ -109,7 +109,7 @@ public class PlayerWorldSpawnMenu {
 								}
 							});
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
+					serverPlayer.menuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
 							() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), MENU::open,
 									false) {
 

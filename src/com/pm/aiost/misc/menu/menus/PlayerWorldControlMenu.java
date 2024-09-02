@@ -92,7 +92,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 				break;
 
 			case FIREWORK_STAR:
-				serverPlayer.doMenuRequest(EFFECTS_MENU_ITEM,
+				serverPlayer.menuRequest(EFFECTS_MENU_ITEM,
 						new SingleMenuRequest(
 								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
 										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
@@ -119,7 +119,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 					if (handler.isReleased())
 						createUpdateWorldMenu(((ReleasedWorldEventHandler) handler).getGameType()).open(serverPlayer);
 					else {
-						serverPlayer.doMenuRequest(RELEASE_ITEM, new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU,
+						serverPlayer.menuRequest(RELEASE_ITEM, new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU,
 								PlayerWorldControlMenu.this::open, false) {
 
 							@Override

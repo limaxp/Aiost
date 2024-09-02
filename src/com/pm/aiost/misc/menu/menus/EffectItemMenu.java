@@ -130,7 +130,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 						CreateItemMenu::new);
 				createItemMenu.setItem(item);
-				serverPlayer.doMenuRequest(EFFECT_BLOCK_SYMBOL,
+				serverPlayer.menuRequest(EFFECT_BLOCK_SYMBOL,
 						() -> new SingleMenuRequest(createItemMenu, EffectItemMenu.this::open, false) {
 
 							@Override
@@ -147,7 +147,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 			case BLACK_BANNER:
 				currentSlot = event.getSlot();
-				serverPlayer.doMenuRequest(NUMBER_1_SYMBOL,
+				serverPlayer.menuRequest(NUMBER_1_SYMBOL,
 						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer),
 								EffectItemMenu.this::open, false) {
 
@@ -161,7 +161,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			case RED_BANNER:
 				currentSlot = event.getSlot();
 				if (blockMode)
-					serverPlayer.doMenuRequest(BLOCK_EFFECT_SYMBOL,
+					serverPlayer.menuRequest(BLOCK_EFFECT_SYMBOL,
 							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer),
 									EffectItemMenu.this::open, false) {
 
@@ -175,7 +175,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				break;
 
 			case WRITABLE_BOOK:
-				serverPlayer.doMenuRequest(CHOOSE_EFFECT_SYMBOL,
+				serverPlayer.menuRequest(CHOOSE_EFFECT_SYMBOL,
 						() -> new SingleMenuRequest(
 								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
 										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),

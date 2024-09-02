@@ -35,7 +35,7 @@ public class DataParticleMenu {
 				MetaHelper.setMeta(Material.GRAY_DYE, GREEN + BOLD + "Dust option",
 						Arrays.asList(GRAY + "Click to set dust option")));
 		menu.setInventoryClickCallback(DataParticleMenu::menuClick);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 
@@ -45,7 +45,7 @@ public class DataParticleMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case STONE:
-				serverPlayer.doMenuRequest(MATERIAL_MENU_IDENTIFIER,
+				serverPlayer.menuRequest(MATERIAL_MENU_IDENTIFIER,
 						() -> new SingleMenuRequest(ItemMenu.getMenu(), menu::open, false) {
 
 							@Override

@@ -40,7 +40,7 @@ public class LocationsMenu extends SingleInventoryMenu {
 		super(BOLD + "Create locations", 6, false);
 		locations = new ArrayList<Location>();
 		set(ADD_LOCATION_ITEM);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
@@ -52,7 +52,7 @@ public class LocationsMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(ADD_LOCATION_ITEM,
+				serverPlayer.menuRequest(ADD_LOCATION_ITEM,
 						() -> new SingleMenuRequest(new LocationMenu(), LocationsMenu.this::open, false) {
 
 							@Override
@@ -64,7 +64,7 @@ public class LocationsMenu extends SingleInventoryMenu {
 				break;
 
 			case RED_BANNER:
-				serverPlayer.doMenuRequest(locations,
+				serverPlayer.menuRequest(locations,
 						() -> new SingleMenuRequest(new LocationMenu(locations.get(event.getSlot())),
 								LocationsMenu.this::open, false) {
 

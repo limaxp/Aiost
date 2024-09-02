@@ -33,7 +33,7 @@ public class EffectConditionMenu {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Choose Condition", 3, true);
 		menu.set(itemStacks);
 		menu.setInventoryClickCallback(EffectConditionMenu::menuClick);
-		menu.setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}
 

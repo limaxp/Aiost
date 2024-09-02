@@ -24,14 +24,14 @@ public class ServerMenu extends FillableListInventoryMenu {
 	public ServerMenu(String name, boolean hasBorder) {
 		super(name, hasBorder);
 		servers = new IdentityArrayList<Server>();
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	public ServerMenu(String name, boolean hasBorder, List<Server> servers) {
 		super(name, hasBorder);
 		this.servers = servers;
 		setServers(servers);
-		setBackLink(ServerPlayer::openMenuRequestPrevMenu);
+		setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
 	@Override
