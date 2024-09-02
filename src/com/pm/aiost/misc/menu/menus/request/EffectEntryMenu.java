@@ -54,37 +54,27 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 			case RED_BANNER:
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(effects,
-							() -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU, false) {
+					serverPlayer.doMenuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
+							EffectEntryMenu.this::open, false) {
 
-								@Override
-								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									setEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
-								}
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									EffectEntryMenu.this.open(serverPlayer);
-								}
-							});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
+						}
+					});
 				else if (clickType == ClickType.SHIFT_LEFT || clickType == ClickType.SHIFT_RIGHT)
 					removeEffect(event.getSlot());
 				break;
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(effects,
-						() -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU, false) {
+				serverPlayer.doMenuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
+						EffectEntryMenu.this::open, false) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								addEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								EffectEntryMenu.this.open(serverPlayer);
-							}
-						});
+					@Override
+					public void onResult(ServerPlayer serverPlayer, Object obj) {
+						addEffect(serverPlayer, (EffectType<?>) obj, event.getSlot());
+					}
+				});
 				break;
 
 			case NETHER_STAR:

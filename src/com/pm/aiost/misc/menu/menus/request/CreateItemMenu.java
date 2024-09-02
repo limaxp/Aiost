@@ -118,62 +118,44 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.doMenuRequest(CHOOSE_ITEM, () -> new SingleMenuRequest(ItemMenu.getMenu(), false) {
+			serverPlayer.doMenuRequest(CHOOSE_ITEM,
+					() -> new SingleMenuRequest(ItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setItem((Material) obj);
-				}
-
-				@Override
-				public void openRequest(ServerPlayer serverPlayer) {
-					CreateItemMenu.this.open(serverPlayer);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setItem((Material) obj);
+						}
+					});
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.doMenuRequest(ITEMS, () -> new SingleMenuRequest(CustomItemMenu.getMenu(), false) {
+			serverPlayer.doMenuRequest(ITEMS,
+					() -> new SingleMenuRequest(CustomItemMenu.getMenu(), CreateItemMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setClone((ItemStack) obj);
-				}
-
-				@Override
-				public void openRequest(ServerPlayer serverPlayer) {
-					CreateItemMenu.this.open(serverPlayer);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setClone((ItemStack) obj);
+						}
+					});
 	}
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
 		serverPlayer.doMenuRequest(AMOUNT_ITEM,
-				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), false) {
+				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
 						setAmount(((Double) obj).intValue());
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						CreateItemMenu.this.open(serverPlayer);
 					}
 				});
 	}
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
 		serverPlayer.doMenuRequest(DAMAGE_ITEM,
-				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), false) {
+				() -> new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
 						setDamage(((Double) obj).shortValue());
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						CreateItemMenu.this.open(serverPlayer);
 					}
 				});
 	}
@@ -181,17 +163,12 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
 		serverPlayer.doMenuRequest(LORE_ITEM,
 				() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
-						false) {
+						CreateItemMenu.this::open, false) {
 
 					@SuppressWarnings("unchecked")
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
 						setItem(MetaHelper.set(item, (List<String>) obj));
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						CreateItemMenu.this.open(serverPlayer);
 					}
 				});
 	}

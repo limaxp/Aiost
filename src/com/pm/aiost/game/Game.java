@@ -842,14 +842,8 @@ public abstract class Game implements AutoCloseable, IGameData, EventHandler {
 			ServerRequest.getHandler().joinGame(serverPlayer, game);
 			return;
 		}
-		serverPlayer.doMenuRequest(new SingleMenuRequest(TextMenu.create(BOLD + "Password", "password"), true) {
-			@Override
-			protected void openRequest(ServerPlayer serverPlayer) {
-				if (backLink == null)
-					serverPlayer.closeInventory();
-				else
-					serverPlayer.openInventory(backLink);
-			}
+		serverPlayer.doMenuRequest(new SingleMenuRequest(TextMenu.create(BOLD + "Password", "password"),
+				backLink == null ? ServerPlayer::closeInventory : (s) -> s.openInventory(backLink), true) {
 
 			@Override
 			protected void onResult(ServerPlayer serverPlayer, Object obj) {

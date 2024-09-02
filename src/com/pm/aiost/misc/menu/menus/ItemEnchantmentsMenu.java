@@ -75,12 +75,8 @@ public class ItemEnchantmentsMenu extends SingleInventoryMenu {
 	}
 
 	private void addEnchantmentClick(ServerPlayer serverPlayer, ItemStack is, InventoryClickEvent event) {
-		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENCHANTMENT_MENU, false) {
-
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.player.openInventory(event.getInventory());
-			}
+		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENCHANTMENT_MENU,
+				(s) -> s.openInventory(event.getInventory()), false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

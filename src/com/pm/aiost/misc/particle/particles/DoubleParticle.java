@@ -102,23 +102,13 @@ public class DoubleParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(DoubleParticleMenu::new, false) {
+		return new SingleMenuRequest(DoubleParticleMenu::new, requestConsumer, targetConsumer, false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
 				IParticle[] arr = (IParticle[]) obj;
 				DoubleParticle.this.particle1 = arr[0];
 				DoubleParticle.this.particle2 = arr[1];
-			}
-
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				requestConsumer.accept(serverPlayer);
-			}
-
-			@Override
-			public void openTarget(ServerPlayer serverPlayer) {
-				targetConsumer.accept(serverPlayer);
 			}
 		};
 	}

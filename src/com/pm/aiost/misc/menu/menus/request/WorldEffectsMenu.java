@@ -70,20 +70,17 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 					answerClick(serverPlayer, event);
 				else if (clickType == ClickType.RIGHT) {
 					int index = InventoryMenu.parseIndex(event.getView().getTitle(), event.getSlot());
-					serverPlayer.doMenuRequest(effects, () -> new SingleMenuRequest(
-							new EffectEntryMenu(new FastArrayList<Effect>(effects[index].toArray())), false) {
+					serverPlayer.doMenuRequest(effects,
+							() -> new SingleMenuRequest(
+									new EffectEntryMenu(new FastArrayList<Effect>(effects[index].toArray())),
+									WorldEffectsMenu.this::open, false) {
 
-						@SuppressWarnings("unchecked")
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							updateEffect((List<Effect>) obj, event);
-						}
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							WorldEffectsMenu.this.open(serverPlayer);
-						}
-					});
+								@SuppressWarnings("unchecked")
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									updateEffect((List<Effect>) obj, event);
+								}
+							});
 				}
 				break;
 

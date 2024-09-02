@@ -69,13 +69,9 @@ public class GameStartMenu extends SingleInventoryMenu {
 			switch (event.getSlot()) {
 
 			case 10:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set min player", minPlayer), false) {
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								serverPlayer.openInventory(event.getInventory());
-							}
+				serverPlayer
+						.doMenuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set min player", minPlayer),
+								(s) -> s.openInventory(event.getInventory()), false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -85,13 +81,9 @@ public class GameStartMenu extends SingleInventoryMenu {
 				break;
 
 			case 11:
-				serverPlayer.doMenuRequest(
-						new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set max player", maxPlayer), false) {
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								serverPlayer.openInventory(event.getInventory());
-							}
+				serverPlayer
+						.doMenuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set max player", maxPlayer),
+								(s) -> s.openInventory(event.getInventory()), false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -104,12 +96,8 @@ public class GameStartMenu extends SingleInventoryMenu {
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.SHIFT_LEFT) {
 					serverPlayer.doMenuRequest(new SingleMenuRequest(
-							TextMenu.create(BOLD + "Set password", password != null ? password : "password"), false) {
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							serverPlayer.openInventory(event.getInventory());
-						}
+							TextMenu.create(BOLD + "Set password", password != null ? password : "password"),
+							(s) -> s.openInventory(event.getInventory()), false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

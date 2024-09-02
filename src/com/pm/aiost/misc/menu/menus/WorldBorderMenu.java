@@ -64,19 +64,14 @@ public class WorldBorderMenu {
 				if (event.getClick() == ClickType.LEFT)
 					border.setCenter(player.getLocation());
 				else if (event.getClick() == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(menu,
-							new SingleMenuRequest(() -> new LocationMenu(border.getCenter()), false) {
+					serverPlayer.doMenuRequest(menu, new SingleMenuRequest(() -> new LocationMenu(border.getCenter()),
+							WorldBorderMenu.menu::open, false) {
 
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									WorldBorderMenu.menu.open(serverPlayer);
-								}
-
-								@Override
-								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									border.setCenter((Location) obj);
-								}
-							});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							border.setCenter((Location) obj);
+						}
+					});
 				break;
 
 			case SUNFLOWER:

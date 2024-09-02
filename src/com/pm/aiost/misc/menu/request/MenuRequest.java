@@ -28,20 +28,12 @@ public abstract class MenuRequest {
 
 	public final void cancel(ServerPlayer serverPlayer) {
 		serverPlayer.popMenuRequest();
-		openRequest(serverPlayer);
+		requestConsumer.accept(serverPlayer);
 	}
 
 	public final void finish(ServerPlayer serverPlayer) {
 		if (!isSaved)
 			serverPlayer.popMenuRequest();
-		openTarget(serverPlayer);
-	}
-
-	protected void openRequest(ServerPlayer serverPlayer) {
-		requestConsumer.accept(serverPlayer);
-	}
-
-	protected void openTarget(ServerPlayer serverPlayer) {
 		targetConsumer.accept(serverPlayer);
 	}
 

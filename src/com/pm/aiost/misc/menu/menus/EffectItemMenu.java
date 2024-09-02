@@ -130,18 +130,14 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 						CreateItemMenu::new);
 				createItemMenu.setItem(item);
-				serverPlayer.doMenuRequest(EFFECT_BLOCK_SYMBOL, () -> new SingleMenuRequest(createItemMenu, false) {
+				serverPlayer.doMenuRequest(EFFECT_BLOCK_SYMBOL,
+						() -> new SingleMenuRequest(createItemMenu, EffectItemMenu.this::open, false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						EffectItemMenu.this.open(serverPlayer);
-					}
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						EffectItemMenu.this.setItem((ItemStack) obj);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								EffectItemMenu.this.setItem((ItemStack) obj);
+							}
+						});
 			}
 			return;
 		}
@@ -152,16 +148,12 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			case BLACK_BANNER:
 				currentSlot = event.getSlot();
 				serverPlayer.doMenuRequest(NUMBER_1_SYMBOL,
-						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer), false) {
+						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer),
+								EffectItemMenu.this::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								setCurrentEffect((Effect) obj);
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								EffectItemMenu.this.open(serverPlayer);
 							}
 						});
 				break;
@@ -170,16 +162,12 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				currentSlot = event.getSlot();
 				if (blockMode)
 					serverPlayer.doMenuRequest(BLOCK_EFFECT_SYMBOL,
-							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer), false) {
+							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer),
+									EffectItemMenu.this::open, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
 									setTileObject((TileObject) obj);
-								}
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									EffectItemMenu.this.open(serverPlayer);
 								}
 							});
 				else
@@ -191,17 +179,12 @@ public class EffectItemMenu extends SingleInventoryMenu {
 						() -> new SingleMenuRequest(
 								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
 										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
-								false) {
+								EffectItemMenu.this::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								EffectEntry entry = (EffectEntry) obj;
 								setEffects(entry);
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								EffectItemMenu.this.open(serverPlayer);
 							}
 						});
 				break;

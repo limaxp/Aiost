@@ -93,33 +93,25 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 			switch (event.getSlot()) {
 
 			case ENVIRONMENT_SLOT:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.ENVIRONMENT_MENU, false) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.ENVIRONMENT_MENU, CreateWorldMenu.this::open, false) {
 
-					@Override
-					protected void openRequest(ServerPlayer serverPlayer) {
-						CreateWorldMenu.this.open(serverPlayer);
-					}
-
-					@Override
-					protected void onResult(ServerPlayer serverPlayer, Object obj) {
-						setEnvironment((Environment) obj);
-					}
-				});
+							@Override
+							protected void onResult(ServerPlayer serverPlayer, Object obj) {
+								setEnvironment((Environment) obj);
+							}
+						});
 				break;
 
 			case TYPE_SLOT:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.WORLD_TYPE_MENU, false) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.WORLD_TYPE_MENU, CreateWorldMenu.this::open, false) {
 
-					@Override
-					protected void openRequest(ServerPlayer serverPlayer) {
-						CreateWorldMenu.this.open(serverPlayer);
-					}
-
-					@Override
-					protected void onResult(ServerPlayer serverPlayer, Object obj) {
-						setType((AiostWorldType<?>) obj);
-					}
-				});
+							@Override
+							protected void onResult(ServerPlayer serverPlayer, Object obj) {
+								setType((AiostWorldType<?>) obj);
+							}
+						});
 				break;
 
 			case NAME_SLOT:

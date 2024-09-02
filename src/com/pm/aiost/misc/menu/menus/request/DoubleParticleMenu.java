@@ -70,29 +70,21 @@ public class DoubleParticleMenu extends SingleInventoryMenu {
 		int index = InventoryMenu.convertSlotToIndex(event.getSlot());
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, false) {
+			serverPlayer.doMenuRequest(
+					new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, DoubleParticleMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setParticle(index, (IParticle) obj);
-				}
-
-				@Override
-				public void openRequest(ServerPlayer serverPlayer) {
-					DoubleParticleMenu.this.open(serverPlayer);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setParticle(index, (IParticle) obj);
+						}
+					});
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-			serverPlayer.doMenuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), false) {
+			serverPlayer.doMenuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
+					DoubleParticleMenu.this::open, false) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
 					setParticle(index, (IParticle) obj);
-				}
-
-				@Override
-				public void openRequest(ServerPlayer serverPlayer) {
-					DoubleParticleMenu.this.open(serverPlayer);
 				}
 			});
 	}

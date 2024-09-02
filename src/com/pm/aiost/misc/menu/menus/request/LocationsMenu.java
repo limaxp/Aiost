@@ -52,33 +52,25 @@ public class LocationsMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case BLACK_BANNER:
-				serverPlayer.doMenuRequest(ADD_LOCATION_ITEM, () -> new SingleMenuRequest(new LocationMenu(), false) {
+				serverPlayer.doMenuRequest(ADD_LOCATION_ITEM,
+						() -> new SingleMenuRequest(new LocationMenu(), LocationsMenu.this::open, false) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						addLocation((Location) obj, event.getSlot());
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						LocationsMenu.this.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								addLocation((Location) obj, event.getSlot());
+							}
+						});
 
 				break;
 
 			case RED_BANNER:
 				serverPlayer.doMenuRequest(locations,
-						() -> new SingleMenuRequest(new LocationMenu(locations.get(event.getSlot())), false) {
+						() -> new SingleMenuRequest(new LocationMenu(locations.get(event.getSlot())),
+								LocationsMenu.this::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								setLocation((Location) obj, event.getSlot());
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								LocationsMenu.this.open(serverPlayer);
 							}
 						});
 				break;

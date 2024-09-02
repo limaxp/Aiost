@@ -69,34 +69,26 @@ public class PlayerWorldSpawnMenu {
 			switch (is.getType()) {
 
 			case ARMOR_STAND:
-				serverPlayer.doMenuRequest(CREATE_TEXT_MENU_IDENTIFIER, () -> new SingleMenuRequest(
-						serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), false) {
+				serverPlayer.doMenuRequest(CREATE_TEXT_MENU_IDENTIFIER,
+						() -> new SingleMenuRequest(
+								serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), MENU::open,
+								false) {
 
-					@SuppressWarnings("unchecked")
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						spawnHologram(serverPlayer, (List<String>) obj);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						MENU.open(serverPlayer);
-					}
-				});
+							@SuppressWarnings("unchecked")
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								spawnHologram(serverPlayer, (List<String>) obj);
+							}
+						});
 				break;
 
 			case ZOMBIE_HEAD:
 				serverPlayer.doMenuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, false) {
+						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, MENU::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								spawnEntity(serverPlayer, (EntityType<?>) obj);
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								MENU.open(serverPlayer);
 							}
 						});
 				break;
@@ -109,30 +101,21 @@ public class PlayerWorldSpawnMenu {
 				ClickType click = event.getClick();
 				if (click == ClickType.LEFT)
 					serverPlayer.doMenuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, false) {
+							() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
 									spawnParticleEffect(serverPlayer, (IParticle) obj);
-								}
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									MENU.open(serverPlayer);
 								}
 							});
 				else if (click == ClickType.RIGHT)
 					serverPlayer.doMenuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), false) {
+							() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), MENU::open,
+									false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
 									spawnParticleEffect(serverPlayer, (IParticle) obj);
-								}
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									MENU.open(serverPlayer);
 								}
 							});
 				else if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)

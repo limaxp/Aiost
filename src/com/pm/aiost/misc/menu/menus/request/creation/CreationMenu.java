@@ -33,16 +33,11 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
 			if (event.getSlot() == objects.size()) {
-				serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, false) {
+				serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
 						addObject(serverPlayer, obj, event.getSlot());
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						CreationMenu.this.open(serverPlayer);
 					}
 				});
 			} else {
@@ -50,16 +45,11 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 				if (click == ClickType.LEFT)
 					serverPlayer.setMenuRequestResult(objects.get(event.getSlot()));
 				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, false) {
+					serverPlayer.doMenuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
 							setObject(serverPlayer, obj, event.getSlot());
-						}
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							CreationMenu.this.open(serverPlayer);
 						}
 					});
 			}

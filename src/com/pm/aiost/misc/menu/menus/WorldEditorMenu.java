@@ -64,94 +64,68 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 				if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
 					setType(Material.AIR);
 				else if (click == ClickType.LEFT)
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, false) {
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							WorldEditorMenu.this.open(serverPlayer);
-						}
-
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setType((Material) obj);
-						}
-					});
-				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(this,
-							new SingleMenuRequest(() -> new SearchBlockMenu(BOLD + "Search block"), false) {
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									WorldEditorMenu.this.open(serverPlayer);
-								}
+					serverPlayer.doMenuRequest(
+							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									setType(((ItemStack) obj).getType());
+									setType((Material) obj);
 								}
 							});
+				else if (click == ClickType.RIGHT)
+					serverPlayer.doMenuRequest(this, new SingleMenuRequest(
+							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
+
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setType(((ItemStack) obj).getType());
+						}
+					});
 				break;
 
 			case 11:
 				if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
 					setType2(Material.AIR);
 				else if (click == ClickType.LEFT)
-					serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, false) {
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							WorldEditorMenu.this.open(serverPlayer);
-						}
-
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setType2((Material) obj);
-						}
-					});
-				else if (click == ClickType.RIGHT)
-					serverPlayer.doMenuRequest(this,
-							new SingleMenuRequest(() -> new SearchBlockMenu(BOLD + "Search block"), false) {
-
-								@Override
-								public void openRequest(ServerPlayer serverPlayer) {
-									WorldEditorMenu.this.open(serverPlayer);
-								}
+					serverPlayer.doMenuRequest(
+							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									setType2(((ItemStack) obj).getType());
+									setType2((Material) obj);
 								}
 							});
+				else if (click == ClickType.RIGHT)
+					serverPlayer.doMenuRequest(this, new SingleMenuRequest(
+							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
+
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setType2(((ItemStack) obj).getType());
+						}
+					});
 				break;
 
 			case 12:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BRUSH_MENU, false) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.BRUSH_MENU, WorldEditorMenu.this::open, false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						WorldEditorMenu.this.open(serverPlayer);
-					}
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setBrush((Brush) obj);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								setBrush((Brush) obj);
+							}
+						});
 				break;
 
 			case 13:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.BRUSH_MODE_MENU, false) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.BRUSH_MODE_MENU, WorldEditorMenu.this::open, false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						WorldEditorMenu.this.open(serverPlayer);
-					}
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setBrushMode((BrushMode) obj);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								setBrushMode((BrushMode) obj);
+							}
+						});
 				break;
 
 			case 16:

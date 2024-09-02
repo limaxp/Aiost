@@ -55,30 +55,21 @@ public class PlayerWorldItemMenu {
 			switch (is.getType()) {
 
 			case BLAZE_ROD:
-				serverPlayer.doMenuRequest(menu, new SingleMenuRequest(CustomItemMenu.getMenu(), true) {
+				serverPlayer.doMenuRequest(menu,
+						new SingleMenuRequest(CustomItemMenu.getMenu(), PlayerWorldItemMenu.menu::open, true) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						serverPlayer.addItem((ItemStack) obj);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						PlayerWorldItemMenu.menu.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								serverPlayer.addItem((ItemStack) obj);
+							}
+						});
 				break;
 
 			case WOODEN_AXE:
 				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 						CreateItemMenu::new);
 				serverPlayer.doMenuRequest(PlayerWorldItemMenu.class,
-						() -> new SingleMenuRequest(createItemMenu, false) {
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								PlayerWorldItemMenu.menu.open(serverPlayer);
-							}
+						() -> new SingleMenuRequest(createItemMenu, PlayerWorldItemMenu.menu::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

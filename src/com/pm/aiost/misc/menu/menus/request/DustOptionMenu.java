@@ -75,65 +75,49 @@ public class DustOptionMenu extends SingleInventoryMenu {
 			switch (is.getType()) {
 
 			case NAME_TAG:
-				serverPlayer.doMenuRequest(SIZE_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
+				serverPlayer.doMenuRequest(SIZE_ITEM,
+						() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setSize((Double) obj);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						DustOptionMenu.this.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								setSize((Double) obj);
+							}
+						});
 				break;
 
 			case BLACK_BANNER:
 				switch (event.getSlot()) {
 				case R_ITEM_SLOT:
-					serverPlayer.doMenuRequest(R_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
+					serverPlayer.doMenuRequest(R_ITEM,
+							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setR((Double) obj);
-						}
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							DustOptionMenu.this.open(serverPlayer);
-						}
-					});
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									setR((Double) obj);
+								}
+							});
 					break;
 
 				case G_ITEM_SLOT:
-					serverPlayer.doMenuRequest(G_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
+					serverPlayer.doMenuRequest(G_ITEM,
+							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setG((Double) obj);
-						}
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							DustOptionMenu.this.open(serverPlayer);
-						}
-					});
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									setG((Double) obj);
+								}
+							});
 					break;
 
 				case B_ITEM_SLOT:
-					serverPlayer.doMenuRequest(B_ITEM, () -> new SingleMenuRequest(NumberMenu::new, false) {
+					serverPlayer.doMenuRequest(B_ITEM,
+							() -> new SingleMenuRequest(NumberMenu::new, DustOptionMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setB((Double) obj);
-						}
-
-						@Override
-						public void openRequest(ServerPlayer serverPlayer) {
-							DustOptionMenu.this.open(serverPlayer);
-						}
-					});
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									setB((Double) obj);
+								}
+							});
 					break;
 
 				default:

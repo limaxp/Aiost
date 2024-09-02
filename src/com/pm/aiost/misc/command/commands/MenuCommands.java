@@ -55,17 +55,14 @@ public class MenuCommands {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
 		ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) sender);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(serverPlayer.getServerWorld().getOrCreateMenu(
-				WorldEffectsMenu.class, () -> new WorldEffectsMenu(serverPlayer.getServerWorld())), false) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(
+				serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
+						() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
+				ServerPlayer::closeInventory, false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
 				serverPlayer.closeInventory();
-			}
-
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.player.closeInventory();
 			}
 		});
 		return true;

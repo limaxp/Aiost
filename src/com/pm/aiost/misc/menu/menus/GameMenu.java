@@ -56,86 +56,62 @@ public class GameMenu {
 		if (is != null) {
 			switch (is.getType()) {
 			case NETHER_STAR:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						GameMenu.MENU.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
+							}
+						});
 				break;
 
 			case END_CRYSTAL:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						GameMenu.MENU.open(serverPlayer);
-					}
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						GameType<?> type = (GameType<?>) obj;
-						serverPlayer.doMenuRequest(new SingleMenuRequest(
-								serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type), true) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
 							@Override
-							protected void openRequest(ServerPlayer serverPlayer) {
-								GameMenu.MENU.open(serverPlayer);
-							}
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								GameType<?> type = (GameType<?>) obj;
+								serverPlayer.doMenuRequest(new SingleMenuRequest(
+										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
+										GameMenu.MENU::open, true) {
 
-							@Override
-							protected void onResult(ServerPlayer serverPlayer, Object obj) {
-								InventoryMenu menu = new GameStartMenu((GameData) obj);
-								menu.setBackLink(GameMenu.MENU); // TODO
-								menu.open(serverPlayer);
+									@Override
+									protected void onResult(ServerPlayer serverPlayer, Object obj) {
+										InventoryMenu menu = new GameStartMenu((GameData) obj);
+										menu.setBackLink(GameMenu.MENU); // TODO
+										menu.open(serverPlayer);
+									}
+								});
 							}
 						});
-					}
-				});
 				break;
 
 			case DIAMOND:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						GameType<?> type = (GameType<?>) obj;
-						GameKitMenu menu = new GameKitMenu(BOLD + type.name + " menu", type.get().getKits()) {
-
-							protected void kitInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-							};
-						};
-						menu.setBackLink(GameMenu.MENU);
-						menu.open(serverPlayer);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						GameMenu.MENU.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								GameType<?> type = (GameType<?>) obj;
+								GameKitMenu menu = new GameKitMenu(BOLD + type.name + " menu", type.get().getKits());
+								menu.setBackLink(GameMenu.MENU);
+								menu.open(serverPlayer);
+							}
+						});
 				break;
 
 			case PAPER:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						GameType<?> type = (GameType<?>) obj;
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								GameType<?> type = (GameType<?>) obj;
 //						new GameStatsMenu(uuid).open(serverPlayer);
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						GameMenu.MENU.open(serverPlayer);
-					}
-				});
+							}
+						});
 				break;
 
 			case WRITTEN_BOOK:

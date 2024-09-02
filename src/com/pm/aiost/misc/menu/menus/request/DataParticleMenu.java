@@ -46,16 +46,11 @@ public class DataParticleMenu {
 			switch (is.getType()) {
 			case STONE:
 				serverPlayer.doMenuRequest(MATERIAL_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(ItemMenu.getMenu(), false) {
+						() -> new SingleMenuRequest(ItemMenu.getMenu(), menu::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								setMaterial(serverPlayer, (Material) obj);
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								menu.open(serverPlayer);
 							}
 						});
 				break;

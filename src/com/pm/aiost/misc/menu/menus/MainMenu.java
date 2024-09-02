@@ -96,23 +96,19 @@ public class MainMenu {
 				return true;
 
 			case PLAYER_HEAD:
-				serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU, true) {
+				serverPlayer.doMenuRequest(
+						new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU, MainMenu.MENU::open, true) {
 
-					@Override
-					protected void openRequest(ServerPlayer serverPlayer) {
-						MainMenu.MENU.open(serverPlayer);
-					}
-
-					@Override
-					protected void onResult(ServerPlayer serverPlayer, Object obj) {
-						UnlockableType<?> type = (UnlockableType<?>) obj;
-						serverPlayer.getOrCreateMenu(type, () -> {
-							UnlockableMenu menu = type.createMenu(serverPlayer);
-							menu.setBackLink(serverPlayer.player.getOpenInventory());
-							return menu;
-						}).open(serverPlayer);
-					}
-				});
+							@Override
+							protected void onResult(ServerPlayer serverPlayer, Object obj) {
+								UnlockableType<?> type = (UnlockableType<?>) obj;
+								serverPlayer.getOrCreateMenu(type, () -> {
+									UnlockableMenu menu = type.createMenu(serverPlayer);
+									menu.setBackLink(serverPlayer.player.getOpenInventory());
+									return menu;
+								}).open(serverPlayer);
+							}
+						});
 				return true;
 
 			case WITHER_SKELETON_SKULL:

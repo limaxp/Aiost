@@ -93,16 +93,13 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 
 			case FIREWORK_STAR:
 				serverPlayer.doMenuRequest(EFFECTS_MENU_ITEM,
-						new SingleMenuRequest(serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
-								() -> new WorldEffectsMenu(serverPlayer.getServerWorld())), false) {
+						new SingleMenuRequest(
+								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
+										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
+								PlayerWorldControlMenu.this::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
-							}
-
-							@Override
-							public void openRequest(ServerPlayer serverPlayer) {
-								PlayerWorldControlMenu.this.open(serverPlayer);
 							}
 						});
 				break;
@@ -122,19 +119,14 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 					if (handler.isReleased())
 						createUpdateWorldMenu(((ReleasedWorldEventHandler) handler).getGameType()).open(serverPlayer);
 					else {
-						serverPlayer.doMenuRequest(RELEASE_ITEM,
-								new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, false) {
+						serverPlayer.doMenuRequest(RELEASE_ITEM, new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU,
+								PlayerWorldControlMenu.this::open, false) {
 
-									@Override
-									public void onResult(ServerPlayer serverPlayer, Object obj) {
-										openReleaseWorldNameMenu(serverPlayer, (GameType<?>) obj);
-									}
-
-									@Override
-									public void openRequest(ServerPlayer serverPlayer) {
-										PlayerWorldControlMenu.this.open(serverPlayer);
-									}
-								});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								openReleaseWorldNameMenu(serverPlayer, (GameType<?>) obj);
+							}
+						});
 					}
 				}
 				break;

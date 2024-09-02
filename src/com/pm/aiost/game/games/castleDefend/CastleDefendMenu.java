@@ -36,52 +36,45 @@ public class CastleDefendMenu extends GameSettingMenu<CastleDefend> {
 
 	private static void waveClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(
-				new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose wave", game.getWave()), false) {
+		serverPlayer.doMenuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Choose wave", game.getWave()),
+				(s) -> s.openInventory(event.getInventory()), false) {
 
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						serverPlayer.openInventory(event.getInventory());
-					}
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						game.setWave((int) obj);
-					}
-				});
+			@Override
+			public void onResult(ServerPlayer serverPlayer, Object obj) {
+				game.setWave((int) obj);
+			}
+		});
 	}
 
 	private static void lockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Lock entity type",
-				game.getEntityTypes(), EnumerationMenu::createItem), false) {
+		serverPlayer
+				.doMenuRequest(
+						new SingleMenuRequest(
+								new EnumerationMenu<EntityConfig>(BOLD + "Lock entity type", game.getEntityTypes(),
+										EnumerationMenu::createItem),
+								(s) -> s.openInventory(event.getInventory()), false) {
 
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.openInventory(event.getInventory());
-			}
-
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.removeEntityType((EntityConfig) obj);
-			}
-		});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								game.removeEntityType((EntityConfig) obj);
+							}
+						});
 	}
 
 	private static void unlockEntityClick(ServerPlayer serverPlayer, InventoryClickEvent event, CastleDefend game) {
 		event.setCancelled(true);
-		serverPlayer.doMenuRequest(new SingleMenuRequest(new EnumerationMenu<EntityConfig>(BOLD + "Unlock entity type",
-				game.getLockedTypes(), EnumerationMenu::createItem), false) {
+		serverPlayer
+				.doMenuRequest(
+						new SingleMenuRequest(
+								new EnumerationMenu<EntityConfig>(BOLD + "Unlock entity type", game.getLockedTypes(),
+										EnumerationMenu::createItem),
+								(s) -> s.openInventory(event.getInventory()), false) {
 
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.openInventory(event.getInventory());
-			}
-
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				game.addEntityType((EntityConfig) obj);
-			}
-		});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								game.addEntityType((EntityConfig) obj);
+							}
+						});
 	}
 }

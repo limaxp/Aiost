@@ -13,40 +13,40 @@ public abstract class SingleMenuRequest extends MenuRequest {
 	protected Menu menu;
 
 	public SingleMenuRequest(Supplier<Menu> menu, boolean isSaved) {
-		super(EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
-		this.menuSupplier = menu;
+		this(menu, EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
 	}
 
 	public SingleMenuRequest(Menu menu, boolean isSaved) {
-		super(EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
-		this.menu = menu;
+		this(menu, EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved);
+	}
+
+	public SingleMenuRequest(Supplier<Menu> menu, Consumer<ServerPlayer> consumer, boolean isSaved) {
+		this(menu, consumer, consumer, isSaved);
+	}
+
+	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> consumer, boolean isSaved) {
+		this(menu, consumer, consumer, isSaved);
 	}
 
 	public SingleMenuRequest(Supplier<Menu> menu, Consumer<ServerPlayer> requestConsumer,
-			Consumer<ServerPlayer> targetConsumer) {
-		super(requestConsumer, targetConsumer, false);
+			Consumer<ServerPlayer> targetConsumer, boolean isSaved) {
+		super(requestConsumer, targetConsumer, isSaved);
 		this.menuSupplier = menu;
 	}
 
-	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
+	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
+			boolean isSaved) {
 		super(requestConsumer, targetConsumer, false);
 		this.menu = menu;
 	}
 
 	@Override
 	public void setResult(ServerPlayer serverPlayer, Object obj) {
-		if (!isSaved)
-			serverPlayer.popMenuRequest();
+		finish(serverPlayer);
 		onResult(serverPlayer, obj);
-		openTarget(serverPlayer);
 	}
 
 	protected abstract void onResult(ServerPlayer serverPlayer, Object obj);
-
-//	@Override
-//	public void setResult(ServerPlayer serverPlayer, Object obj) {
-//		finish(serverPlayer);
-//	}
 
 	@Override
 	public void openPrev(ServerPlayer serverPlayer) {

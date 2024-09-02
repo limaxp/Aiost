@@ -65,20 +65,10 @@ public abstract class AnimationParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(new AnimationParticleMenu(this), false) {
+		return new SingleMenuRequest(new AnimationParticleMenu(this), requestConsumer, targetConsumer, false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
-			}
-
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				requestConsumer.accept(serverPlayer);
-			}
-
-			@Override
-			public void openTarget(ServerPlayer serverPlayer) {
-				targetConsumer.accept(serverPlayer);
 			}
 		};
 	}

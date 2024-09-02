@@ -65,19 +65,16 @@ public class WorldSpecialGameruleMenu extends SingleInventoryMenu {
 			GameRule<Object> gamerule = GAME_RULES[InventoryMenu.parseBorderedIndex(event.getView().getTitle(), slot)];
 			Class<?> type = gamerule.getType();
 			if (type == Integer.class) {
-				serverPlayer.doMenuRequest(gamerule, () -> new SingleMenuRequest(
-						new NumberMenu(event.getCurrentItem().getItemMeta().getDisplayName()), false) {
+				serverPlayer.doMenuRequest(gamerule,
+						() -> new SingleMenuRequest(
+								new NumberMenu(event.getCurrentItem().getItemMeta().getDisplayName()),
+								WorldSpecialGameruleMenu.this::open, false) {
 
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						serverWorld.setGameRule(gamerule, ((Double) obj).intValue());
-					}
-
-					@Override
-					public void openRequest(ServerPlayer serverPlayer) {
-						WorldSpecialGameruleMenu.this.open(serverPlayer);
-					}
-				});
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								serverWorld.setGameRule(gamerule, ((Double) obj).intValue());
+							}
+						});
 
 			}
 		}

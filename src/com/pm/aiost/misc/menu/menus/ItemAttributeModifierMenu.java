@@ -132,12 +132,8 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 	}
 
 	private void changeSlotClick(ServerPlayer serverPlayer, ItemStack is, int attributeId, InventoryClickEvent event) {
-		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EQUIPMENT_SLOT_MENU, false) {
-
-			@Override
-			public void openRequest(ServerPlayer serverPlayer) {
-				serverPlayer.player.openInventory(event.getInventory());
-			}
+		serverPlayer.doMenuRequest(new SingleMenuRequest(EnumerationMenus.EQUIPMENT_SLOT_MENU,
+				(s) -> s.openInventory(event.getInventory()), false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {
