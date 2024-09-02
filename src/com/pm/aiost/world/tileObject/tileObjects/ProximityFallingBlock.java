@@ -80,7 +80,7 @@ public class ProximityFallingBlock extends TileObject implements TickableObject 
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose damage value"),
 						() -> new NumberMenu(BOLD + "Choose range value") },
 				new Consumer[] { (damage) -> this.damage = (Double) damage, (range) -> setRange((Double) range) });
@@ -132,8 +132,8 @@ public class ProximityFallingBlock extends TileObject implements TickableObject 
 		public void hitFallingBlock(FallingBlock fallingBlock) {
 			isFalling = false;
 			getBlock().setBlockData(fallingBlock.getBlockData(), true);
-			fallingBlock.getWorld().spawnParticle(Particle.BLOCK, fallingBlock.getLocation(), 10, 0.0, 0.0, 0.0,
-					0.0, fallingBlock.getBlockData(), false);
+			fallingBlock.getWorld().spawnParticle(Particle.BLOCK, fallingBlock.getLocation(), 10, 0.0, 0.0, 0.0, 0.0,
+					fallingBlock.getBlockData(), false);
 		}
 
 		@Override

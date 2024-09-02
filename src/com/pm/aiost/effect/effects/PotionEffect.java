@@ -116,7 +116,7 @@ public class PotionEffect extends SimplePlayerEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> EnumerationMenus.POTION_EFFECT_TYPE_MENU, () -> new NumberMenu(BOLD + "Choose duration"),
 						() -> new NumberMenu(BOLD + "Choose amplifier") },

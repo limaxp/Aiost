@@ -134,7 +134,7 @@ public class LocationParticle<T> extends DataParticle<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { () -> EnumerationMenus.PARTICLE_MENU, () -> new NumberMenu(BOLD + "Choose count"),
 						() -> new NumberMenu(BOLD + "Choose offset x"), () -> new NumberMenu(BOLD + "Choose offset y"),
 						() -> new NumberMenu(BOLD + "Choose offset z"), () -> new NumberMenu(BOLD + "Choose extra"),

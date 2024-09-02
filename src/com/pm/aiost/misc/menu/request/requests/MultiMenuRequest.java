@@ -15,12 +15,12 @@ public class MultiMenuRequest extends MenuRequest {
 	protected int currentIndex;
 
 	public MultiMenuRequest(Supplier<Menu>[] menuSupplier, Consumer<Object>[] resultConsumer, boolean isSaved) {
-		this(EMPTY_CONSUMER, EMPTY_CONSUMER, menuSupplier, resultConsumer);
+		this(EMPTY_CONSUMER, EMPTY_CONSUMER, isSaved, menuSupplier, resultConsumer);
 	}
 
 	public MultiMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
-			Supplier<Menu>[] menuSupplier, Consumer<Object>[] resultConsumer) {
-		super(requestConsumer, targetConsumer, false);
+			boolean isSaved, Supplier<Menu>[] menuSupplier, Consumer<Object>[] resultConsumer) {
+		super(requestConsumer, targetConsumer, isSaved);
 		this.menuSupplier = menuSupplier;
 		this.menus = new Menu[menuSupplier.length];
 		this.resultConsumer = resultConsumer;

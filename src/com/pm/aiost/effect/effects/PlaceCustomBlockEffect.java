@@ -60,7 +60,7 @@ public class PlaceCustomBlockEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu },
 				new Consumer[] { this::setActions, this::setCondition });
 	}

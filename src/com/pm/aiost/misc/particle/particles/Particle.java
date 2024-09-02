@@ -68,8 +68,8 @@ public class Particle implements IParticle {
 
 	@Override
 	public void spawn(double x, double y, double z, float yaw, float pitch, Iterable<Player> player) {
-		PacketSender.send(player, PacketFactory.packetParticles(NMS.to(particle, null), longDistance, x, y, z,
-				offsetX, offsetY, offsetZ, extra, count));
+		PacketSender.send(player, PacketFactory.packetParticles(NMS.to(particle, null), longDistance, x, y, z, offsetX,
+				offsetY, offsetZ, extra, count));
 	}
 
 	@Override
@@ -145,7 +145,7 @@ public class Particle implements IParticle {
 	@SuppressWarnings("unchecked")
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { () -> EnumerationMenus.PARTICLE_MENU,
 						() -> new NumberMenu(ChatColor.BOLD + "Choose count"),
 						() -> new NumberMenu(ChatColor.BOLD + "Choose offset x"),

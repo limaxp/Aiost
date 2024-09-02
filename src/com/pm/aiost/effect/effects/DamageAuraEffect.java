@@ -119,7 +119,7 @@ public class DamageAuraEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { ChooseParticleMenu::getMenu, () -> new NumberMenu(BOLD + "Choose damage"),
 						() -> new NumberMenu(BOLD + "Choose range") },
 				new Consumer[] { (particle) -> this.particle = (IParticle) particle,

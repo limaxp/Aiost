@@ -117,7 +117,7 @@ public class Ring extends AnimationParticle {
 	@Override
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
 						() -> new NumberMenu(BOLD + "Choose size") },
 

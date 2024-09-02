@@ -137,7 +137,7 @@ public class LaunchParticleEffect extends SimpleLivingEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu, ChooseParticleMenu::getMenu,
 						() -> new NumberMenu(BOLD + "Choose velocity"), () -> new NumberMenu(BOLD + "Choose damage"),
 						() -> new NumberMenu(BOLD + "Choose knockback"), DoesUseEffectMenu::getMenu },

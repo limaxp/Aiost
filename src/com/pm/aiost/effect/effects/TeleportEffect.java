@@ -110,7 +110,7 @@ public class TeleportEffect extends SimpleEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer,
+		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> new NumberMenu(BOLD + "Choose delta x"), () -> new NumberMenu(BOLD + "Choose delta y"),
 						() -> new NumberMenu(BOLD + "Choose delta z") },
