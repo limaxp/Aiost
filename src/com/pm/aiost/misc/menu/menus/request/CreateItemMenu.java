@@ -8,16 +8,19 @@ import static com.pm.aiost.misc.utils.ChatColor.PURPLE;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
-import com.pm.aiost.misc.menu.menus.ItemEnchantmentsMenu;
 import com.pm.aiost.misc.menu.menus.ItemNBTMenu;
 import com.pm.aiost.misc.menu.request.requests.SingleMenuRequest;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
@@ -92,7 +95,21 @@ public class CreateItemMenu extends SingleInventoryMenu {
 				break;
 
 			case 15:
-				new ItemEnchantmentsMenu(serverPlayer).open(serverPlayer);
+				serverPlayer.menuRequest(new SingleMenuRequest(new EnchantmentsMenu(item.getItemMeta().getEnchants()),
+						this::open, false) {
+
+					@Override
+					protected void onResult(ServerPlayer serverPlayer, Object obj) {
+						@SuppressWarnings("unchecked")
+						Map<Enchantment, Integer> enchantments = (Map<Enchantment, Integer>) obj;
+						ItemMeta meta = item.getItemMeta();
+						meta.removeEnchantments();
+						for (Entry<Enchantment, Integer> entry : enchantments.entrySet())
+							meta.addEnchant(entry.getKey(), entry.getValue(), true);
+						item.setItemMeta(meta);
+						getInventory().setItem(CHOOSE_ITEM_SLOT, item);
+					}
+				});
 				break;
 
 			case 16:
