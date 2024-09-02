@@ -73,14 +73,15 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 								}
 							});
 				else if (click == ClickType.RIGHT)
-					serverPlayer.menuRequest(this, new SingleMenuRequest(
-							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
+					serverPlayer.menuRequest(this,
+							() -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
+									WorldEditorMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setType(((ItemStack) obj).getType());
-						}
-					});
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									setType(((ItemStack) obj).getType());
+								}
+							});
 				break;
 
 			case 11:
@@ -96,14 +97,15 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 								}
 							});
 				else if (click == ClickType.RIGHT)
-					serverPlayer.menuRequest(this, new SingleMenuRequest(
-							() -> new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open, false) {
+					serverPlayer.menuRequest(this,
+							() -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
+									WorldEditorMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setType2(((ItemStack) obj).getType());
-						}
-					});
+								@Override
+								public void onResult(ServerPlayer serverPlayer, Object obj) {
+									setType2(((ItemStack) obj).getType());
+								}
+							});
 				break;
 
 			case 12:

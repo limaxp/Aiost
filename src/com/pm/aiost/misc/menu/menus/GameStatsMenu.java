@@ -15,7 +15,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.dataAccess.DataAccess;
-import com.pm.aiost.misc.log.Logger;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -24,10 +23,9 @@ public class GameStatsMenu extends ListInventoryMenu {
 
 	private UUID uuid;
 
-	public GameStatsMenu(UUID uuid) {
-		super(BOLD + uuid + " stats", true);
+	public GameStatsMenu(UUID uuid, String name) {
+		super(BOLD + name + " stats", true);
 		this.uuid = uuid;
-		setBackLink(ServerPlayer::openMenuRequest);
 	}
 
 	@Override
@@ -38,9 +36,10 @@ public class GameStatsMenu extends ListInventoryMenu {
 			resultSet = DataAccess.getAccess().getGameStats(uuid, 28, (index * 28));
 			set(inv, resultSet, GameStatsMenu::createItem);
 		} catch (SQLException e) {
-			Logger.err("PlayerWorldMenu: Could not load game stats for game '" + uuid + "'", e);
+
 		} finally {
-			DataAccess.getAccess().closeResult(resultSet);
+			if (resultSet != null)
+				DataAccess.getAccess().closeResult(resultSet);
 		}
 		return inv;
 	}

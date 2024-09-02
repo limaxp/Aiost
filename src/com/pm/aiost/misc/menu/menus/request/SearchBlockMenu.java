@@ -40,7 +40,7 @@ public class SearchBlockMenu extends SingleInventoryMenu {
 		if (event.getCurrentItem() == null)
 			return;
 		if (slot == 45)
-			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.create(BOLD + "Choose name", text),
+			serverPlayer.menuRequest(new SingleMenuRequest(TextMenu.create(BOLD + "Choose name", text),
 					SearchBlockMenu.this::open, false) {
 
 				@Override

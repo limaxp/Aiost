@@ -44,13 +44,14 @@ public class MarkerPlacerEffect extends SingletonEffect {
 	}
 
 	public void openMarkerMenu(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(this, new SingleMenuRequest(MarkerMenu.MENU, ServerPlayer::closeInventory, false) {
+		serverPlayer.menuRequest(this,
+				() -> new SingleMenuRequest(MarkerMenu.MENU, ServerPlayer::closeInventory, false) {
 
-			@Override
-			protected void onResult(ServerPlayer serverPlayer, Object obj) {
-				name = (String) obj;
-			}
-		});
+					@Override
+					protected void onResult(ServerPlayer serverPlayer, Object obj) {
+						name = (String) obj;
+					}
+				});
 	}
 
 	public static void createMarker(String name, Block block) {

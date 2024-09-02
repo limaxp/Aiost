@@ -59,32 +59,32 @@ public class XYZMenu extends SingleInventoryMenu {
 		event.setCancelled(true);
 		int slot = event.getSlot();
 		if (slot == 10)
-			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose x", x),
-					XYZMenu.this::open, false) {
+			serverPlayer.menuRequest(
+					new SingleMenuRequest(TextMenu.createNumber(BOLD + "Choose x", x), XYZMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setX((Double) obj);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setX((Double) obj);
+						}
+					});
 		else if (slot == 11)
-			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose y", y),
-					XYZMenu.this::open, false) {
+			serverPlayer.menuRequest(
+					new SingleMenuRequest(TextMenu.createNumber(BOLD + "Choose y", y), XYZMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setY((Double) obj);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setY((Double) obj);
+						}
+					});
 		else if (slot == 12)
-			serverPlayer.menuRequest(new SingleMenuRequest(() -> TextMenu.createNumber(BOLD + "Choose z", z),
-					XYZMenu.this::open, false) {
+			serverPlayer.menuRequest(
+					new SingleMenuRequest(TextMenu.createNumber(BOLD + "Choose z", z), XYZMenu.this::open, false) {
 
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setZ((Double) obj);
-				}
-			});
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setZ((Double) obj);
+						}
+					});
 		else if (slot == 15)
 			reset(event);
 		else if (slot == 16)

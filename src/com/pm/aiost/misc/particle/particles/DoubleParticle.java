@@ -102,7 +102,7 @@ public class DoubleParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(DoubleParticleMenu::new, requestConsumer, targetConsumer, false) {
+		return new SingleMenuRequest(new DoubleParticleMenu(), requestConsumer, targetConsumer, false) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

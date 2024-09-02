@@ -56,7 +56,7 @@ public class PlayerWorldItemMenu {
 
 			case BLAZE_ROD:
 				serverPlayer.menuRequest(menu,
-						new SingleMenuRequest(CustomItemMenu.getMenu(), PlayerWorldItemMenu.menu::open, true) {
+						() -> new SingleMenuRequest(CustomItemMenu.getMenu(), PlayerWorldItemMenu.menu::open, true) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

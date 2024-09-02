@@ -92,7 +92,7 @@ public class PlayerWorldToolMenu {
 	public static void createBuildStaff(ServerPlayer serverPlayer) {
 		Effect effect = new BuildStaffEffect();
 		serverPlayer.menuRequest(effect.getClass(),
-				effect.getMenuRequest(serverPlayer, MENU::open, (serverPlayer1) -> {
+				() -> effect.getMenuRequest(serverPlayer, MENU::open, (serverPlayer1) -> {
 					int effectId = serverPlayer1.getServerWorld().getWorldEffects().addTemp(effect);
 					serverPlayer1.addItem(NBT.setWorldEffect(createBuildStaff(effect), effectId));
 					serverPlayer1.closeInventory();

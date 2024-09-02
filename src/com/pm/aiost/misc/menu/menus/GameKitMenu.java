@@ -12,13 +12,12 @@ import org.bukkit.inventory.Inventory;
 
 import com.pm.aiost.game.GameKit;
 import com.pm.aiost.game.GamePlayer;
+import com.pm.aiost.game.GameType;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.LazyInventoryMenu;
 import com.pm.aiost.player.ServerPlayer;
 
 public class GameKitMenu extends LazyInventoryMenu {
-
-	private static final String CLICK_TEXT = GRAY + "Click to change kit";
 
 	private GameKit[] kits;
 
@@ -30,7 +29,7 @@ public class GameKitMenu extends LazyInventoryMenu {
 	@Override
 	public void buildInventory(Inventory inv, int index) {
 		set(inv, 0, index * InventoryMenu.MAX_ITEMS_WITH_BORDER, kits.length,
-				(kitIndex) -> kits[kitIndex].createMenuItem(CLICK_TEXT));
+				(kitIndex) -> kits[kitIndex].createMenuItem(GRAY + "Click to change kit"));
 	}
 
 	@Override
@@ -55,18 +54,25 @@ public class GameKitMenu extends LazyInventoryMenu {
 			serverPlayer.player.closeInventory();
 			return;
 		}
-		GameKit kit = kits[index];
-		if (kit.getPrice() > 0 && !serverPlayer.hasUnlockable(gamePlayer.game.getType(), (short) index)) {
-			BuyMenu.openBuyUnlockableMenu(serverPlayer, DARK_PURPLE + BOLD + kit.name,
-					Arrays.asList(kit.getDescription()), gamePlayer.game.getType().getId(), (short) index,
-					kit.getPrice(), event.getInventory(), () -> {
-					});
+
+		if (buyKit(serverPlayer, gamePlayer.game.getType(), event, index))
 			return;
-		}
 
 		gamePlayer.equipKit(index);
-		ServerPlayer.sendActionBar(serverPlayer.player, kit.name + " kit selected");
+		ServerPlayer.sendActionBar(serverPlayer.player, kits[index].name + " kit selected");
 		serverPlayer.setCooldown(GameKit.class, 40);
 		serverPlayer.player.closeInventory();
+	}
+
+	protected boolean buyKit(ServerPlayer serverPlayer, GameType<?> type, InventoryClickEvent event, int index) {
+		GameKit kit = kits[index];
+		if (kit.getPrice() > 0 && !serverPlayer.hasUnlockable(type, (short) index)) {
+			BuyMenu.openBuyUnlockableMenu(serverPlayer, DARK_PURPLE + BOLD + kit.name,
+					Arrays.asList(kit.getDescription()), type.getId(), (short) index, kit.getPrice(),
+					event.getInventory(), () -> {
+					});
+			return true;
+		}
+		return false;
 	}
 }

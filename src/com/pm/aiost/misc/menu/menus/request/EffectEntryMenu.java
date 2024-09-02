@@ -121,7 +121,7 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 	private Effect createEffect(ServerPlayer serverPlayer, EffectType<?> type, int slot) {
 		Effect effect = type.create();
 		effect.setDefault();
-		serverPlayer.menuRequest(effect.getClass(), effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
+		serverPlayer.menuRequest(effect.getClass(), () -> effect.getMenuRequest(serverPlayer, (serverPlayer1) -> {
 			setItem(effect, slot);
 			open(serverPlayer1);
 		}));

@@ -639,10 +639,6 @@ public class ServerPlayer implements AutoCloseable {
 		return menu;
 	}
 
-	public void menuRequest(Object identifier, MenuRequest menuRequest) {
-		menuRequest(identifier, () -> menuRequest);
-	}
-
 	public void menuRequest(Object identifier, Supplier<MenuRequest> supplier) {
 		MenuRequest request = getStoredMenuRequest(identifier);
 		if (request == null) {
@@ -650,10 +646,6 @@ public class ServerPlayer implements AutoCloseable {
 			storeMenuRequest(identifier, request);
 		}
 		menuRequest(request);
-	}
-
-	public void menuRequest(Supplier<MenuRequest> supplier) {
-		menuRequest(supplier.get());
 	}
 
 	public void menuRequest(MenuRequest menuRequest) {

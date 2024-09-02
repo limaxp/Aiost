@@ -75,12 +75,12 @@ public class GameMenu {
 								GameType<?> type = (GameType<?>) obj;
 								serverPlayer.menuRequest(new SingleMenuRequest(
 										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
-										GameMenu.MENU::open, true) {
+										ServerPlayer::openMenuRequest, true) {
 
 									@Override
 									protected void onResult(ServerPlayer serverPlayer, Object obj) {
 										InventoryMenu menu = new GameStartMenu((GameData) obj);
-										menu.setBackLink(GameMenu.MENU); // TODO
+										menu.setBackLink(ServerPlayer::openMenuRequest);
 										menu.open(serverPlayer);
 									}
 								});
@@ -95,8 +95,17 @@ public class GameMenu {
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								GameType<?> type = (GameType<?>) obj;
-								GameKitMenu menu = new GameKitMenu(BOLD + type.name + " menu", type.get().getKits());
-								menu.setBackLink(GameMenu.MENU);
+								GameKitMenu menu = new GameKitMenu(BOLD + type.name + " kits", type.get().getKits()) {
+
+									@Override
+									protected void kitInventoryClick(ServerPlayer serverPlayer,
+											InventoryClickEvent event) {
+										int index = InventoryMenu.parseBorderedIndex(event.getView().getTitle(),
+												event.getSlot());
+										buyKit(serverPlayer, type, event, index);
+									}
+								};
+								menu.setBackLink(ServerPlayer::openMenuRequest);
 								menu.open(serverPlayer);
 							}
 						});
@@ -109,7 +118,19 @@ public class GameMenu {
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
 								GameType<?> type = (GameType<?>) obj;
-//						new GameStatsMenu(uuid).open(serverPlayer);
+
+								serverPlayer.menuRequest(new SingleMenuRequest(
+										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
+										ServerPlayer::openMenuRequest, true) {
+
+									@Override
+									protected void onResult(ServerPlayer serverPlayer, Object obj) {
+										GameData gameData = (GameData) obj;
+										InventoryMenu menu = new GameStatsMenu(gameData.uuid, gameData.name);
+										menu.setBackLink(ServerPlayer::openMenuRequest);
+										menu.open(serverPlayer);
+									}
+								});
 							}
 						});
 				break;
