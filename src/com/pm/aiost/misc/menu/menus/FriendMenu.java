@@ -42,7 +42,6 @@ public class FriendMenu extends ViewInventoryMenu {
 	public FriendMenu(ServerPlayer serverPlayer) {
 		super(BOLD + "Friends", true);
 		this.serverPlayer = serverPlayer;
-		setBackLink(SocialMenu.getMenu());
 	}
 
 	@Override

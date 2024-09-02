@@ -28,12 +28,12 @@ public class WorldMenu {
 						Arrays.asList(GRAY + "Click to create a new world")),
 
 				MetaHelper.setMeta(Material.GOLD_BLOCK, YELLOW + BOLD + "My Worlds",
-						Arrays.asList(GRAY + "Click to view your worlds", "", GRAY + " -Load Worlds",
-								GRAY + " -Release Worlds", GRAY + " -Rename Worlds", GRAY + " -Delete Worlds")),
+						Arrays.asList(GRAY + "Click to view your worlds", "", GRAY + "Load Worlds",
+								GRAY + "Release Worlds", GRAY + "Rename Worlds", GRAY + "Delete Worlds")),
 
 				MetaHelper.setMeta(Material.DIAMOND_BLOCK, DARK_AQUA + BOLD + "Realeased Worlds",
 						Arrays.asList(GRAY + "Click to view your realeased Worlds", "",
-								GRAY + " -Play your released worlds", GRAY + " -Load them in build mode")));
+								GRAY + "Play your released worlds", GRAY + "Load released worlds into build mode")));
 		menu.setInventoryClickCallback(WorldMenu::menuClick);
 		menu.setBackLink(MainMenu.getMenu());
 		return menu;

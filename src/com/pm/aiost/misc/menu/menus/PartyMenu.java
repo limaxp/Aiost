@@ -1,5 +1,6 @@
 package com.pm.aiost.misc.menu.menus;
 
+import static com.pm.aiost.misc.utils.ChatColor.BLUE;
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import static com.pm.aiost.misc.utils.ChatColor.GRAY;
 import static com.pm.aiost.misc.utils.ChatColor.GREEN;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 import com.google.common.io.ByteArrayDataInput;
 import com.pm.aiost.item.Items;
 import com.pm.aiost.misc.menu.AnvilMenu;
+import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.server.request.ServerRequest;
 import com.pm.aiost.misc.utils.PlayerHead;
@@ -26,6 +28,9 @@ import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
 public class PartyMenu extends SingleInventoryMenu {
+
+	private static final ItemStack FRIENDS_ITEM = MetaHelper.setMeta(Material.RED_BANNER, BLUE + "" + BOLD + "Friends",
+			Arrays.asList(GRAY + "Click to view your friends"));
 
 	private static final ItemStack INVITE_ITEM = MetaHelper.setMeta(Material.WRITABLE_BOOK,
 			GREEN + "" + BOLD + "Invite to party", Arrays.asList(GRAY + "Click to invite someone to your party", "",
@@ -42,8 +47,7 @@ public class PartyMenu extends SingleInventoryMenu {
 		super(BOLD + "Party", 3, true);
 		this.serverPlayer = serverPlayer;
 		uuids = new ArrayList<UUID>();
-		addBorderItems(new int[] { 9, 17 }, LEAVE_ITEM, INVITE_ITEM);
-		setBackLink(SocialMenu.getMenu());
+		addBorderItems(new int[] { 8, 9, 17 }, FRIENDS_ITEM, LEAVE_ITEM, INVITE_ITEM);
 	}
 
 	@Override
@@ -67,6 +71,12 @@ public class PartyMenu extends SingleInventoryMenu {
 		case LAVA_BUCKET:
 			ServerRequest.getHandler().leaveParty(serverPlayer);
 			clear();
+			break;
+
+		case RED_BANNER:
+			InventoryMenu menu = (InventoryMenu) serverPlayer.getOrCreateMenu(FriendMenu.class, FriendMenu::new);
+			menu.setBackLink(event.getInventory());
+			menu.open(serverPlayer);
 			break;
 
 		case PLAYER_HEAD:
