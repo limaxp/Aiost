@@ -36,7 +36,7 @@ public abstract class SingleMenuRequest extends MenuRequest {
 
 	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
 			boolean isSaved) {
-		super(requestConsumer, targetConsumer, false);
+		super(requestConsumer, targetConsumer, isSaved);
 		this.menu = menu;
 	}
 
