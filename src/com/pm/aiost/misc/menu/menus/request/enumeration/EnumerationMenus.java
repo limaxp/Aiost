@@ -10,6 +10,7 @@ import java.util.function.Supplier;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World.Environment;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.potion.PotionEffectType;
 
@@ -23,7 +24,6 @@ import com.pm.aiost.item.spell.Spell;
 import com.pm.aiost.misc.event.eventHandler.EventHandler;
 import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
-import com.pm.aiost.misc.nms.GenericAttribute;
 import com.pm.aiost.misc.particle.IParticle;
 import com.pm.aiost.misc.particle.ParticleType;
 import com.pm.aiost.misc.registry.AiostRegistry;
@@ -39,6 +39,9 @@ public class EnumerationMenus {
 
 	public static final InventoryMenu ENCHANTMENT_MENU = new EnumerationMenu<Enchantment>(BOLD + "Choose enchantment",
 			Enchantment.values(), EnumerationMenu::createItem);
+
+	public static final InventoryMenu ATTRIBUTE_MENU = new EnumerationMenu<Attribute>(BOLD + "Choose attribute",
+			Attribute.values(), EnumerationMenu::createItem);
 
 	public static final InventoryMenu EFFECT_TYPE_MENU = new EnumerationMenu<EffectType<?>>(BOLD + "Choose Effect",
 			AiostRegistry.EFFECTS.size(), AiostRegistry.EFFECTS::getByIndex, EnumerationMenu::createItem);
@@ -68,9 +71,6 @@ public class EnumerationMenus {
 
 	public static final InventoryMenu PARTICLE_MENU = new EnumerationMenu<Particle>(BOLD + "Choose particle",
 			Particle.values(), EnumerationMenu::createItem);
-
-	public static final InventoryMenu GENERIC_ATTRIBUTE_MENU = new EnumerationMenu<GenericAttribute>(
-			BOLD + "Choose attribute", GenericAttribute::get, GenericAttribute.getItems());
 
 	public static final InventoryMenu GAME_RPOFILES_MENU = new EnumerationMenu<GameProfile>(BOLD + "Choose profile",
 			AiostRegistry.PROFILES.size(), AiostRegistry.PROFILES::getByIndex, EnumerationMenu::createItem);

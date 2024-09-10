@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.World.Environment;
+import org.bukkit.attribute.Attribute;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
@@ -48,6 +49,7 @@ import net.minecraft.world.entity.EntityType;
 public class EnumerationMenu<T> extends ArrayInventoryMenu {
 
 	private static final List<String> ENCHANTMENT_LORE = Arrays.asList(GRAY + "Click to choose this enchantment");
+	private static final List<String> ATTRIBUTE_LORE = Arrays.asList(GRAY + "Click to choose this attribute");
 	private static final List<String> ENTITY_TYPE_LORE = Arrays.asList(GRAY + "Click to choose this entity type");
 	private static final List<String> PARTICLE_TYPE_LORE = Arrays.asList(GRAY + "Click to choose this particle type");
 	private static final List<String> SPELL_LORE = Arrays.asList(GRAY + "Click to choose this spell");
@@ -110,6 +112,11 @@ public class EnumerationMenu<T> extends ArrayInventoryMenu {
 	public static ItemStack createItem(Enchantment type) {
 		return MetaHelper.setMeta(Material.ENCHANTED_BOOK, GRAY + BOLD + type.getKey().getKey().replace('_', ' '),
 				ENCHANTMENT_LORE);
+	}
+
+	public static ItemStack createItem(Attribute type) {
+		return MetaHelper.setMeta(Material.ENCHANTED_BOOK, GRAY + BOLD + type.getKey().getKey().replace('_', ' '),
+				ATTRIBUTE_LORE);
 	}
 
 	public static ItemStack createItem(EffectType<?> type) {
