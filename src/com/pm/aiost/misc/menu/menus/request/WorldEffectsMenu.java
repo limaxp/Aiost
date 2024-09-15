@@ -51,7 +51,7 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 		int maxLength = factor + MAX_ITEMS;
 		for (int i = factor; i < maxLength && i < fileNames.length; i++) {
 			int id = Integer.parseInt(fileNames[i]);
-			EffectEntry data = new EffectEntry(id, worldEffects.get(id), worldEffects.getSelfArray(id));
+			EffectEntry data = new EffectEntry(id, worldEffects.get(id), worldEffects.getSelf(id));
 			this.effects[i] = data;
 			setItem(data, i - factor);
 		}
@@ -97,7 +97,7 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 		EffectEntryBuilder entryBuilder = new EffectEntryBuilder();
 		entryBuilder.addAll(effects);
 		entryBuilder.replaceWorldEntry(id, worldEffects);
-		EffectEntry data = new EffectEntry(id, worldEffects.get(id), worldEffects.getSelfArray(id));
+		EffectEntry data = new EffectEntry(id, worldEffects.get(id), worldEffects.getSelf(id));
 		this.effects[index] = data;
 		setItem(data, slot);
 	}

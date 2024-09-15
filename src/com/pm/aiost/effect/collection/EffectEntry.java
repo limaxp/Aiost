@@ -6,17 +6,17 @@ import org.bukkit.inventory.EquipmentSlot;
 
 import com.pm.aiost.effect.Effect;
 
-public class EffectEntryList extends EffectList {
+public class EffectEntry extends EffectList {
 
-	public static final EffectEntryList EMPTY = new EffectEntryList();
+	public static final EffectEntry EMPTY = new EffectEntry();
 
 	private final Effect[] effects;
 
-	public EffectEntryList() {
+	public EffectEntry() {
 		effects = EMPTY_EFFECTS;
 	}
 
-	public EffectEntryList(Effect... effects) {
+	public EffectEntry(Effect... effects) {
 		this.effects = effects;
 		for (int i = 0; i < effects.length; i++)
 			super.add(effects[i]);

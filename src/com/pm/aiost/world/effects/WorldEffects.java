@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 
 import com.pm.aiost.effect.Effect;
-import com.pm.aiost.effect.collection.EffectEntryList;
+import com.pm.aiost.effect.collection.EffectEntry;
 import com.pm.aiost.effect.collection.EffectList;
 
 import it.unimi.dsi.fastutil.ints.Int2ObjectLinkedOpenHashMap;
@@ -17,12 +17,12 @@ public class WorldEffects extends WorldEffectLoader {
 	private static final int ID_BOUND = Integer.MAX_VALUE - TEMP_ID_BOUND;
 
 	private final Int2ObjectLinkedOpenHashMap<Effect[]> effects;
-	private final Int2ObjectLinkedOpenHashMap<EffectEntryList> selfEffects;
+	private final Int2ObjectLinkedOpenHashMap<EffectEntry> selfEffects;
 
 	public WorldEffects(File dir) {
 		super(dir);
 		effects = new Int2ObjectLinkedOpenHashMap<Effect[]>();
-		selfEffects = new Int2ObjectLinkedOpenHashMap<EffectEntryList>();
+		selfEffects = new Int2ObjectLinkedOpenHashMap<EffectEntry>();
 	}
 
 	public int add(Effect... effects) {
@@ -77,7 +77,7 @@ public class WorldEffects extends WorldEffectLoader {
 	protected synchronized void addSelfSynchronized(int id, Effect... selfEffects) {
 		if (this.selfEffects.size() >= CACHE_SIZE)
 			this.selfEffects.removeLast();
-		this.selfEffects.putAndMoveToFirst(id, new EffectEntryList(selfEffects));
+		this.selfEffects.putAndMoveToFirst(id, new EffectEntry(selfEffects));
 	}
 
 	protected synchronized void addSynchronized(int id, Effect[] effects, Effect[] selfEffects) {
@@ -108,29 +108,29 @@ public class WorldEffects extends WorldEffectLoader {
 			if (id >= ID_BOUND)
 				return EffectList.EMPTY_EFFECTS;
 			load(id, this);
-			return this.effects.getOrDefault(id, EffectEntryList.EMPTY_EFFECTS);
+			return this.effects.getOrDefault(id, EffectEntry.EMPTY_EFFECTS);
 		}
 		return effects;
 	}
 
-	public EffectEntryList getSelf(int id) {
-		EffectEntryList selfEffects = this.selfEffects.get(id);
+	private EffectEntry getSelfEntry(int id) {
+		EffectEntry selfEffects = this.selfEffects.get(id);
 		if (selfEffects == null) {
 			if (id < ID_BOUND) {
 				load(id, this);
-				selfEffects = this.selfEffects.getOrDefault(id, EffectEntryList.EMPTY);
+				selfEffects = this.selfEffects.getOrDefault(id, EffectEntry.EMPTY);
 			} else
-				selfEffects = EffectEntryList.EMPTY;
+				selfEffects = EffectEntry.EMPTY;
 		}
 		return selfEffects;
 	}
 
 	public List<Effect> getSelf(int id, byte action) {
-		return getSelf(id).getOrEmpty(action);
+		return getSelfEntry(id).getOrEmpty(action);
 	}
 
-	public Effect[] getSelfArray(int id) {
-		return getSelf(id).getEffects();
+	public Effect[] getSelf(int id) {
+		return getSelfEntry(id).getEffects();
 	}
 
 	private int generateId() {
