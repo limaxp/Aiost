@@ -10,15 +10,30 @@ public class EffectCondition {
 	private static final Object2ByteMap<String> NAME_MAP = new Object2ByteLinkedOpenHashMap<String>();
 	private static final FastArrayList<String> NAMES_LIST = new FastArrayList<String>();
 
-	public static final byte NONE = a("none"); // no condition set
-	public static final byte MAIN_HAND = a("main_hand"); // only allowed in main hand
-	public static final byte OFF_HAND = a("off_hand"); // only allowed in off hand
-	public static final byte UNIQUE = a("unique"); // can only be once in EffectData
-	public static final byte SELF = a("self"); // effect belongs to holder object (will not get saved in EffectData!)
+	/**
+	 * no condition set
+	 */
+	public static final byte NONE = register("none");
 
-	public static byte a(String name) {
-		return register(name);
-	}
+	/**
+	 * only allowed in main hand
+	 */
+	public static final byte MAIN_HAND = register("main_hand");
+
+	/**
+	 * only allowed in main hand
+	 */
+	public static final byte OFF_HAND = register("off_hand");
+
+	/**
+	 * can only be once in EffectData
+	 */
+	public static final byte UNIQUE = register("unique");
+
+	/**
+	 * effect belongs to holder object (will not get saved in EffectData)
+	 */
+	public static final byte SELF = register("self");
 
 	public static byte register(String name) {
 		byte id = (byte) NAMES_LIST.insert(name);

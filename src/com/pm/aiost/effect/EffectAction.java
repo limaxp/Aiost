@@ -21,33 +21,33 @@ public class EffectAction {
 	private static final ByteList MAIN_LIST = new ByteArrayList();
 	private static final List<Byte> MAIN_LIST_VIEW = Collections.unmodifiableList(MAIN_LIST);
 
-	public static final byte BLOCK_BREAK = a("block_break", true);
-	public static final byte BLOCK_PLACE = a("block_place", true);
-	public static final byte BOW_SHOOT = a("bow_shoot", true);
-	public static final byte PROJECTILE_LAUNCH = a("projectile_launch", true);
-	public static final byte PROJECTILE_HIT = a("projectile_hit", false);
-	public static final byte FISHING = a("fishing", true);
-	public static final byte FISHING_ROD_LAUNCH = a("fishing_rod_launch", true);
-	public static final byte CLICK = a("click", true);
-	public static final byte LEFT_CLICK = a("left_click", true);
-	public static final byte RIGHT_CLICK = a("right_click", true);
-	public static final byte ITEM_PICKUP = a("item_pickup", false);
-	public static final byte ITEM_DROP = a("item_drop", false);
-	public static final byte ITEM_CONSUME = a("item_consume", true);
-	public static final byte ITEM_MERGE = a("item_merge", false);
-	public static final byte ITEM_SWAP = a("item_swap", false);
-	public static final byte ITEM_HELD = a("item_held", false);
-	public static final byte EQUIP = a("equip", false);
-	public static final byte UNEQUIP = a("unequip", false);
-	public static final byte INVENTORY_CLICK = a("inventory_click", false);
-	public static final byte INVENTORY_PLACE = a("inventory_place", false);
-	public static final byte INVENTORY_DRAG = a("inventory_drag", false);
-	public static final byte INVENTORY_CREATIVE_CLICK = a("inventory_creative_click", false);
-	public static final byte INVENTORY_CREATIVE_PLACE = a("inventory_creative_place", false);
-	public static final byte MOVE = a("move", false);
-	public static final byte DEATH = a("death", false);
-	public static final byte TICK = a("tick", false);
-	public static final byte JUMP = a("jump", false);
+	public static final byte BLOCK_BREAK = register("block_break", true);
+	public static final byte BLOCK_PLACE = register("block_place", true);
+	public static final byte BOW_SHOOT = register("bow_shoot", true);
+	public static final byte PROJECTILE_LAUNCH = register("projectile_launch", true);
+	public static final byte PROJECTILE_HIT = register("projectile_hit", false);
+	public static final byte FISHING = register("fishing", true);
+	public static final byte FISHING_ROD_LAUNCH = register("fishing_rod_launch", true);
+	public static final byte CLICK = register("click", true);
+	public static final byte LEFT_CLICK = register("left_click", true);
+	public static final byte RIGHT_CLICK = register("right_click", true);
+	public static final byte ITEM_PICKUP = register("item_pickup", false);
+	public static final byte ITEM_DROP = register("item_drop", false);
+	public static final byte ITEM_CONSUME = register("item_consume", true);
+	public static final byte ITEM_MERGE = register("item_merge", false);
+	public static final byte ITEM_SWAP = register("item_swap", false);
+	public static final byte ITEM_HELD = register("item_held", false);
+	public static final byte EQUIP = register("equip", false);
+	public static final byte UNEQUIP = register("unequip", false);
+	public static final byte INVENTORY_CLICK = register("inventory_click", false);
+	public static final byte INVENTORY_PLACE = register("inventory_place", false);
+	public static final byte INVENTORY_DRAG = register("inventory_drag", false);
+	public static final byte INVENTORY_CREATIVE_CLICK = register("inventory_creative_click", false);
+	public static final byte INVENTORY_CREATIVE_PLACE = register("inventory_creative_place", false);
+	public static final byte MOVE = register("move", false);
+	public static final byte DEATH = register("death", false);
+	public static final byte TICK = register("tick", false);
+	public static final byte JUMP = register("jump", false);
 
 	public static final byte BLOCK_BREAK_MAIN_HAND = getMainHandAction(BLOCK_BREAK);
 	public static final byte BLOCK_BREAK_OFF_HAND = getOffHandAction(BLOCK_BREAK);
@@ -70,7 +70,7 @@ public class EffectAction {
 	public static final byte ITEM_CONSUME_MAIN_HAND = getMainHandAction(ITEM_CONSUME);
 	public static final byte ITEM_CONSUME_OFF_HAND = getOffHandAction(ITEM_CONSUME);
 
-	public static byte a(String name, boolean hasHand) {
+	public static byte register(String name, boolean hasHand) {
 		return hasHand ? registerHand(name) : register(name);
 	}
 

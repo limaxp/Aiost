@@ -40,7 +40,7 @@ public class Spells {
 	private static final Effect HEAL_EFFECT = new HealEffect(new byte[] { EffectAction.TICK }, EffectCondition.NONE,
 			10.0);
 
-	public static final ProjectileSpell FLAME = a(
+	public static final ProjectileSpell FLAME = register(
 			new ProjectileSpell("Flame", 10, 2.0, 2.0F, Sound.ITEM_FIRECHARGE_USE) {
 
 				@Override
@@ -52,7 +52,7 @@ public class Spells {
 				}
 			});
 
-	public static final ProjectileSpell FIRE_BALL = a(
+	public static final ProjectileSpell FIRE_BALL = register(
 			new ProjectileSpell("Fireball", 20, 6.0, 1.0F, Sound.ITEM_FIRECHARGE_USE) {
 
 				@Override
@@ -65,10 +65,10 @@ public class Spells {
 				}
 			});
 
-	public static final EffectSpell FIRE_AURA = a(new EffectSpell("FireAura", "Fire aura", 800, 12.0, 400,
+	public static final EffectSpell FIRE_AURA = register(new EffectSpell("FireAura", "Fire aura", 800, 12.0, 400,
 			new AuraEffect(new Particle(org.bukkit.Particle.FLAME, 50, 5, 0, false), SET_BLOCK_ON_FIRE_EFFECT, 5)));
 
-	public static final ProjectileSpell WATER_BEAM = a(
+	public static final ProjectileSpell WATER_BEAM = register(
 			new ProjectileSpell("WaterBeam", "Water beam", 10, 2.0, 2.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
 				@Override
@@ -80,7 +80,7 @@ public class Spells {
 				}
 			});
 
-	public static final ProjectileSpell FOUNTAIN = a(
+	public static final ProjectileSpell FOUNTAIN = register(
 			new ProjectileSpell("Fountain", 20, 6.0, 1.0F, Sound.ENTITY_PLAYER_SPLASH) {
 
 				@Override
@@ -93,11 +93,11 @@ public class Spells {
 				}
 			});
 
-	public static final EffectSpell WATER_AURA = a(
+	public static final EffectSpell WATER_AURA = register(
 			new EffectSpell("WaterAura", "Water aura", 800, 12.0, 400, new AuraEffect(
 					new Particle(org.bukkit.Particle.FALLING_WATER, 100, 5, 0, false), SET_BLOCK_ON_WATER_EFFECT, 5)));
 
-	public static final ProjectileSpell EARTH_BEAM = a(
+	public static final ProjectileSpell EARTH_BEAM = register(
 			new ProjectileSpell("EarthBeam", "Earth beam", 10, 2.0, 2.0F, Sound.BLOCK_GRASS_BREAK) {
 
 				@Override
@@ -109,7 +109,7 @@ public class Spells {
 				}
 			});
 
-	public static final ProjectileSpell EARTH_BALL = a(
+	public static final ProjectileSpell EARTH_BALL = register(
 			new ProjectileSpell("Earthball", 20, 6.0, 1.0F, Sound.BLOCK_GRASS_BREAK) {
 
 				@Override
@@ -122,11 +122,11 @@ public class Spells {
 				}
 			});
 
-	public static final EffectSpell EARTH_AURA = a(new EffectSpell("EarthAura", "Earth aura", 800, 12.0, 500,
+	public static final EffectSpell EARTH_AURA = register(new EffectSpell("EarthAura", "Earth aura", 800, 12.0, 500,
 			new AuraEffect(new DataParticle<BlockData>(org.bukkit.Particle.BLOCK, 50, 5, 0, false,
 					Bukkit.createBlockData(Material.DIRT)), SHOOT_UP_BLOCK_EFFECT, 5)));
 
-	public static final ProjectileSpell WIND_BLOW = a(
+	public static final ProjectileSpell WIND_BLOW = register(
 			new ProjectileSpell("WindBlow", "Wind blow", 10, 2.0, 2.0F, Sound.ENTITY_LLAMA_SPIT) {
 
 				@Override
@@ -138,7 +138,7 @@ public class Spells {
 				}
 			});
 
-	public static final ProjectileSpell WIND_SHOT = a(
+	public static final ProjectileSpell WIND_SHOT = register(
 			new ProjectileSpell("WindShot", "Wind shot", 20, 6.0, 1.0F, Sound.ENTITY_LLAMA_SPIT) {
 
 				@Override
@@ -152,14 +152,14 @@ public class Spells {
 
 	// TODO: make wind aura effect
 
-	public static final EffectSpell WIND_AURA = a(new EffectSpell("WindAura", "Wind aura", 800, 12.0, 500,
+	public static final EffectSpell WIND_AURA = register(new EffectSpell("WindAura", "Wind aura", 800, 12.0, 500,
 			new AuraEffect(new Particle(org.bukkit.Particle.CLOUD, 50, 5, 0, false), SHOOT_UP_BLOCK_EFFECT, 5)));
 
 	// TODO: ice spells?
 
-	public static final HealSpell HEAL = a(new HealSpell("Heal", 400, 10.0, 10.0));
+	public static final HealSpell HEAL = register(new HealSpell("Heal", 400, 10.0, 10.0));
 
-	public static final ProjectileSpell HEAL_OTHER = a(
+	public static final ProjectileSpell HEAL_OTHER = register(
 			new ProjectileSpell("HealOther", "Heal other", 20, 6.0, 1.0F, Sound.BLOCK_CONDUIT_ACTIVATE) {
 
 				@Override
@@ -171,25 +171,25 @@ public class Spells {
 				}
 			});
 
-	public static final EffectSpell HEAL_AURA = a(new EffectSpell("HealAura", "Heal aura", 800, 20.0, 400,
+	public static final EffectSpell HEAL_AURA = register(new EffectSpell("HealAura", "Heal aura", 800, 20.0, 400,
 			new AuraEffect(new Particle(org.bukkit.Particle.HAPPY_VILLAGER, 100, 5, 0, false),
 					new HealEffect(new byte[] { EffectAction.TICK }, EffectCondition.NONE, 2.0), 5)));
 
-	public static final SummonEntitySpell SUMMON_ZOMBIE = a(
+	public static final SummonEntitySpell SUMMON_ZOMBIE = register(
 			new SummonEntitySpell("SummonZombie", "Summon Zombie", 20, 8, AiostEntityTypes.ZOMBIE, 1200));
 
-	public static final SummonEntitySpell SUMMON_SKELETON = a(
+	public static final SummonEntitySpell SUMMON_SKELETON = register(
 			new SummonEntitySpell("SummonSkeleton", "Summon Skeleton", 25, 10, AiostEntityTypes.SKELETON, 1200));
 
-	public static final SummonEntitySpell SUMMON_WITHER_SKELETON = a(new SummonEntitySpell("SummonWitherSkeleton",
-			"Summon Wither Skeleton", 30, 14, AiostEntityTypes.WITHER_SKELETON, 1200));
+	public static final SummonEntitySpell SUMMON_WITHER_SKELETON = register(new SummonEntitySpell(
+			"SummonWitherSkeleton", "Summon Wither Skeleton", 30, 14, AiostEntityTypes.WITHER_SKELETON, 1200));
 
-	public static final SummonEntitySpell SUMMON_ENDERMAN = a(
+	public static final SummonEntitySpell SUMMON_ENDERMAN = register(
 			new SummonEntitySpell("SummonEnderman", "Summon Enderman", 30, 14, AiostEntityTypes.ENDERMAN, 1200));
 
 	// TODO: Conjured Weapons?
 
-	public static final DisguiseSpell TRANSFORM_TO_ZOMBIE = a(new DisguiseSpell("TransformToZombie",
+	public static final DisguiseSpell TRANSFORM_TO_ZOMBIE = register(new DisguiseSpell("TransformToZombie",
 			"Transform to Zombie", 25, 10.0, new DisguiseEntity(AiostEntityTypes.ZOMBIE), 800));
 
 	// TODO: Touch spells
@@ -198,7 +198,7 @@ public class Spells {
 
 	// TODO: Spells with aoe damage
 
-	public static <T extends Spell> T a(T spell) {
+	public static <T extends Spell> T register(T spell) {
 		AiostRegistry.SPELLS.register(spell.getName(), spell);
 		return spell;
 	}
