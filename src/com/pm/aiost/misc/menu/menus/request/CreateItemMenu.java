@@ -111,20 +111,16 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 			case 15:
 				serverPlayer.menuRequest(new SingleMenuRequest(false,
-						new EnchantmentsMenu(item.getItemMeta().getEnchants()), this::open) {
-
-					@Override
-					protected void onResult(ServerPlayer serverPlayer, Object obj) {
-						@SuppressWarnings("unchecked")
-						Map<Enchantment, Integer> enchantments = (Map<Enchantment, Integer>) obj;
-						ItemMeta meta = item.getItemMeta();
-						meta.removeEnchantments();
-						for (Entry<Enchantment, Integer> entry : enchantments.entrySet())
-							meta.addEnchant(entry.getKey(), entry.getValue(), true);
-						item.setItemMeta(meta);
-						getInventory().setItem(CHOOSE_ITEM_SLOT, item);
-					}
-				});
+						new EnchantmentsMenu(item.getItemMeta().getEnchants()), this::open, (obj) -> {
+							@SuppressWarnings("unchecked")
+							Map<Enchantment, Integer> enchantments = (Map<Enchantment, Integer>) obj;
+							ItemMeta meta = item.getItemMeta();
+							meta.removeEnchantments();
+							for (Entry<Enchantment, Integer> entry : enchantments.entrySet())
+								meta.addEnchant(entry.getKey(), entry.getValue(), true);
+							item.setItemMeta(meta);
+							getInventory().setItem(CHOOSE_ITEM_SLOT, item);
+						}));
 				break;
 
 			case 16:
@@ -170,57 +166,28 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.menuRequest(new SingleMenuRequest(false, ItemMenu.getMenu(), CreateItemMenu.this::open) {
-
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setItem((Material) obj);
-				}
-			});
+			serverPlayer.menuRequest(new SingleMenuRequest(false, ItemMenu.getMenu(), CreateItemMenu.this::open,
+					(obj) -> setItem((Material) obj)));
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.menuRequest(new SingleMenuRequest(false, CustomItemMenu.getMenu(), CreateItemMenu.this::open) {
-
-				@Override
-				public void onResult(ServerPlayer serverPlayer, Object obj) {
-					setClone((ItemStack) obj);
-				}
-			});
+			serverPlayer.menuRequest(new SingleMenuRequest(false, CustomItemMenu.getMenu(), CreateItemMenu.this::open,
+					(obj) -> setClone((ItemStack) obj)));
 	}
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(
-				new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open) {
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setAmount(((Double) obj).intValue());
-					}
-				});
+		serverPlayer.menuRequest(new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose amount"),
+				CreateItemMenu.this::open, (obj) -> setAmount(((Double) obj).intValue())));
 	}
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
-		serverPlayer.menuRequest(
-				new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open) {
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setDamage(((Double) obj).shortValue());
-					}
-				});
+		serverPlayer.menuRequest(new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose damage"),
+				CreateItemMenu.this::open, (obj) -> setDamage(((Double) obj).shortValue())));
 	}
 
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
 		serverPlayer.menuRequest(
-				new SingleMenuRequest(false,
-						serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), CreateItemMenu.this::open) {
-
-					@SuppressWarnings("unchecked")
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						setItem(MetaHelper.set(item, (List<String>) obj));
-					}
-				});
+				new SingleMenuRequest(false, serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
+						CreateItemMenu.this::open, (obj) -> setItem(MetaHelper.set(item, (List<String>) obj))));
 	}
 
 	private final AnvilMenu renameItemMenu() {

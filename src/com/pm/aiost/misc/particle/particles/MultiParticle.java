@@ -105,15 +105,11 @@ public class MultiParticle implements IParticle {
 
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(false, new MultiParticleMenu(), requestConsumer, targetConsumer) {
-
-			@Override
-			public void onResult(ServerPlayer serverPlayer, Object obj) {
-				@SuppressWarnings("unchecked")
-				List<IParticle> list = (List<IParticle>) obj;
-				MultiParticle.this.particles = list.toArray(new IParticle[list.size()]);
-			}
-		};
+		return new SingleMenuRequest(false, new MultiParticleMenu(), requestConsumer, targetConsumer, (obj) -> {
+			@SuppressWarnings("unchecked")
+			List<IParticle> list = (List<IParticle>) obj;
+			MultiParticle.this.particles = list.toArray(new IParticle[list.size()]);
+		});
 	}
 
 	@Override

@@ -12,17 +12,12 @@ public class SingleMenuRequest extends MenuRequest {
 	protected Consumer<Object> resultConsumer;
 
 	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> consumer) {
-		this(isSaved, menu, consumer, consumer);
+		this(isSaved, menu, consumer, consumer, EMPTY_RESULT_CONSUMER);
 	}
 
 	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> consumer,
-			ResultConsumer resultConsumer) {
-		this(isSaved, menu, consumer, consumer);
-	}
-
-	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> requestConsumer,
-			Consumer<ServerPlayer> targetConsumer) {
-		this(isSaved, menu, requestConsumer, targetConsumer, EMPTY_RESULT_CONSUMER);
+			Consumer<Object> resultConsumer) {
+		this(isSaved, menu, consumer, consumer, resultConsumer);
 	}
 
 	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> requestConsumer,
@@ -70,9 +65,5 @@ public class SingleMenuRequest extends MenuRequest {
 	@Override
 	public Menu getMenu(int index) {
 		return getMenu();
-	}
-
-	public static interface ResultConsumer extends Consumer<Object> {
-
 	}
 }
