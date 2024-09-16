@@ -10,12 +10,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.collection.list.IdentityArrayList;
-import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableListInventoryMenu;
+import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableInventoryMenu;
 import com.pm.aiost.misc.server.Server;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-public class ServerMenu extends FillableListInventoryMenu {
+public class ServerMenu extends FillableInventoryMenu {
 
 	private static final String CLICK_TEXT = GRAY + "Click to join server";
 

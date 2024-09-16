@@ -2,9 +2,9 @@ package com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus;
 
 import org.bukkit.inventory.Inventory;
 
-public class FillableListInventoryMenu extends ListInventoryMenu {
+public class FillableInventoryMenu extends ListInventoryMenu {
 
-	public FillableListInventoryMenu(String name, boolean hasBorder) {
+	public FillableInventoryMenu(String name, boolean hasBorder) {
 		super(name, hasBorder);
 	}
 

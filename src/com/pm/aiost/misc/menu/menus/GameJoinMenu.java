@@ -15,7 +15,7 @@ import com.pm.aiost.game.Game;
 import com.pm.aiost.game.GameType;
 import com.pm.aiost.game.data.IGameData;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
-import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableListInventoryMenu;
+import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.FillableInventoryMenu;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.server.messaging.ServerDataRequester;
 import com.pm.aiost.misc.server.request.ServerRequest;
@@ -23,7 +23,7 @@ import com.pm.aiost.misc.utils.ChatColor;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
 
-public class GameJoinMenu extends FillableListInventoryMenu {
+public class GameJoinMenu extends FillableInventoryMenu {
 
 	private static final String CLICK_TEXT = ChatColor.GRAY + "Click to join game";
 
