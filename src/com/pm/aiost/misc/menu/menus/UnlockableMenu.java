@@ -41,7 +41,7 @@ public class UnlockableMenu extends LazyInventoryMenu {
 		short startID = (short) (index * getMaxInventoryItems());
 		short activeID = (short) (unlockableType.get(serverPlayer) - 1);
 		BitSet typeBitSet = serverPlayer.getUnlockables(unlockableType);
-		set_(inv, 0, startID, getItemSize(), (unlockableID) -> {
+		set(inv, 0, startID, getItemSize(), (unlockableID) -> {
 			if (typeBitSet.get((short) unlockableID)) {
 				if (unlockableID == activeID)
 					return activate(unlockableType.getItem(unlockableID * 2 + 1));

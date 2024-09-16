@@ -20,7 +20,7 @@ public class PlayerSkillMenu extends UnlockableMenu {
 	public void buildInventory(Inventory inv, int index) {
 		short startID = (short) (index * getMaxInventoryItems());
 		BitSet typeBitSet = serverPlayer.getUnlockables(unlockableType);
-		set_(inv, 0, startID, getItemSize(), (unlockableID) -> {
+		set(inv, 0, startID, getItemSize(), (unlockableID) -> {
 			if (typeBitSet.get((short) unlockableID))
 				return unlockableType.getItem(unlockableID * 2 + 1);
 			return unlockableType.getItem(unlockableID * 2);
