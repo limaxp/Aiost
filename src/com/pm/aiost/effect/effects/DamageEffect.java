@@ -85,7 +85,7 @@ public class DamageEffect extends SimpleLivingEntityEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { EffectActionMenu::new, EffectConditionMenu::getMenu,
 						() -> new NumberMenu(BOLD + "Choose damage value") },
 				new Consumer[] { this::setActions, this::setCondition, (damage) -> this.damage = (Double) damage });

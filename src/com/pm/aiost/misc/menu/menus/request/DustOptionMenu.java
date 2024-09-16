@@ -76,7 +76,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 
 			case NAME_TAG:
 				serverPlayer.menuRequest(SIZE_ITEM,
-						() -> new SingleMenuRequest(new NumberMenu(), DustOptionMenu.this::open, false) {
+						() -> new SingleMenuRequest(false, new NumberMenu(), DustOptionMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -89,7 +89,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 				switch (event.getSlot()) {
 				case R_ITEM_SLOT:
 					serverPlayer.menuRequest(R_ITEM,
-							() -> new SingleMenuRequest(new NumberMenu(), DustOptionMenu.this::open, false) {
+							() -> new SingleMenuRequest(false, new NumberMenu(), DustOptionMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -100,7 +100,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 
 				case G_ITEM_SLOT:
 					serverPlayer.menuRequest(G_ITEM,
-							() -> new SingleMenuRequest(new NumberMenu(), DustOptionMenu.this::open, false) {
+							() -> new SingleMenuRequest(false, new NumberMenu(), DustOptionMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -111,7 +111,7 @@ public class DustOptionMenu extends SingleInventoryMenu {
 
 				case B_ITEM_SLOT:
 					serverPlayer.menuRequest(B_ITEM,
-							() -> new SingleMenuRequest(new NumberMenu(), DustOptionMenu.this::open, false) {
+							() -> new SingleMenuRequest(false, new NumberMenu(), DustOptionMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {

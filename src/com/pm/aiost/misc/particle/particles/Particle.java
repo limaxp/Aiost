@@ -145,7 +145,7 @@ public class Particle implements IParticle {
 	@SuppressWarnings("unchecked")
 	@Override
 	public MenuRequest getMenuRequest(Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { () -> EnumerationMenus.PARTICLE_MENU,
 						() -> new NumberMenu(ChatColor.BOLD + "Choose count"),
 						() -> new NumberMenu(ChatColor.BOLD + "Choose offset x"),

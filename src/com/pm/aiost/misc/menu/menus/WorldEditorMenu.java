@@ -65,7 +65,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 					setType(Material.AIR);
 				else if (click == ClickType.LEFT)
 					serverPlayer.menuRequest(
-							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
+							new SingleMenuRequest(false, EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -74,8 +74,8 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 							});
 				else if (click == ClickType.RIGHT)
 					serverPlayer.menuRequest(this,
-							() -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
-									WorldEditorMenu.this::open, false) {
+							() -> new SingleMenuRequest(false,
+									new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -89,7 +89,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 					setType2(Material.AIR);
 				else if (click == ClickType.LEFT)
 					serverPlayer.menuRequest(
-							new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open, false) {
+							new SingleMenuRequest(false, EnumerationMenus.BLOCK_MENU, WorldEditorMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -98,8 +98,8 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 							});
 				else if (click == ClickType.RIGHT)
 					serverPlayer.menuRequest(this,
-							() -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
-									WorldEditorMenu.this::open, false) {
+							() -> new SingleMenuRequest(false,
+									new SearchBlockMenu(BOLD + "Search block"), WorldEditorMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -110,7 +110,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 
 			case 12:
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.BRUSH_MENU, WorldEditorMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.BRUSH_MENU, WorldEditorMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -121,7 +121,7 @@ public class WorldEditorMenu extends SingleInventoryMenu {
 
 			case 13:
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.BRUSH_MODE_MENU, WorldEditorMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.BRUSH_MODE_MENU, WorldEditorMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

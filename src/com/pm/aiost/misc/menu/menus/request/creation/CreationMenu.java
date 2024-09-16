@@ -33,7 +33,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
 			if (event.getSlot() == objects.size()) {
-				serverPlayer.menuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
+				serverPlayer.menuRequest(new SingleMenuRequest(false, sourceMenu, CreationMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -45,7 +45,7 @@ public abstract class CreationMenu<T> extends SingleInventoryMenu {
 				if (click == ClickType.LEFT)
 					serverPlayer.setMenuRequestResult(objects.get(event.getSlot()));
 				else if (click == ClickType.RIGHT)
-					serverPlayer.menuRequest(new SingleMenuRequest(sourceMenu, CreationMenu.this::open, false) {
+					serverPlayer.menuRequest(new SingleMenuRequest(false, sourceMenu, CreationMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

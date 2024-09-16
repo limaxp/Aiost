@@ -77,8 +77,8 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 			case RED_BANNER:
 				if (serverPlayer.isAdmin())
-					serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.EVENT_HANDLER_MENU,
-							CreateRegionMenu.this::open, false) {
+					serverPlayer.menuRequest(new SingleMenuRequest(false,
+							EnumerationMenus.EVENT_HANDLER_MENU, CreateRegionMenu.this::open) {
 
 						@SuppressWarnings("unchecked")
 						@Override
@@ -88,8 +88,8 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 					});
 				else
 					// TODO make it so these EventHandler actually work in a game!
-					serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.REGION_EVENT_HANDLER_MENU,
-							CreateRegionMenu.this::open, false) {
+					serverPlayer.menuRequest(new SingleMenuRequest(false,
+							EnumerationMenus.REGION_EVENT_HANDLER_MENU, CreateRegionMenu.this::open) {
 
 						@SuppressWarnings("unchecked")
 						@Override
@@ -101,7 +101,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 			case STONE:
 				serverPlayer.menuRequest(NO_NAME_ITEM,
-						() -> new SingleMenuRequest(new LocationMenu(loc1), CreateRegionMenu.this::open, false) {
+						() -> new SingleMenuRequest(false, new LocationMenu(loc1), CreateRegionMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -112,7 +112,7 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 			case GOLD_BLOCK:
 				serverPlayer.menuRequest(NO_EVENT_HANDLER_ITEM,
-						() -> new SingleMenuRequest(new LocationMenu(loc2), CreateRegionMenu.this::open, false) {
+						() -> new SingleMenuRequest(false, new LocationMenu(loc2), CreateRegionMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

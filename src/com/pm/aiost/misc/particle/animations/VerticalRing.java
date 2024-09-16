@@ -97,7 +97,7 @@ public class VerticalRing extends Ring {
 	@Override
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
 						() -> new NumberMenu(BOLD + "Choose size"), () -> new NumberMenu(BOLD + "Choose yaw") },
 

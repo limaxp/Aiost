@@ -274,7 +274,7 @@ public class StackEffect extends Effect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new SingleMenuRequest(new NumberMenu(BOLD + "Choose size"), requestConsumer, targetConsumer, false) {
+		return new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose size"), requestConsumer, targetConsumer) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

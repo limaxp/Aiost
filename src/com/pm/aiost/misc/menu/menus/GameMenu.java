@@ -54,7 +54,7 @@ public class GameMenu {
 		ItemStack is = event.getCurrentItem();
 		switch (is.getType()) {
 		case NETHER_STAR:
-			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+			serverPlayer.menuRequest(new SingleMenuRequest(true, EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -64,14 +64,14 @@ public class GameMenu {
 			break;
 
 		case END_CRYSTAL:
-			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+			serverPlayer.menuRequest(new SingleMenuRequest(true, EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
 					GameType<?> type = (GameType<?>) obj;
 					serverPlayer.menuRequest(
-							new SingleMenuRequest(serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
-									ServerPlayer::openMenuRequest, true) {
+							new SingleMenuRequest(true,
+									serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type), ServerPlayer::openMenuRequest) {
 
 								@Override
 								protected void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -85,7 +85,7 @@ public class GameMenu {
 			break;
 
 		case DIAMOND:
-			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+			serverPlayer.menuRequest(new SingleMenuRequest(true, EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -105,15 +105,15 @@ public class GameMenu {
 			break;
 
 		case PAPER:
-			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+			serverPlayer.menuRequest(new SingleMenuRequest(true, EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
 					GameType<?> type = (GameType<?>) obj;
 
 					serverPlayer.menuRequest(
-							new SingleMenuRequest(serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
-									ServerPlayer::openMenuRequest, true) {
+							new SingleMenuRequest(true,
+									serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type), ServerPlayer::openMenuRequest) {
 
 								@Override
 								protected void onResult(ServerPlayer serverPlayer, Object obj) {

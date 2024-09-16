@@ -151,7 +151,7 @@ public class Helix extends AnimationParticle {
 	@Override
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose radius"),
 						() -> new NumberMenu(BOLD + "Choose height"), () -> new NumberMenu(BOLD + "Choose size"),
 						() -> new NumberMenu(BOLD + "Choose phi") },

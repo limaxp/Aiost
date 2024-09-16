@@ -11,22 +11,22 @@ public class SingleMenuRequest extends MenuRequest {
 	protected Menu menu;
 	protected Consumer<Object> resultConsumer;
 
-	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> consumer, boolean isSaved) {
-		this(menu, consumer, consumer, isSaved);
+	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> consumer) {
+		this(isSaved, menu, consumer, consumer);
 	}
 
-	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> consumer, boolean isSaved,
-			Consumer<Object> resultConsumer) {
-		this(menu, consumer, consumer, isSaved, resultConsumer);
+	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> consumer,
+			ResultConsumer resultConsumer) {
+		this(isSaved, menu, consumer, consumer);
 	}
 
-	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
-			boolean isSaved) {
-		this(menu, requestConsumer, targetConsumer, isSaved, EMPTY_RESULT_CONSUMER);
+	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> requestConsumer,
+			Consumer<ServerPlayer> targetConsumer) {
+		this(isSaved, menu, requestConsumer, targetConsumer, EMPTY_RESULT_CONSUMER);
 	}
 
-	public SingleMenuRequest(Menu menu, Consumer<ServerPlayer> requestConsumer, Consumer<ServerPlayer> targetConsumer,
-			boolean isSaved, Consumer<Object> resultConsumer) {
+	public SingleMenuRequest(boolean isSaved, Menu menu, Consumer<ServerPlayer> requestConsumer,
+			Consumer<ServerPlayer> targetConsumer, Consumer<Object> resultConsumer) {
 		super(requestConsumer, targetConsumer, isSaved);
 		this.menu = menu;
 		this.resultConsumer = resultConsumer;
@@ -70,5 +70,9 @@ public class SingleMenuRequest extends MenuRequest {
 	@Override
 	public Menu getMenu(int index) {
 		return getMenu();
+	}
+
+	public static interface ResultConsumer extends Consumer<Object> {
+
 	}
 }

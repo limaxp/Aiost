@@ -56,9 +56,9 @@ public class MenuCommands {
 			return false;
 		ServerPlayer serverPlayer = ServerPlayer.getByPlayer((Player) sender);
 		serverPlayer.menuRequest(new SingleMenuRequest(
+				false,
 				serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
-						() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
-				ServerPlayer::closeInventory, false) {
+						() -> new WorldEffectsMenu(serverPlayer.getServerWorld())), ServerPlayer::closeInventory) {
 
 			@Override
 			public void onResult(ServerPlayer serverPlayer, Object obj) {

@@ -90,8 +90,8 @@ public class MainMenu {
 			return true;
 
 		case ENDER_CHEST:
-			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU,
-					ServerPlayer::openEventHandlerMenu, true) {
+			serverPlayer.menuRequest(new SingleMenuRequest(true,
+					EnumerationMenus.UNLOCKABLE_TYPE_MENU, ServerPlayer::openEventHandlerMenu) {
 
 				@Override
 				protected void onResult(ServerPlayer serverPlayer, Object obj) {

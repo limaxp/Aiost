@@ -70,8 +70,8 @@ public class GameStartMenu extends SingleInventoryMenu {
 
 			case 10:
 				serverPlayer
-						.menuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set min player", minPlayer),
-								(s) -> s.openInventory(event.getInventory()), false) {
+						.menuRequest(new SingleMenuRequest(false,
+								TextMenu.createInteger(BOLD + "Set min player", minPlayer), (s) -> s.openInventory(event.getInventory())) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -82,8 +82,8 @@ public class GameStartMenu extends SingleInventoryMenu {
 
 			case 11:
 				serverPlayer
-						.menuRequest(new SingleMenuRequest(TextMenu.createInteger(BOLD + "Set max player", maxPlayer),
-								(s) -> s.openInventory(event.getInventory()), false) {
+						.menuRequest(new SingleMenuRequest(false,
+								TextMenu.createInteger(BOLD + "Set max player", maxPlayer), (s) -> s.openInventory(event.getInventory())) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -96,8 +96,8 @@ public class GameStartMenu extends SingleInventoryMenu {
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.SHIFT_LEFT) {
 					serverPlayer.menuRequest(new SingleMenuRequest(
-							TextMenu.create(BOLD + "Set password", password != null ? password : "password"),
-							(s) -> s.openInventory(event.getInventory()), false) {
+							false,
+							TextMenu.create(BOLD + "Set password", password != null ? password : "password"), (s) -> s.openInventory(event.getInventory())) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

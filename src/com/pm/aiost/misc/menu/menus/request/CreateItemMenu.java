@@ -110,8 +110,8 @@ public class CreateItemMenu extends SingleInventoryMenu {
 				break;
 
 			case 15:
-				serverPlayer.menuRequest(new SingleMenuRequest(new EnchantmentsMenu(item.getItemMeta().getEnchants()),
-						this::open, false) {
+				serverPlayer.menuRequest(new SingleMenuRequest(false,
+						new EnchantmentsMenu(item.getItemMeta().getEnchants()), this::open) {
 
 					@Override
 					protected void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -170,7 +170,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseItem(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		if (event.getClick() == ClickType.LEFT)
-			serverPlayer.menuRequest(new SingleMenuRequest(ItemMenu.getMenu(), CreateItemMenu.this::open, false) {
+			serverPlayer.menuRequest(new SingleMenuRequest(false, ItemMenu.getMenu(), CreateItemMenu.this::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -179,7 +179,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 			});
 
 		else if (event.getClick() == ClickType.RIGHT)
-			serverPlayer.menuRequest(new SingleMenuRequest(CustomItemMenu.getMenu(), CreateItemMenu.this::open, false) {
+			serverPlayer.menuRequest(new SingleMenuRequest(false, CustomItemMenu.getMenu(), CreateItemMenu.this::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -190,7 +190,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseAmount(ServerPlayer serverPlayer) {
 		serverPlayer.menuRequest(
-				new SingleMenuRequest(new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open, false) {
+				new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose amount"), CreateItemMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -201,7 +201,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void chooseDamage(ServerPlayer serverPlayer) {
 		serverPlayer.menuRequest(
-				new SingleMenuRequest(new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open, false) {
+				new SingleMenuRequest(false, new NumberMenu(BOLD + "Choose damage"), CreateItemMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -212,8 +212,8 @@ public class CreateItemMenu extends SingleInventoryMenu {
 
 	protected void openLoreMenu(ServerPlayer serverPlayer) {
 		serverPlayer.menuRequest(
-				new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
-						CreateItemMenu.this::open, false) {
+				new SingleMenuRequest(false,
+						serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), CreateItemMenu.this::open) {
 
 					@SuppressWarnings("unchecked")
 					@Override

@@ -72,8 +72,8 @@ public class WorldEffectsMenu extends LazyInventoryMenu {
 					int index = InventoryMenu.parseIndex(event.getView().getTitle(), event.getSlot());
 					serverPlayer.menuRequest(effects,
 							() -> new SingleMenuRequest(
-									new EffectEntryMenu(new FastArrayList<Effect>(effects[index].toArray())),
-									WorldEffectsMenu.this::open, false) {
+									false,
+									new EffectEntryMenu(new FastArrayList<Effect>(effects[index].toArray())), WorldEffectsMenu.this::open) {
 
 								@SuppressWarnings("unchecked")
 								@Override

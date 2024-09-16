@@ -99,7 +99,7 @@ public class MultiParticleMenu extends SingleInventoryMenu {
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
 			serverPlayer.menuRequest(
-					new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MultiParticleMenu.this::open, false) {
+					new SingleMenuRequest(false, EnumerationMenus.PARTICLE_EFFECT_MENU, MultiParticleMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -108,8 +108,8 @@ public class MultiParticleMenu extends SingleInventoryMenu {
 					});
 
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-			serverPlayer.menuRequest(new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
-					MultiParticleMenu.this::open, false) {
+			serverPlayer.menuRequest(new SingleMenuRequest(false,
+					CreationMenus.getParticleEffectMenu(serverPlayer), MultiParticleMenu.this::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {

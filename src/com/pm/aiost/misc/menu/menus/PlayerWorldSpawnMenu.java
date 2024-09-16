@@ -66,8 +66,8 @@ public class PlayerWorldSpawnMenu {
 
 		case ARMOR_STAND:
 			serverPlayer.menuRequest(CREATE_TEXT_MENU_IDENTIFIER,
-					() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
-							MENU::open, false) {
+					() -> new SingleMenuRequest(false,
+							serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), MENU::open) {
 
 						@SuppressWarnings("unchecked")
 						@Override
@@ -79,7 +79,7 @@ public class PlayerWorldSpawnMenu {
 
 		case ZOMBIE_HEAD:
 			serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-					() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, MENU::open, false) {
+					() -> new SingleMenuRequest(false, EnumerationMenus.ENTITY_TYPE_MENU, MENU::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -96,7 +96,7 @@ public class PlayerWorldSpawnMenu {
 			ClickType click = event.getClick();
 			if (click == ClickType.LEFT)
 				serverPlayer.menuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open, false) {
+						() -> new SingleMenuRequest(false, EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -105,8 +105,8 @@ public class PlayerWorldSpawnMenu {
 						});
 			else if (click == ClickType.RIGHT)
 				serverPlayer.menuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), MENU::open,
-								false) {
+						() -> new SingleMenuRequest(false, CreationMenus.getParticleEffectMenu(serverPlayer),
+								MENU::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

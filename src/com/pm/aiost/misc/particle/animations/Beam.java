@@ -131,7 +131,7 @@ public class Beam extends AnimationParticle {
 	@Override
 	public MenuRequest getAnimationMenuRequest(Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { () -> new NumberMenu(BOLD + "Choose range"), () -> new NumberMenu(BOLD + "Choose yaw"),
 						() -> new NumberMenu(BOLD + "Choose pitch") },
 

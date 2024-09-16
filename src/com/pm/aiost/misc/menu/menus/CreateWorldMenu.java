@@ -94,7 +94,7 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 
 			case ENVIRONMENT_SLOT:
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.ENVIRONMENT_MENU, CreateWorldMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.ENVIRONMENT_MENU, CreateWorldMenu.this::open) {
 
 							@Override
 							protected void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -105,7 +105,7 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 
 			case TYPE_SLOT:
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.WORLD_TYPE_MENU, CreateWorldMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.WORLD_TYPE_MENU, CreateWorldMenu.this::open) {
 
 							@Override
 							protected void onResult(ServerPlayer serverPlayer, Object obj) {

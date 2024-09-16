@@ -65,8 +65,8 @@ public class PlayerWorldSpawnDecoMenu {
 
 		case ARMOR_STAND:
 			serverPlayer.menuRequest(MENU,
-					() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new),
-							PlayerWorldSpawnDecoMenu.MENU::open, false) {
+					() -> new SingleMenuRequest(false,
+							serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new), PlayerWorldSpawnDecoMenu.MENU::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -77,8 +77,8 @@ public class PlayerWorldSpawnDecoMenu {
 
 		case ZOMBIE_HEAD:
 			serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-					() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, PlayerWorldSpawnDecoMenu.MENU::open,
-							false) {
+					() -> new SingleMenuRequest(false, EnumerationMenus.ENTITY_TYPE_MENU,
+							PlayerWorldSpawnDecoMenu.MENU::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -91,8 +91,8 @@ public class PlayerWorldSpawnDecoMenu {
 			ClickType click = event.getClick();
 			if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
 				serverPlayer.menuRequest(PLAYER_PROFILE_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(EnumerationMenus.GAME_RPOFILES_MENU,
-								PlayerWorldSpawnDecoMenu.MENU::open, false) {
+						() -> new SingleMenuRequest(false,
+								EnumerationMenus.GAME_RPOFILES_MENU, PlayerWorldSpawnDecoMenu.MENU::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -104,8 +104,8 @@ public class PlayerWorldSpawnDecoMenu {
 			break;
 
 		case STONE:
-			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(EnumerationMenus.BLOCK_MENU,
-					PlayerWorldSpawnDecoMenu.MENU::open, false) {
+			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(false,
+					EnumerationMenus.BLOCK_MENU, PlayerWorldSpawnDecoMenu.MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {

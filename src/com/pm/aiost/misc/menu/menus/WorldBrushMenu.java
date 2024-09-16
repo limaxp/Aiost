@@ -57,7 +57,7 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 				setType(Material.AIR);
 			else if (click == ClickType.LEFT)
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldBrushMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.BLOCK_MENU, WorldBrushMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -65,8 +65,8 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 							}
 						});
 			else if (click == ClickType.RIGHT)
-				serverPlayer.menuRequest(this, () -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
-						WorldBrushMenu.this::open, false) {
+				serverPlayer.menuRequest(this, () -> new SingleMenuRequest(false,
+						new SearchBlockMenu(BOLD + "Search block"), WorldBrushMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -80,7 +80,7 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 				setType2(Material.AIR);
 			else if (click == ClickType.LEFT)
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(EnumerationMenus.BLOCK_MENU, WorldBrushMenu.this::open, false) {
+						new SingleMenuRequest(false, EnumerationMenus.BLOCK_MENU, WorldBrushMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -88,8 +88,8 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 							}
 						});
 			else if (click == ClickType.RIGHT)
-				serverPlayer.menuRequest(this, () -> new SingleMenuRequest(new SearchBlockMenu(BOLD + "Search block"),
-						WorldBrushMenu.this::open, false) {
+				serverPlayer.menuRequest(this, () -> new SingleMenuRequest(false,
+						new SearchBlockMenu(BOLD + "Search block"), WorldBrushMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -100,7 +100,7 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 
 		case 12:
 			serverPlayer
-					.menuRequest(new SingleMenuRequest(EnumerationMenus.BRUSH_MENU, WorldBrushMenu.this::open, false) {
+					.menuRequest(new SingleMenuRequest(false, EnumerationMenus.BRUSH_MENU, WorldBrushMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -111,7 +111,7 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 
 		case 13:
 			serverPlayer.menuRequest(
-					new SingleMenuRequest(EnumerationMenus.BRUSH_MODE_MENU, WorldBrushMenu.this::open, false) {
+					new SingleMenuRequest(false, EnumerationMenus.BRUSH_MODE_MENU, WorldBrushMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -123,8 +123,8 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 		case 14:
 			if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
 				serverPlayer.menuRequest(
-						new SingleMenuRequest(TextMenu.createNumber(BOLD + "Choose radius", effect.getData().xRadius),
-								WorldBrushMenu.this::open, false) {
+						new SingleMenuRequest(false,
+								TextMenu.createNumber(BOLD + "Choose radius", effect.getData().xRadius), WorldBrushMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -133,8 +133,8 @@ public class WorldBrushMenu extends SingleInventoryMenu {
 						});
 			else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
 				serverPlayer
-						.menuRequest(new SingleMenuRequest(new XYZMenu(BOLD + "Choose radius", effect.getData().xRadius,
-								effect.getData().yRadius, effect.getData().zRadius), WorldBrushMenu.this::open, false) {
+						.menuRequest(new SingleMenuRequest(false, new XYZMenu(BOLD + "Choose radius", effect.getData().xRadius,
+										effect.getData().yRadius, effect.getData().zRadius), WorldBrushMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

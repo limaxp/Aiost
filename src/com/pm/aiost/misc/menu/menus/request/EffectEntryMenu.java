@@ -54,8 +54,8 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 			case RED_BANNER:
 				ClickType clickType = event.getClick();
 				if (clickType == ClickType.LEFT || clickType == ClickType.RIGHT)
-					serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
-							EffectEntryMenu.this::open, false) {
+					serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(false,
+							EnumerationMenus.EFFECT_TYPE_MENU, EffectEntryMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -67,8 +67,8 @@ public class EffectEntryMenu extends SingleInventoryMenu {
 				break;
 
 			case BLACK_BANNER:
-				serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(EnumerationMenus.EFFECT_TYPE_MENU,
-						EffectEntryMenu.this::open, false) {
+				serverPlayer.menuRequest(effects, () -> new SingleMenuRequest(false,
+						EnumerationMenus.EFFECT_TYPE_MENU, EffectEntryMenu.this::open) {
 
 					@Override
 					public void onResult(ServerPlayer serverPlayer, Object obj) {

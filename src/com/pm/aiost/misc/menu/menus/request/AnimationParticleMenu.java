@@ -67,8 +67,8 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 	private void particleItemClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.menuRequest(CHOOSE_PARTICLE, () -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU,
-					AnimationParticleMenu.this::open, false) {
+			serverPlayer.menuRequest(CHOOSE_PARTICLE, () -> new SingleMenuRequest(false,
+					EnumerationMenus.PARTICLE_EFFECT_MENU, AnimationParticleMenu.this::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -77,8 +77,8 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 			});
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
 			serverPlayer.menuRequest(particle,
-					() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),
-							AnimationParticleMenu.this::open, false) {
+					() -> new SingleMenuRequest(false,
+							CreationMenus.getParticleEffectMenu(serverPlayer), AnimationParticleMenu.this::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

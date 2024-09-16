@@ -98,7 +98,7 @@ public class TimedAuraEffect extends AuraEffect {
 	@Override
 	public MenuRequest getMenuRequest(ServerPlayer serverPlayer, Consumer<ServerPlayer> requestConsumer,
 			Consumer<ServerPlayer> targetConsumer) {
-		return new MultiMenuRequest(requestConsumer, targetConsumer, false,
+		return new MultiMenuRequest(false, requestConsumer, targetConsumer,
 				new Supplier[] { ChooseParticleMenu::getMenu, () -> CreationMenus.getEffectMenu(serverPlayer),
 						() -> new NumberMenu(BOLD + "Choose range"), () -> new NumberMenu(BOLD + "Choose duration") },
 				new Consumer[] { (particle) -> this.particle = (IParticle) particle,

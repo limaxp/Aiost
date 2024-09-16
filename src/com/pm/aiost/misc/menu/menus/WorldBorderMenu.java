@@ -63,7 +63,7 @@ public class WorldBorderMenu {
 				border.setCenter(player.getLocation());
 			else if (event.getClick() == ClickType.RIGHT)
 				serverPlayer.menuRequest(MENU,
-						() -> new SingleMenuRequest(new LocationMenu(border.getCenter()), MENU::open, false) {
+						() -> new SingleMenuRequest(false, new LocationMenu(border.getCenter()), MENU::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {

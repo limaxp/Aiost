@@ -53,7 +53,7 @@ public class PlayerWorldItemMenu {
 		switch (is.getType()) {
 
 		case BLAZE_ROD:
-			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(CustomItemMenu.getMenu(), MENU::open, true) {
+			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(true, CustomItemMenu.getMenu(), MENU::open) {
 
 				@Override
 				public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -66,7 +66,7 @@ public class PlayerWorldItemMenu {
 			CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
 					CreateItemMenu::new);
 			serverPlayer.menuRequest(PlayerWorldItemMenu.class,
-					() -> new SingleMenuRequest(createItemMenu, MENU::open, false) {
+					() -> new SingleMenuRequest(false, createItemMenu, MENU::open) {
 
 						@Override
 						public void onResult(ServerPlayer serverPlayer, Object obj) {

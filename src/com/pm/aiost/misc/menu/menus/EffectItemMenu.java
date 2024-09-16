@@ -131,7 +131,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 						CreateItemMenu::new);
 				createItemMenu.setItem(item);
 				serverPlayer.menuRequest(EFFECT_BLOCK_SYMBOL,
-						() -> new SingleMenuRequest(createItemMenu, EffectItemMenu.this::open, false) {
+						() -> new SingleMenuRequest(false, createItemMenu, EffectItemMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -148,8 +148,8 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			case BLACK_BANNER:
 				currentSlot = event.getSlot();
 				serverPlayer.menuRequest(NUMBER_1_SYMBOL,
-						() -> new SingleMenuRequest(CreationMenus.getEffectMenu(serverPlayer),
-								EffectItemMenu.this::open, false) {
+						() -> new SingleMenuRequest(false,
+								CreationMenus.getEffectMenu(serverPlayer), EffectItemMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -162,8 +162,8 @@ public class EffectItemMenu extends SingleInventoryMenu {
 				currentSlot = event.getSlot();
 				if (blockMode)
 					serverPlayer.menuRequest(BLOCK_EFFECT_SYMBOL,
-							() -> new SingleMenuRequest(CreationMenus.getTileObjectMenu(serverPlayer),
-									EffectItemMenu.this::open, false) {
+							() -> new SingleMenuRequest(false,
+									CreationMenus.getTileObjectMenu(serverPlayer), EffectItemMenu.this::open) {
 
 								@Override
 								public void onResult(ServerPlayer serverPlayer, Object obj) {
@@ -177,9 +177,9 @@ public class EffectItemMenu extends SingleInventoryMenu {
 			case WRITABLE_BOOK:
 				serverPlayer.menuRequest(CHOOSE_EFFECT_SYMBOL,
 						() -> new SingleMenuRequest(
+								false,
 								serverPlayer.getServerWorld().getOrCreateMenu(WorldEffectsMenu.class,
-										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())),
-								EffectItemMenu.this::open, false) {
+										() -> new WorldEffectsMenu(serverPlayer.getServerWorld())), EffectItemMenu.this::open) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
