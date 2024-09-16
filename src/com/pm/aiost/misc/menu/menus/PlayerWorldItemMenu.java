@@ -93,22 +93,17 @@ public class PlayerWorldItemMenu {
 	}
 
 	private static AnvilMenu createPlayerNameHeadMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					ItemStack head = PlayerHead.create(event.getCurrentItem().getItemMeta().getDisplayName());
-					HashMap<Integer, ItemStack> result = serverPlayer.player.getInventory().addItem(head);
-					if (!result.isEmpty()) {
-						Location loc = serverPlayer.player.getLocation();
-						loc.getWorld().dropItem(loc, head);
-					}
-					MENU.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(MENU);
+		menu.setClickCallback((serverPlayer, event) -> {
+			ItemStack head = PlayerHead.create(event.getCurrentItem().getItemMeta().getDisplayName());
+			HashMap<Integer, ItemStack> result = serverPlayer.player.getInventory().addItem(head);
+			if (!result.isEmpty()) {
+				Location loc = serverPlayer.player.getLocation();
+				loc.getWorld().dropItem(loc, head);
+			}
+			MENU.open(serverPlayer);
+		});
 		return menu;
 	}
 }

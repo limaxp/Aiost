@@ -89,18 +89,12 @@ public class PartyMenu extends SingleInventoryMenu {
 	}
 
 	private AnvilMenu createPartyInviteMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Invite player", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					ServerRequest.getHandler().inviteParty(serverPlayer,
-							event.getCurrentItem().getItemMeta().getDisplayName());
-					PartyMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Invite player", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			ServerRequest.getHandler().inviteParty(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName());
+			PartyMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

@@ -118,27 +118,21 @@ public class EnchantmentsMenu extends SingleInventoryMenu {
 
 	private AnvilMenu createLevelMenu(InventoryClickEvent lastEvent) {
 		Enchantment ench = list.get(getIndex(lastEvent));
-		AnvilMenu menu = new AnvilMenu(BOLD + "Enchantment Level", MetaHelper.setMeta(Material.PAPER, "_")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() != 2)
-					return;
-				int level;
-				try {
-					level = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
-				} catch (NumberFormatException e) {
-					serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-					return;
-				}
-
-				MetaHelper.setMeta(lastEvent.getCurrentItem(),
-						GRAY + BOLD + ench.getName().toLowerCase() + ' ' + level);
-				enchantments.replace(ench, level);
-				EnchantmentsMenu.this.open(serverPlayer);
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Enchantment Level", MetaHelper.setMeta(Material.PAPER, "_"));
 		menu.setBackLink(EnchantmentsMenu.this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			int level;
+			try {
+				level = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+
+			MetaHelper.setMeta(lastEvent.getCurrentItem(), GRAY + BOLD + ench.getName().toLowerCase() + ' ' + level);
+			enchantments.replace(ench, level);
+			EnchantmentsMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

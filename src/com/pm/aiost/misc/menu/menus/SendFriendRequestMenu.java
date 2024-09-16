@@ -95,17 +95,12 @@ public class SendFriendRequestMenu extends ViewInventoryMenu {
 	}
 
 	private AnvilMenu createFriendRequestMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name") {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					FriendHandler.sendRequest(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName());
-					SendFriendRequestMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name");
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			FriendHandler.sendRequest(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName());
+			SendFriendRequestMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

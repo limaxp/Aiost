@@ -125,7 +125,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 
 									@Override
 									public void onResult(ServerPlayer serverPlayer, Object obj) {
-										openReleaseWorldNameMenu(serverPlayer, (GameType<?>) obj);
+										releaseWorldNameMenu((GameType<?>) obj).open(serverPlayer);
 									}
 								});
 					}
@@ -142,26 +142,20 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 		}
 	}
 
-	private void openReleaseWorldNameMenu(ServerPlayer serverPlayer, GameType<?> type) {
+	private AnvilMenu releaseWorldNameMenu(GameType<?> type) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name",
-				MetaHelper.setMeta(Material.PAPER, handler.getName() + "_")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					String name = event.getCurrentItem().getItemMeta().getDisplayName();
-					if (!WordFilter.containsBlocked(name))
-						releaseWorld(serverPlayer, name, type);
-					else {
-						displayInSlot(PlayerWorldControlMenu.this.getInventory(), FORBIDDEN_NAME_ITEM, RELEASE_SLOT,
-								100);
-						PlayerWorldControlMenu.this.open(serverPlayer);
-					}
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, handler.getName() + "_"));
 		menu.setBackLink(this);
-		menu.open(serverPlayer);
+		menu.setClickCallback((serverPlayer, event) -> {
+			String name = event.getCurrentItem().getItemMeta().getDisplayName();
+			if (!WordFilter.containsBlocked(name))
+				releaseWorld(serverPlayer, name, type);
+			else {
+				displayInSlot(PlayerWorldControlMenu.this.getInventory(), FORBIDDEN_NAME_ITEM, RELEASE_SLOT, 100);
+				PlayerWorldControlMenu.this.open(serverPlayer);
+			}
+		});
+		return menu;
 	}
 
 	private void releaseWorld(ServerPlayer serverPlayer, String name, GameType<?> type) {

@@ -54,16 +54,10 @@ public class MarkerMenu {
 	}
 
 	private static AnvilMenu createCustomMarkerMenu(Inventory inv) {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					serverPlayer.setMenuRequestResult(event.getCurrentItem().getItemMeta().getDisplayName());
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(inv);
+		menu.setClickCallback((serverPlayer, event) -> serverPlayer
+				.setMenuRequestResult(event.getCurrentItem().getItemMeta().getDisplayName()));
 		return menu;
 	}
 }

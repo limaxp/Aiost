@@ -136,7 +136,7 @@ public class CreateItemMenu extends SingleInventoryMenu {
 				break;
 
 			case 20:
-				createChangeCustomModeldataMenu(serverPlayer).open(serverPlayer);
+				createChangeCustomModeldataMenu().open(serverPlayer);
 				break;
 
 			case 21:
@@ -224,17 +224,12 @@ public class CreateItemMenu extends SingleInventoryMenu {
 	}
 
 	private final AnvilMenu renameItemMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", item) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setItem(event.getCurrentItem());
-					CreateItemMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", item);
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setItem(event.getCurrentItem());
+			CreateItemMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 
@@ -284,33 +279,27 @@ public class CreateItemMenu extends SingleInventoryMenu {
 		InventoryMenu.displayInSlot(serverPlayer.player, clone, slot);
 	}
 
-	private AnvilMenu createChangeCustomModeldataMenu(ServerPlayer serverPlayer) {
+	private AnvilMenu createChangeCustomModeldataMenu() {
 		ItemMeta itemMeta = item.getItemMeta();
 		int customModelData = 0;
 		if (itemMeta.hasCustomModelData())
 			customModelData = itemMeta.getCustomModelData();
 
 		AnvilMenu menu = new AnvilMenu(BOLD + "custom modeldata",
-				MetaHelper.setMeta(Material.PAPER, Integer.toString(customModelData))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() != 2)
-					return;
-
-				int id;
-				try {
-					id = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
-				} catch (NumberFormatException e) {
-					serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-					return;
-				}
-				itemMeta.setCustomModelData(id);
-				item.setItemMeta(itemMeta);
-				CreateItemMenu.this.open(serverPlayer);
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, Integer.toString(customModelData)));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			int id;
+			try {
+				id = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+			itemMeta.setCustomModelData(id);
+			item.setItemMeta(itemMeta);
+			CreateItemMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 }

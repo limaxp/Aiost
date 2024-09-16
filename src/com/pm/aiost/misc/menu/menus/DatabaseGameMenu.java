@@ -15,7 +15,6 @@ import java.util.UUID;
 import org.bukkit.Material;
 import org.bukkit.World.Environment;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -26,7 +25,6 @@ import com.pm.aiost.misc.menu.AnvilMenu;
 import com.pm.aiost.misc.menu.menus.PlayerWorldMenu.PlayerWorldData;
 import com.pm.aiost.misc.registry.AiostRegistry;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
-import com.pm.aiost.player.ServerPlayer;
 import com.pm.aiost.world.EnvironmentHelper;
 
 public abstract interface DatabaseGameMenu {
@@ -145,22 +143,17 @@ public abstract interface DatabaseGameMenu {
 	public default AnvilMenu createNameMenu(Inventory inv) {
 		String gameName = getGameName();
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name",
-				MetaHelper.setMeta(Material.PAPER, gameName == null ? "name" : gameName)) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					String text = event.getCurrentItem().getItemMeta().getDisplayName();
-					if (text.isEmpty())
-						setGameName(null);
-					else
-						setGameName(text);
-					serverPlayer.player.openInventory(inv);
-					resetMenu(inv);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, gameName == null ? "name" : gameName));
 		menu.setBackLink(inv);
+		menu.setClickCallback((serverPlayer, event) -> {
+			String text = event.getCurrentItem().getItemMeta().getDisplayName();
+			if (text.isEmpty())
+				setGameName(null);
+			else
+				setGameName(text);
+			serverPlayer.player.openInventory(inv);
+			resetMenu(inv);
+		});
 		return menu;
 	}
 

@@ -153,39 +153,30 @@ public class GamesMenu extends ViewInventoryMenu implements DatabaseGameMenu {
 
 	public AnvilMenu createAuthorNameMenu(Inventory inv) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose author",
-				MetaHelper.setMeta(Material.PAPER, authorName == null ? "name" : authorName)) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					String text = event.getCurrentItem().getItemMeta().getDisplayName();
-					if (text.isEmpty())
-						authorName = null;
-					else
-						authorName = text;
-					serverPlayer.player.openInventory(inv);
-					resetMenu(inv);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, authorName == null ? "name" : authorName));
 		menu.setBackLink(inv);
+		menu.setClickCallback((serverPlayer, event) -> {
+			String text = event.getCurrentItem().getItemMeta().getDisplayName();
+			if (text.isEmpty())
+				authorName = null;
+			else
+				authorName = text;
+			serverPlayer.player.openInventory(inv);
+			resetMenu(inv);
+
+		});
 		return menu;
 	}
 
 	public AnvilMenu createUUIDMenu(Inventory inv) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose id",
-				MetaHelper.setMeta(Material.PAPER, uuid == null ? "id" : uuid.toString())) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					uuid = event.getCurrentItem().getItemMeta().getDisplayName();
-					serverPlayer.player.openInventory(inv);
-					resetMenu(inv);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, uuid == null ? "id" : uuid.toString()));
 		menu.setBackLink(inv);
+		menu.setClickCallback((serverPlayer, event) -> {
+			uuid = event.getCurrentItem().getItemMeta().getDisplayName();
+			serverPlayer.player.openInventory(inv);
+			resetMenu(inv);
+		});
 		return menu;
 	}
 

@@ -88,24 +88,19 @@ public class WorldSettingMenu {
 	}
 
 	private static AnvilMenu createChangeTimeMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Time", MetaHelper.setMeta(Material.PAPER, "time")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					int time;
-					try {
-						time = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
-					} catch (NumberFormatException e) {
-						serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-						return;
-					}
-					serverPlayer.player.getWorld().setTime(time);
-					MENU.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Time", MetaHelper.setMeta(Material.PAPER, "time"));
 		menu.setBackLink(MENU);
+		menu.setClickCallback((serverPlayer, event) -> {
+			int time;
+			try {
+				time = Integer.parseInt(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+			serverPlayer.player.getWorld().setTime(time);
+			MENU.open(serverPlayer);
+		});
 		return menu;
 	}
 

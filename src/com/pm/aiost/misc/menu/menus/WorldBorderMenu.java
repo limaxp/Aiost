@@ -91,47 +91,37 @@ public class WorldBorderMenu {
 
 	private static AnvilMenu createChangeSizeMenu(WorldBorder border) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Border size",
-				MetaHelper.setMeta(Material.PAPER, Double.toString(border.getSize()))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					double size;
-					try {
-						size = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
-					} catch (NumberFormatException e) {
-						serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-						return;
-					}
-					border.setSize(size);
-					MENU.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, Double.toString(border.getSize())));
 		menu.setBackLink(MENU);
+		menu.setClickCallback((serverPlayer, event) -> {
+			double size;
+			try {
+				size = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+			border.setSize(size);
+			MENU.open(serverPlayer);
+		});
 		return menu;
 	}
 
 	private static AnvilMenu createChangeDamageMenu(WorldBorder border) {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Border damage",
-				MetaHelper.setMeta(Material.PAPER, Double.toString(border.getDamageAmount()))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					double size;
-					try {
-						size = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
-					} catch (NumberFormatException e) {
-						serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-						return;
-					}
-					border.setDamageAmount(size);
-					MENU.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, Double.toString(border.getDamageAmount())));
 		menu.setBackLink(MENU);
+		menu.setClickCallback((serverPlayer, event) -> {
+			double size;
+			try {
+				size = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+			border.setDamageAmount(size);
+			MENU.open(serverPlayer);
+		});
 		return menu;
 	}
 }

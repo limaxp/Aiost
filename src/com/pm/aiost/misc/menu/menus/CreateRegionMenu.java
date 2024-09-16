@@ -154,17 +154,12 @@ public class CreateRegionMenu extends SingleInventoryMenu {
 
 	private AnvilMenu renameRegionMenu() {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose region name",
-				MetaHelper.setMeta(Material.PAPER, name == null ? "name" : name)) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setName(event.getCurrentItem().getItemMeta().getDisplayName());
-					CreateRegionMenu.this.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, name == null ? "name" : name));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setName(event.getCurrentItem().getItemMeta().getDisplayName());
+			CreateRegionMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

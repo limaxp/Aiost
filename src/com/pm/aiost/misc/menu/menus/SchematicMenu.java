@@ -23,7 +23,7 @@ import com.pm.aiost.misc.utils.worldEdit.SchematicFileLoader;
 import com.pm.aiost.player.ServerPlayer;
 
 public class SchematicMenu extends SingleInventoryMenu {
-	
+
 	// TODO make schematics work!
 
 	private static final ItemStack NO_SAVED_SCHEMATIC_ITEM = MetaHelper.setMeta(Material.BARRIER,
@@ -85,17 +85,12 @@ public class SchematicMenu extends SingleInventoryMenu {
 	}
 
 	private AnvilMenu saveSchematicMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					saveSchematic(event.getCurrentItem().getItemMeta().getDisplayName());
-					SchematicMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			saveSchematic(event.getCurrentItem().getItemMeta().getDisplayName());
+			SchematicMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 
@@ -105,18 +100,12 @@ public class SchematicMenu extends SingleInventoryMenu {
 	}
 
 	private AnvilMenu loadSchematicMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					loadSchematic(event.getCurrentItem().getItemMeta().getDisplayName(),
-							serverPlayer.player.getLocation());
-					SchematicMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			loadSchematic(event.getCurrentItem().getItemMeta().getDisplayName(), serverPlayer.player.getLocation());
+			SchematicMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

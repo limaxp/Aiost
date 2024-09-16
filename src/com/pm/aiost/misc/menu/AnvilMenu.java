@@ -5,6 +5,7 @@ import static com.pm.aiost.misc.utils.ChatColor.GRAY;
 import static com.pm.aiost.misc.utils.ChatColor.RED;
 
 import java.util.Arrays;
+import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 import org.bukkit.Material;
@@ -32,7 +33,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.inventory.ContainerLevelAccess;
 
-public abstract class AnvilMenu implements Menu, InventoryEventHandler, InventoryHolder {
+public class AnvilMenu implements Menu, InventoryEventHandler, InventoryHolder {
 
 	private static final ItemStack BACK_ITEM = MetaHelper.setMeta(new ItemStack(Material.BARRIER),
 			RED + BOLD + "Cancel", Arrays.asList(GRAY + "Click to go back to previous menu"));
@@ -41,6 +42,7 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 	private ItemStack first;
 	private ItemStack second;
 	private Consumer<ServerPlayer> backLink;
+	private BiConsumer<ServerPlayer, InventoryClickEvent> clickCallback;
 
 	public AnvilMenu(String name) {
 		this(name, new ItemStack(Material.PAPER), Items.AIR);
@@ -64,8 +66,6 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 		this.second = second;
 		backLink = DEFAULT_BACK_LINK;
 	}
-
-	protected abstract void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event);
 
 	@Override
 	public void open(ServerPlayer serverPlayer) {
@@ -104,7 +104,7 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 	}
 
 	@Override
-	public void onInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
+	public final void onInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		playClickSound((Player) event.getWhoClicked());
 		int slot = event.getSlot();
 		if (slot == -999) {
@@ -115,6 +115,20 @@ public abstract class AnvilMenu implements Menu, InventoryEventHandler, Inventor
 			return;
 		}
 		inventoryClickCallback(serverPlayer, event);
+	}
+
+	protected void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
+		event.setCancelled(true);
+		if (event.getSlot() == 2)
+			clickCallback.accept(serverPlayer, event);
+	}
+
+	public void setClickCallback(BiConsumer<ServerPlayer, InventoryClickEvent> clickCallback) {
+		this.clickCallback = clickCallback;
+	}
+
+	public BiConsumer<ServerPlayer, InventoryClickEvent> getClickCallback() {
+		return clickCallback;
 	}
 
 	public void openBackLink(ServerPlayer serverPlayer) {

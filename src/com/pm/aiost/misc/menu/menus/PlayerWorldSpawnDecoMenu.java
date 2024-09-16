@@ -120,18 +120,13 @@ public class PlayerWorldSpawnDecoMenu {
 	}
 
 	private static AnvilMenu createPlayerNameMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					spawnPlayer(serverPlayer,
-							ProfileFetcher.fetch(event.getCurrentItem().getItemMeta().getDisplayName(), false));
-					PlayerWorldSpawnDecoMenu.MENU.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Choose name", MetaHelper.setMeta(Material.PAPER, "name"));
 		menu.setBackLink(PlayerWorldSpawnDecoMenu.MENU);
+		menu.setClickCallback((serverPlayer, event) -> {
+			spawnPlayer(serverPlayer,
+					ProfileFetcher.fetch(event.getCurrentItem().getItemMeta().getDisplayName(), false));
+			PlayerWorldSpawnDecoMenu.MENU.open(serverPlayer);
+		});
 		return menu;
 	}
 

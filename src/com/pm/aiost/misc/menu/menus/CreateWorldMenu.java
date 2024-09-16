@@ -138,17 +138,12 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 
 	private AnvilMenu renameWorldMenu() {
 		AnvilMenu menu = new AnvilMenu(BOLD + "Choose world name",
-				MetaHelper.setMeta(Material.PAPER, name == null ? "name" : name)) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setName(event.getCurrentItem().getItemMeta().getDisplayName());
-					CreateWorldMenu.this.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, name == null ? "name" : name));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setName(event.getCurrentItem().getItemMeta().getDisplayName());
+			CreateWorldMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

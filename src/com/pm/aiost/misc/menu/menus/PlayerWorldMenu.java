@@ -131,24 +131,19 @@ public class PlayerWorldMenu extends ListInventoryMenu {
 
 	private AnvilMenu renameWorldMenu(ItemStack is, int dataIndex, Inventory inv) {
 		PlayerWorldData data = dataList.get(dataIndex);
-		AnvilMenu menu = new AnvilMenu(BOLD + "Rename world", MetaHelper.setMeta(Material.PAPER, data.name)) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					String newName = event.getCurrentItem().getItemMeta().getDisplayName();
-					if (!WordFilter.containsBlocked(newName)) {
-						WorldLoader.renamePlayerWorld(serverPlayer, data.uuid, newName, false);
-						ItemMeta im = is.getItemMeta();
-						im.setDisplayName(newName);
-						is.setItemMeta(im);
-					} else
-						serverPlayer.player.sendMessage(RED + BOLD + "The given name is not allowed!");
-					serverPlayer.player.openInventory(inv);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Rename world", MetaHelper.setMeta(Material.PAPER, data.name));
 		menu.setBackLink(inv);
+		menu.setClickCallback((serverPlayer, event) -> {
+			String newName = event.getCurrentItem().getItemMeta().getDisplayName();
+			if (!WordFilter.containsBlocked(newName)) {
+				WorldLoader.renamePlayerWorld(serverPlayer, data.uuid, newName, false);
+				ItemMeta im = is.getItemMeta();
+				im.setDisplayName(newName);
+				is.setItemMeta(im);
+			} else
+				serverPlayer.player.sendMessage(RED + BOLD + "The given name is not allowed!");
+			serverPlayer.player.openInventory(inv);
+		});
 		return menu;
 	}
 

@@ -76,7 +76,7 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 			}
 			ClickType click = event.getClick();
 			if (click == ClickType.LEFT)
-				createValueMenu(serverPlayer, is, index).open(serverPlayer);
+				createValueMenu(is, index).open(serverPlayer);
 			if (click == ClickType.RIGHT)
 				changeSlotClick(serverPlayer, is, index, event);
 			if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
@@ -101,33 +101,28 @@ public class ItemAttributeModifierMenu extends ArrayInventoryMenu {
 		serverPlayer.player.sendMessage(RED + "Cannot add more attributes!");
 	}
 
-	private AnvilMenu createValueMenu(ServerPlayer serverPlayer, ItemStack is, int attributeId) {
+	private AnvilMenu createValueMenu(ItemStack is, int attributeId) {
 		ItemMeta im = is.getItemMeta();
 		List<String> lore = im.getLore();
 		AnvilMenu menu = new AnvilMenu(BOLD + "Attribute value",
-				MetaHelper.setMeta(Material.PAPER, lore.get(1).substring(2))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					double value;
-					try {
-						value = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
-					} catch (NumberFormatException e) {
-						serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
-						return;
-					}
-					GenericAttribute attribute = GenericAttribute.get(attributeId);
-					ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifier(getList(nbtTag),
-							attribute.name, lore.get(0).substring(2), value));
-					lore.set(1, DARK_GRAY + value);
-					im.setLore(lore);
-					is.setItemMeta(im);
-					ItemAttributeModifierMenu.this.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, lore.get(1).substring(2)));
 		menu.setBackLink(ItemAttributeModifierMenu.this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			double value;
+			try {
+				value = Double.parseDouble(event.getCurrentItem().getItemMeta().getDisplayName());
+			} catch (NumberFormatException e) {
+				serverPlayer.player.sendMessage(ChatColor.RED + "Your input must be a number!");
+				return;
+			}
+			GenericAttribute attribute = GenericAttribute.get(attributeId);
+			ItemHideFlagsMenu.modifyNBT(serverPlayer, (nbtTag) -> NBT.setAttributeModifier(getList(nbtTag),
+					attribute.name, lore.get(0).substring(2), value));
+			lore.set(1, DARK_GRAY + value);
+			im.setLore(lore);
+			is.setItemMeta(im);
+			ItemAttributeModifierMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

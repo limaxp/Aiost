@@ -109,17 +109,12 @@ public class CreateTextMenu extends SingleInventoryMenu {
 	private AnvilMenu createSetLineMenu(int slot) {
 		int index = InventoryMenu.convertSlotToIndex(slot);
 		AnvilMenu menu = new AnvilMenu(BOLD + "Set line " + (index + 1),
-				MetaHelper.setMeta(Material.PAPER, index < texts.size() ? texts.get(index) : "text")) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setText(slot, index, event.getCurrentItem().getItemMeta().getDisplayName());
-					CreateTextMenu.this.open(serverPlayer);
-				}
-			}
-		};
+				MetaHelper.setMeta(Material.PAPER, index < texts.size() ? texts.get(index) : "text"));
 		menu.setBackLink(this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setText(slot, index, event.getCurrentItem().getItemMeta().getDisplayName());
+			CreateTextMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 

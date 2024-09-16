@@ -77,50 +77,35 @@ public class LocationMenu extends SingleInventoryMenu {
 	}
 
 	private AnvilMenu createChangeXMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "X", MetaHelper.setMeta(Material.PAPER, Double.toString(x))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setX(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
-							serverPlayer.player.getLocation().getX()));
-					LocationMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "X", MetaHelper.setMeta(Material.PAPER, Double.toString(x)));
 		menu.setBackLink(LocationMenu.this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setX(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
+					serverPlayer.player.getLocation().getX()));
+			LocationMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 
 	private AnvilMenu createChangeYMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Y", MetaHelper.setMeta(Material.PAPER, Double.toString(y))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setY(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
-							serverPlayer.player.getLocation().getY()));
-					LocationMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Y", MetaHelper.setMeta(Material.PAPER, Double.toString(y)));
 		menu.setBackLink(LocationMenu.this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setY(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
+					serverPlayer.player.getLocation().getY()));
+			LocationMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 
 	private AnvilMenu createChangeZMenu() {
-		AnvilMenu menu = new AnvilMenu(BOLD + "Z", MetaHelper.setMeta(Material.PAPER, Double.toString(z))) {
-			@Override
-			public void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-				event.setCancelled(true);
-				if (event.getSlot() == 2) {
-					setZ(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
-							serverPlayer.player.getLocation().getZ()));
-					LocationMenu.this.open(serverPlayer);
-				}
-			}
-		};
+		AnvilMenu menu = new AnvilMenu(BOLD + "Z", MetaHelper.setMeta(Material.PAPER, Double.toString(z)));
 		menu.setBackLink(LocationMenu.this);
+		menu.setClickCallback((serverPlayer, event) -> {
+			setZ(parseCoordinate(serverPlayer, event.getCurrentItem().getItemMeta().getDisplayName(),
+					serverPlayer.player.getLocation().getZ()));
+			LocationMenu.this.open(serverPlayer);
+		});
 		return menu;
 	}
 
