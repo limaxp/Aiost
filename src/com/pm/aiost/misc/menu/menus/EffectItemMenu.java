@@ -117,7 +117,7 @@ public class EffectItemMenu extends SingleInventoryMenu {
 	private void initMenu() {
 		set(ITEMS);
 		addBorderItems(new int[] { 0, 9, 17 }, CHOOSE_EFFECT_SYMBOL, BLOCK_EFFECT_SYMBOL, EFFECT_BLOCK_SYMBOL);
-		setBackLink(PlayerWorldItemMenu.getMenu());
+		setBackLink(PlayerWorldItemMenu.MENU);
 	}
 
 	@Override

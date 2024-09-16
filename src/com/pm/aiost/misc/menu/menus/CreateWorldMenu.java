@@ -83,7 +83,7 @@ public class CreateWorldMenu extends SingleInventoryMenu {
 	protected void initMenu() {
 		set(CHOOSE_ENVIRONMENT.clone(), CHOOSE_TYPE.clone(), CHOOSE_NAME.clone(), GENERATE_STRUCTURES_YES, null,
 				RESET_ITEM, ACCEPT_ITEM);
-		setBackLink(WorldMenu.getMenu());
+		setBackLink(WorldMenu.MENU);
 	}
 
 	@Override

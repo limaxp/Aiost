@@ -70,20 +70,14 @@ public class CustomItemMenu {
 	}
 
 	private static void mainMenuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		if (event.getCurrentItem() != null)
-			groupMenus[InventoryMenu.parseBorderedIndex(event.getView().getTitle(), event.getSlot())]
-					.open(serverPlayer);
+		groupMenus[InventoryMenu.parseBorderedIndex(event.getView().getTitle(), event.getSlot())].open(serverPlayer);
 	}
 
 	protected static void underMenuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem().clone();
-		if (is != null) {
-			if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)
-				is.setAmount(is.getMaxStackSize());
-			serverPlayer.setMenuRequestResult(is);
-		}
+		if (event.getClick() == ClickType.SHIFT_LEFT || event.getClick() == ClickType.SHIFT_RIGHT)
+			is.setAmount(is.getMaxStackSize());
+		serverPlayer.setMenuRequestResult(is);
 	}
 
 	public static InventoryMenu getMenu() {

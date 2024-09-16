@@ -62,7 +62,7 @@ public class WorldGameruleMenu extends LazyInventoryMenu {
 	public WorldGameruleMenu(ServerWorld serverWorld) {
 		super(BOLD + "Gamerules", GAME_RULES.length, true);
 		this.serverWorld = serverWorld;
-		setBackLink(WorldSettingMenu.getMenu());
+		setBackLink(WorldSettingMenu.MENU);
 	}
 
 	@Override

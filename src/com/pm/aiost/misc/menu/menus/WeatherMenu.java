@@ -21,7 +21,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 public class WeatherMenu {
 
-	private static InventoryMenu menu = createWeatherMenu();
+	public static final InventoryMenu MENU = createWeatherMenu();
 
 	private static InventoryMenu createWeatherMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Choose weather", 3, true);
@@ -36,36 +36,33 @@ public class WeatherMenu {
 				MetaHelper.setMeta(Material.GRAY_CONCRETE, GRAY + BOLD + "Strom",
 						Arrays.asList(GRAY + "Click to set weather to storm")));
 		menu.setClickCallback(WeatherMenu::menuClick);
-		menu.setBackLink(WorldSettingMenu.getMenu());
+		menu.setBackLink(WorldSettingMenu.MENU);
 		return menu;
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		if (event.getCurrentItem() != null) {
-			HumanEntity player = event.getWhoClicked();
-			World world = player.getWorld();
-			switch (event.getSlot()) {
+		HumanEntity player = event.getWhoClicked();
+		World world = player.getWorld();
+		switch (event.getSlot()) {
 
-			case 12:
-				world.setStorm(false);
-				world.setThundering(false);
-				player.sendMessage("Weather set to sunny");
-				break;
+		case 12:
+			world.setStorm(false);
+			world.setThundering(false);
+			player.sendMessage("Weather set to sunny");
+			break;
 
-			case 13:
-				world.setStorm(true);
-				player.sendMessage("Weather set to rain");
-				break;
+		case 13:
+			world.setStorm(true);
+			player.sendMessage("Weather set to rain");
+			break;
 
-			case 14:
-				world.setThundering(true);
-				player.sendMessage("Weather set to rain & thunder");
-				break;
+		case 14:
+			world.setThundering(true);
+			player.sendMessage("Weather set to rain & thunder");
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -85,9 +82,5 @@ public class WeatherMenu {
 			world.setStorm(true);
 			player.sendMessage("Weather set to rain");
 		}
-	}
-
-	public static InventoryMenu getMenu() {
-		return menu;
 	}
 }

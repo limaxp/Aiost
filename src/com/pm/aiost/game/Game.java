@@ -384,7 +384,7 @@ public abstract class Game implements AutoCloseable, IGameData, EventHandler {
 
 	protected void defeat(ServerPlayer serverPlayer) {
 		if (serverPlayer.getGameData().removeLive() < 1) {
-			GameRateMenu.getMenu().open(serverPlayer);
+			GameRateMenu.MENU.open(serverPlayer);
 			quit(serverPlayer);
 			setSpectator(serverPlayer);
 		}

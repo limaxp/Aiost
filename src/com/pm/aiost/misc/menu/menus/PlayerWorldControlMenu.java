@@ -83,12 +83,12 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 
 			case BLAZE_ROD:
 				if (canEdit(serverPlayer))
-					PlayerWorldItemMenu.getMenu().open(serverPlayer);
+					PlayerWorldItemMenu.MENU.open(serverPlayer);
 				break;
 
 			case ZOMBIE_HEAD:
 				if (canEdit(serverPlayer))
-					PlayerWorldSpawnMenu.getMenu().open(serverPlayer);
+					PlayerWorldSpawnMenu.MENU.open(serverPlayer);
 				break;
 
 			case FIREWORK_STAR:
@@ -106,7 +106,7 @@ public class PlayerWorldControlMenu extends SingleInventoryMenu {
 
 			case COMPARATOR:
 				if (isOwner(serverPlayer))
-					WorldSettingMenu.getMenu().open(serverPlayer);
+					WorldSettingMenu.MENU.open(serverPlayer);
 				break;
 
 			case WOODEN_AXE:

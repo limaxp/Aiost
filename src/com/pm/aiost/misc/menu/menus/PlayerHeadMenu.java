@@ -5,15 +5,12 @@ import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 import java.util.List;
 
 import org.bukkit.Bukkit;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.LazyInventoryMenu;
 import com.pm.aiost.misc.utils.PlayerHead;
-import com.pm.aiost.player.ServerPlayer;
 
 public class PlayerHeadMenu {
 
@@ -32,19 +29,8 @@ public class PlayerHeadMenu {
 				});
 			}
 		};
-		menu.setClickCallback(PlayerHeadMenu::menuClick);
-		menu.setBackLink(PlayerWorldItemMenu.getMenu());
+		menu.setClickCallback((serverPlayer, event) -> serverPlayer.addItem(event.getCurrentItem()));
+		menu.setBackLink(PlayerWorldItemMenu.MENU);
 		return menu;
-	}
-
-	protected static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null)
-			serverPlayer.addItem(is);
-	}
-
-	public static InventoryMenu getMenu() {
-		return MENU;
 	}
 }

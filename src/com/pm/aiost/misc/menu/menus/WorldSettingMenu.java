@@ -26,7 +26,7 @@ import com.pm.aiost.world.ServerWorld;
 
 public class WorldSettingMenu {
 
-	private static InventoryMenu menu = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Settings", 3, true);
@@ -51,42 +51,39 @@ public class WorldSettingMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		switch (is.getType()) {
 
-			case CLOCK:
-				if (event.getClick() == ClickType.LEFT)
-					switchTime(serverPlayer.player);
-				else if (event.getClick() == ClickType.RIGHT)
-					createChangeTimeMenu().open(serverPlayer);
-				break;
+		case CLOCK:
+			if (event.getClick() == ClickType.LEFT)
+				switchTime(serverPlayer.player);
+			else if (event.getClick() == ClickType.RIGHT)
+				createChangeTimeMenu().open(serverPlayer);
+			break;
 
-			case PRISMARINE_SHARD:
-				if (event.getClick() == ClickType.LEFT)
-					WeatherMenu.switchWeather(serverPlayer.player);
-				else if (event.getClick() == ClickType.RIGHT)
-					WeatherMenu.getMenu().open(serverPlayer);
-				break;
+		case PRISMARINE_SHARD:
+			if (event.getClick() == ClickType.LEFT)
+				WeatherMenu.switchWeather(serverPlayer.player);
+			else if (event.getClick() == ClickType.RIGHT)
+				WeatherMenu.MENU.open(serverPlayer);
+			break;
 
-			case BARRIER:
-				WorldBorderMenu.getMenu().open(serverPlayer);
-				break;
+		case BARRIER:
+			WorldBorderMenu.MENU.open(serverPlayer);
+			break;
 
-			case RED_BANNER:
-				setWorldSpawn(serverPlayer.player);
-				break;
+		case RED_BANNER:
+			setWorldSpawn(serverPlayer.player);
+			break;
 
-			case COMPARATOR:
-				ServerWorld serverWorld = serverPlayer.getServerWorld();
-				serverWorld.getOrCreateMenu(WorldGameruleMenu.class, () -> new WorldGameruleMenu(serverWorld))
-						.open(serverPlayer);
-				break;
+		case COMPARATOR:
+			ServerWorld serverWorld = serverPlayer.getServerWorld();
+			serverWorld.getOrCreateMenu(WorldGameruleMenu.class, () -> new WorldGameruleMenu(serverWorld))
+					.open(serverPlayer);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -104,11 +101,11 @@ public class WorldSettingMenu {
 						return;
 					}
 					serverPlayer.player.getWorld().setTime(time);
-					WorldSettingMenu.menu.open(serverPlayer);
+					MENU.open(serverPlayer);
 				}
 			}
 		};
-		menu.setBackLink(WorldSettingMenu.menu);
+		menu.setBackLink(MENU);
 		return menu;
 	}
 
@@ -136,9 +133,5 @@ public class WorldSettingMenu {
 		player.getWorld().setSpawnLocation(loc);
 		player.sendMessage(
 				"Set the world spawn point to " + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ());
-	}
-
-	public static InventoryMenu getMenu() {
-		return menu;
 	}
 }

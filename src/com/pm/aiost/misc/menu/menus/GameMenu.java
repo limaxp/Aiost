@@ -51,97 +51,88 @@ public class GameMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
-			case NETHER_STAR:
-				serverPlayer
-						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+		switch (is.getType()) {
+		case NETHER_STAR:
+			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
-							}
-						});
-				break;
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					GameJoinMenu.openMenu(serverPlayer, (GameType<?>) obj);
+				}
+			});
+			break;
 
-			case END_CRYSTAL:
-				serverPlayer
-						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+		case END_CRYSTAL:
+			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameType<?> type = (GameType<?>) obj;
-								serverPlayer.menuRequest(new SingleMenuRequest(
-										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
-										ServerPlayer::openMenuRequest, true) {
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					GameType<?> type = (GameType<?>) obj;
+					serverPlayer.menuRequest(
+							new SingleMenuRequest(serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
+									ServerPlayer::openMenuRequest, true) {
 
-									@Override
-									protected void onResult(ServerPlayer serverPlayer, Object obj) {
-										InventoryMenu menu = new GameStartMenu((GameData) obj);
-										menu.setBackLink(ServerPlayer::openMenuRequest);
-										menu.open(serverPlayer);
-									}
-								});
-							}
-						});
-				break;
+								@Override
+								protected void onResult(ServerPlayer serverPlayer, Object obj) {
+									InventoryMenu menu = new GameStartMenu((GameData) obj);
+									menu.setBackLink(ServerPlayer::openMenuRequest);
+									menu.open(serverPlayer);
+								}
+							});
+				}
+			});
+			break;
 
-			case DIAMOND:
-				serverPlayer
-						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+		case DIAMOND:
+			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameType<?> type = (GameType<?>) obj;
-								GameKitMenu menu = new GameKitMenu(BOLD + type.name + " kits", type.get().getKits()) {
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					GameType<?> type = (GameType<?>) obj;
+					GameKitMenu menu = new GameKitMenu(BOLD + type.name + " kits", type.get().getKits()) {
 
-									@Override
-									protected void kitInventoryClick(ServerPlayer serverPlayer,
-											InventoryClickEvent event) {
-										int index = InventoryMenu.parseBorderedIndex(event.getView().getTitle(),
-												event.getSlot());
-										buyKit(serverPlayer, type, event, index);
-									}
-								};
-								menu.setBackLink(ServerPlayer::openMenuRequest);
-								menu.open(serverPlayer);
-							}
-						});
-				break;
+						@Override
+						protected void kitInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
+							int index = InventoryMenu.parseBorderedIndex(event.getView().getTitle(), event.getSlot());
+							buyKit(serverPlayer, type, event, index);
+						}
+					};
+					menu.setBackLink(ServerPlayer::openMenuRequest);
+					menu.open(serverPlayer);
+				}
+			});
+			break;
 
-			case PAPER:
-				serverPlayer
-						.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
+		case PAPER:
+			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.GAME_TYPE_MENU, GameMenu.MENU::open, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								GameType<?> type = (GameType<?>) obj;
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					GameType<?> type = (GameType<?>) obj;
 
-								serverPlayer.menuRequest(new SingleMenuRequest(
-										serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
-										ServerPlayer::openMenuRequest, true) {
+					serverPlayer.menuRequest(
+							new SingleMenuRequest(serverPlayer.getOrCreateMenu(GamesMenu.class, GamesMenu::new, type),
+									ServerPlayer::openMenuRequest, true) {
 
-									@Override
-									protected void onResult(ServerPlayer serverPlayer, Object obj) {
-										GameData gameData = (GameData) obj;
-										InventoryMenu menu = new GameStatsMenu(gameData.uuid, gameData.name);
-										menu.setBackLink(ServerPlayer::openMenuRequest);
-										menu.open(serverPlayer);
-									}
-								});
-							}
-						});
-				break;
+								@Override
+								protected void onResult(ServerPlayer serverPlayer, Object obj) {
+									GameData gameData = (GameData) obj;
+									InventoryMenu menu = new GameStatsMenu(gameData.uuid, gameData.name);
+									menu.setBackLink(ServerPlayer::openMenuRequest);
+									menu.open(serverPlayer);
+								}
+							});
+				}
+			});
+			break;
 
-			case WRITTEN_BOOK:
+		case WRITTEN_BOOK:
 
-				break;
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 

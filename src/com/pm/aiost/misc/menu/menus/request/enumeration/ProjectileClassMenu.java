@@ -10,7 +10,6 @@ import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.entity.Projectile;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
@@ -38,14 +37,9 @@ public class ProjectileClassMenu {
 
 		InventoryMenu menu = new ArrayInventoryMenu(BOLD + "Choose projectile", size, true);
 		menu.set(itemStacks);
-		menu.setClickCallback(ProjectileClassMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
+		menu.setClickCallback((serverPlayer, event) -> serverPlayer
+				.setMenuRequestResult(ProjectileClass.get(InventoryMenu.convertSlotToIndex(event.getSlot()))));
 		return menu;
-	}
-
-	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		if (event.getCurrentItem() != null)
-			serverPlayer.setMenuRequestResult(ProjectileClass.get(InventoryMenu.convertSlotToIndex(event.getSlot())));
 	}
 }

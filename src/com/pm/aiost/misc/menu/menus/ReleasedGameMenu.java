@@ -42,7 +42,7 @@ public class ReleasedGameMenu extends ListInventoryMenu implements DatabaseGameM
 		super(BOLD + "Your released games", true);
 		this.serverPlayer = serverPlayer;
 		dataList = new ArrayList<GameData>();
-		setBackLink(WorldMenu.getMenu());
+		setBackLink(WorldMenu.MENU);
 	}
 
 	@Override

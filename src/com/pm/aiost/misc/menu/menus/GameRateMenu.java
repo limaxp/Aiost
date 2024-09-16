@@ -11,17 +11,15 @@ import static com.pm.aiost.misc.utils.ChatColor.YELLOW;
 import java.util.Arrays;
 
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
-import com.pm.aiost.player.ServerPlayer;
 
 public class GameRateMenu {
 
-	private static InventoryMenu menu = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Rate menu", 3, true);
@@ -39,20 +37,11 @@ public class GameRateMenu {
 
 				MetaHelper.setMeta(Material.GREEN_CONCRETE, GREEN + BOLD + "5",
 						Arrays.asList(GRAY + "Click to rate map")));
-		menu.setClickCallback(GameRateMenu::menuClick);
-		return menu;
-	}
 
-	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
+		menu.setClickCallback((serverPlayer, event) -> {
 			serverPlayer.getGameData().setRateValue(event.getSlot() - 10);
 			serverPlayer.player.closeInventory();
-		}
-	}
-
-	public static InventoryMenu getMenu() {
+		});
 		return menu;
 	}
 }

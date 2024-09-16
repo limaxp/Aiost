@@ -9,7 +9,6 @@ import java.util.Arrays;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
@@ -40,32 +39,28 @@ public class DataParticleMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
-			case STONE:
-				serverPlayer.menuRequest(MATERIAL_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(ItemMenu.getMenu(), menu::open, false) {
+		switch (event.getCurrentItem().getType()) {
+		case STONE:
+			serverPlayer.menuRequest(MATERIAL_MENU_IDENTIFIER,
+					() -> new SingleMenuRequest(ItemMenu.getMenu(), menu::open, false) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								setMaterial(serverPlayer, (Material) obj);
-							}
-						});
-				break;
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							setMaterial(serverPlayer, (Material) obj);
+						}
+					});
+			break;
 
-			case STICK:
-				serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new).open(serverPlayer);
-				break;
+		case STICK:
+			serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new).open(serverPlayer);
+			break;
 
-			case GRAY_DYE:
-				new DustOptionMenu().open(serverPlayer);
-				break;
+		case GRAY_DYE:
+			new DustOptionMenu().open(serverPlayer);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 

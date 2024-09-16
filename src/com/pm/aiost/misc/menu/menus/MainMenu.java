@@ -72,56 +72,52 @@ public class MainMenu {
 	}
 
 	public static boolean menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
-			case COMPASS:
-				GameMenu.getMenu().open(serverPlayer);
-				return true;
+		switch (is.getType()) {
+		case COMPASS:
+			GameMenu.getMenu().open(serverPlayer);
+			return true;
 
-			case CLOCK:
-				if (SpigotConfig.HAS_BUNGEE)
-					LobbyMenu.getMenu().open(serverPlayer);
-				else
-					ServerRequest.getHandler().sendLobby(serverPlayer);
-				return true;
+		case CLOCK:
+			if (SpigotConfig.HAS_BUNGEE)
+				LobbyMenu.getMenu().open(serverPlayer);
+			else
+				ServerRequest.getHandler().sendLobby(serverPlayer);
+			return true;
 
-			case GRASS_BLOCK:
-				WorldMenu.getMenu().open(serverPlayer);
-				return true;
+		case GRASS_BLOCK:
+			WorldMenu.MENU.open(serverPlayer);
+			return true;
 
-			case ENDER_CHEST:
-				serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU,
-						ServerPlayer::openEventHandlerMenu, true) {
+		case ENDER_CHEST:
+			serverPlayer.menuRequest(new SingleMenuRequest(EnumerationMenus.UNLOCKABLE_TYPE_MENU,
+					ServerPlayer::openEventHandlerMenu, true) {
 
-					@Override
-					protected void onResult(ServerPlayer serverPlayer, Object obj) {
-						UnlockableType<?> type = (UnlockableType<?>) obj;
-						serverPlayer.getOrCreateMenu(type, () -> {
-							UnlockableMenu menu = type.createMenu(serverPlayer);
-							menu.setBackLink(serverPlayer.player.getOpenInventory());
-							return menu;
-						}).open(serverPlayer);
-					}
-				});
-				return true;
+				@Override
+				protected void onResult(ServerPlayer serverPlayer, Object obj) {
+					UnlockableType<?> type = (UnlockableType<?>) obj;
+					serverPlayer.getOrCreateMenu(type, () -> {
+						UnlockableMenu menu = type.createMenu(serverPlayer);
+						menu.setBackLink(serverPlayer.player.getOpenInventory());
+						return menu;
+					}).open(serverPlayer);
+				}
+			});
+			return true;
 
-			case PLAYER_HEAD:
-				InventoryMenu menu = (InventoryMenu) serverPlayer.getOrCreateMenu(PartyMenu.class, PartyMenu::new);
-				menu.setBackLink(MENU);
-				menu.open(serverPlayer);
-				return true;
+		case PLAYER_HEAD:
+			InventoryMenu menu = (InventoryMenu) serverPlayer.getOrCreateMenu(PartyMenu.class, PartyMenu::new);
+			menu.setBackLink(MENU);
+			menu.open(serverPlayer);
+			return true;
 
-			case COMPARATOR:
-				serverPlayer.getOrCreateMenu(SettingMenu.class, SettingMenu::createMenu).open(serverPlayer);
-				return true;
+		case COMPARATOR:
+			serverPlayer.getOrCreateMenu(SettingMenu.class, SettingMenu::createMenu).open(serverPlayer);
+			return true;
 
-			default:
-				return false;
-			}
+		default:
+			return false;
 		}
-		return true;
 	}
 
 	public static InventoryMenu getMenu() {

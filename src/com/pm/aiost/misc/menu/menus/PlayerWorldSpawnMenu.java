@@ -13,7 +13,6 @@ import java.util.List;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.entity.AiostEntityTypes;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
@@ -39,7 +38,7 @@ public class PlayerWorldSpawnMenu {
 	private static final Object PARTICLE_EFFECT_MENU_IDENTIFIER = new Object();
 	private static final Object CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER = new Object();
 
-	private static final InventoryMenu MENU = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Spawn Menu", 3, true);
@@ -63,70 +62,65 @@ public class PlayerWorldSpawnMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		switch (event.getCurrentItem().getType()) {
 
-			case ARMOR_STAND:
-				serverPlayer.menuRequest(CREATE_TEXT_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(
-								serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new), MENU::open,
+		case ARMOR_STAND:
+			serverPlayer.menuRequest(CREATE_TEXT_MENU_IDENTIFIER,
+					() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateTextMenu.class, CreateTextMenu::new),
+							MENU::open, false) {
+
+						@SuppressWarnings("unchecked")
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							spawnHologram(serverPlayer, (List<String>) obj);
+						}
+					});
+			break;
+
+		case ZOMBIE_HEAD:
+			serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
+					() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, MENU::open, false) {
+
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							spawnEntity(serverPlayer, (EntityType<?>) obj);
+						}
+					});
+			break;
+
+		case PLAYER_HEAD:
+			PlayerWorldSpawnDecoMenu.MENU.open(serverPlayer);
+			break;
+
+		case LAVA_BUCKET:
+			ClickType click = event.getClick();
+			if (click == ClickType.LEFT)
+				serverPlayer.menuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
+						() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open, false) {
+
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								spawnParticleEffect(serverPlayer, (IParticle) obj);
+							}
+						});
+			else if (click == ClickType.RIGHT)
+				serverPlayer.menuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
+						() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), MENU::open,
 								false) {
 
-							@SuppressWarnings("unchecked")
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnHologram(serverPlayer, (List<String>) obj);
+								spawnParticleEffect(serverPlayer, (IParticle) obj);
 							}
 						});
-				break;
+			else if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
+				for (PacketEntity packetEntity : serverPlayer.getServerWorld()
+						.getPacketEntities(serverPlayer.player.getLocation(), 2, PacketEntityTypes.PARTICLE_SPAWNER))
+					packetEntity.remove();
+			break;
 
-			case ZOMBIE_HEAD:
-				serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, MENU::open, false) {
-
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnEntity(serverPlayer, (EntityType<?>) obj);
-							}
-						});
-				break;
-
-			case PLAYER_HEAD:
-				PlayerWorldSpawnDecoMenu.getMenu().open(serverPlayer);
-				break;
-
-			case LAVA_BUCKET:
-				ClickType click = event.getClick();
-				if (click == ClickType.LEFT)
-					serverPlayer.menuRequest(PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, MENU::open, false) {
-
-								@Override
-								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									spawnParticleEffect(serverPlayer, (IParticle) obj);
-								}
-							});
-				else if (click == ClickType.RIGHT)
-					serverPlayer.menuRequest(CREATE_PARTICLE_EFFECT_MENU_IDENTIFIER,
-							() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer), MENU::open,
-									false) {
-
-								@Override
-								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									spawnParticleEffect(serverPlayer, (IParticle) obj);
-								}
-							});
-				else if (click == ClickType.SHIFT_LEFT || click == ClickType.SHIFT_RIGHT)
-					for (PacketEntity packetEntity : serverPlayer.getServerWorld().getPacketEntities(
-							serverPlayer.player.getLocation(), 2, PacketEntityTypes.PARTICLE_SPAWNER))
-						packetEntity.remove();
-				break;
-
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -142,9 +136,5 @@ public class PlayerWorldSpawnMenu {
 	private static void spawnHologram(ServerPlayer serverPlayer, List<String> text) {
 		PacketEntityTypes.spawn(new Hologram(serverPlayer.getServerWorld(), text), serverPlayer.player.getLocation());
 		serverPlayer.player.closeInventory();
-	}
-
-	public static InventoryMenu getMenu() {
-		return MENU;
 	}
 }

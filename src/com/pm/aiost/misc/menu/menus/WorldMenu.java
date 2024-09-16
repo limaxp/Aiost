@@ -19,7 +19,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 public class WorldMenu {
 
-	private static InventoryMenu menu = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "World Menu", 3, true);
@@ -40,29 +40,22 @@ public class WorldMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
-			case GRASS_BLOCK:
-				serverPlayer.getOrCreateMenu(CreateWorldMenu.class, CreateWorldMenu::new).open(serverPlayer);
-				break;
+		switch (is.getType()) {
+		case GRASS_BLOCK:
+			serverPlayer.getOrCreateMenu(CreateWorldMenu.class, CreateWorldMenu::new).open(serverPlayer);
+			break;
 
-			case GOLD_BLOCK:
-				serverPlayer.getOrCreateMenu(PlayerWorldMenu.class, PlayerWorldMenu::new).open(serverPlayer);
-				break;
+		case GOLD_BLOCK:
+			serverPlayer.getOrCreateMenu(PlayerWorldMenu.class, PlayerWorldMenu::new).open(serverPlayer);
+			break;
 
-			case DIAMOND_BLOCK:
-				serverPlayer.getOrCreateMenu(ReleasedGameMenu.class, ReleasedGameMenu::new).open(serverPlayer);
-				break;
+		case DIAMOND_BLOCK:
+			serverPlayer.getOrCreateMenu(ReleasedGameMenu.class, ReleasedGameMenu::new).open(serverPlayer);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
-	}
-
-	public static InventoryMenu getMenu() {
-		return menu;
 	}
 }

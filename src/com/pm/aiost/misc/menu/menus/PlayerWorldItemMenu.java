@@ -26,7 +26,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 public class PlayerWorldItemMenu {
 
-	private static InventoryMenu menu = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Item menu", 3, true);
@@ -49,50 +49,46 @@ public class PlayerWorldItemMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		switch (is.getType()) {
 
-			case BLAZE_ROD:
-				serverPlayer.menuRequest(menu,
-						() -> new SingleMenuRequest(CustomItemMenu.getMenu(), PlayerWorldItemMenu.menu::open, true) {
+		case BLAZE_ROD:
+			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(CustomItemMenu.getMenu(), MENU::open, true) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								serverPlayer.addItem((ItemStack) obj);
-							}
-						});
-				break;
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					serverPlayer.addItem((ItemStack) obj);
+				}
+			});
+			break;
 
-			case WOODEN_AXE:
-				CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
-						CreateItemMenu::new);
-				serverPlayer.menuRequest(PlayerWorldItemMenu.class,
-						() -> new SingleMenuRequest(createItemMenu, PlayerWorldItemMenu.menu::open, false) {
+		case WOODEN_AXE:
+			CreateItemMenu createItemMenu = (CreateItemMenu) serverPlayer.getOrCreateMenu(CreateItemMenu.class,
+					CreateItemMenu::new);
+			serverPlayer.menuRequest(PlayerWorldItemMenu.class,
+					() -> new SingleMenuRequest(createItemMenu, MENU::open, false) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								serverPlayer.addItem((ItemStack) obj);
-							}
-						});
-				break;
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							serverPlayer.addItem((ItemStack) obj);
+						}
+					});
+			break;
 
-			case STONE:
-				serverPlayer.getOrCreateMenu(EffectItemMenu.class, EffectItemMenu::new).open(serverPlayer);
-				break;
+		case STONE:
+			serverPlayer.getOrCreateMenu(EffectItemMenu.class, EffectItemMenu::new).open(serverPlayer);
+			break;
 
-			case PLAYER_HEAD:
-				ClickType click = event.getClick();
-				if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-					PlayerHeadMenu.getMenu().open(serverPlayer);
-				else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-					createPlayerNameHeadMenu().open(serverPlayer);
-				break;
+		case PLAYER_HEAD:
+			ClickType click = event.getClick();
+			if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
+				PlayerHeadMenu.MENU.open(serverPlayer);
+			else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
+				createPlayerNameHeadMenu().open(serverPlayer);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -108,15 +104,11 @@ public class PlayerWorldItemMenu {
 						Location loc = serverPlayer.player.getLocation();
 						loc.getWorld().dropItem(loc, head);
 					}
-					PlayerWorldItemMenu.menu.open(serverPlayer);
+					MENU.open(serverPlayer);
 				}
 			}
 		};
-		menu.setBackLink(PlayerWorldItemMenu.menu);
-		return menu;
-	}
-
-	public static InventoryMenu getMenu() {
+		menu.setBackLink(MENU);
 		return menu;
 	}
 }

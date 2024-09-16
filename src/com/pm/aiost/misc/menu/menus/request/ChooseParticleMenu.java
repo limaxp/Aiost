@@ -36,22 +36,19 @@ public class ChooseParticleMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		switch (is.getType()) {
 
-			case FIREWORK_STAR:
-				EnumerationMenus.PARTICLE_EFFECT_MENU.open(serverPlayer);
-				break;
+		case FIREWORK_STAR:
+			EnumerationMenus.PARTICLE_EFFECT_MENU.open(serverPlayer);
+			break;
 
-			case LAVA_BUCKET:
-				CreationMenus.getParticleEffectMenu(serverPlayer).open(serverPlayer);
-				break;
+		case LAVA_BUCKET:
+			CreationMenus.getParticleEffectMenu(serverPlayer).open(serverPlayer);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 

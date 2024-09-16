@@ -37,50 +37,44 @@ public class AnimationParticleMenu extends SingleInventoryMenu {
 		set(CHOOSE_PARTICLE.clone(), CHOOSE_ANIMATION.clone(), null, null, null, MultiParticleMenu.RESET_ITEM,
 				MultiParticleMenu.ACCEPT_ITEM);
 		setBackLink(ServerPlayer::openMenuRequestPrev);
+		setClickCallback(this::menuClick);
 	}
 
-	@Override
-	protected void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
+	private void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
+		switch (event.getCurrentItem().getType()) {
 
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		case FIREWORK_STAR:
+			particleItemClick(serverPlayer, event);
+			break;
 
-			case FIREWORK_STAR:
-				particleItemClick(serverPlayer, event);
-				break;
+		case REPEATER:
+			animationItemClick(serverPlayer);
+			break;
 
-			case REPEATER:
-				animationItemClick(serverPlayer);
-				break;
+		case LAVA_BUCKET:
+			reset();
+			break;
 
-			case LAVA_BUCKET:
-				reset();
-				break;
+		case NETHER_STAR:
+			accept(serverPlayer, event);
+			break;
 
-			case NETHER_STAR:
-				accept(serverPlayer, event);
-				break;
-
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
 	private void particleItemClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		ClickType click = event.getClick();
 		if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-			serverPlayer.menuRequest(CHOOSE_PARTICLE,
-					() -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU, AnimationParticleMenu.this::open,
-							false) {
+			serverPlayer.menuRequest(CHOOSE_PARTICLE, () -> new SingleMenuRequest(EnumerationMenus.PARTICLE_EFFECT_MENU,
+					AnimationParticleMenu.this::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							setParticle((IParticle) obj);
-						}
-					});
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					setParticle((IParticle) obj);
+				}
+			});
 		else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
 			serverPlayer.menuRequest(particle,
 					() -> new SingleMenuRequest(CreationMenus.getParticleEffectMenu(serverPlayer),

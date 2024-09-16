@@ -38,9 +38,7 @@ public class EffectConditionMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		if (event.getCurrentItem() != null)
-			serverPlayer.setMenuRequestResult((byte) InventoryMenu.convertSlotToIndex(event.getSlot()));
+		serverPlayer.setMenuRequestResult((byte) InventoryMenu.convertSlotToIndex(event.getSlot()));
 	}
 
 	public static InventoryMenu getMenu() {

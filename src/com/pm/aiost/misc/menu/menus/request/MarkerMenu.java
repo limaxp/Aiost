@@ -46,15 +46,11 @@ public class MarkerMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			if (event.getSlot() == CUSTOM_MARKER_SLOT)
-				createCustomMarkerMenu(event.getInventory()).open(serverPlayer);
-			else
-				serverPlayer.setMenuRequestResult(
-						Marker.get(InventoryMenu.parseBorderedIndex(event.getView().getTitle(), event.getSlot())));
-		}
+		if (event.getSlot() == CUSTOM_MARKER_SLOT)
+			createCustomMarkerMenu(event.getInventory()).open(serverPlayer);
+		else
+			serverPlayer.setMenuRequestResult(
+					Marker.get(InventoryMenu.parseBorderedIndex(event.getView().getTitle(), event.getSlot())));
 	}
 
 	private static AnvilMenu createCustomMarkerMenu(Inventory inv) {

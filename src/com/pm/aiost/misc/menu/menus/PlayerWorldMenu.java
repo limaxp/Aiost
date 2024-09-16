@@ -46,7 +46,7 @@ public class PlayerWorldMenu extends ListInventoryMenu {
 		super(BOLD + serverPlayer.player.getName() + "'s worlds", true);
 		this.serverPlayer = serverPlayer;
 		dataList = new ArrayList<PlayerWorldData>();
-		setBackLink(WorldMenu.getMenu());
+		setBackLink(WorldMenu.MENU);
 	}
 
 	@Override
@@ -97,8 +97,7 @@ public class PlayerWorldMenu extends ListInventoryMenu {
 	@Override
 	protected void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		event.setCancelled(true);
-		ItemStack is = event.getCurrentItem();
-		if (is != null) {
+		if (event.getCurrentItem() != null) {
 			int dataIndex = parseBorderedIndex(event.getView().getTitle(), event.getSlot());
 
 			switch (event.getClick()) {

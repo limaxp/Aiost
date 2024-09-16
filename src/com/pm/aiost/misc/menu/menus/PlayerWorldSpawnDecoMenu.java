@@ -37,7 +37,7 @@ public class PlayerWorldSpawnDecoMenu {
 
 	private static final Object PLAYER_PROFILE_MENU_IDENTIFIER = new Object();
 
-	private static final InventoryMenu MENU = createMenu();
+	public static final InventoryMenu MENU = createMenu();
 
 	private static InventoryMenu createMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Spawn Deco Menu", 3, true);
@@ -55,71 +55,67 @@ public class PlayerWorldSpawnDecoMenu {
 				MetaHelper.setMeta(Material.STONE, GRAY + BOLD + "Block",
 						Arrays.asList(GRAY + "Click to spawn a deco block")));
 		menu.setClickCallback(PlayerWorldSpawnDecoMenu::menuClick);
-		menu.setBackLink(PlayerWorldSpawnMenu.getMenu());
+		menu.setBackLink(PlayerWorldSpawnMenu.MENU);
 		return menu;
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			switch (is.getType()) {
+		switch (is.getType()) {
 
-			case ARMOR_STAND:
-				serverPlayer.menuRequest(MENU,
-						() -> new SingleMenuRequest(
-								serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new),
+		case ARMOR_STAND:
+			serverPlayer.menuRequest(MENU,
+					() -> new SingleMenuRequest(serverPlayer.getOrCreateMenu(CreateItemMenu.class, CreateItemMenu::new),
+							PlayerWorldSpawnDecoMenu.MENU::open, false) {
+
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							spawnFurniture(serverPlayer, (ItemStack) obj);
+						}
+					});
+			break;
+
+		case ZOMBIE_HEAD:
+			serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
+					() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU, PlayerWorldSpawnDecoMenu.MENU::open,
+							false) {
+
+						@Override
+						public void onResult(ServerPlayer serverPlayer, Object obj) {
+							spawnEntityLiving(serverPlayer, (EntityType<?>) obj);
+						}
+					});
+			break;
+
+		case PLAYER_HEAD:
+			ClickType click = event.getClick();
+			if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
+				serverPlayer.menuRequest(PLAYER_PROFILE_MENU_IDENTIFIER,
+						() -> new SingleMenuRequest(EnumerationMenus.GAME_RPOFILES_MENU,
 								PlayerWorldSpawnDecoMenu.MENU::open, false) {
 
 							@Override
 							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnFurniture(serverPlayer, (ItemStack) obj);
+								spawnPlayer(serverPlayer, (GameProfile) obj);
 							}
 						});
-				break;
+			else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
+				createPlayerNameMenu().open(serverPlayer);
+			break;
 
-			case ZOMBIE_HEAD:
-				serverPlayer.menuRequest(ENTITY_TYPE_MENU_IDENTIFIER,
-						() -> new SingleMenuRequest(EnumerationMenus.ENTITY_TYPE_MENU,
-								PlayerWorldSpawnDecoMenu.MENU::open, false) {
+		case STONE:
+			serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(EnumerationMenus.BLOCK_MENU,
+					PlayerWorldSpawnDecoMenu.MENU::open, false) {
 
-							@Override
-							public void onResult(ServerPlayer serverPlayer, Object obj) {
-								spawnEntityLiving(serverPlayer, (EntityType<?>) obj);
-							}
-						});
-				break;
+				@Override
+				public void onResult(ServerPlayer serverPlayer, Object obj) {
+					spawnBlock(serverPlayer, (Material) obj);
+				}
+			});
+			break;
 
-			case PLAYER_HEAD:
-				ClickType click = event.getClick();
-				if (click == ClickType.LEFT || click == ClickType.SHIFT_LEFT)
-					serverPlayer.menuRequest(PLAYER_PROFILE_MENU_IDENTIFIER,
-							() -> new SingleMenuRequest(EnumerationMenus.GAME_RPOFILES_MENU,
-									PlayerWorldSpawnDecoMenu.MENU::open, false) {
-
-								@Override
-								public void onResult(ServerPlayer serverPlayer, Object obj) {
-									spawnPlayer(serverPlayer, (GameProfile) obj);
-								}
-							});
-				else if (click == ClickType.RIGHT || click == ClickType.SHIFT_RIGHT)
-					createPlayerNameMenu().open(serverPlayer);
-				break;
-
-			case STONE:
-				serverPlayer.menuRequest(MENU, () -> new SingleMenuRequest(EnumerationMenus.BLOCK_MENU,
-						PlayerWorldSpawnDecoMenu.MENU::open, false) {
-
-					@Override
-					public void onResult(ServerPlayer serverPlayer, Object obj) {
-						spawnBlock(serverPlayer, (Material) obj);
-					}
-				});
-				break;
-
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -157,9 +153,5 @@ public class PlayerWorldSpawnDecoMenu {
 	private static void spawnBlock(ServerPlayer serverPlayer, Material material) {
 		PacketFallingBlock player = new PacketFallingBlock(serverPlayer.getServerWorld(), material);
 		PacketEntityTypes.spawn(player, serverPlayer.player.getLocation());
-	}
-
-	public static InventoryMenu getMenu() {
-		return MENU;
 	}
 }

@@ -10,14 +10,12 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.dataAccess.DataAccess;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.ListInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
-import com.pm.aiost.player.ServerPlayer;
 
 public class GameStatsMenu extends ListInventoryMenu {
 
@@ -51,10 +49,5 @@ public class GameStatsMenu extends ListInventoryMenu {
 						GRAY + "Winner: " + DARK_GRAY + resultSet.getString(2),
 						GRAY + "Player Data: " + DARK_GRAY + resultSet.getString(3),
 						GRAY + "Date: " + DARK_GRAY + resultSet.getDate(4) + " " + resultSet.getTime(4)));
-	}
-
-	@Override
-	protected void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 	}
 }

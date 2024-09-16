@@ -33,21 +33,21 @@ public class MenuCommands {
 	public static boolean openItem(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
-		PlayerWorldItemMenu.getMenu().open((Player) sender);
+		PlayerWorldItemMenu.MENU.open((Player) sender);
 		return true;
 	}
 
 	public static boolean openSpawn(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
-		PlayerWorldSpawnMenu.getMenu().open((Player) sender);
+		PlayerWorldSpawnMenu.MENU.open((Player) sender);
 		return true;
 	}
 
 	public static boolean openWorldSetting(CommandSender sender, Command cmd, String label, String[] args) {
 		if (!CommandUtil.requirePlayer(sender) || !CommandUtil.isAdmin(sender))
 			return false;
-		WorldSettingMenu.getMenu().open((Player) sender);
+		WorldSettingMenu.MENU.open((Player) sender);
 		return true;
 	}
 

@@ -71,26 +71,22 @@ public class SettingMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			int slot = event.getSlot();
-			int settingIndex = InventoryMenu.parseBorderedIndex(event.getView().getTitle(), slot, 2,
-					ITEMS_PER_INVENTORY);
-			switch (is.getType()) {
-			case LIME_DYE:
-				serverPlayer.setSetting(SETTINGS[settingIndex], (byte) 0);
-				event.getInventory().setItem(slot, ITEMS[settingIndex * 2]);
-				break;
+		int slot = event.getSlot();
+		int settingIndex = InventoryMenu.parseBorderedIndex(event.getView().getTitle(), slot, 2, ITEMS_PER_INVENTORY);
+		switch (is.getType()) {
+		case LIME_DYE:
+			serverPlayer.setSetting(SETTINGS[settingIndex], (byte) 0);
+			event.getInventory().setItem(slot, ITEMS[settingIndex * 2]);
+			break;
 
-			case GRAY_DYE:
-				serverPlayer.setSetting(SETTINGS[settingIndex], (byte) 1);
-				event.getInventory().setItem(slot, ITEMS[settingIndex * 2 + 1]);
-				break;
+		case GRAY_DYE:
+			serverPlayer.setSetting(SETTINGS[settingIndex], (byte) 1);
+			event.getInventory().setItem(slot, ITEMS[settingIndex * 2 + 1]);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 }

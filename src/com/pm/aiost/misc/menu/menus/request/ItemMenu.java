@@ -3,7 +3,6 @@ package com.pm.aiost.misc.menu.menus.request;
 import static com.pm.aiost.misc.utils.ChatColor.BOLD;
 
 import org.bukkit.Material;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
@@ -12,26 +11,20 @@ import com.pm.aiost.player.ServerPlayer;
 
 public class ItemMenu {
 
-	private static InventoryMenu menu;
+	private static InventoryMenu menu = createMainMenu();;
 
-	static {
-		init();
-	}
-
-	private static void init() {
-		createMainMenu();
-	}
-
-	private static void createMainMenu() {
+	private static ArrayInventoryMenu createMainMenu() {
 		Material[] materials = Material.values();
 		ItemStack[] items = new ItemStack[materials.length];
 		for (int i = 0; i < materials.length; i++)
 			items[i] = new ItemStack(materials[i]);
 
-		menu = new ArrayInventoryMenu(BOLD + "Items", items.length, true);
+		ArrayInventoryMenu menu = new ArrayInventoryMenu(BOLD + "Items", items.length, true);
 		menu.set(items);
-		menu.setClickCallback(ItemMenu::mainMenuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
+		menu.setClickCallback(
+				(serverPlayer, event) -> serverPlayer.setMenuRequestResult(event.getCurrentItem().getType()));
+		return menu;
 	}
 
 //	private static ItemStack[] getTabIcons() {
@@ -42,12 +35,6 @@ public class ItemMenu {
 //				MetaHelper.hideAttributes(new ItemStack(Material.GOLDEN_SWORD)),
 //				MetaHelper.hidePotionEffects(MetaHelper.createWaterBottle()) };
 //	}
-
-	private static void mainMenuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
-		if (event.getCurrentItem() != null)
-			serverPlayer.setMenuRequestResult(event.getCurrentItem().getType());
-	}
 
 	public static InventoryMenu getMenu() {
 		return menu;

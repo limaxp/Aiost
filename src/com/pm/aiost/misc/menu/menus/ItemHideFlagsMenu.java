@@ -52,39 +52,36 @@ public class ItemHideFlagsMenu {
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			int slot = event.getSlot();
-			switch (slot) {
+		int slot = event.getSlot();
+		switch (slot) {
 
-			case 10:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_ENCHANTMENTS);
-				break;
+		case 10:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_ENCHANTMENTS);
+			break;
 
-			case 11:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_ATTRIBUTE_MODIFIERS);
-				break;
+		case 11:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_ATTRIBUTE_MODIFIERS);
+			break;
 
-			case 12:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_UNBREAKABLE);
-				break;
+		case 12:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_UNBREAKABLE);
+			break;
 
-			case 13:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_CAN_DESTROY);
-				break;
+		case 13:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_CAN_DESTROY);
+			break;
 
-			case 14:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_CAN_PLACE_ON);
-				break;
+		case 14:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_CAN_PLACE_ON);
+			break;
 
-			case 15:
-				flagClick(serverPlayer, is, slot, HideFlag.HIDE_OTHERS);
-				break;
+		case 15:
+			flagClick(serverPlayer, is, slot, HideFlag.HIDE_OTHERS);
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 

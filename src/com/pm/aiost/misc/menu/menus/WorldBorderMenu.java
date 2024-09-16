@@ -27,7 +27,7 @@ import com.pm.aiost.player.ServerPlayer;
 
 public class WorldBorderMenu {
 
-	private static InventoryMenu menu = createWeatherMenu();
+	public static final InventoryMenu MENU = createWeatherMenu();
 
 	private static InventoryMenu createWeatherMenu() {
 		InventoryMenu menu = new SingleInventoryMenu(BOLD + "Border menu", 3, true);
@@ -48,47 +48,44 @@ public class WorldBorderMenu {
 				MetaHelper.setMeta(Material.LAVA_BUCKET, GRAY + BOLD + "Reset",
 						Arrays.asList(GRAY + "Reset world border to default values")));
 		menu.setClickCallback(WorldBorderMenu::menuClick);
-		menu.setBackLink(WorldSettingMenu.getMenu());
+		menu.setBackLink(WorldSettingMenu.MENU);
 		return menu;
 	}
 
 	private static void menuClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		event.setCancelled(true);
 		ItemStack is = event.getCurrentItem();
-		if (is != null) {
-			HumanEntity player = event.getWhoClicked();
-			WorldBorder border = player.getWorld().getWorldBorder();
-			switch (is.getType()) {
+		HumanEntity player = event.getWhoClicked();
+		WorldBorder border = player.getWorld().getWorldBorder();
+		switch (is.getType()) {
 
-			case RED_BANNER:
-				if (event.getClick() == ClickType.LEFT)
-					border.setCenter(player.getLocation());
-				else if (event.getClick() == ClickType.RIGHT)
-					serverPlayer.menuRequest(menu, () -> new SingleMenuRequest(new LocationMenu(border.getCenter()),
-							WorldBorderMenu.menu::open, false) {
+		case RED_BANNER:
+			if (event.getClick() == ClickType.LEFT)
+				border.setCenter(player.getLocation());
+			else if (event.getClick() == ClickType.RIGHT)
+				serverPlayer.menuRequest(MENU,
+						() -> new SingleMenuRequest(new LocationMenu(border.getCenter()), MENU::open, false) {
 
-						@Override
-						public void onResult(ServerPlayer serverPlayer, Object obj) {
-							border.setCenter((Location) obj);
-						}
-					});
-				break;
+							@Override
+							public void onResult(ServerPlayer serverPlayer, Object obj) {
+								border.setCenter((Location) obj);
+							}
+						});
+			break;
 
-			case SUNFLOWER:
-				createChangeSizeMenu(border).open(serverPlayer);
-				break;
+		case SUNFLOWER:
+			createChangeSizeMenu(border).open(serverPlayer);
+			break;
 
-			case IRON_SWORD:
-				createChangeDamageMenu(border).open(serverPlayer);
-				break;
+		case IRON_SWORD:
+			createChangeDamageMenu(border).open(serverPlayer);
+			break;
 
-			case LAVA_BUCKET:
-				border.reset();
-				break;
+		case LAVA_BUCKET:
+			border.reset();
+			break;
 
-			default:
-				break;
-			}
+		default:
+			break;
 		}
 	}
 
@@ -107,11 +104,11 @@ public class WorldBorderMenu {
 						return;
 					}
 					border.setSize(size);
-					WorldBorderMenu.menu.open(serverPlayer);
+					MENU.open(serverPlayer);
 				}
 			}
 		};
-		menu.setBackLink(WorldBorderMenu.menu);
+		menu.setBackLink(MENU);
 		return menu;
 	}
 
@@ -130,15 +127,11 @@ public class WorldBorderMenu {
 						return;
 					}
 					border.setDamageAmount(size);
-					WorldBorderMenu.menu.open(serverPlayer);
+					MENU.open(serverPlayer);
 				}
 			}
 		};
-		menu.setBackLink(WorldBorderMenu.menu);
-		return menu;
-	}
-
-	public static InventoryMenu getMenu() {
+		menu.setBackLink(MENU);
 		return menu;
 	}
 }
