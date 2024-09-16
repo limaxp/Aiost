@@ -10,6 +10,9 @@ public abstract class MenuRequest {
 	public static final Consumer<ServerPlayer> EMPTY_CONSUMER = (serverPlayer) -> {
 	};
 
+	public static final Consumer<Object> EMPTY_RESULT_CONSUMER = (result) -> {
+	};
+
 	protected Consumer<ServerPlayer> requestConsumer;
 	protected Consumer<ServerPlayer> targetConsumer;
 	protected boolean isSaved;

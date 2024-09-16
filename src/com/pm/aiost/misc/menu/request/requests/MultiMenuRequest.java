@@ -14,10 +14,6 @@ public class MultiMenuRequest extends MenuRequest {
 	protected Consumer<Object>[] resultConsumer;
 	protected int currentIndex;
 
-	public MultiMenuRequest(Supplier<Menu>[] menuSupplier, Consumer<Object>[] resultConsumer, boolean isSaved) {
-		this(EMPTY_CONSUMER, isSaved, menuSupplier, resultConsumer);
-	}
-
 	public MultiMenuRequest(Consumer<ServerPlayer> consumer, boolean isSaved, Supplier<Menu>[] menuSupplier,
 			Consumer<Object>[] resultConsumer) {
 		this(consumer, consumer, isSaved, menuSupplier, resultConsumer);
