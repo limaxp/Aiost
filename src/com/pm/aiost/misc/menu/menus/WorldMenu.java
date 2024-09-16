@@ -34,7 +34,7 @@ public class WorldMenu {
 				MetaHelper.setMeta(Material.DIAMOND_BLOCK, DARK_AQUA + BOLD + "Realeased Worlds",
 						Arrays.asList(GRAY + "Click to view your realeased Worlds", "",
 								GRAY + "Play your released worlds", GRAY + "Load released worlds into build mode")));
-		menu.setInventoryClickCallback(WorldMenu::menuClick);
+		menu.setClickCallback(WorldMenu::menuClick);
 		menu.setBackLink(MainMenu.getMenu());
 		return menu;
 	}

@@ -32,7 +32,7 @@ public class PlayerHeadMenu {
 				});
 			}
 		};
-		menu.setInventoryClickCallback(PlayerHeadMenu::menuClick);
+		menu.setClickCallback(PlayerHeadMenu::menuClick);
 		menu.setBackLink(PlayerWorldItemMenu.getMenu());
 		return menu;
 	}

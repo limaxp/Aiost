@@ -30,7 +30,7 @@ public class ItemMenu {
 
 		menu = new ArrayInventoryMenu(BOLD + "Items", items.length, true);
 		menu.set(items);
-		menu.setInventoryClickCallback(ItemMenu::mainMenuClick);
+		menu.setClickCallback(ItemMenu::mainMenuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 

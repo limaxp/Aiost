@@ -25,7 +25,6 @@ import com.pm.aiost.misc.database.DatabaseManager;
 import com.pm.aiost.misc.event.AiostListener;
 import com.pm.aiost.misc.event.eventHandler.EventHandlerManager;
 import com.pm.aiost.misc.log.Logger;
-import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler;
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuHandler;
 import com.pm.aiost.misc.menu.menus.GameJoinMenu;
 import com.pm.aiost.misc.packet.entity.PacketEntityType;
@@ -157,7 +156,6 @@ public class Aiost extends JavaPlugin {
 			@Override
 			public void run() {
 				InventoryMenuHandler.animateMenusSchedulerTick();
-				InventoryMenuCustomAnimationHandler.animateMenusSchedulerTick();
 			}
 		}.runTaskTimer(Aiost.getPlugin(), 0, 10);
 

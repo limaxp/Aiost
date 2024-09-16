@@ -37,7 +37,7 @@ public class CustomItemMenu {
 
 	private static void createMainMenu() {
 		menu = new ArrayInventoryMenu(BOLD + "Items", ItemGroups.size() + 1, true);
-		menu.setInventoryClickCallback(CustomItemMenu::mainMenuClick);
+		menu.setClickCallback(CustomItemMenu::mainMenuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 	}
 
@@ -64,7 +64,7 @@ public class CustomItemMenu {
 	private static InventoryMenu createItemMenu(Collection<ItemStack> items, String name) {
 		InventoryMenu menu = new ArrayInventoryMenu(BOLD + name, items.size(), false);
 		menu.set(items);
-		menu.setInventoryClickCallback(CustomItemMenu::underMenuClick);
+		menu.setClickCallback(CustomItemMenu::underMenuClick);
 		menu.setBackLink(CustomItemMenu.menu);
 		return menu;
 	}

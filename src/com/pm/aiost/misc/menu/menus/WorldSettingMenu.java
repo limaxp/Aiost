@@ -45,7 +45,7 @@ public class WorldSettingMenu {
 
 				MetaHelper.setMeta(Material.COMPARATOR, GREEN + BOLD + "Gamerules",
 						Arrays.asList(GRAY + "Click to modify gamerules")));
-		menu.setInventoryClickCallback(WorldSettingMenu::menuClick);
+		menu.setClickCallback(WorldSettingMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openEventHandlerMenu);
 		return menu;
 	}

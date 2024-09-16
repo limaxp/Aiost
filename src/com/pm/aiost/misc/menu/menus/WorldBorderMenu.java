@@ -47,7 +47,7 @@ public class WorldBorderMenu {
 
 				MetaHelper.setMeta(Material.LAVA_BUCKET, GRAY + BOLD + "Reset",
 						Arrays.asList(GRAY + "Reset world border to default values")));
-		menu.setInventoryClickCallback(WorldBorderMenu::menuClick);
+		menu.setClickCallback(WorldBorderMenu::menuClick);
 		menu.setBackLink(WorldSettingMenu.getMenu());
 		return menu;
 	}

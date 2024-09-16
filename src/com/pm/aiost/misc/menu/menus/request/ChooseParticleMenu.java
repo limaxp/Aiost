@@ -30,7 +30,7 @@ public class ChooseParticleMenu {
 
 				MetaHelper.setMeta(Material.LAVA_BUCKET, BLUE + BOLD + "Create Particle",
 						Arrays.asList(GRAY + "Click to create a new particle")));
-		menu.setInventoryClickCallback(ChooseParticleMenu::menuClick);
+		menu.setClickCallback(ChooseParticleMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}

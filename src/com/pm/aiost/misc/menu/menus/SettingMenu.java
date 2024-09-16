@@ -64,14 +64,9 @@ public class SettingMenu {
 			public int getMaxInventoryItems() {
 				return ITEMS_PER_INVENTORY;
 			}
-
-			@Override
-			public int getMaxInventoryItems(boolean hasBorder) {
-				return ITEMS_PER_INVENTORY;
-			}
 		};
 		menu.setBackLink(MainMenu.getMenu());
-		menu.setInventoryClickCallback(SettingMenu::menuClick);
+		menu.setClickCallback(SettingMenu::menuClick);
 		return menu;
 	}
 

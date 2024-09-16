@@ -45,7 +45,7 @@ public class GameMenu {
 
 				MetaHelper.setMeta(Material.WRITTEN_BOOK, GOLD + BOLD + "Quests",
 						Arrays.asList(GRAY + "Click to view your quests")));
-		menu.setInventoryClickCallback(GameMenu::menuClick);
+		menu.setClickCallback(GameMenu::menuClick);
 		menu.setBackLink(MainMenu.getMenu());
 		return menu;
 	}

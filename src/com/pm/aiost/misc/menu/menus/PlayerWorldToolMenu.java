@@ -47,7 +47,7 @@ public class PlayerWorldToolMenu {
 						Arrays.asList(GRAY + "Click to get world brush tool")),
 
 				MetaHelper.setMeta(Material.DEBUG_STICK, Arrays.asList(GRAY + "Click to get debug stick")));
-		menu.setInventoryClickCallback(PlayerWorldToolMenu::menuClick);
+		menu.setClickCallback(PlayerWorldToolMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openEventHandlerMenu);
 		return menu;
 	}

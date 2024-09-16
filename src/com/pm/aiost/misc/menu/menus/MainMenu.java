@@ -33,7 +33,7 @@ public class MainMenu {
 		InventoryMenu menu = initMenu();
 		menu.addBorderItem(17, MetaHelper.setMeta(Material.CLOCK, YELLOW + BOLD + "Lobby Selector",
 				Arrays.asList(GRAY + "Click to join lobby")));
-		menu.setInventoryClickCallback(MainMenu::menuClick);
+		menu.setClickCallback(MainMenu::menuClick);
 		menu.setBackLink((serverPlayer) -> {
 			Menu eventHandlerMenu = serverPlayer.getEventHandler().getMenu();
 			if (eventHandlerMenu == menu)

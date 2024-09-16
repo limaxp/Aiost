@@ -12,6 +12,7 @@ public class InventoryMenuHandler {
 	private static final List<Inventory> ACTIVE_NEXT_PREV_ANIMATED_MENUS = new IdentityArrayList<Inventory>();
 	private static final List<Inventory> ACTIVE_BORDER_ANIMATED_MENUS = new IdentityArrayList<Inventory>();
 	private static final List<Inventory> ACTIVE_BORDER_AND_NEXT_PREV_ANIMATED_MENUS = new IdentityArrayList<Inventory>();
+	private static final List<InventoryMenuAnimationHandler> ANIMATION_HANDLER = new IdentityArrayList<InventoryMenuAnimationHandler>();
 	private static boolean hasToggledNextPrevButtons;
 
 	public static void inventoryOpen(InventoryMenu inventoryMenu, Inventory inventory) {
@@ -63,6 +64,9 @@ public class InventoryMenuHandler {
 			for (Inventory inventory : ACTIVE_BORDER_AND_NEXT_PREV_ANIMATED_MENUS)
 				animateBordersExceptNextPrevButtons(inventory);
 		}
+
+		for (InventoryMenuAnimationHandler handler : ANIMATION_HANDLER)
+			handler.animate();
 	}
 
 	private static void animateBorders(Inventory inventory) {
@@ -118,6 +122,24 @@ public class InventoryMenuHandler {
 				inventory.setItem(slot, nextItem);
 			for (int slot : InventoryMenu.PREV_SLOTS)
 				inventory.setItem(slot, prevItem);
+		}
+	}
+
+	public abstract static class InventoryMenuAnimationHandler extends IdentityArrayList<Inventory> {
+
+		protected abstract void animate(Inventory inv);
+
+		public InventoryMenuAnimationHandler() {
+			ANIMATION_HANDLER.add(this);
+		}
+
+		public final void animate() {
+			for (Inventory inv : this)
+				animate(inv);
+		}
+
+		public final void unregister() {
+			ANIMATION_HANDLER.remove(this);
 		}
 	}
 }

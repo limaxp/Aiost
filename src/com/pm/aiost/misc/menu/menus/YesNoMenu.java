@@ -16,7 +16,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenu;
-import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler.InventoryMenuAnimationHandler;
+import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuHandler.InventoryMenuAnimationHandler;
 import com.pm.aiost.misc.menu.inventoryMenu.inventoryMenus.SingleInventoryMenu;
 import com.pm.aiost.misc.utils.meta.MetaHelper;
 import com.pm.aiost.player.ServerPlayer;
@@ -124,15 +124,15 @@ public class YesNoMenu extends SingleInventoryMenu {
 	}
 
 	public void setYesCallback(BiConsumer<ServerPlayer, InventoryClickEvent> yesCallback) {
-		setInventoryClickCallback(yesCallback);
+		setClickCallback(yesCallback);
 	}
 
 	public void resetYesCallback() {
-		setInventoryClickCallback(InventoryMenu.NULL_CLICK_CALLBACK);
+		setClickCallback(InventoryMenu.NULL_CLICK_CALLBACK);
 	}
 
 	public BiConsumer<ServerPlayer, InventoryClickEvent> getYesCallback() {
-		return getInventoryClickCallback();
+		return getClickCallback();
 	}
 
 	public void setNoCallback(BiConsumer<ServerPlayer, InventoryClickEvent> noCallback) {

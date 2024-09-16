@@ -30,7 +30,7 @@ public class GameSettingMenu<T extends Game> extends ArrayInventoryMenu {
 		set(ITEMS);
 		set(ITEMS.length, items);
 		ObjectClickCallback<T> callback = new ObjectClickCallback<T>(game, ITEMS.length + items.length);
-		setInventoryClickCallback(callback);
+		setClickCallback(callback);
 		initClickCallback(callback);
 	}
 
@@ -41,7 +41,7 @@ public class GameSettingMenu<T extends Game> extends ArrayInventoryMenu {
 	@SuppressWarnings("unchecked")
 	@SafeVarargs
 	protected final void setClickCallbacks(TriConsumer<ServerPlayer, InventoryClickEvent, T>... callbacks) {
-		((ObjectClickCallback<T>) getInventoryClickCallback()).setCallbacks(ITEMS.length, callbacks);
+		((ObjectClickCallback<T>) getClickCallback()).setCallbacks(ITEMS.length, callbacks);
 	}
 
 	private static void livesClick(ServerPlayer serverPlayer, InventoryClickEvent event, Game game) {

@@ -34,7 +34,7 @@ public class DataParticleMenu {
 
 				MetaHelper.setMeta(Material.GRAY_DYE, GREEN + BOLD + "Dust option",
 						Arrays.asList(GRAY + "Click to set dust option")));
-		menu.setInventoryClickCallback(DataParticleMenu::menuClick);
+		menu.setClickCallback(DataParticleMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}

@@ -40,7 +40,7 @@ public class MarkerMenu {
 		InventoryMenu menu = new ArrayInventoryMenu(BOLD + "Marker menu", 2, true);
 		menu.set(items);
 		menu.addBorderItem(CUSTOM_MARKER_SLOT, COSTUM_MARKER_ITEM);
-		menu.setInventoryClickCallback(MarkerMenu::menuClick);
+		menu.setClickCallback(MarkerMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}

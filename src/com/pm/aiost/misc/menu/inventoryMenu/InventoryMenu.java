@@ -10,7 +10,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.List;
 import java.util.Set;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -32,7 +31,7 @@ import org.bukkit.inventory.ItemStack;
 import com.pm.aiost.Aiost;
 import com.pm.aiost.misc.menu.InventoryEventHandler;
 import com.pm.aiost.misc.menu.Menu;
-import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuCustomAnimationHandler.InventoryMenuAnimationHandler;
+import com.pm.aiost.misc.menu.inventoryMenu.InventoryMenuHandler.InventoryMenuAnimationHandler;
 import com.pm.aiost.misc.other.interfaces.ExpandedIntFunction;
 import com.pm.aiost.misc.other.interfaces.ThrowingFunction;
 import com.pm.aiost.misc.other.interfaces.ThrowingIntFunction;
@@ -49,6 +48,10 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	public static final char NAME_SEPERATOR = ' ';
 	public static final byte MAX_ITEMS = 45;
 	public static final byte MAX_ITEMS_WITH_BORDER = 28;
+	public static final int FIRST_BORDER_INDEX = 17;
+	public static final int LAST_BORDER_INDEX = 43;
+	public static final int LAST_BORDERLESS_INDEX = 44;
+	public static final int FIRST_BORDERED_SLOT = 10;
 
 	public static final int[] BORDER_SLOTS = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 17, 18, 19, 20, 21, 22, 23, 24,
 			25, 26 };
@@ -83,12 +86,24 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	public static final int[] BACK_SLOTS_5 = new int[] { 48, 49, 50 };
 	public static final int[] NEXT_SLOTS_5 = new int[] { 51, 52, 53 };
 
-	public static final ItemStack BORDER_ITEM;
-	public static final ItemStack BORDER_ITEM_2;
-	public static final ItemStack NEXT_ITEM;
-	public static final ItemStack NEXT_ITEM_2;
-	public static final ItemStack PREV_ITEM;
-	public static final ItemStack PREV_ITEM_2;
+	public static final ItemStack BORDER_ITEM = MetaHelper.setMeta(new ItemStack(Material.GRAY_STAINED_GLASS_PANE),
+			BLUE + BOLD + "Close", Arrays.asList(GRAY + "Click to close menu"));
+
+	public static final ItemStack BORDER_ITEM_2 = MetaHelper.setMeta(
+			new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE), BLUE + BOLD + "Close",
+			Arrays.asList(GRAY + "Click to close menu"));
+
+	public static final ItemStack NEXT_ITEM = MetaHelper.setMeta(new ItemStack(Material.GREEN_STAINED_GLASS_PANE),
+			GREEN + BOLD + "Next page", Arrays.asList(GRAY + "Click to open next page"));
+
+	public static final ItemStack NEXT_ITEM_2 = MetaHelper.setMeta(new ItemStack(Material.LIME_STAINED_GLASS_PANE),
+			GREEN + BOLD + "Next page", Arrays.asList(GRAY + "Click to open next page"));
+
+	public static final ItemStack PREV_ITEM = MetaHelper.setMeta(new ItemStack(Material.RED_STAINED_GLASS_PANE),
+			RED + BOLD + "Previous page", Arrays.asList(GRAY + "Click to open previous page"));
+
+	public static final ItemStack PREV_ITEM_2 = MetaHelper.setMeta(new ItemStack(Material.PINK_STAINED_GLASS_PANE),
+			RED + BOLD + "Previous page", Arrays.asList(GRAY + "Click to open previous page"));
 
 	public static final ItemStack NEXT_ITEM_HEAD = PlayerHead.create("MHF_ArrowRight", GREEN + BOLD + "Next row",
 			Arrays.asList(GRAY + "Click to open next row"));
@@ -101,32 +116,6 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 
 	public static final ItemStack PREV_ITEM_BANNER = Banner.create(Material.BLACK_BANNER, GREEN + BOLD + "Previous row",
 			Arrays.asList(GRAY + "Click to open previous row"), Banner.minusPattern(DyeColor.BLACK, DyeColor.WHITE));
-
-	public static final int FIRST_BORDER_INDEX = 17;
-	public static final int LAST_BORDER_INDEX = 43;
-	public static final int LAST_BORDERLESS_INDEX = 44;
-
-	public static final int FIRST_BORDERED_SLOT = 10;
-
-	static {
-		List<String> borderItemLore = Arrays.asList(GRAY + "Click to close menu");
-		BORDER_ITEM = MetaHelper.setMeta(new ItemStack(Material.GRAY_STAINED_GLASS_PANE), BLUE + BOLD + "Close",
-				borderItemLore);
-		BORDER_ITEM_2 = MetaHelper.setMeta(new ItemStack(Material.LIGHT_GRAY_STAINED_GLASS_PANE), BLUE + BOLD + "Close",
-				borderItemLore);
-
-		List<String> nextItemLore = Arrays.asList(GRAY + "Click to open next page");
-		NEXT_ITEM = MetaHelper.setMeta(new ItemStack(Material.GREEN_STAINED_GLASS_PANE), GREEN + BOLD + "Next page",
-				nextItemLore);
-		NEXT_ITEM_2 = MetaHelper.setMeta(new ItemStack(Material.LIME_STAINED_GLASS_PANE), GREEN + BOLD + "Next page",
-				nextItemLore);
-
-		List<String> prevItemLore = Arrays.asList(GRAY + "Click to open previous page");
-		PREV_ITEM = MetaHelper.setMeta(new ItemStack(Material.RED_STAINED_GLASS_PANE), RED + BOLD + "Previous page",
-				prevItemLore);
-		PREV_ITEM_2 = MetaHelper.setMeta(new ItemStack(Material.PINK_STAINED_GLASS_PANE), RED + BOLD + "Previous page",
-				prevItemLore);
-	}
 
 	private Consumer<ServerPlayer> backLink;
 	private BiConsumer<ServerPlayer, InventoryClickEvent> clickCallback;
@@ -199,7 +188,7 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	}
 
 	public void setCategories(ItemStack... itemStacks) {
-		setCategories_(PREV_ITEM_HEAD, NEXT_ITEM_HEAD, itemStacks);
+		setCategories(PREV_ITEM_HEAD, NEXT_ITEM_HEAD, itemStacks);
 	}
 
 	public void setCategories(ItemStack borderItem, ItemStack... itemStacks) {
@@ -219,7 +208,7 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 		}
 	}
 
-	public void setCategories_(ItemStack prevItem, ItemStack nextItem, ItemStack... itemStacks) {
+	public void setCategories(ItemStack prevItem, ItemStack nextItem, ItemStack... itemStacks) {
 		int size = itemStacks.length;
 		int index = 0;
 		int inventoryIndex = 0;
@@ -465,28 +454,28 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	public void set(Inventory inv, int index, int counter, int limiter, int add,
 			ExpandedIntFunction<ItemStack> isSupplier) {
 		try {
-			set_(inv, index, counter, limiter, add, isSupplier);
+			set(inv, index, counter, limiter, add, isSupplier);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	public <E extends Exception> void set_(int inventoryIndex, int index, int counter, int limiter,
+	public <E extends Exception> void set(int inventoryIndex, int index, int counter, int limiter,
 			ThrowingIntFunction<ItemStack, E> isSupplier) throws E {
-		set_(getInventory(inventoryIndex), index, counter, limiter, 1, isSupplier);
+		set(getInventory(inventoryIndex), index, counter, limiter, 1, isSupplier);
 	}
 
-	public <E extends Exception> void set_(Inventory inv, int index, int counter, int limiter,
+	public <E extends Exception> void set(Inventory inv, int index, int counter, int limiter,
 			ThrowingIntFunction<ItemStack, E> isSupplier) throws E {
-		set_(inv, index, counter, limiter, 1, isSupplier);
+		set(inv, index, counter, limiter, 1, isSupplier);
 	}
 
-	public <E extends Exception> void set_(int inventoryIndex, int index, int counter, int limiter, int add,
+	public <E extends Exception> void set(int inventoryIndex, int index, int counter, int limiter, int add,
 			ThrowingIntFunction<ItemStack, E> isSupplier) throws E {
-		set_(getInventory(inventoryIndex), index, counter, limiter, add, isSupplier);
+		set(getInventory(inventoryIndex), index, counter, limiter, add, isSupplier);
 	}
 
-	public <E extends Exception> void set_(Inventory inv, int index, int counter, int limiter, int add,
+	public <E extends Exception> void set(Inventory inv, int index, int counter, int limiter, int add,
 			ThrowingIntFunction<ItemStack, E> isSupplier) throws E {
 		int endIndex = counter + getMaxInventoryItems();
 		if (endIndex > limiter)
@@ -777,7 +766,7 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	}
 
 	@Override
-	public void onInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
+	public final void onInventoryClick(ServerPlayer serverPlayer, InventoryClickEvent event) {
 		playClickSound((Player) event.getWhoClicked());
 		ItemStack is = event.getCurrentItem();
 		if (is != null) {
@@ -809,25 +798,21 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 	}
 
 	protected void inventoryClickCallback(ServerPlayer serverPlayer, InventoryClickEvent event) {
-		clickCallback.accept(serverPlayer, event);
+		event.setCancelled(true);
+		if (event.getCurrentItem() != null)
+			clickCallback.accept(serverPlayer, event);
 	}
 
-	public void setInventoryClickCallback(BiConsumer<ServerPlayer, InventoryClickEvent> clickCallback) {
+	public void setClickCallback(BiConsumer<ServerPlayer, InventoryClickEvent> clickCallback) {
 		this.clickCallback = clickCallback;
 	}
 
 	@SafeVarargs
-	public final void setInventoryClickCallback(BiConsumer<ServerPlayer, InventoryClickEvent>... clickCallbacks) {
+	public final void setClickCallback(BiConsumer<ServerPlayer, InventoryClickEvent>... clickCallbacks) {
 		this.clickCallback = new ArrayClickCallback(clickCallbacks);
 	}
 
-	@SafeVarargs
-	public final <T> void setInventoryClickCallback(T value,
-			TriConsumer<ServerPlayer, InventoryClickEvent, T>... clickCallbacks) {
-		this.clickCallback = new ObjectClickCallback<T>(value, clickCallbacks);
-	}
-
-	public BiConsumer<ServerPlayer, InventoryClickEvent> getInventoryClickCallback() {
+	public BiConsumer<ServerPlayer, InventoryClickEvent> getClickCallback() {
 		return clickCallback;
 	}
 
@@ -859,7 +844,7 @@ public abstract class InventoryMenu implements Menu, InventoryEventHandler, Inve
 		return hasBorder() ? MAX_ITEMS_WITH_BORDER : MAX_ITEMS;
 	}
 
-	public int getMaxInventoryItems(boolean hasBorder) {
+	public static int getMaxInventoryItems(boolean hasBorder) {
 		return hasBorder ? MAX_ITEMS_WITH_BORDER : MAX_ITEMS;
 	}
 

@@ -35,7 +35,7 @@ public class WeatherMenu {
 
 				MetaHelper.setMeta(Material.GRAY_CONCRETE, GRAY + BOLD + "Strom",
 						Arrays.asList(GRAY + "Click to set weather to storm")));
-		menu.setInventoryClickCallback(WeatherMenu::menuClick);
+		menu.setClickCallback(WeatherMenu::menuClick);
 		menu.setBackLink(WorldSettingMenu.getMenu());
 		return menu;
 	}

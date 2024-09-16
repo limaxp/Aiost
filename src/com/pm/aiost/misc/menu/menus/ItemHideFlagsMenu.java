@@ -46,7 +46,7 @@ public class ItemHideFlagsMenu {
 
 				MetaHelper.setMeta(Material.WHITE_BANNER, GRAY + BOLD + "Hide others",
 						Arrays.asList(GRAY + "Click to change other visibility")));
-		menu.setInventoryClickCallback(ItemHideFlagsMenu::menuClick);
+		menu.setClickCallback(ItemHideFlagsMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openMenuRequestPrev);
 		return menu;
 	}

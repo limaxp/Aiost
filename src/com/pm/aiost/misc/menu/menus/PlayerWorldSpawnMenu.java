@@ -57,7 +57,7 @@ public class PlayerWorldSpawnMenu {
 						Arrays.asList(GRAY + "Left click to spawn an existing particle",
 								GRAY + "Right click to create and spawn a new particle",
 								GRAY + "Shift click to delete near particles")));
-		menu.setInventoryClickCallback(PlayerWorldSpawnMenu::menuClick);
+		menu.setClickCallback(PlayerWorldSpawnMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openEventHandlerMenu);
 		return menu;
 	}

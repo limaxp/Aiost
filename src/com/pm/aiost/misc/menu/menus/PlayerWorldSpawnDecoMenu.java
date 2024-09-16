@@ -54,7 +54,7 @@ public class PlayerWorldSpawnDecoMenu {
 
 				MetaHelper.setMeta(Material.STONE, GRAY + BOLD + "Block",
 						Arrays.asList(GRAY + "Click to spawn a deco block")));
-		menu.setInventoryClickCallback(PlayerWorldSpawnDecoMenu::menuClick);
+		menu.setClickCallback(PlayerWorldSpawnDecoMenu::menuClick);
 		menu.setBackLink(PlayerWorldSpawnMenu.getMenu());
 		return menu;
 	}

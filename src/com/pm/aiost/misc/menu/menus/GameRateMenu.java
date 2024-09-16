@@ -39,7 +39,7 @@ public class GameRateMenu {
 
 				MetaHelper.setMeta(Material.GREEN_CONCRETE, GREEN + BOLD + "5",
 						Arrays.asList(GRAY + "Click to rate map")));
-		menu.setInventoryClickCallback(GameRateMenu::menuClick);
+		menu.setClickCallback(GameRateMenu::menuClick);
 		return menu;
 	}
 

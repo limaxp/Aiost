@@ -43,7 +43,7 @@ public class PlayerWorldItemMenu {
 				MetaHelper.setMeta(Material.PLAYER_HEAD, BLUE + BOLD + "Player Heads",
 						Arrays.asList(GRAY + "Left click to open player head menu",
 								GRAY + "Right click to get a head per player name")));
-		menu.setInventoryClickCallback(PlayerWorldItemMenu::menuClick);
+		menu.setClickCallback(PlayerWorldItemMenu::menuClick);
 		menu.setBackLink(ServerPlayer::openEventHandlerMenu);
 		return menu;
 	}
